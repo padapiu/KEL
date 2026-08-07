@@ -164,14 +164,6 @@
                     <button onclick="showPage('thpt')" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-10 rounded-full transition shadow-lg transform hover:-translate-y-1">Vào Thi Ngay</button>
                 </div>
             </section>
-
-            <section class="py-12 px-6 mb-12 reveal">
-                <h2 class="text-3xl font-bold text-center text-[#2b3674] dark:text-indigo-300 mb-6">Vocabulary / Collocations</h2>
-                <p class="text-center text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto text-lg">Mở khóa kho tàng từ vựng ăn điểm cao cho cả 4 kỹ năng thi IELTS và THPTQG.</p>
-                <div class="text-center">
-                    <button onclick="showPage('vocab')" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-10 rounded-full transition shadow-lg transform hover:-translate-y-1">Khám Phá Ngay</button>
-                </div>
-            </section>
         </div>
 
         <div id="page-ielts" class="page-content">
@@ -179,7 +171,7 @@
                 <h2 class="text-4xl font-extrabold text-center text-[#2b3674] dark:text-indigo-300 mb-4">Kho Đề Thi IELTS đa dạng</h2>
                 <p class="text-center text-gray-600 dark:text-gray-400 mb-10 text-lg">Giao diện chuẩn như thi IELTS trên máy</p>
 
-                <!-- Thanh Điều Hướng Kỹ Năng (Tabs) -->
+                <!-- Thanh Điều Hướng Kỹ Năng -->
                 <div class="flex flex-wrap justify-center gap-3 mb-12">
                     <button id="ielts-btn-listening" onclick="showIeltsTab('listening')" class="px-6 py-2 rounded-full font-bold transition shadow-md bg-indigo-600 text-white">🎧 Listening</button>
                     <button id="ielts-btn-reading" onclick="showIeltsTab('reading')" class="px-6 py-2 rounded-full font-bold transition bg-gray-100 text-gray-600 dark:bg-slate-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-600">📖 Reading</button>
@@ -187,16 +179,21 @@
                     <button id="ielts-btn-writing" onclick="showIeltsTab('writing')" class="px-6 py-2 rounded-full font-bold transition bg-gray-100 text-gray-600 dark:bg-slate-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-600">✍️ Writing</button>
                 </div>
                 
-                <!-- Nội dung các Tab -->
+                <!-- Nội dung Tab Listening -->
                 <div id="ielts-content-listening" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="bg-white dark:bg-darkCard rounded-2xl p-6 shadow-md border-t-4 border-indigo-500 hover:shadow-xl transition cursor-pointer transform hover:-translate-y-2">
-                        <div class="flex justify-between items-center mb-4">
-                            <span class="bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200 text-xs font-bold px-3 py-1 rounded-full">Part 1 & 2</span>
+                    <div class="bg-white dark:bg-darkCard rounded-2xl p-6 shadow-md border-t-4 border-indigo-500 hover:shadow-xl transition cursor-pointer transform hover:-translate-y-2 flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200 text-xs font-bold px-3 py-1 rounded-full">Part 1 & 2</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-indigo-900 dark:text-indigo-400 mb-2">Listening Practice 1</h3>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm mb-6">Luyện tập nghe điền từ với chủ đề đời sống hàng ngày.</p>
                         </div>
-                        <h3 class="text-xl font-bold text-indigo-900 dark:text-indigo-400 mb-2">Listening Practice 1</h3>
-                        <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">Luyện tập nghe điền từ với chủ đề đời sống hàng ngày.</p>
-                        <!-- Nút Demo tính năng nộp bài lưu Database -->
-                        <button onclick="submitTestResult('Listening Practice 1', 8.5)" class="w-full bg-indigo-50 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300 dark:hover:bg-indigo-800 font-bold py-2 px-4 rounded-xl hover:bg-indigo-100 transition">Demo: Nộp & Lưu 8.5 Điểm</button>
+                        <div class="flex flex-col gap-2">
+                            <!-- Nút bắt đầu đếm giờ nổi bật -->
+                            <button onclick="startExamTimer(40)" class="w-full bg-[#ff5e00] hover:bg-orange-600 text-white font-bold py-3 px-4 rounded-xl shadow-lg transition">Thi Ngay (40 Phút)</button>
+                            <button onclick="submitTestResult('Listening Practice 1', 8.5)" class="w-full bg-indigo-50 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300 dark:hover:bg-indigo-800 font-bold py-2 px-4 rounded-xl hover:bg-indigo-100 transition">Nộp Bài Lưu Demo (8.5)</button>
+                        </div>
                     </div>
                 </div>
 
@@ -207,11 +204,14 @@
                         </div>
                         <h3 class="text-xl font-bold text-indigo-900 dark:text-indigo-400 mb-2">Reading Test - Vol 1</h3>
                         <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">Bài đọc học thuật bao gồm các dạng True/False/Not Given.</p>
-                        <button onclick="submitTestResult('Reading Test Vol 1', 7.0)" class="w-full bg-green-50 text-green-700 dark:bg-green-900/50 dark:text-green-300 font-bold py-2 px-4 rounded-xl hover:bg-green-100 transition">Demo: Nộp & Lưu 7.0 Điểm</button>
+                        <div class="flex flex-col gap-2">
+                            <button onclick="startExamTimer(60)" class="w-full bg-[#ff5e00] hover:bg-orange-600 text-white font-bold py-3 px-4 rounded-xl shadow-lg transition">Thi Ngay (60 Phút)</button>
+                            <button onclick="submitTestResult('Reading Test Vol 1', 7.0)" class="w-full bg-green-50 text-green-700 dark:bg-green-900/50 dark:text-green-300 font-bold py-2 px-4 rounded-xl hover:bg-green-100 transition">Nộp Bài Lưu Demo (7.0)</button>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Các tab khác giữ nguyên cấu trúc hiển thị... -->
+                <!-- Các tab khác -->
                 <div id="ielts-content-speaking" class="hidden grid grid-cols-1 gap-6">
                     <p class="text-center text-gray-500 dark:text-gray-400 italic">Dữ liệu bài tập Speaking đang được cập nhật...</p>
                 </div>
@@ -221,7 +221,7 @@
             </div>
         </div>
 
-        <!-- Các trang THPT, Vocab, Courses tương tự (đã ẩn bớt để ngắn gọn) -->
+        <!-- Các trang THPT, Vocab, Courses -->
         <div id="page-thpt" class="page-content">
             <div class="max-w-6xl mx-auto py-12 px-6 reveal">
                 <h2 class="text-4xl font-extrabold text-center text-[#2b3674] dark:text-indigo-300 mb-4">Chiến Thần THPT Quốc Gia</h2>
@@ -256,18 +256,19 @@
                 </a>
                 <!-- Zalo -->
                 <a href="https://zalo.me/84858194454" target="_blank" class="flex items-center text-gray-600 dark:text-gray-400 hover:text-blue-500 font-semibold transition" title="Nhắn tin Zalo">
-                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M21.2 12.3c-.3 4.6-3.8 8.4-8.4 8.7-2 .1-3.9-.5-5.5-1.5L2 21.6l2.1-5.3c-1-1.6-1.6-3.6-1.5-5.6.3-4.6 3.8-8.4 8.4-8.7 5.1-.3 9.4 3.7 9.8 8.8.1.5.2 1 .1 1.5zm-9.3-6.5c-3.6 0-6.5 2.8-6.5 6.3 0 1.2.3 2.4 1 3.4l-1.1 2.8 2.9-1.1c1 .6 2.1 1 3.3 1 3.6 0 6.5-2.8 6.5-6.3s-2.9-6.4-6.5-6.4zm-2.7 6.1c-.2.2-.4.4-.4.7 0 .5.2.9.4 1.2.2.2.5.4.8.4.3 0 .5-.1.8-.4l.7-.7c.2-.2.5-.2.7 0l1.4 1.4c.2.2.2.5 0 .7l-.7.7c-.5.5-1.1.7-1.8.7-2.3 0-4.3-1.9-4.3-4.3 0-.7.2-1.3.7-1.8l.7-.7c.2-.2.5-.2.7 0l1.4 1.4c.2.2.2.5 0 .7l-.7.7c-.2.3-.4.6-.4.9z"/></svg>
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M21.2 12.3c-.3 4.6-3.8 8.4-8.4 8.7-2 .1-3.9-.5-5.5-1.5L2 21.6l2.1-5.3c-1-1.6-1.6-3.6-1.5-5.6.3-4.6 3.8-8.4 8.4-8.7 5.1-.3 9.4 3.7 9.8 8.8.1.5.2 1 .1 1.5zm-9.3-6.5c-3.6 0-6.5 2.8-6.5 6.3 0 1.2.3 2.4 1 3.4l-1.1 2.8 2.9-1.1c1 .6 2.1 1 3.3 1 3.6 0 6.5-2.8 6.5-6.3s-2.9-6.4-6.5-6.4zm-2.7 6.1c-.2.2-.4.4-.4.7 0 .5.2.9.4 1.2.2.2.5.4.8.4.3 0 .5-.1.8-.4l.7-.7c.2-.2.5-.2.7 0l1.4 1.4c.2.2.2.5 0 .7l-.7.7c-.2.3-.4.6-.4.9z"/></svg>
                     Zalo: Lê Bình Minh
-                </a>
-                <!-- Hotline -->
-                <a href="tel:0858194454" class="flex items-center text-gray-600 dark:text-gray-400 hover:text-red-500 font-semibold transition" title="Gọi Hotline">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                    Hotline: 0858194454
                 </a>
             </div>
         </div>
     </footer>
 
+    <!-- Đồng Hồ Đếm Giờ Nổi Bật -->
+    <div id="exam-timer" class="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-50 hidden bg-red-600 text-white font-extrabold text-4xl px-8 py-4 rounded-2xl shadow-[0_0_25px_rgba(220,38,38,0.7)] border-4 border-white dark:border-slate-800 transition-all duration-300 select-none">
+        00:00
+    </div>
+
+    <!-- UI Components -->
     <div id="toast-container" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2"></div>
 
     <div id="auth-modal" class="fixed inset-0 bg-black bg-opacity-50 modal-overlay hidden z-[100] flex items-center justify-center">
@@ -304,197 +305,65 @@
             <h2 class="text-2xl font-extrabold text-[#2b3674] dark:text-indigo-300 mb-6 border-b pb-2 dark:border-slate-700">Lịch Sử Luyện Thi</h2>
             
             <div class="overflow-y-auto flex-grow" id="progress-list-container">
-                <!-- Danh sách tiến trình sẽ được chèn bằng JS -->
                 <p class="text-center text-gray-500 my-4">Đang tải dữ liệu...</p>
             </div>
         </div>
     </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, collection, addDoc, query, onSnapshot, serverTimestamp, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        // 1. KẾT NỐI MÔI TRƯỜNG FIREBASE AN TOÀN
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'kel-test-app';
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
-        
-        let app, db, auth, globalUser = null;
-
-        if (Object.keys(firebaseConfig).length > 0) {
-            app = initializeApp(firebaseConfig);
-            db = getFirestore(app);
-            auth = getAuth(app);
-            
-            // Hàm khởi tạo Auth nền tảng
-            async function setupFirebase() {
-                try {
-                    if (typeof __initial_auth_token !== 'undefined') {
-                        await signInWithCustomToken(auth, __initial_auth_token);
-                    } else {
-                        await signInAnonymously(auth);
-                    }
-                } catch(e) { console.error("Setup Auth Error:", e); }
-            }
-            setupFirebase();
-
-            // Lắng nghe thay đổi trạng thái đăng nhập
-            onAuthStateChanged(auth, (user) => {
-                globalUser = user;
-                if (user && !user.isAnonymous) {
-                    // Đã đăng nhập
-                    document.getElementById('btn-login-header').classList.add('hidden');
-                    document.getElementById('user-profile').classList.remove('hidden');
-                    
-                    // Kiểm tra an toàn xem user có email không để tránh lỗi 'split' of null
-                    const emailDisplay = user.email ? user.email : 'Tài khoản KEL';
-                    const nameDisplay = user.email ? user.email.split('@')[0] : 'bạn';
-                    
-                    document.getElementById('user-email-display').innerText = emailDisplay;
-                    closeModals();
-                    showToast("Xin chào, " + nameDisplay + "!", 'success');
-                } else {
-                    // Chế độ ẩn danh (Chưa login)
-                    document.getElementById('btn-login-header').classList.remove('hidden');
-                    document.getElementById('user-profile').classList.add('hidden');
-                }
-            });
-        }
-
-        // --- CÁC HÀM XỬ LÝ AUTH UI ---
-        let isLoginMode = true;
-        
-        window.toggleAuthMode = function() {
-            isLoginMode = !isLoginMode;
-            document.getElementById('auth-title').innerText = isLoginMode ? 'Đăng Nhập' : 'Đăng Ký Tài Khoản';
-            document.getElementById('auth-submit-btn').innerText = isLoginMode ? 'Đăng Nhập' : 'Tạo Tài Khoản';
-            document.getElementById('auth-switch-text').innerText = isLoginMode ? 'Chưa có tài khoản?' : 'Đã có tài khoản?';
-            document.getElementById('auth-switch-btn').innerText = isLoginMode ? 'Đăng ký ngay' : 'Đăng nhập';
-        }
-
-        window.handleAuth = async function(e) {
-            e.preventDefault();
-            if (!auth) return showToast("Lỗi kết nối máy chủ!", 'error');
-            
-            const email = document.getElementById('auth-email').value;
-            const pass = document.getElementById('auth-password').value;
-            
-            try {
-                if (isLoginMode) {
-                    await signInWithEmailAndPassword(auth, email, pass);
-                } else {
-                    await createUserWithEmailAndPassword(auth, email, pass);
-                }
-            } catch (error) {
-                console.error("Auth error:", error);
-                let msg = "Đã xảy ra lỗi!";
-                if (error.code === 'auth/email-already-in-use') msg = "Email này đã được sử dụng!";
-                if (error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') msg = "Sai mật khẩu hoặc email!";
-                if (error.code === 'auth/weak-password') msg = "Mật khẩu quá yếu!";
-                showToast(msg, 'error');
-            }
-        }
-
-        window.logoutUser = async function() {
-            if (auth) {
-                await signOut(auth);
-                showToast("Đã đăng xuất!", 'success');
-                // Tự động đăng nhập ẩn danh lại để bảo vệ database rules
-                if (typeof __initial_auth_token !== 'undefined') {
-                    signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    signInAnonymously(auth);
-                }
-            }
-        }
-
-        // --- CÁC HÀM XỬ LÝ DATABASE (TIẾN TRÌNH) ---
-        
-        // Hàm Demo nộp điểm (được gắn vào nút trong giao diện)
-        window.submitTestResult = async function(testName, score) {
-            if (!globalUser || globalUser.isAnonymous) {
-                showToast("Vui lòng đăng nhập để lưu kết quả!", 'error');
-                openLoginModal();
-                return;
-            }
-            
-            try {
-                // RULE 1: Lưu vào collection cá nhân của user
-                const progressRef = collection(db, 'artifacts', appId, 'users', globalUser.uid, 'progress');
-                await addDoc(progressRef, {
-                    testName: testName,
-                    score: score,
-                    timestamp: serverTimestamp(),
-                    dateStr: new Date().toLocaleDateString('vi-VN')
-                });
-                showToast(`Tuyệt vời! Đã lưu kết quả ${score} điểm cho ${testName}.`, 'success');
-            } catch (error) {
-                console.error("Lỗi khi lưu điểm:", error);
-                showToast("Không thể lưu kết quả lúc này.", 'error');
-            }
-        }
-
-        window.showProgressModal = async function() {
-            document.getElementById('progress-modal').classList.remove('hidden');
-            const container = document.getElementById('progress-list-container');
-            container.innerHTML = '<p class="text-center text-gray-500 my-4">Đang tải dữ liệu...</p>';
-            
-            if (!globalUser || !db) return;
-
-            try {
-                // RULE 2: Truy vấn cơ bản, không dùng compound queries phức tạp
-                const progressRef = collection(db, 'artifacts', appId, 'users', globalUser.uid, 'progress');
-                const querySnapshot = await getDocs(progressRef);
-                
-                let historyHTML = '<ul class="divide-y divide-gray-200 dark:divide-slate-700">';
-                let count = 0;
-                
-                querySnapshot.forEach((docSnap) => {
-                    count++;
-                    const data = docSnap.data();
-                    historyHTML += `
-                        <li class="py-4 flex justify-between items-center">
-                            <div>
-                                <h4 class="text-lg font-bold text-gray-800 dark:text-gray-200">${data.testName}</h4>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">Ngày làm: ${data.dateStr || 'Gần đây'}</p>
-                            </div>
-                            <div class="bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 font-extrabold px-4 py-2 rounded-lg">
-                                ${data.score}
-                            </div>
-                        </li>
-                    `;
-                });
-                historyHTML += '</ul>';
-                
-                if (count === 0) {
-                    container.innerHTML = '<p class="text-center text-gray-500 my-8">Bạn chưa hoàn thành bài thi nào. Hãy bắt đầu ngay nhé!</p>';
-                } else {
-                    container.innerHTML = historyHTML;
-                }
-
-            } catch (error) {
-                console.error("Lỗi tải lịch sử:", error);
-                container.innerHTML = '<p class="text-center text-red-500 my-4">Không thể tải dữ liệu.</p>';
-            }
-        }
-    </script>
-
+    <!-- Script Chức năng UI và Đếm giờ -->
     <script>
-        // Hàm Toast Message thay thế alert()
+        // --- CHỨC NĂNG ĐẾM GIỜ ---
+        let examTimerInterval;
+        function startExamTimer(minutes) {
+            const timerEl = document.getElementById('exam-timer');
+            timerEl.classList.remove('hidden', 'animate-pulse');
+            timerEl.classList.add('bg-red-600');
+            
+            let time = minutes * 60;
+            
+            clearInterval(examTimerInterval);
+            updateTimerDisplay(timerEl, time);
+            showToast(`Bắt đầu tính giờ làm bài (${minutes} phút)!`, "success");
+
+            examTimerInterval = setInterval(() => {
+                time--;
+                updateTimerDisplay(timerEl, time);
+                
+                // Nhấp nháy cảnh báo 5 phút cuối
+                if (time === 300) {
+                    timerEl.classList.add('animate-pulse');
+                    showToast("Chú ý: Chỉ còn 5 phút làm bài!", "error");
+                }
+                
+                if (time <= 0) {
+                    clearInterval(examTimerInterval);
+                    timerEl.classList.add('hidden');
+                    timerEl.classList.remove('animate-pulse');
+                    showToast("Đã hết thời gian làm bài! Hệ thống tự động thu bài.", "error");
+                    // Có thể gọi hàm tự động nộp bài ở đây
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay(el, timeInSeconds) {
+            let m = Math.floor(timeInSeconds / 60);
+            let s = timeInSeconds % 60;
+            el.innerText = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        }
+
+
+        // Hàm Toast Message
         function showToast(message, type = 'success') {
             const toast = document.createElement('div');
             toast.className = `px-4 py-3 rounded-lg shadow-lg text-white font-bold ${type === 'success' ? 'bg-green-500' : 'bg-red-500'} transition-all duration-300 transform translate-y-10 opacity-0`;
             toast.innerText = message;
             document.getElementById('toast-container').appendChild(toast);
             
-            // Animate In
             setTimeout(() => { toast.classList.remove('translate-y-10', 'opacity-0'); }, 10);
-            
-            // Animate Out & Remove
             setTimeout(() => {
                 toast.classList.add('opacity-0', 'translate-y-2');
                 setTimeout(() => toast.remove(), 300);
-            }, 3000);
+            }, 4000);
         }
 
         // Xử lý Modals
@@ -510,17 +379,15 @@
             html.classList.toggle('dark');
             const isDark = html.classList.contains('dark');
             document.getElementById('theme-icon').innerText = isDark ? '☀️' : '🌙';
-            // Lưu trạng thái
             try { localStorage.setItem('theme', isDark ? 'dark' : 'light'); } catch(e){}
         }
 
-        // Tự động set Dark Mode nếu máy tính user đang ở Dark Mode
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
             document.documentElement.classList.add('dark');
             document.getElementById('theme-icon').innerText = '☀️';
         }
 
-        // SPA Navigation (Đã cải tiến từ phiên bản trước)
+        // SPA Navigation
         function showPage(pageId, tabId = 'listening') {
             document.querySelectorAll('.page-content').forEach(page => page.classList.remove('active'));
             document.querySelectorAll('.nav-link').forEach(link => {
@@ -531,11 +398,9 @@
             if (targetPage) {
                 targetPage.classList.add('active');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
-                // Kích hoạt lại animation scroll reveal cho trang mới
                 setTimeout(initScrollReveal, 100);
             }
 
-            // Highlight link
             document.querySelectorAll('.nav-link').forEach(link => {
                 if (link.getAttribute('onclick') && link.getAttribute('onclick').includes(`showPage('${pageId}'`)) {
                     link.classList.add('bg-[#e9e3ff]', 'dark:bg-slate-700', 'text-[#ff5e00]');
@@ -567,21 +432,17 @@
             });
         }
 
-        // Hiệu ứng Scroll Reveal (Trượt hiển thị phần tử khi cuộn trang)
         function initScrollReveal() {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('active');
-                        // Tùy chọn: observer.unobserve(entry.target) nếu chỉ muốn chạy 1 lần
                     }
                 });
             }, { threshold: 0.1 });
-
             document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         }
 
-        // Khởi tạo ban đầu
         document.getElementById('mobile-menu-btn').addEventListener('click', () => {
             document.getElementById('nav-menu').classList.toggle('hidden');
         });
@@ -591,49 +452,132 @@
             initScrollReveal();
         });
     </script>
-<script type="module">
-    // 1. Import các thư viện cốt lõi từ Firebase
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-    import { getFirestore } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-    // 2. Cấu hình Firebase của bạn (Đã lấy từ ảnh chụp màn hình của bạn)
-    const firebaseConfig = {
-        apiKey: "AIzaSyALmotmcPgFYE6A1zxi312X95Lh7OqMRBc",
-        authDomain: "trang-web-kel.firebaseapp.com",
-        projectId: "trang-web-kel",
-        storageBucket: "trang-web-kel.firebasestorage.app",
-        messagingSenderId: "110649887157",
-        appId: "1:110649887157:web:148535e19a1e00057131fc",
-        measurementId: "G-PDVQ2S2GY1"
-    };
+    <!-- SCRIPT FIREBASE ĐÃ ĐƯỢC GỘP CHUẨN XÁC VÀ DUY NHẤT -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, serverTimestamp, getDocs } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-    // 3. Khởi tạo ứng dụng
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
+        const firebaseConfig = {
+            apiKey: "AIzaSyALmotmcPgFYE6A1zxi312X95Lh7OqMRBc",
+            authDomain: "trang-web-kel.firebaseapp.com",
+            projectId: "trang-web-kel",
+            storageBucket: "trang-web-kel.firebasestorage.app",
+            messagingSenderId: "110649887157",
+            appId: "1:110649887157:web:148535e19a1e00057131fc",
+            measurementId: "G-PDVQ2S2GY1"
+        };
 
-    // 4. Lắng nghe trạng thái đăng nhập của học viên
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            console.log("Trạng thái: Đã đăng nhập với email", user.email);
-            // Ẩn nút đăng nhập và hiện Avatar học viên
-            document.getElementById('btn-login-header').classList.add('hidden');
-            document.getElementById('user-profile').classList.remove('hidden');
-            document.getElementById('user-email-display').innerText = user.email;
-        } else {
-            console.log("Trạng thái: Chưa đăng nhập");
-            // Hiện lại nút đăng nhập
-            document.getElementById('btn-login-header').classList.remove('hidden');
-            document.getElementById('user-profile').classList.add('hidden');
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        let globalUser = null;
+
+        // Lắng nghe đăng nhập
+        onAuthStateChanged(auth, (user) => {
+            globalUser = user;
+            if (user) {
+                document.getElementById('btn-login-header').classList.add('hidden');
+                document.getElementById('user-profile').classList.remove('hidden');
+                document.getElementById('user-email-display').innerText = user.email;
+                closeModals();
+                showToast("Đăng nhập thành công!", 'success');
+            } else {
+                document.getElementById('btn-login-header').classList.remove('hidden');
+                document.getElementById('user-profile').classList.add('hidden');
+            }
+        });
+
+        // Xử lý Auth Form
+        let isLoginMode = true;
+        window.toggleAuthMode = function() {
+            isLoginMode = !isLoginMode;
+            document.getElementById('auth-title').innerText = isLoginMode ? 'Đăng Nhập' : 'Đăng Ký Tài Khoản';
+            document.getElementById('auth-submit-btn').innerText = isLoginMode ? 'Đăng Nhập' : 'Tạo Tài Khoản';
+            document.getElementById('auth-switch-text').innerText = isLoginMode ? 'Chưa có tài khoản?' : 'Đã có tài khoản?';
+            document.getElementById('auth-switch-btn').innerText = isLoginMode ? 'Đăng ký ngay' : 'Đăng nhập';
         }
-    });
 
-    // Xuất các biến ra window để dùng ở các hàm JS thông thường (như nút bấm onclick)
-    window.auth = auth;
-    window.signInWithEmailAndPassword = signInWithEmailAndPassword;
-    window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
-    window.signOut = signOut;
-</script>
+        window.handleAuth = async function(e) {
+            e.preventDefault();
+            const email = document.getElementById('auth-email').value;
+            const pass = document.getElementById('auth-password').value;
+            try {
+                if (isLoginMode) {
+                    await signInWithEmailAndPassword(auth, email, pass);
+                } else {
+                    await createUserWithEmailAndPassword(auth, email, pass);
+                    showToast("Tạo tài khoản thành công!", 'success');
+                }
+            } catch (error) {
+                let msg = "Đã xảy ra lỗi: " + error.message;
+                if (error.code === 'auth/email-already-in-use') msg = "Email này đã được sử dụng!";
+                if (error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') msg = "Sai mật khẩu hoặc email!";
+                showToast(msg, 'error');
+            }
+        }
+
+        window.logoutUser = async function() {
+            await signOut(auth);
+            showToast("Đã đăng xuất!", 'success');
+        }
+
+        // Xử lý Firestore (Lưu điểm Demo)
+        window.submitTestResult = async function(testName, score) {
+            if (!globalUser) {
+                showToast("Vui lòng đăng nhập để lưu kết quả!", 'error');
+                openLoginModal();
+                return;
+            }
+            try {
+                const progressRef = collection(db, 'users', globalUser.uid, 'progress');
+                await addDoc(progressRef, {
+                    testName: testName,
+                    score: score,
+                    timestamp: serverTimestamp(),
+                    dateStr: new Date().toLocaleDateString('vi-VN')
+                });
+                showToast(`Đã lưu kết quả ${score} điểm cho ${testName}.`, 'success');
+            } catch (error) {
+                showToast("Không thể lưu kết quả. Vui lòng kiểm tra quyền Firestore Rules.", 'error');
+                console.error(error);
+            }
+        }
+
+        window.showProgressModal = async function() {
+            document.getElementById('progress-modal').classList.remove('hidden');
+            const container = document.getElementById('progress-list-container');
+            container.innerHTML = '<p class="text-center text-gray-500 my-4">Đang tải dữ liệu...</p>';
+            
+            if (!globalUser) return;
+            try {
+                const progressRef = collection(db, 'users', globalUser.uid, 'progress');
+                const querySnapshot = await getDocs(progressRef);
+                let historyHTML = '<ul class="divide-y divide-gray-200 dark:divide-slate-700">';
+                let count = 0;
+                
+                querySnapshot.forEach((docSnap) => {
+                    count++;
+                    const data = docSnap.data();
+                    historyHTML += `
+                        <li class="py-4 flex justify-between items-center">
+                            <div>
+                                <h4 class="text-lg font-bold text-gray-800 dark:text-gray-200">${data.testName}</h4>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">Ngày làm: ${data.dateStr}</p>
+                            </div>
+                            <div class="bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 font-extrabold px-4 py-2 rounded-lg">
+                                ${data.score}
+                            </div>
+                        </li>
+                    `;
+                });
+                historyHTML += '</ul>';
+                container.innerHTML = count === 0 ? '<p class="text-center text-gray-500 my-8">Bạn chưa hoàn thành bài thi nào.</p>' : historyHTML;
+            } catch (error) {
+                container.innerHTML = '<p class="text-center text-red-500 my-4">Không thể tải dữ liệu (Chưa cấp quyền Firestore Rules).</p>';
+            }
+        }
+    </script>
 </body>
 </html>
