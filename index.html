@@ -591,5 +591,49 @@
             initScrollReveal();
         });
     </script>
+<script type="module">
+    // 1. Import các thư viện cốt lõi từ Firebase
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+    import { getFirestore } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+    // 2. Cấu hình Firebase của bạn (Đã lấy từ ảnh chụp màn hình của bạn)
+    const firebaseConfig = {
+        apiKey: "AIzaSyALmotmcPgFYE6A1zxi312X95Lh7OqMRBc",
+        authDomain: "trang-web-kel.firebaseapp.com",
+        projectId: "trang-web-kel",
+        storageBucket: "trang-web-kel.firebasestorage.app",
+        messagingSenderId: "110649887157",
+        appId: "1:110649887157:web:148535e19a1e00057131fc",
+        measurementId: "G-PDVQ2S2GY1"
+    };
+
+    // 3. Khởi tạo ứng dụng
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // 4. Lắng nghe trạng thái đăng nhập của học viên
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            console.log("Trạng thái: Đã đăng nhập với email", user.email);
+            // Ẩn nút đăng nhập và hiện Avatar học viên
+            document.getElementById('btn-login-header').classList.add('hidden');
+            document.getElementById('user-profile').classList.remove('hidden');
+            document.getElementById('user-email-display').innerText = user.email;
+        } else {
+            console.log("Trạng thái: Chưa đăng nhập");
+            // Hiện lại nút đăng nhập
+            document.getElementById('btn-login-header').classList.remove('hidden');
+            document.getElementById('user-profile').classList.add('hidden');
+        }
+    });
+
+    // Xuất các biến ra window để dùng ở các hàm JS thông thường (như nút bấm onclick)
+    window.auth = auth;
+    window.signInWithEmailAndPassword = signInWithEmailAndPassword;
+    window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
+    window.signOut = signOut;
+</script>
 </body>
 </html>
