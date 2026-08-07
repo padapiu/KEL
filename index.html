@@ -83,7 +83,6 @@
             transition: opacity 0.3s ease;
         }
         
-        /* Custom scrollbar cho khung đề thi */
         .custom-scroll::-webkit-scrollbar { width: 8px; }
         .custom-scroll::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
         .custom-scroll::-webkit-scrollbar-thumb { background: #c7c7c7; border-radius: 10px; }
@@ -115,7 +114,6 @@
                 
                 <button id="btn-login-header" onclick="openLoginModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-full transition-transform hover:scale-105 shadow-md">Đăng Nhập</button>
                 
-                <!-- Profile Học Viên Dropdown -->
                 <div id="user-profile" class="hidden relative group cursor-pointer flex items-center gap-2">
                     <div class="flex items-center gap-2">
                         <span class="text-xl">🔔</span>
@@ -158,12 +156,76 @@
 
     <main class="flex-grow">
         
-        <!-- TRANG CHỦ -->
         <div id="page-home" class="page-content active">
             <section class="hero-gradient text-white text-center py-20 px-6 rounded-[30px] mx-4 md:mx-12 my-8 shadow-lg reveal">
                 <h1 class="text-4xl md:text-5xl font-extrabold mb-4 drop-shadow-md">Chỉ cần 1 click - KEL sẽ giúp bạn đạt AIM</h1>
                 <p class="text-lg md:text-xl mb-8 opacity-90 max-w-2xl mx-auto">Khám phá lộ trình chinh phục IELTS và THPTQG được cá nhân hóa dành riêng cho bạn!</p>
                 <button onclick="showPage('courses')" class="btn-primary bg-[#ff5e00] text-white font-extrabold text-xl py-3 px-8 rounded-full">Lét Gô!</button>
+            </section>
+
+            <section class="px-6 mx-4 md:mx-12 my-8 grid grid-cols-1 xl:grid-cols-12 gap-8 reveal">
+                <div class="xl:col-span-4 bg-white dark:bg-darkCard p-6 rounded-[30px] shadow-sm border border-gray-100 dark:border-slate-700">
+                    <h3 class="text-2xl font-bold text-[#2b3674] dark:text-indigo-300 mb-4 flex items-center gap-2">
+                        <span>🎯</span> Mục Tiêu IELTS
+                    </h3>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Nhập điểm dự kiến các kỹ năng để tính Overall.</p>
+                    
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-600 dark:text-gray-400 mb-1">Listening</label>
+                            <input type="number" id="calc-l" step="0.5" min="0" max="9" placeholder="0 - 9" class="w-full bg-gray-50 border border-gray-200 text-gray-800 text-sm rounded-xl focus:ring-indigo-500 focus:border-indigo-500 block px-3 py-2 dark:bg-slate-700 dark:border-slate-600 dark:placeholder-gray-400 dark:text-white" oninput="calculateIELTS()">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-600 dark:text-gray-400 mb-1">Reading</label>
+                            <input type="number" id="calc-r" step="0.5" min="0" max="9" placeholder="0 - 9" class="w-full bg-gray-50 border border-gray-200 text-gray-800 text-sm rounded-xl focus:ring-indigo-500 focus:border-indigo-500 block px-3 py-2 dark:bg-slate-700 dark:border-slate-600 dark:placeholder-gray-400 dark:text-white" oninput="calculateIELTS()">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-600 dark:text-gray-400 mb-1">Writing</label>
+                            <input type="number" id="calc-w" step="0.5" min="0" max="9" placeholder="0 - 9" class="w-full bg-gray-50 border border-gray-200 text-gray-800 text-sm rounded-xl focus:ring-indigo-500 focus:border-indigo-500 block px-3 py-2 dark:bg-slate-700 dark:border-slate-600 dark:placeholder-gray-400 dark:text-white" oninput="calculateIELTS()">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-600 dark:text-gray-400 mb-1">Speaking</label>
+                            <input type="number" id="calc-s" step="0.5" min="0" max="9" placeholder="0 - 9" class="w-full bg-gray-50 border border-gray-200 text-gray-800 text-sm rounded-xl focus:ring-indigo-500 focus:border-indigo-500 block px-3 py-2 dark:bg-slate-700 dark:border-slate-600 dark:placeholder-gray-400 dark:text-white" oninput="calculateIELTS()">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4 pt-4 border-t border-gray-100 dark:border-slate-700 flex justify-between items-center">
+                        <label class="text-sm font-bold text-gray-700 dark:text-gray-300">Mục tiêu bạn muốn đạt:</label>
+                        <input type="number" id="calc-target" step="0.5" min="0" max="9" placeholder="Target" class="w-20 bg-indigo-50 border border-indigo-200 text-indigo-800 font-bold text-sm rounded-xl focus:ring-indigo-500 focus:border-indigo-500 block px-2 py-1 text-center dark:bg-indigo-900/50 dark:border-indigo-700 dark:text-indigo-200" oninput="calculateIELTS()">
+                    </div>
+
+                    <div class="bg-indigo-600 text-white p-4 rounded-2xl text-center shadow-md">
+                        <p class="text-sm opacity-80 mb-1">Overall Band Score</p>
+                        <p class="text-4xl font-black drop-shadow-sm" id="calc-result">0.0</p>
+                        <p id="calc-status" class="text-xs font-bold mt-2 h-4"></p>
+                    </div>
+                </div>
+
+                <div class="xl:col-span-8 bg-white dark:bg-darkCard p-6 rounded-[30px] shadow-sm border border-gray-100 dark:border-slate-700 flex flex-col">
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <h3 class="text-2xl font-bold text-[#2b3674] dark:text-indigo-300 flex items-center gap-2">
+                                <span>🔥</span> Lịch Học Tập (Streak)
+                            </h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Các ô xanh thể hiện những ngày bạn đã hoàn thành bài thi.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex-grow flex items-center w-full overflow-hidden">
+                        <div id="streak-calendar-container" class="w-full">
+                            <p class="text-gray-400 text-sm text-center italic">Đang tải lịch học tập...</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex gap-4 text-xs text-gray-500 dark:text-gray-400 items-center justify-end">
+                        <span>Lười học</span>
+                        <div class="flex gap-1">
+                            <div class="w-4 h-4 rounded-sm bg-gray-200 dark:bg-slate-700"></div>
+                            <div class="w-4 h-4 rounded-sm bg-green-300"></div>
+                            <div class="w-4 h-4 rounded-sm bg-green-500"></div>
+                        </div>
+                        <span>Chăm chỉ</span>
+                    </div>
+                </div>
             </section>
 
             <section class="py-12 px-6 text-center reveal">
@@ -205,13 +267,11 @@
             </section>
         </div>
 
-        <!-- TRANG IELTS -->
         <div id="page-ielts" class="page-content">
             <div class="max-w-6xl mx-auto py-12 px-6 reveal">
                 <h2 class="text-4xl font-extrabold text-center text-[#2b3674] dark:text-indigo-300 mb-4">Kho Đề Thi IELTS đa dạng</h2>
                 <p class="text-center text-gray-600 dark:text-gray-400 mb-10 text-lg">Giao diện chuẩn như thi IELTS trên máy</p>
 
-                <!-- Thanh Điều Hướng Kỹ Năng -->
                 <div class="flex flex-wrap justify-center gap-3 mb-12">
                     <button id="ielts-btn-listening" onclick="showIeltsTab('listening')" class="px-6 py-2 rounded-full font-bold transition shadow-md bg-indigo-600 text-white">🎧 Listening</button>
                     <button id="ielts-btn-reading" onclick="showIeltsTab('reading')" class="px-6 py-2 rounded-full font-bold transition bg-gray-100 text-gray-600 dark:bg-slate-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-600">📖 Reading</button>
@@ -254,7 +314,6 @@
             </div>
         </div>
 
-        <!-- TRANG THPT QG -->
         <div id="page-thpt" class="page-content">
             <div class="max-w-6xl mx-auto py-8 px-4 sm:px-6 reveal" id="thpt-dashboard">
                 <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
@@ -264,7 +323,6 @@
                     </div>
                 </div>
 
-                <!-- Danh sách Đề Thi -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="bg-white dark:bg-darkCard rounded-2xl p-6 shadow-md border-l-4 border-orange-500 flex flex-col justify-between">
                         <div>
@@ -280,9 +338,7 @@
                 </div>
             </div>
 
-            <!-- KHUNG LÀM BÀI THI THPT (Ẩn mặc định) -->
             <div id="thpt-exam-room" class="hidden max-w-5xl mx-auto py-6 px-4">
-                <!-- Thanh công cụ làm bài -->
                 <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-4 mb-6 sticky top-24 z-40 border border-gray-200 dark:border-slate-700 flex flex-wrap justify-between items-center gap-4">
                     <div>
                         <h3 class="font-bold text-lg text-gray-800 dark:text-white">Đề Minh Họa Số 2</h3>
@@ -297,26 +353,20 @@
                     </div>
                 </div>
 
-                <!-- Cấu trúc Câu hỏi và Khung điều hướng -->
                 <div class="flex flex-col lg:flex-row gap-6">
-                    <!-- Danh sách câu hỏi -->
                     <div class="lg:w-3/4 space-y-6" id="thpt-questions-container">
-                        <!-- JS sẽ render câu hỏi vào đây -->
                     </div>
 
-                    <!-- Bảng điều hướng nhanh -->
                     <div class="lg:w-1/4">
                         <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-md p-6 sticky top-48 border border-gray-100 dark:border-slate-700">
                             <h4 class="font-bold mb-4 text-center dark:text-white border-b pb-2 dark:border-slate-700">Bảng Câu Hỏi</h4>
                             <div class="grid grid-cols-5 gap-2" id="thpt-navigator">
-                                <!-- JS sẽ render ô số vào đây -->
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- KHUNG XEM ĐÁP ÁN (Ẩn mặc định) -->
             <div id="thpt-result-room" class="hidden max-w-4xl mx-auto py-8 px-4">
                 <div class="bg-white dark:bg-slate-800 rounded-3xl p-8 shadow-xl text-center mb-8 border border-gray-100 dark:border-slate-700">
                     <div class="text-6xl mb-4">🏆</div>
@@ -341,7 +391,6 @@
                 <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-6 border border-gray-100 dark:border-slate-700">
                     <h3 class="text-2xl font-bold text-indigo-700 dark:text-indigo-400 mb-6 border-b pb-4 dark:border-slate-700">Đáp Án & Giải Thích Chi Tiết</h3>
                     <div class="space-y-8" id="thpt-explanations-container">
-                        <!-- JS sẽ render đáp án vào đây -->
                     </div>
                 </div>
             </div>
@@ -382,7 +431,6 @@
 
     <div id="toast-container" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
-    <!-- Modal Form Đăng nhập / Đăng ký -->
     <div id="auth-modal" class="fixed inset-0 bg-black bg-opacity-50 modal-overlay hidden z-[100] flex items-center justify-center">
         <div class="bg-white dark:bg-darkCard w-full max-w-md p-8 rounded-2xl shadow-2xl relative">
             <button onclick="closeModals()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white">
@@ -409,7 +457,6 @@
         </div>
     </div>
 
-    <!-- Modal Tiến trình học tập -->
     <div id="progress-modal" class="fixed inset-0 bg-black bg-opacity-50 modal-overlay hidden z-[100] flex items-center justify-center">
         <div class="bg-white dark:bg-darkCard w-full max-w-2xl p-8 rounded-2xl shadow-2xl relative max-h-[80vh] flex flex-col">
             <button onclick="closeModals()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white">
@@ -424,7 +471,6 @@
     </div>
 
     <script>
-        // --- Hàm Toast Message ---
         function showToast(message, type = 'success') {
             const toast = document.createElement('div');
             toast.className = `px-4 py-3 rounded-lg shadow-lg text-white font-bold pointer-events-auto ${type === 'success' ? 'bg-green-500' : type === 'warning' ? 'bg-orange-500' : 'bg-red-500'} transition-all duration-300 transform translate-y-10 opacity-0`;
@@ -444,7 +490,6 @@
             document.getElementById('progress-modal').classList.add('hidden');
         }
 
-        // --- Chế độ Sáng / Tối ---
         function toggleDarkMode() {
             const html = document.documentElement;
             html.classList.toggle('dark');
@@ -458,7 +503,6 @@
             document.getElementById('theme-icon').innerText = '☀️';
         }
 
-        // --- SPA Navigation ---
         function showPage(pageId, tabId = 'listening') {
             document.querySelectorAll('.page-content').forEach(page => page.classList.remove('active'));
             document.querySelectorAll('.nav-link').forEach(link => {
@@ -525,10 +569,6 @@
     </script>
 
     <script>
-        // =========================================================================
-        // HỆ THỐNG ĐỀ THI THPT QUỐC GIA (ĐỀ MINH HỌA SỐ 2)
-        // =========================================================================
-
         const clozePassage = `The rise of digital technology has profoundly impacted education. In recent years, traditional classrooms have been supplemented by online learning platforms, (25) ______ provide students with greater flexibility. Online courses allow learners to access materials at their own pace, making education more accessible to those with busy schedules. (26) ______, this shift also presents challenges. Some students struggle with time management and lack the discipline needed for self-study. Moreover, the absence of face-to-face interaction can lead to feelings of isolation. To address these issues, many educators are adopting a blended learning approach. This method combines online resources (27) ______ traditional classroom instruction. By blending the two, schools can offer the benefits of digital tools while maintaining the personal connection that is (28) ______ for effective learning. Ultimately, (29) ______ technology continues to evolve, education systems must adapt to ensure that all students can succeed.`;
 
         const readingPassage1 = `Sleep is a vital process that affects our physical and mental health. Despite its importance, many adults do not get the recommended seven to eight hours of sleep per night. The consequences of sleep deprivation are numerous, ranging from decreased concentration and memory issues to a weakened immune system.\n\nOne of the main culprits behind modern sleep problems is the excessive use of electronic devices before bedtime. The blue light emitted by smartphones and tablets interferes with the production of melatonin, a hormone that regulates the sleep-wake cycle. Consequently, people find it harder to fall asleep and experience poorer sleep quality.\n\nTo improve sleep hygiene, experts suggest establishing a regular bedtime routine. This includes going to bed and waking up at the same time every day, even on weekends. Additionally, creating a relaxing pre-sleep ritual, such as reading a book or taking a warm bath, can signal to the body that it is time to wind down. Keeping the bedroom dark, quiet, and cool also promotes better rest. By prioritizing sleep, individuals can significantly enhance their overall well-being and daily performance.`;
@@ -572,7 +612,7 @@
             { id: 34, passage: readingPassage1, group: "Phần Đọc hiểu 1", q: "According to the passage, maintaining a regular bedtime schedule ______.", opts: ["A. should only be done on weekdays", "B. is a key part of improving sleep hygiene", "C. is less effective than using electronic devices", "D. causes more stress and anxiety"], ans: 1, exp: "Duy trì lịch ngủ đều đặn là một phần quan trọng để cải thiện giấc ngủ" },
             { id: 35, passage: readingPassage1, group: "Phần Đọc hiểu 1", q: "The word \"it\" in paragraph 3 refers to ______.", opts: ["A. the body", "B. a book", "C. the pre-sleep ritual", "D. going to bed"], ans: 0, exp: "Đại từ \"it\" thay thế cho \"the body\" - cơ thể" },
             { id: 36, passage: readingPassage2, group: "Phần Đọc hiểu 2", q: "What is the primary focus of the passage?", opts: ["A. The history of fossil fuels.", "B. The advantages and challenges of renewable energy.", "C. How to build offshore wind farms.", "D. The cost of upgrading the electrical grid."], ans: 1, exp: "Đoạn văn tập trung vào lợi ích và thách thức của năng lượng tái tạo" },
-            { id: 37, passage: readingPassage2, group: "Phần Đọc hiểu 2", q: "Why is renewable energy considered better for the environment than fossil fuels?", opts: ["A. It produces more greenhouse gases.", "B. It is more expensive to produce.", "C. It generates electricity with minimal emissions.", "D. It requires burning natural resources."], ans: 2, exp: "Nó tạo ra điện với lượng khí thải tối thiểu" },
+            { id: 37, passage: readingPassage2, group: "Phần Đọc hiểu 2", q: "Why is renewable energy considered better for the environment than fossil fuels?", opts: ["A. It produces more greenhouse gases.", "B. It is more expensive to produce.", "C. It generates electricity with little to no emissions.", "D. It requires burning natural resources."], ans: 2, exp: "Nó tạo ra điện với lượng khí thải tối thiểu" },
             { id: 38, passage: readingPassage2, group: "Phần Đọc hiểu 2", q: "The word \"plummeted\" in paragraph 2 means ______.", opts: ["A. increased sharply", "B. remained stable", "C. decreased significantly", "D. fluctuated randomly"], ans: 2, exp: "plummeted = giảm mạnh" },
             { id: 39, passage: readingPassage2, group: "Phần Đọc hiểu 2", q: "How has battery storage technology improved solar energy?", opts: ["A. By making solar panels larger.", "B. By allowing excess energy to be saved for later use.", "C. By generating more sunlight.", "D. By reducing the cost of installation."], ans: 1, exp: "Công nghệ pin lưu trữ giúp lưu lại năng lượng dư thừa để dùng sau" },
             { id: 40, passage: readingPassage2, group: "Phần Đọc hiểu 2", q: "According to paragraph 3, offshore wind farms are advantageous because ______.", opts: ["A. they are cheap to build", "B. they do not require any planning", "C. ocean winds are stronger and more consistent", "D. they are located far away from the coast"], ans: 2, exp: "Gió ngoài khơi mạnh và ổn định hơn so với trên đất liền" }
@@ -586,7 +626,6 @@
             document.getElementById('thpt-exam-room').classList.remove('hidden');
             document.getElementById('thpt-result-room').classList.add('hidden');
             
-            // Render Câu hỏi
             const qContainer = document.getElementById('thpt-questions-container');
             const navContainer = document.getElementById('thpt-navigator');
             qContainer.innerHTML = '';
@@ -596,7 +635,6 @@
             let currentPassage = "";
 
             thptExamData.forEach((item, index) => {
-                // Hiển thị tiêu đề nhóm câu hỏi
                 if (item.group !== currentGroup) {
                     currentGroup = item.group;
                     const groupDiv = document.createElement('div');
@@ -605,7 +643,6 @@
                     qContainer.appendChild(groupDiv);
                 }
 
-                // Hiển thị đoạn văn đọc hiểu nếu có
                 if (item.passage && item.passage !== currentPassage) {
                     currentPassage = item.passage;
                     const passageDiv = document.createElement('div');
@@ -614,7 +651,6 @@
                     qContainer.appendChild(passageDiv);
                 }
 
-                // Khối câu hỏi
                 const qDiv = document.createElement('div');
                 qDiv.className = "bg-white dark:bg-darkCard p-6 border-b border-x border-gray-200 dark:border-slate-700 " + (index === thptExamData.length - 1 || thptExamData[index+1]?.group !== currentGroup ? "rounded-b-xl mb-6 shadow-sm" : "");
                 qDiv.id = `thpt-q-${index}`;
@@ -641,7 +677,6 @@
                 qDiv.innerHTML = html;
                 qContainer.appendChild(qDiv);
 
-                // Khối điều hướng Navigator
                 const navBtn = document.createElement('button');
                 navBtn.className = "h-10 w-10 rounded-lg border border-gray-300 dark:border-slate-600 font-bold text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-700 transition flex items-center justify-center";
                 navBtn.innerText = item.id;
@@ -652,7 +687,11 @@
                 navContainer.appendChild(navBtn);
             });
 
-            // Đồng hồ đếm ngược 50 phút
+            const submitBottomDiv = document.createElement('div');
+            submitBottomDiv.className = "mt-8 mb-12 text-center";
+            submitBottomDiv.innerHTML = `<button onclick="submitThptExam(false)" class="bg-green-500 hover:bg-green-600 text-white font-extrabold text-xl py-4 px-12 rounded-full shadow-[0_10px_25px_rgba(34,197,94,0.4)] transition transform hover:-translate-y-1">Nộp Bài Ngay</button>`;
+            qContainer.appendChild(submitBottomDiv);
+
             let time = 50 * 60;
             const timerDisplay = document.getElementById('thpt-timer-display');
             clearInterval(thptTimerInterval);
@@ -680,17 +719,14 @@
         function selectThptOption(qIndex, optIndex) {
             userThptAnswers[qIndex] = optIndex;
             
-            // Xóa style của nút chọn cũ
             for (let i = 0; i < 4; i++) {
                 const btn = document.getElementById(`thpt-opt-${qIndex}-${i}`);
                 btn.className = "text-left px-4 py-3 border-2 border-gray-200 dark:border-slate-600 rounded-xl hover:bg-indigo-50 dark:hover:bg-slate-700 transition font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-darkCard";
             }
             
-            // Highlight nút vừa chọn
             const selectedBtn = document.getElementById(`thpt-opt-${qIndex}-${optIndex}`);
             selectedBtn.className = "text-left px-4 py-3 border-2 border-indigo-500 rounded-xl font-bold text-indigo-700 bg-indigo-50 dark:bg-indigo-900/40 dark:text-indigo-300 dark:border-indigo-400 ring-2 ring-indigo-200 transition";
 
-            // Highlight bảng điều hướng
             const navBtn = document.getElementById(`thpt-nav-${qIndex}`);
             navBtn.className = "h-10 w-10 rounded-lg font-bold text-white bg-indigo-500 border border-indigo-600 shadow-sm flex items-center justify-center transition";
         }
@@ -710,10 +746,8 @@
                 if (ans === thptExamData[idx].ans) correctCount++;
             });
             
-            // Thang điểm 10 (40 câu -> 0.25đ/câu)
             const finalScore = (correctCount * 0.25).toFixed(2);
             
-            // Hiển thị Khung kết quả
             document.getElementById('thpt-exam-room').classList.add('hidden');
             document.getElementById('thpt-result-room').classList.remove('hidden');
             
@@ -722,7 +756,6 @@
             
             renderThptExplanations();
             
-            // Lưu điểm lên Firebase (nếu đã đăng nhập)
             if (typeof submitTestResult === 'function') {
                 submitTestResult('Đề Minh Họa Số 2 - THPTQG', parseFloat(finalScore));
             } else {
@@ -757,10 +790,8 @@
                     let optClass = "px-4 py-2 rounded-lg border border-gray-200 dark:border-slate-600 text-gray-600 dark:text-gray-400 bg-white dark:bg-slate-800";
                     
                     if (optIdx === item.ans) {
-                        // Đáp án đúng luôn tô xanh
                         optClass = "px-4 py-2 rounded-lg border-2 border-green-500 bg-green-50 text-green-700 font-bold dark:bg-green-900/30 dark:text-green-300";
                     } else if (optIdx === userAns && !isCorrect) {
-                        // Đáp án user chọn sai thì tô đỏ
                         optClass = "px-4 py-2 rounded-lg border-2 border-red-500 bg-red-50 text-red-700 font-bold dark:bg-red-900/30 dark:text-red-300 line-through";
                     }
 
@@ -783,7 +814,6 @@
         function exitToThptDashboard() {
             document.getElementById('thpt-result-room').classList.add('hidden');
             document.getElementById('thpt-dashboard').classList.remove('hidden');
-            // Reset mảng đáp án để thi lại
             userThptAnswers = new Array(40).fill(null);
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -811,7 +841,87 @@
         const db = getFirestore(app);
         let globalUser = null;
 
-        // Cập nhật giờ hệ thống trên Profile
+        window.renderStreakCalendar = function(activeDates = new Set()) {
+            const container = document.getElementById('streak-calendar-container');
+            if(!container) return;
+            
+            const today = new Date();
+            let currentDay = new Date();
+            currentDay.setDate(today.getDate() - 364);
+            
+            let html = '<div class="flex gap-1.5 overflow-x-auto custom-scroll pb-2 items-end h-full">';
+            let colHtml = '<div class="flex flex-col gap-1.5">';
+            
+            for(let i = 0; i < 365; i++) {
+                const dateStr = currentDay.toLocaleDateString('vi-VN');
+                const isActive = activeDates.has(dateStr);
+                const colorClass = isActive ? 'bg-green-500 shadow-[0_0_5px_rgba(34,197,94,0.6)]' : 'bg-gray-100 dark:bg-slate-700/50';
+                
+                colHtml += `<div class="w-4 h-4 rounded-[3px] ${colorClass} transition-all duration-300 hover:ring-2 hover:ring-indigo-400 cursor-pointer" title="${dateStr}${isActive ? ' - Đã hoàn thành bài tập' : ' - Chưa nộp bài'}"></div>`;
+                
+                if ((i + 1) % 7 === 0 || i === 364) {
+                    colHtml += '</div>';
+                    html += colHtml;
+                    colHtml = '<div class="flex flex-col gap-1.5">';
+                }
+                currentDay.setDate(currentDay.getDate() + 1);
+            }
+            html += '</div>';
+            container.innerHTML = html;
+            
+            setTimeout(() => {
+                const scrollArea = container.querySelector('.overflow-x-auto');
+                if(scrollArea) scrollArea.scrollLeft = scrollArea.scrollWidth;
+            }, 100);
+        };
+
+        window.fetchUserStreak = async function() {
+            if(!globalUser) return renderStreakCalendar();
+            try {
+                const progressRef = collection(db, 'users', globalUser.uid, 'progress');
+                const qSnap = await getDocs(progressRef);
+                const activeDates = new Set();
+                qSnap.forEach(doc => {
+                    const data = doc.data();
+                    if(data.dateStr) activeDates.add(data.dateStr);
+                });
+                renderStreakCalendar(activeDates);
+            } catch(e) { console.error("Lỗi lấy dữ liệu Streak", e); }
+        };
+
+        window.calculateIELTS = function() {
+            const l = parseFloat(document.getElementById('calc-l').value) || 0;
+            const r = parseFloat(document.getElementById('calc-r').value) || 0;
+            const w = parseFloat(document.getElementById('calc-w').value) || 0;
+            const s = parseFloat(document.getElementById('calc-s').value) || 0;
+            const target = parseFloat(document.getElementById('calc-target').value) || 0;
+
+            let avg = (l + r + w + s) / 4;
+            let integerPart = Math.floor(avg);
+            let fractionalPart = avg - integerPart;
+            let overall = integerPart;
+
+            if (fractionalPart >= 0.75) overall = integerPart + 1.0;
+            else if (fractionalPart >= 0.25) overall = integerPart + 0.5;
+
+            document.getElementById('calc-result').innerText = overall.toFixed(1);
+
+            const status = document.getElementById('calc-status');
+            if(target > 0) {
+                if(overall >= target) {
+                    status.innerText = "🎉 Tuyệt vời! Bạn đã đạt mục tiêu!";
+                    status.className = "text-[#ffe0cc] font-bold text-xs mt-2 transition-colors";
+                } else {
+                    status.innerText = `🔥 Cần thêm ${(target - overall).toFixed(1)} điểm nữa!`;
+                    status.className = "text-orange-200 font-bold text-xs mt-2 transition-colors";
+                }
+            } else {
+                status.innerText = "";
+            }
+        };
+
+        setTimeout(() => renderStreakCalendar(), 500);
+
         setInterval(() => {
             const now = new Date();
             const timeString = now.toLocaleTimeString('vi-VN', {hour: '2-digit', minute:'2-digit'});
@@ -840,11 +950,13 @@
                     }
                 } catch(e) { console.log("Lỗi tải mục tiêu:", e); }
 
+                fetchUserStreak();
                 closeModals();
             } else {
                 document.getElementById('btn-login-header').classList.remove('hidden');
                 document.getElementById('user-profile').classList.add('hidden');
                 document.getElementById('user-goal').value = '';
+                renderStreakCalendar(); 
             }
         });
 
@@ -910,6 +1022,7 @@
                     dateStr: new Date().toLocaleDateString('vi-VN')
                 });
                 showToast(`Đã tự động lưu kết quả ${score} điểm vào hồ sơ của bạn.`, 'success');
+                fetchUserStreak();
             } catch (error) {
                 console.error(error);
             }
