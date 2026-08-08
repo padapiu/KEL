@@ -30,7 +30,7 @@
         .dark .logo-text { text-shadow: 2px 2px 0px #7c2d12; }
         .nav-link { transition: all 0.3s ease; }
         .nav-link:hover { transform: scale(1.05); }
-        .hero-gradient { background: linear-gradient(135deg, #00c6ff, #0072ff); } 
+        .hero-gradient { background: linear-gradient(135deg, #00c6ff, #0072ff); } /* Nâng cấp màu tươi sáng hơn */
         .dark .hero-gradient { background: linear-gradient(135deg, #005c99, #003366); }
         .skill-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border-bottom: 5px solid transparent; }
         .skill-card:hover { transform: translateY(-10px) scale(1.02); border-bottom-color: #00c6ff; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
@@ -48,13 +48,10 @@
         .dark .custom-scroll::-webkit-scrollbar-track { background: #1e293b; }
         .dark .custom-scroll::-webkit-scrollbar-thumb { background: #475569; }
         
+        /* Chống select text mặc định ở ngoài phòng thi */
         .no-select { user-select: none; -webkit-user-select: none; }
+        /* Vùng cho phép select text để highlight */
         .highlightable-content { user-select: text; -webkit-user-select: text; }
-        
-        .ielts-input { border-bottom: 2px solid #94a3b8; background: transparent; width: 120px; padding: 2px 8px; text-align: center; font-weight: bold; color: #0284c7; outline: none; transition: all 0.3s; }
-        .ielts-input:focus { border-bottom-color: #0ea5e9; width: 150px; }
-        .dark .ielts-input { color: #38bdf8; border-bottom-color: #475569; }
-        .dark .ielts-input:focus { border-bottom-color: #38bdf8; }
     </style>
 </head>
 <body class="bg-[#f4f7fe] text-[#2b3674] dark:bg-darkBg dark:text-darkText">
@@ -237,33 +234,19 @@
                 </div>
                 
                 <div id="ielts-content-listening" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Cambridge 21 Test 4 -->
+                    <!-- Cambridge 20 -->
                     <div class="bg-white dark:bg-darkCard rounded-2xl p-6 shadow-md border-t-4 border-cyan-500 hover:shadow-xl transition flex flex-col justify-between">
                         <div>
                             <div class="flex justify-between items-center mb-4">
                                 <span class="bg-cyan-100 text-cyan-800 dark:bg-cyan-900 dark:text-cyan-200 text-xs font-bold px-3 py-1 rounded-full">Cambridge Academic</span>
                                 <span class="text-xs text-rose-500 font-bold bg-rose-50 px-2 py-1 rounded dark:bg-rose-900/30">MỚI NHẤT</span>
                             </div>
-                            <h3 class="text-xl font-bold text-cyan-900 dark:text-cyan-400 mb-2">Cambridge 21 - Test 4</h3>
-                            <p class="text-gray-600 dark:text-gray-400 text-sm mb-6">4 Section chuẩn format đề thi thật kèm Audio.</p>
-                        </div>
-                        <div class="flex flex-col gap-2" id="ielts-action-cam21-4">
-                            <button onclick="startIeltsExam('Cambridge 21 - Test 4', false)" class="w-full bg-emerald-500 hover:bg-emerald-400 text-white font-bold py-2 px-4 rounded-xl shadow transition">Luyện Tập (Tùy chỉnh thời gian)</button>
-                            <button onclick="startIeltsExam('Cambridge 21 - Test 4', true)" class="w-full bg-rose-500 hover:bg-rose-400 text-white font-bold py-2 px-4 rounded-xl shadow transition">Vào Thi (Chuẩn 40 Phút)</button>
-                        </div>
-                    </div>
-
-                    <!-- Cambridge 20 -->
-                    <div class="bg-white dark:bg-darkCard rounded-2xl p-6 shadow-md border-t-4 border-cyan-500 hover:shadow-xl transition flex flex-col justify-between">
-                        <div>
-                            <div class="flex justify-between items-center mb-4">
-                                <span class="bg-cyan-100 text-cyan-800 dark:bg-cyan-900 dark:text-cyan-200 text-xs font-bold px-3 py-1 rounded-full">Cambridge Academic</span>
-                            </div>
                             <h3 class="text-xl font-bold text-cyan-900 dark:text-cyan-400 mb-2">Cambridge 20 - Test 1</h3>
                             <p class="text-gray-600 dark:text-gray-400 text-sm mb-6">4 Section chuẩn format đề thi thật.</p>
                         </div>
                         <div class="flex flex-col gap-2" id="ielts-action-cam20-1">
-                            <button class="w-full bg-slate-300 dark:bg-slate-700 text-white font-bold py-2 px-4 rounded-xl shadow cursor-not-allowed">Đang cập nhật...</button>
+                            <button onclick="startIeltsExam('Cambridge 20 - Test 1', false)" class="w-full bg-emerald-500 hover:bg-emerald-400 text-white font-bold py-2 px-4 rounded-xl shadow transition">Luyện Tập (Tùy chỉnh thời gian)</button>
+                            <button onclick="startIeltsExam('Cambridge 20 - Test 1', true)" class="w-full bg-rose-500 hover:bg-rose-400 text-white font-bold py-2 px-4 rounded-xl shadow transition">Vào Thi (Chuẩn 40 Phút)</button>
                         </div>
                     </div>
 
@@ -277,7 +260,23 @@
                             <p class="text-gray-600 dark:text-gray-400 text-sm mb-6">4 Section chuẩn format đề thi thật.</p>
                         </div>
                         <div class="flex flex-col gap-2" id="ielts-action-cam19-1">
-                            <button class="w-full bg-slate-300 dark:bg-slate-700 text-white font-bold py-2 px-4 rounded-xl shadow cursor-not-allowed">Đang cập nhật...</button>
+                            <button onclick="startIeltsExam('Cambridge 19 - Test 1', false)" class="w-full bg-emerald-500 hover:bg-emerald-400 text-white font-bold py-2 px-4 rounded-xl shadow transition">Luyện Tập (Tùy chỉnh thời gian)</button>
+                            <button onclick="startIeltsExam('Cambridge 19 - Test 1', true)" class="w-full bg-rose-500 hover:bg-rose-400 text-white font-bold py-2 px-4 rounded-xl shadow transition">Vào Thi (Chuẩn 40 Phút)</button>
+                        </div>
+                    </div>
+
+                    <!-- Cambridge 18 -->
+                    <div class="bg-white dark:bg-darkCard rounded-2xl p-6 shadow-md border-t-4 border-cyan-500 hover:shadow-xl transition flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="bg-cyan-100 text-cyan-800 dark:bg-cyan-900 dark:text-cyan-200 text-xs font-bold px-3 py-1 rounded-full">Cambridge Academic</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-cyan-900 dark:text-cyan-400 mb-2">Cambridge 18 - Test 1</h3>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm mb-6">4 Section chuẩn format đề thi thật.</p>
+                        </div>
+                        <div class="flex flex-col gap-2" id="ielts-action-cam18-1">
+                            <button onclick="startIeltsExam('Cambridge 18 - Test 1', false)" class="w-full bg-emerald-500 hover:bg-emerald-400 text-white font-bold py-2 px-4 rounded-xl shadow transition">Luyện Tập (Tùy chỉnh thời gian)</button>
+                            <button onclick="startIeltsExam('Cambridge 18 - Test 1', true)" class="w-full bg-rose-500 hover:bg-rose-400 text-white font-bold py-2 px-4 rounded-xl shadow transition">Vào Thi (Chuẩn 40 Phút)</button>
                         </div>
                     </div>
                 </div>
@@ -289,19 +288,14 @@
                 <div id="ielts-content-writing" class="hidden grid grid-cols-1 gap-6"><p class="text-center text-gray-500 italic">Cập nhật sau...</p></div>
             </div>
 
-            <!-- IELTS Exam Room -->
+            <!-- IELTS Exam Room (Chứa Audio & Highlighter) -->
             <div id="ielts-exam-room" class="hidden max-w-7xl mx-auto py-6 px-4">
                 <!-- Header Control -->
                 <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-4 mb-6 sticky top-24 z-40 border border-gray-200 dark:border-slate-700">
                     <div class="flex flex-wrap justify-between items-center gap-4 mb-4">
-                        <div class="flex items-center gap-4">
-                            <button onclick="confirmExitIelts()" class="bg-gray-100 hover:bg-gray-200 dark:bg-slate-700 dark:hover:bg-slate-600 p-2 rounded-full transition">
-                                ❌
-                            </button>
-                            <div>
-                                <h3 class="font-bold text-xl text-gray-800 dark:text-white" id="ielts-exam-title">Cambridge 21 - Test 4</h3>
-                                <p class="text-sm text-gray-500">IELTS Listening Test | Bôi đen văn bản để Highlight</p>
-                            </div>
+                        <div>
+                            <h3 class="font-bold text-xl text-gray-800 dark:text-white" id="ielts-exam-title">Cambridge 20 - Test 1</h3>
+                            <p class="text-sm text-gray-500">IELTS Listening Test | Bôi đen văn bản để Highlight</p>
                         </div>
                         <div class="flex items-center gap-4">
                             <div class="bg-rose-50 dark:bg-rose-900/30 text-rose-500 dark:text-rose-400 font-mono font-bold text-2xl px-4 py-2 rounded-xl border border-rose-200 dark:border-rose-800 flex items-center gap-2">
@@ -314,7 +308,7 @@
 
                     <!-- Audio Player Control -->
                     <div class="bg-cyan-50 dark:bg-slate-700 rounded-xl p-3 flex flex-wrap items-center gap-3 border border-cyan-100 dark:border-slate-600 shadow-sm">
-                        <audio id="ielts-audio" src="" preload="metadata"></audio>
+                        <audio id="ielts-audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" preload="metadata"></audio>
                         <button onclick="toggleAudio()" id="btn-audio-play" class="w-10 h-10 bg-cyan-500 hover:bg-cyan-400 text-white rounded-full flex items-center justify-center shadow-md focus:outline-none transition">
                             <svg class="w-5 h-5 ml-1" fill="currentColor" viewBox="0 0 20 20"><path d="M4 4l12 6-12 6z"></path></svg>
                         </button>
@@ -336,216 +330,24 @@
                 </div>
 
                 <!-- Exam Content Area -->
-                <div class="bg-white dark:bg-darkCard p-6 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 highlightable-content" id="ielts-exam-content">
-                    
-                    <!-- PART 1 -->
-                    <div id="ielts-p1" class="ielts-part-section block space-y-6">
-                        <h4 class="font-bold text-xl mb-2 text-cyan-800 dark:text-cyan-300 border-b pb-2 dark:border-slate-600">PART 1: Questions 1-10</h4>
-                        <p class="text-gray-700 dark:text-gray-300 font-bold italic mb-4">Complete the form below. Write ONE WORD ONLY for each answer.</p>
-                        <div class="bg-gray-50 dark:bg-slate-700/50 p-6 rounded-xl border border-gray-200 dark:border-slate-600 text-lg text-gray-800 dark:text-gray-200 leading-loose">
-                            <h5 class="text-center font-bold text-xl mb-4">Survey about shopping in Broadbeach</h5>
-                            <p>Name: Martyn <input type="text" id="ans-1" class="ielts-input" placeholder="(1)"></p>
-                            <p class="mt-4 font-semibold text-cyan-700 dark:text-cyan-400">Today's journey to Broadbeach</p>
-                            <p>used his <input type="text" id="ans-2" class="ielts-input" placeholder="(2)"></p>
-                            <p class="mt-4 font-semibold text-cyan-700 dark:text-cyan-400">town centre:</p>
-                            <p>has visited the <input type="text" id="ans-3" class="ielts-input" placeholder="(3)"></p>
-                            <p class="mt-4 font-semibold text-cyan-700 dark:text-cyan-400">Purpose of today's trip:</p>
-                            <p>looking for a new <input type="text" id="ans-4" class="ielts-input" placeholder="(4)"></p>
-                            <p>collecting <input type="text" id="ans-5" class="ielts-input" placeholder="(5)"> (after repair)</p>
-                            <p class="mt-4 font-semibold text-cyan-700 dark:text-cyan-400">Preferred day for shopping:</p>
-                            <p><input type="text" id="ans-6" class="ielts-input" placeholder="(6)"></p>
-                            <p class="mt-4 font-semibold text-cyan-700 dark:text-cyan-400">Opinions about shopping in the town centre</p>
-                            <p>Finds the service in shops is excellent</p>
-                            <p>Thinks there are too many places selling <input type="text" id="ans-7" class="ielts-input" placeholder="(7)"></p>
-                            <p>Would like more places to buy <input type="text" id="ans-8" class="ielts-input" placeholder="(8)"></p>
-                            <p class="mt-4 font-semibold text-cyan-700 dark:text-cyan-400">Opinions about new out-of-town Shopping Centre</p>
-                            <p>Likes the <input type="text" id="ans-9" class="ielts-input" placeholder="(9)"> best</p>
-                            <p>Believes the <input type="text" id="ans-10" class="ielts-input" placeholder="(10)"> is unnecessary</p>
-                        </div>
-                    </div>
-
-                    <!-- PART 2 -->
-                    <div id="ielts-p2" class="ielts-part-section hidden space-y-6">
-                        <h4 class="font-bold text-xl mb-2 text-cyan-800 dark:text-cyan-300 border-b pb-2 dark:border-slate-600">PART 2: Questions 11-20</h4>
-                        <div class="mb-6">
-                            <p class="text-gray-700 dark:text-gray-300 font-bold mb-2">Questions 11-12: Choose TWO letters, A-E.</p>
-                            <p class="mb-2 text-gray-800 dark:text-gray-200">In which TWO areas of the business exhibition did James Craig promote his company last year?</p>
-                            <div class="flex flex-col gap-2 pl-4 text-gray-700 dark:text-gray-300">
-                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" name="q11_12" value="A" class="w-4 h-4 text-cyan-600"> A. the Digital Marketing Centre</label>
-                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" name="q11_12" value="B" class="w-4 h-4 text-cyan-600"> B. the TalkCon Zone</label>
-                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" name="q11_12" value="C" class="w-4 h-4 text-cyan-600"> C. the Breakout area</label>
-                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" name="q11_12" value="D" class="w-4 h-4 text-cyan-600"> D. the Business Village</label>
-                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" name="q11_12" value="E" class="w-4 h-4 text-cyan-600"> E. the Business Connections Zone</label>
-                            </div>
-                        </div>
-
-                        <div class="mb-6">
-                            <p class="text-gray-700 dark:text-gray-300 font-bold mb-2">Questions 13-14: Choose TWO letters, A-E.</p>
-                            <p class="mb-2 text-gray-800 dark:text-gray-200">Which TWO facts are given about discounts on popular brands available to exhibitors?</p>
-                            <div class="flex flex-col gap-2 pl-4 text-gray-700 dark:text-gray-300">
-                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" name="q13_14" value="A" class="w-4 h-4 text-cyan-600"> A. They are available to all members of exhibiting companies.</label>
-                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" name="q13_14" value="B" class="w-4 h-4 text-cyan-600"> B. They can be used for both food and clothing.</label>
-                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" name="q13_14" value="C" class="w-4 h-4 text-cyan-600"> C. They only apply if people spend at least £400.</label>
-                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" name="q13_14" value="D" class="w-4 h-4 text-cyan-600"> D. They can be used by family members.</label>
-                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" name="q13_14" value="E" class="w-4 h-4 text-cyan-600"> E. The percentage saved is always the same.</label>
-                            </div>
-                        </div>
-
-                        <div>
-                            <p class="text-gray-700 dark:text-gray-300 font-bold mb-2">Questions 15-20: Which topic will each of the following speakers focus on?</p>
-                            <p class="italic text-gray-600 dark:text-gray-400 mb-4">Choose SIX answers from the box and select the correct letter, A-G.</p>
+                <div class="flex flex-col lg:flex-row gap-6 relative">
+                    <!-- Left: Questions / Text (Highlightable) -->
+                    <div class="lg:w-full bg-white dark:bg-darkCard p-6 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 highlightable-content" id="ielts-exam-content">
+                        <h4 class="font-bold text-xl mb-4 text-cyan-800 dark:text-cyan-300">SECTION 1: Questions 1-10</h4>
+                        <p class="text-gray-700 dark:text-gray-300 mb-4 font-bold italic">Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.</p>
+                        
+                        <div class="space-y-6 text-gray-800 dark:text-gray-200 leading-relaxed text-lg">
+                            <p><strong>Booking a Table at the Restaurant</strong></p>
+                            <p>Customer Name: <input type="text" class="border-b-2 border-gray-400 dark:border-gray-500 bg-transparent w-48 px-2 focus:outline-none focus:border-cyan-500 inline-block text-center" placeholder="(1)"></p>
+                            <p>Phone number: 07745 <input type="text" class="border-b-2 border-gray-400 dark:border-gray-500 bg-transparent w-40 px-2 focus:outline-none focus:border-cyan-500 inline-block text-center" placeholder="(2)"></p>
+                            <p>Date of booking: 15th <input type="text" class="border-b-2 border-gray-400 dark:border-gray-500 bg-transparent w-32 px-2 focus:outline-none focus:border-cyan-500 inline-block text-center" placeholder="(3)"></p>
+                            <p>Number of people: <input type="text" class="border-b-2 border-gray-400 dark:border-gray-500 bg-transparent w-24 px-2 focus:outline-none focus:border-cyan-500 inline-block text-center" placeholder="(4)"></p>
+                            <p>Special requirement: Wants a table near the <input type="text" class="border-b-2 border-gray-400 dark:border-gray-500 bg-transparent w-40 px-2 focus:outline-none focus:border-cyan-500 inline-block text-center" placeholder="(5)"></p>
                             
-                            <div class="bg-cyan-50 dark:bg-slate-700/50 p-4 rounded-xl mb-4 border border-cyan-100 dark:border-slate-600">
-                                <ul class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-gray-800 dark:text-gray-200">
-                                    <li><b>A.</b> Supporting job seekers</li>
-                                    <li><b>B.</b> Dealing with personal problems</li>
-                                    <li><b>C.</b> Effects of an unexpectedly rapid expansion</li>
-                                    <li><b>D.</b> A global range of business experiences</li>
-                                    <li><b>E.</b> Coping with financial set-backs</li>
-                                    <li><b>F.</b> Developing a company in response to changing markets</li>
-                                    <li><b>G.</b> Combining business success with contributions to charities</li>
-                                </ul>
-                            </div>
-
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-800 dark:text-gray-200">
-                                <div class="flex items-center justify-between border-b dark:border-slate-600 pb-2">15. Jim Clowrie <select id="ans-15" class="border rounded p-1 dark:bg-slate-800"><option value="">-</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select></div>
-                                <div class="flex items-center justify-between border-b dark:border-slate-600 pb-2">16. David France <select id="ans-16" class="border rounded p-1 dark:bg-slate-800"><option value="">-</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select></div>
-                                <div class="flex items-center justify-between border-b dark:border-slate-600 pb-2">17. Oliver Stanton <select id="ans-17" class="border rounded p-1 dark:bg-slate-800"><option value="">-</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select></div>
-                                <div class="flex items-center justify-between border-b dark:border-slate-600 pb-2">18. Francesca Heptonstall <select id="ans-18" class="border rounded p-1 dark:bg-slate-800"><option value="">-</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select></div>
-                                <div class="flex items-center justify-between border-b dark:border-slate-600 pb-2">19. Salman Khan <select id="ans-19" class="border rounded p-1 dark:bg-slate-800"><option value="">-</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select></div>
-                                <div class="flex items-center justify-between border-b dark:border-slate-600 pb-2">20. Annie Craven <select id="ans-20" class="border rounded p-1 dark:bg-slate-800"><option value="">-</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select></div>
-                            </div>
+                            <hr class="my-6 border-gray-200 dark:border-slate-700">
+                            <p><em>(Bạn có thể dùng chuột bôi đen đoạn văn bản bất kỳ trong vùng này để kiểm tra tính năng Highlight 3 màu mô phỏng thi thật. Nháy đúp vào chữ đã bôi để xóa.)</em></p>
+                            <p>The quick brown fox jumps over the lazy dog. Listening carefully to the speaker is essential for catching the correct spelling of names and addresses. Distractors are commonly used in Section 1 to confuse the candidate.</p>
                         </div>
-                    </div>
-
-                    <!-- PART 3 -->
-                    <div id="ielts-p3" class="ielts-part-section hidden space-y-6">
-                        <h4 class="font-bold text-xl mb-2 text-cyan-800 dark:text-cyan-300 border-b pb-2 dark:border-slate-600">PART 3: Questions 21-30</h4>
-                        <p class="text-center font-bold text-lg text-gray-800 dark:text-gray-200">Presentation on houses of the future</p>
-                        
-                        <p class="font-bold text-gray-700 dark:text-gray-300">Questions 21-23: Choose the correct letter, A, B or C.</p>
-                        <div class="space-y-4 text-gray-800 dark:text-gray-200">
-                            <div>
-                                <p class="mb-1">21. Which aspect of their presentation are Mia and Leo both concerned about?</p>
-                                <label class="block cursor-pointer"><input type="radio" name="q21" value="A" class="mr-2"> A. meeting the deadline</label>
-                                <label class="block cursor-pointer"><input type="radio" name="q21" value="B" class="mr-2"> B. finding suitable examples</label>
-                                <label class="block cursor-pointer"><input type="radio" name="q21" value="C" class="mr-2"> C. including original ideas</label>
-                            </div>
-                            <div>
-                                <p class="mb-1">22. The students decide to focus their assignment on housing for</p>
-                                <label class="block cursor-pointer"><input type="radio" name="q22" value="A" class="mr-2"> A. family groups.</label>
-                                <label class="block cursor-pointer"><input type="radio" name="q22" value="B" class="mr-2"> B. old people.</label>
-                                <label class="block cursor-pointer"><input type="radio" name="q22" value="C" class="mr-2"> C. single people.</label>
-                            </div>
-                            <div>
-                                <p class="mb-1">23. The students agree that demand for accommodation in urban areas should be met by</p>
-                                <label class="block cursor-pointer"><input type="radio" name="q23" value="A" class="mr-2"> A. repurposing offices and factories.</label>
-                                <label class="block cursor-pointer"><input type="radio" name="q23" value="B" class="mr-2"> B. constructing tall buildings.</label>
-                                <label class="block cursor-pointer"><input type="radio" name="q23" value="C" class="mr-2"> C. developing creative ideas for smaller homes.</label>
-                            </div>
-                        </div>
-
-                        <hr class="border-gray-200 dark:border-slate-700 my-4">
-                        
-                        <p class="font-bold text-gray-700 dark:text-gray-300">Questions 24-30: What opinion is given about each of the following developments?</p>
-                        <p class="italic text-gray-600 dark:text-gray-400 mb-4">Choose SEVEN answers from the box and select the correct letter, A-I.</p>
-                        
-                        <div class="bg-cyan-50 dark:bg-slate-700/50 p-4 rounded-xl mb-4 border border-cyan-100 dark:border-slate-600 text-sm text-gray-800 dark:text-gray-200 grid grid-cols-1 md:grid-cols-2 gap-2">
-                            <div><b>A.</b> This could cause unnecessary anxiety.</div>
-                            <div><b>B.</b> This would be especially beneficial for city residents.</div>
-                            <div><b>C.</b> This would be challenging for young people.</div>
-                            <div><b>D.</b> This would have environmental benefits.</div>
-                            <div><b>E.</b> This could encourage creativity.</div>
-                            <div><b>F.</b> This could lead to social problems.</div>
-                            <div><b>G.</b> This could enable retired people to share a project.</div>
-                            <div><b>H.</b> This would help some people but cause problems for others.</div>
-                            <div><b>I.</b> This would suit both existing and new members of a household.</div>
-                        </div>
-
-                        <div class="space-y-2 text-gray-800 dark:text-gray-200">
-                            <div class="flex items-center justify-between border-b dark:border-slate-600 pb-2">24. use of roof space for gardens <select id="ans-24" class="border rounded p-1 dark:bg-slate-800"><option value="">-</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option></select></div>
-                            <div class="flex items-center justify-between border-b dark:border-slate-600 pb-2">25. shared working spaces <select id="ans-25" class="border rounded p-1 dark:bg-slate-800"><option value="">-</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option></select></div>
-                            <div class="flex items-center justify-between border-b dark:border-slate-600 pb-2">26. moveable internal walls <select id="ans-26" class="border rounded p-1 dark:bg-slate-800"><option value="">-</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option></select></div>
-                            <div class="flex items-center justify-between border-b dark:border-slate-600 pb-2">27. smart mirrors in bathrooms <select id="ans-27" class="border rounded p-1 dark:bg-slate-800"><option value="">-</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option></select></div>
-                            <div class="flex items-center justify-between border-b dark:border-slate-600 pb-2">28. bike sheds with charging points <select id="ans-28" class="border rounded p-1 dark:bg-slate-800"><option value="">-</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option></select></div>
-                            <div class="flex items-center justify-between border-b dark:border-slate-600 pb-2">29. restriction of cars to certain areas <select id="ans-29" class="border rounded p-1 dark:bg-slate-800"><option value="">-</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option></select></div>
-                            <div class="flex items-center justify-between border-b dark:border-slate-600 pb-2">30. communal vegetable plots <select id="ans-30" class="border rounded p-1 dark:bg-slate-800"><option value="">-</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option></select></div>
-                        </div>
-                    </div>
-
-                    <!-- PART 4 -->
-                    <div id="ielts-p4" class="ielts-part-section hidden space-y-6">
-                        <h4 class="font-bold text-xl mb-2 text-cyan-800 dark:text-cyan-300 border-b pb-2 dark:border-slate-600">PART 4: Questions 31-40</h4>
-                        <p class="text-gray-700 dark:text-gray-300 font-bold italic mb-4">Complete the notes below. Write ONE WORD ONLY for each answer.</p>
-                        
-                        <div class="bg-gray-50 dark:bg-slate-700/50 p-6 rounded-xl border border-gray-200 dark:border-slate-600 text-lg text-gray-800 dark:text-gray-200 leading-loose">
-                            <h5 class="font-bold text-xl mb-4">Music therapy for surgical patients</h5>
-                            <p class="font-bold text-cyan-700 dark:text-cyan-400">Background</p>
-                            <ul class="list-disc pl-6 mb-4">
-                                <li>Surgery impacts patients because they may experience discomfort or unwelcome changes to their <input type="text" id="ans-31" class="ielts-input" placeholder="(31)">.</li>
-                                <li>Current post-surgical strategies focus mainly on pain relief.</li>
-                            </ul>
-                            
-                            <p class="font-bold text-cyan-700 dark:text-cyan-400">Recent research</p>
-                            <ul class="list-disc pl-6">
-                                <li>A study reviewed data from about 100 <input type="text" id="ans-32" class="ielts-input" placeholder="(32)"> and found that listening to music
-                                    <ul class="list-circle pl-6 text-base text-gray-600 dark:text-gray-400">
-                                        <li>improved hospital patients' sense of wellbeing.</li>
-                                        <li>reduced the length of their stay.</li>
-                                    </ul>
-                                </li>
-                                <li>The patients in the study all listened to music with a <input type="text" id="ans-33" class="ielts-input" placeholder="(33)"> effect.</li>
-                                <li>The music was mostly played through music <input type="text" id="ans-34" class="ielts-input" placeholder="(34)">.</li>
-                                <li>Patients reported an absence or low levels of <input type="text" id="ans-35" class="ielts-input" placeholder="(35)">.</li>
-                                <li>Medical records confirmed that patients who were played music in hospital needed less <input type="text" id="ans-36" class="ielts-input" placeholder="(36)"> than those who weren't played music.</li>
-                                <li>The best results were achieved when patients were played music while they were <input type="text" id="ans-37" class="ielts-input" placeholder="(37)">.</li>
-                                <li>The study concluded that playing music was effective because it served as a <input type="text" id="ans-38" class="ielts-input" placeholder="(38)">.</li>
-                                <li>The researchers recommend playing either music or sounds from <input type="text" id="ans-39" class="ielts-input" placeholder="(39)"> to all surgical patients.</li>
-                                <li>A future study will investigate the best <input type="text" id="ans-40" class="ielts-input" placeholder="(40)"> for the music.</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Bottom Navigation Tabs for Parts -->
-                <div class="mt-6 flex flex-wrap justify-center gap-2">
-                    <button onclick="switchIeltsPart(1)" id="tab-p1" class="px-6 py-2 rounded-full font-bold bg-cyan-500 text-white shadow-md transition">Part 1</button>
-                    <button onclick="switchIeltsPart(2)" id="tab-p2" class="px-6 py-2 rounded-full font-bold bg-gray-200 text-gray-700 dark:bg-slate-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-slate-600 transition">Part 2</button>
-                    <button onclick="switchIeltsPart(3)" id="tab-p3" class="px-6 py-2 rounded-full font-bold bg-gray-200 text-gray-700 dark:bg-slate-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-slate-600 transition">Part 3</button>
-                    <button onclick="switchIeltsPart(4)" id="tab-p4" class="px-6 py-2 rounded-full font-bold bg-gray-200 text-gray-700 dark:bg-slate-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-slate-600 transition">Part 4</button>
-                </div>
-            </div>
-
-            <!-- IELTS Result Room -->
-            <div id="ielts-result-room" class="hidden max-w-4xl mx-auto py-8 px-4">
-                <div class="bg-white dark:bg-slate-800 rounded-3xl p-8 shadow-xl text-center mb-8 border border-gray-100 dark:border-slate-700">
-                    <div class="text-6xl mb-4">🏆</div>
-                    <h2 class="text-3xl font-extrabold text-gray-800 dark:text-white mb-2">Kết Quả Bài Thi Listening</h2>
-                    <p class="text-gray-500 mb-6">Cambridge IELTS 21 - Test 4</p>
-                    
-                    <div class="flex justify-center items-center gap-12 mb-8">
-                        <div>
-                            <p class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-1">Số câu đúng</p>
-                            <p class="text-4xl font-black text-emerald-500"><span id="ielts-correct-count">0</span>/40</p>
-                        </div>
-                        <div class="w-px h-16 bg-gray-200 dark:bg-slate-700"></div>
-                        <div>
-                            <p class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-1">Band Score (IELTS)</p>
-                            <p class="text-4xl font-black text-cyan-500 dark:text-cyan-400" id="ielts-final-score">0.0</p>
-                        </div>
-                    </div>
-                    
-                    <div class="flex justify-center gap-4">
-                        <button onclick="exitToIeltsDashboard()" class="px-6 py-2 bg-slate-500 text-white hover:bg-slate-400 font-bold rounded-lg transition shadow-md">Thoát</button>
-                        <button onclick="redoIeltsExam()" class="px-6 py-2 bg-amber-500 text-white hover:bg-amber-400 font-bold rounded-lg transition shadow-md">Làm Lại Bài</button>
-                    </div>
-                </div>
-                
-                <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-6 border border-gray-100 dark:border-slate-700">
-                    <h3 class="text-2xl font-bold text-cyan-600 dark:text-cyan-400 mb-6 border-b pb-4 dark:border-slate-700">Transcript & Giải Thích Chi Tiết</h3>
-                    <div class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed" id="ielts-transcript-container">
-                        <p class="italic text-center">Transcript và đáp án sẽ được cập nhật đầy đủ tại đây.</p>
                     </div>
                 </div>
             </div>
@@ -559,6 +361,7 @@
         </div>
 
         <div id="page-thpt" class="page-content">
+            <!-- Dashboard Danh Sách Đề THPT -->
             <div class="max-w-6xl mx-auto py-8 px-4 sm:px-6 reveal" id="thpt-dashboard">
                 <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
                     <div>
@@ -568,6 +371,7 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Đề Số 2 -->
                     <div class="bg-white dark:bg-darkCard rounded-2xl p-6 shadow-md border-l-4 border-slate-400 flex flex-col justify-between transform hover:-translate-y-1 transition">
                         <div>
                             <div class="flex justify-between items-start mb-2">
@@ -579,6 +383,7 @@
                         <button onclick="startThptExam(2)" class="w-full bg-cyan-500 hover:bg-cyan-400 text-white font-bold py-3 rounded-xl shadow transition">Làm Đề Số 2 (50 Phút)</button>
                     </div>
                     
+                    <!-- Đề Số 3 -->
                     <div class="bg-white dark:bg-darkCard rounded-2xl p-6 shadow-md border-l-4 border-amber-500 flex flex-col justify-between transform hover:-translate-y-1 transition">
                         <div>
                             <div class="flex justify-between items-start mb-2">
@@ -593,17 +398,12 @@
                 </div>
             </div>
 
-            <!-- Phòng thi THPT -->
+            <!-- Giao diện Phòng Thi -->
             <div id="thpt-exam-room" class="hidden max-w-5xl mx-auto py-6 px-4">
                 <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-4 mb-6 sticky top-24 z-40 border border-gray-200 dark:border-slate-700 flex flex-wrap justify-between items-center gap-4">
-                    <div class="flex items-center gap-4">
-                        <button onclick="confirmExitThpt()" class="bg-gray-100 hover:bg-gray-200 dark:bg-slate-700 dark:hover:bg-slate-600 p-2 rounded-full transition">
-                            ❌
-                        </button>
-                        <div>
-                            <h3 class="font-bold text-lg text-gray-800 dark:text-white" id="thpt-exam-title">Đề Minh Họa</h3>
-                            <p class="text-sm text-gray-500">Môn: Tiếng Anh | 40 Câu</p>
-                        </div>
+                    <div>
+                        <h3 class="font-bold text-lg text-gray-800 dark:text-white" id="thpt-exam-title">Đề Minh Họa</h3>
+                        <p class="text-sm text-gray-500">Môn: Tiếng Anh | 40 Câu</p>
                     </div>
                     <div class="flex items-center gap-4">
                         <div class="bg-rose-50 dark:bg-rose-900/30 text-rose-500 dark:text-rose-400 font-mono font-bold text-2xl px-4 py-2 rounded-xl flex items-center gap-2 border border-rose-200 dark:border-rose-800">
@@ -615,17 +415,22 @@
                 </div>
 
                 <div class="flex flex-col lg:flex-row gap-6">
-                    <div class="lg:w-3/4 space-y-6" id="thpt-questions-container"></div>
+                    <!-- Nơi render câu hỏi -->
+                    <div class="lg:w-3/4 space-y-6" id="thpt-questions-container">
+                    </div>
+
+                    <!-- Bảng Navigator bên phải -->
                     <div class="lg:w-1/4">
                         <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-md p-6 sticky top-48 border border-gray-100 dark:border-slate-700">
                             <h4 class="font-bold mb-4 text-center dark:text-white border-b pb-2 dark:border-slate-700">Bảng Câu Hỏi</h4>
-                            <div class="grid grid-cols-5 gap-2" id="thpt-navigator"></div>
+                            <div class="grid grid-cols-5 gap-2" id="thpt-navigator">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Kết quả THPT -->
+            <!-- Phòng Chấm Điểm & Giải thích -->
             <div id="thpt-result-room" class="hidden max-w-4xl mx-auto py-8 px-4">
                 <div class="bg-white dark:bg-slate-800 rounded-3xl p-8 shadow-xl text-center mb-8 border border-gray-100 dark:border-slate-700">
                     <div class="text-6xl mb-4">🏆</div>
@@ -649,7 +454,8 @@
 
                 <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-6 border border-gray-100 dark:border-slate-700">
                     <h3 class="text-2xl font-bold text-cyan-600 dark:text-cyan-400 mb-6 border-b pb-4 dark:border-slate-700">Đáp Án & Giải Thích Chi Tiết</h3>
-                    <div class="space-y-8" id="thpt-explanations-container"></div>
+                    <div class="space-y-8" id="thpt-explanations-container">
+                    </div>
                 </div>
             </div>
         </div>
@@ -660,7 +466,6 @@
                 <p class="text-center text-gray-600 dark:text-gray-400 mb-10 text-lg">Kho từ vựng siêu cấp đang được xây dựng.</p>
             </div>
         </div>
-        
         <div id="page-courses" class="page-content">
              <div class="max-w-4xl mx-auto py-20 px-6 text-center reveal">
                  <div class="text-6xl mb-6">🚀</div>
@@ -691,7 +496,6 @@
         </div>
     </footer>
 
-    <!-- Modals -->
     <div id="toast-container" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
     <div id="auth-modal" class="fixed inset-0 bg-black bg-opacity-50 modal-overlay hidden z-[100] flex items-center justify-center">
@@ -734,34 +538,129 @@
         </div>
     </div>
 
+    <div id="exam-timer" class="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-50 hidden bg-rose-500 text-white font-extrabold text-4xl px-8 py-4 rounded-2xl shadow-[0_0_25px_rgba(244,63,94,0.7)] border-4 border-white dark:border-slate-800 transition-all duration-300 select-none pointer-events-none">
+        00:00
+    </div>
+
     <script>
+        // ------------------ BIẾN BẢO VỆ TIẾN TRÌNH ------------------
         let isTakingExam = false; 
 
-        // -- THPT Data (Mock Data để chạy web) --
+        // ------------------ DỮ LIỆU ĐỀ THI THPT ------------------
+        const clozePassage2 = `The rise of digital technology has profoundly impacted education. In recent years, traditional classrooms have been supplemented by online learning platforms, (25) ______ provide students with greater flexibility. Online courses allow learners to access materials at their own pace, making education more accessible to those with busy schedules. (26) ______, this shift also presents challenges. Some students struggle with time management and lack the discipline needed for self-study. Moreover, the absence of face-to-face interaction can lead to feelings of isolation. To address these issues, many educators are adopting a blended learning approach. This method combines online resources (27) ______ traditional classroom instruction. By blending the two, schools can offer the benefits of digital tools while maintaining the personal connection that is (28) ______ for effective learning. Ultimately, (29) ______ technology continues to evolve, education systems must adapt to ensure that all students can succeed.`;
+        const readingPassage1_2 = `Sleep is a vital process that affects our physical and mental health. Despite its importance, many adults do not get the recommended seven to eight hours of sleep per night. The consequences of sleep deprivation are numerous, ranging from decreased concentration and memory issues to a weakened immune system.\n\nOne of the main culprits behind modern sleep problems is the excessive use of electronic devices before bedtime. The blue light emitted by smartphones and tablets interferes with the production of melatonin, a hormone that regulates the sleep-wake cycle. Consequently, people find it harder to fall asleep and experience poorer sleep quality.\n\nTo improve sleep hygiene, experts suggest establishing a regular bedtime routine. This includes going to bed and waking up at the same time every day, even on weekends. Additionally, creating a relaxing pre-sleep ritual, such as reading a book or taking a warm bath, can signal to the body that it is time to wind down. Keeping the bedroom dark, quiet, and cool also promotes better rest. By prioritizing sleep, individuals can significantly enhance their overall well-being and daily performance.`;
+        const readingPassage2_2 = `Renewable energy sources, such as wind, solar, and hydroelectric power, are playing an increasingly crucial role in the global fight against climate change. Unlike fossil fuels, which release harmful greenhouse gases when burned, renewable energy generates electricity with little to no emissions. This transition is essential for reducing the world's carbon footprint and mitigating the severe impacts of global warming.\n\nSolar energy has seen remarkable growth over the past decade. The cost of solar panels has plummeted, making it more accessible for both residential and commercial use. Innovations in battery storage technology have also addressed one of solar power's main drawbacks: intermittency. Now, excess energy generated during sunny days can be stored and used at night or during cloudy weather, ensuring a more stable power supply.\n\nWind power is another rapidly expanding sector. Offshore wind farms, in particular, have enormous potential because ocean winds are generally stronger and more consistent than those on land. Countries with long coastlines are investing heavily in this infrastructure to capitalize on the abundant resource. However, the construction of these massive turbines requires significant initial investment and careful environmental planning to avoid disrupting marine ecosystems.\n\nDespite the progress, the shift to 100% renewable energy faces hurdles. Upgrading the existing electrical grid to handle decentralized power sources is a massive logistical and financial challenge. Moreover, political and economic interests tied to the fossil fuel industry often slow down the transition. Nevertheless, the continuous advancement of green technologies provides hope for a sustainable and clean energy future.`;
+
         const thptExamData2 = [
             { id: 1, group: "Phần Ngữ âm", q: "Mark the letter A, B, C, or D to indicate the word whose underlined part differs from the other three in pronunciation.\nA. maintain | B. attain | C. certain | D. complain", opts: ["A. maintain", "B. attain", "C. certain", "D. complain"], ans: 2, exp: "certain /sɜːtən/, các từ còn lại chứa âm /eɪ/" },
             { id: 2, group: "Phần Ngữ âm", q: "A. looked | B. smiled | C. stayed | D. listened", opts: ["A. looked", "B. smiled", "C. stayed", "D. listened"], ans: 0, exp: "looked phát âm là /t/, các từ còn lại là /d/" },
+            { id: 3, group: "Phần Trọng âm", q: "Mark the letter A, B, C, or D to indicate the word that differs from the other three in the position of primary stress.\nA. confide | B. gather | C. divide | D. maintain", opts: ["A. confide", "B. gather", "C. divide", "D. maintain"], ans: 1, exp: "gather nhấn âm 1, các từ còn lại nhấn âm 2" },
+            { id: 4, group: "Phần Trọng âm", q: "A. environment | B. technology | C. agriculture | D. discovery", opts: ["A. environment", "B. technology", "C. agriculture", "D. discovery"], ans: 2, exp: "agriculture nhấn âm 1, các từ còn lại nhấn âm 2" },
+            { id: 5, group: "Phần Từ vựng & Ngữ pháp", q: "The new policy will be implemented ______ the beginning of next month.", opts: ["A. in", "B. on", "C. at", "D. by"], ans: 2, exp: "at the beginning of: vào đầu của" },
+            { id: 6, group: "Phần Từ vựng & Ngữ pháp", q: "If she ______ about the heavy traffic, she would have left earlier.", opts: ["A. knows", "B. knew", "C. had known", "D. has known"], ans: 2, exp: "Câu điều kiện loại 3: If + S + had P2, S + would have P2" },
+            { id: 7, group: "Phần Từ vựng & Ngữ pháp", q: "Despite the bad weather, the outdoor concert ______ as planned.", opts: ["A. went on", "B. put off", "C. took over", "D. brought up"], ans: 0, exp: "went on = continued: tiếp tục diễn ra" },
+            { id: 8, group: "Phần Từ vựng & Ngữ pháp", q: "Students are required to hand in their assignments by Friday, ______?", opts: ["A. are they", "B. aren't they", "C. do they", "D. don't they"], ans: 1, exp: "Câu hỏi đuôi cho 'Students are' là 'aren't they'" },
+            { id: 9, group: "Phần Từ vựng & Ngữ pháp", q: "The ______ of the internet has completely changed the way we communicate.", opts: ["A. invention", "B. discover", "C. creation", "D. maintenance"], ans: 0, exp: "invention: sự phát minh (phát minh ra internet)" },
+            { id: 10, group: "Phần Từ vựng & Ngữ pháp", q: "She is a ______ student who always gets top marks in all subjects.", opts: ["A. hard-working", "B. hard-worked", "C. hardly-working", "D. working-hard"], ans: 0, exp: "hard-working: tính từ ghép (chăm chỉ)" },
+            { id: 11, group: "Phần Từ vựng & Ngữ pháp", q: "The book ______ by my favorite author is a bestseller this year.", opts: ["A. writing", "B. written", "C. wrote", "D. writes"], ans: 1, exp: "Rút gọn mệnh đề quan hệ dạng bị động: The book which was written -> written" },
+            { id: 12, group: "Phần Từ vựng & Ngữ pháp", q: "He didn't have much time, so he just ______ through the report before the meeting.", opts: ["A. glanced", "B. stared", "C. gazed", "D. watched"], ans: 0, exp: "glance through: nhìn lướt qua" },
+            { id: 13, group: "Phần Từ vựng & Ngữ pháp", q: "I remember ______ to the zoo by my parents when I was a child.", opts: ["A. taking", "B. being taken", "C. to take", "D. to be taken"], ans: 1, exp: "remember + V-ing: nhớ đã làm gì; dạng bị động: being + P2" },
+            { id: 14, group: "Phần Từ vựng & Ngữ pháp", q: "The higher the demand for the product, ______ it becomes.", opts: ["A. the most expensive", "B. the more expensive", "C. more expensive", "D. as expensive"], ans: 1, exp: "Cấu trúc so sánh kép: The + so sánh hơn, the + so sánh hơn" },
+            { id: 15, group: "Phần Từ vựng & Ngữ pháp", q: "They have set up a special fund to support people ______ in rural areas.", opts: ["A. living", "B. to live", "C. lived", "D. live"], ans: 0, exp: "Rút gọn mệnh đề quan hệ dạng chủ động: people who live -> living" },
+            { id: 16, group: "Phần Từ vựng & Ngữ pháp", q: "The company is looking for a candidate with strong ______ skills to handle customer complaints.", opts: ["A. interpersonal", "B. international", "C. interchangeable", "D. internal"], ans: 0, exp: "interpersonal skills: kỹ năng giao tiếp, ứng xử" },
+            { id: 17, group: "Phần Từ vựng & Ngữ pháp", q: "We ______ out of milk. Could you buy some on your way home?", opts: ["A. have run", "B. are running", "C. ran", "D. run"], ans: 0, exp: "Thì hiện tại hoàn thành diễn tả sự việc vừa mới xảy ra, kết quả lưu lại ở hiện tại" },
+            { id: 18, group: "Phần Từ vựng & Ngữ pháp", q: "It is crucial that the manager ______ informed of the changes immediately.", opts: ["A. is", "B. be", "C. was", "D. has been"], ans: 1, exp: "Cấu trúc giả định: It is crucial that + S + (should) + V nguyên thể (be)" },
+            { id: 19, group: "Phần Giao tiếp", q: "Tom: 'Would you like to join us for dinner tonight?' - Mary: '______'", opts: ["A. Yes, I'd love to.", "B. No, thanks. I'm full.", "C. I don't think so.", "D. You're welcome."], ans: 0, exp: "Đáp lại lời mời một cách lịch sự" },
+            { id: 20, group: "Phần Giao tiếp", q: "Alex: 'I think we should use public transport to reduce pollution.' - Sarah: '______'", opts: ["A. I couldn't agree more.", "B. You're welcome.", "C. Good luck!", "D. That's a bad idea."], ans: 0, exp: "Bày tỏ sự đồng ý hoàn toàn" },
+            { id: 21, group: "Phần Đồng nghĩa & Trái nghĩa", q: "CLOSEST in meaning:\nThe teacher's explanation was so lucid that everyone understood the complex topic.", opts: ["A. clear", "B. confusing", "C. boring", "D. long"], ans: 0, exp: "lucid = clear: rõ ràng, dễ hiểu" },
+            { id: 22, group: "Phần Đồng nghĩa & Trái nghĩa", q: "CLOSEST in meaning:\nMany species of animals are in peril due to habitat destruction.", opts: ["A. safety", "B. danger", "C. comfort", "D. balance"], ans: 1, exp: "in peril = in danger: gặp nguy hiểm" },
+            { id: 23, group: "Phần Đồng nghĩa & Trái nghĩa", q: "OPPOSITE in meaning:\nThe new law was implemented successfully despite initial opposition.", opts: ["A. executed", "B. applied", "C. delayed", "D. managed"], ans: 2, exp: "implemented: được thi hành >< delayed: bị trì hoãn" },
+            { id: 24, group: "Phần Đồng nghĩa & Trái nghĩa", q: "OPPOSITE in meaning:\nShe was completely exhausted after running the marathon.", opts: ["A. tired", "B. energetic", "C. weak", "D. sleepy"], ans: 1, exp: "exhausted: kiệt sức >< energetic: tràn đầy năng lượng" },
+            { id: 25, passage: clozePassage2, group: "Phần Điền khuyết", q: "Question 25", opts: ["A. who", "B. which", "C. where", "D. that"], ans: 1, exp: "Đại từ quan hệ thay thế cho cụm danh từ chỉ vật phía trước, dùng sau dấu phẩy" },
+            { id: 26, passage: clozePassage2, group: "Phần Điền khuyết", q: "Question 26", opts: ["A. Therefore", "B. However", "C. For instance", "D. Furthermore"], ans: 1, exp: "Liên từ chỉ sự tương phản giữa lợi ích ở câu trước và khó khăn ở câu sau" },
+            { id: 27, passage: clozePassage2, group: "Phần Điền khuyết", q: "Question 27", opts: ["A. with", "B. to", "C. for", "D. about"], ans: 0, exp: "combine sth with sth: kết hợp cái gì với cái gì" },
+            { id: 28, passage: clozePassage2, group: "Phần Điền khuyết", q: "Question 28", opts: ["A. vital", "B. trivial", "C. optional", "D. harmful"], ans: 0, exp: "vital: quan trọng, thiết yếu" },
+            { id: 29, passage: clozePassage2, group: "Phần Điền khuyết", q: "Question 29", opts: ["A. although", "B. because", "C. as", "D. until"], ans: 2, exp: "as: khi/bởi vì. Ở đây dịch là 'khi công nghệ tiếp tục phát triển'" },
+            { id: 30, passage: readingPassage1_2, group: "Phần Đọc hiểu 1", q: "What is the main idea of the passage?", opts: ["A. The benefits of using electronic devices before bed.", "B. The importance of sleep and how to improve it.", "C. How to cure memory issues with medication.", "D. The physical consequences of working too hard."], ans: 1, exp: "Ý chính của đoạn văn là tầm quan trọng của giấc ngủ và cách cải thiện nó" },
+            { id: 31, passage: readingPassage1_2, group: "Phần Đọc hiểu 1", q: "According to paragraph 1, which of the following is NOT a consequence of sleep deprivation?", opts: ["A. Memory issues", "B. Decreased concentration", "C. A weakened immune system", "D. Increased productivity"], ans: 3, exp: "Tăng năng suất làm việc KHÔNG phải là hậu quả của thiếu ngủ" },
+            { id: 32, passage: readingPassage1_2, group: "Phần Đọc hiểu 1", q: "The word 'interferes' in paragraph 2 is closest in meaning to ______.", opts: ["A. supports", "B. disrupts", "C. creates", "D. improves"], ans: 1, exp: "interfere = disrupt: cản trở, làm gián đoạn" },
+            { id: 33, passage: readingPassage1_2, group: "Phần Đọc hiểu 1", q: "What does the blue light from screens do to the body?", opts: ["A. It increases melatonin production.", "B. It helps people fall asleep faster.", "C. It disrupts the production of melatonin.", "D. It improves overall sleep quality."], ans: 2, exp: "Ánh sáng xanh làm gián đoạn quá trình sản xuất melatonin" },
+            { id: 34, passage: readingPassage1_2, group: "Phần Đọc hiểu 1", q: "According to the passage, maintaining a regular bedtime schedule ______.", opts: ["A. should only be done on weekdays", "B. is a key part of improving sleep hygiene", "C. is less effective than using electronic devices", "D. causes more stress and anxiety"], ans: 1, exp: "Duy trì lịch ngủ đều đặn là một phần quan trọng để cải thiện giấc ngủ" },
+            { id: 35, passage: readingPassage1_2, group: "Phần Đọc hiểu 1", q: "The word 'it' in paragraph 3 refers to ______.", opts: ["A. the body", "B. a book", "C. the pre-sleep ritual", "D. going to bed"], ans: 0, exp: "Đại từ 'it' thay thế cho 'the body' (cơ thể)" },
+            { id: 36, passage: readingPassage2_2, group: "Phần Đọc hiểu 2", q: "What is the primary focus of the passage?", opts: ["A. The history of fossil fuels.", "B. The advantages and challenges of renewable energy.", "C. How to build offshore wind farms.", "D. The cost of upgrading the electrical grid."], ans: 1, exp: "Đoạn văn tập trung vào lợi ích và thách thức của năng lượng tái tạo" },
+            { id: 37, passage: readingPassage2_2, group: "Phần Đọc hiểu 2", q: "Why is renewable energy considered better for the environment than fossil fuels?", opts: ["A. It produces more greenhouse gases.", "B. It is more expensive to produce.", "C. It generates electricity with minimal emissions.", "D. It requires burning natural resources."], ans: 2, exp: "Nó tạo ra điện với lượng khí thải tối thiểu" },
+            { id: 38, passage: readingPassage2_2, group: "Phần Đọc hiểu 2", q: "The word 'plummeted' in paragraph 2 means ______.", opts: ["A. increased sharply", "B. remained stable", "C. decreased significantly", "D. fluctuated randomly"], ans: 2, exp: "plummeted = giảm mạnh (decreased significantly)" },
+            { id: 39, passage: readingPassage2_2, group: "Phần Đọc hiểu 2", q: "How has battery storage technology improved solar energy?", opts: ["A. By making solar panels larger.", "B. By allowing excess energy to be saved for later use.", "C. By generating more sunlight.", "D. By reducing the cost of installation."], ans: 1, exp: "Công nghệ pin lưu trữ giúp lưu lại năng lượng dư thừa để dùng sau" },
+            { id: 40, passage: readingPassage2_2, group: "Phần Đọc hiểu 2", q: "According to paragraph 3, offshore wind farms are advantageous because ______.", opts: ["A. they are cheap to build", "B. they do not require any planning", "C. ocean winds are stronger and more consistent", "D. they are located far away from the coast"], ans: 2, exp: "Gió ngoài khơi mạnh và ổn định hơn so với trên đất liền" }
         ];
-        const thptExamData3 = [
-            { id: 1, group: "Part I. Phonetics", q: "Mark the letter A, B, C, or D to indicate the word whose underlined part differs from the other three in pronunciation.\nA. apply | B. rely | C. deny | D. safely", opts: ["A. apply", "B. rely", "C. deny", "D. safely"], ans: 3, exp: "safely /ˈseɪfli/ (âm /i/). Chữ y cuối từ trạng từ thường phát âm /i/." }
-        ]; // Dữ liệu thật nên lấy từ API hoặc gán full object
 
-        // --- SPA Navigation & Protections ---
+        const clozePassage3 = `Preparing for standardized language proficiency tests can be a daunting task for many high school students. A well-structured study plan is essential for achieving a high band score. Firstly, students should familiarize themselves with the test format, (25) ______ includes different sections such as reading, writing, listening, and speaking. Secondly, consistent practice is vital. Engaging with a variety of materials, from academic articles to podcasts, helps expand one's vocabulary and comprehension skills. (26) ______, relying solely on self-study might not be enough for everyone. Many learners find it beneficial to join study groups or enroll in specialized preparation courses. In these environments, they can receive constructive feedback from experienced instructors and (27) ______ their speaking skills through mock interviews. Furthermore, managing time effectively during the actual exam is a skill that requires (28) ______ practice. By taking full-length practice tests under timed conditions, candidates can train themselves to stay calm and focused. Ultimately, with dedication and the right strategies, conquering these exams becomes an (29) ______ goal.`;
+        const readingPassage1_3 = `The landscape of digital entertainment has undergone a massive transformation over the last two decades. Gone are the days when video games were solely considered a niche hobby for children. Today, the gaming industry, driven by major platforms and sophisticated hardware consoles, surpasses both the film and music industries in global revenue.\n\nOne of the key drivers of this growth is the shift towards digital distribution. Platforms that allow users to purchase, download, and manage their game libraries online have revolutionized how consumers access content. This convenience eliminates the need for physical discs and allows developers to frequently update their games with new features or downloadable content (DLC), keeping the community engaged for years after a game's initial release.\n\nFurthermore, gaming has become a highly social activity. Multiplayer titles and co-op campaigns enable friends to connect and collaborate regardless of geographical boundaries. Esports—competitive, organized video gaming—has also surged in popularity, drawing massive audiences to live streams and filling stadiums with passionate fans cheering for their favorite professional teams. As technology continues to advance with virtual reality and cloud gaming, the future of digital entertainment promises to be even more immersive.`;
+        const readingPassage2_3 = `Choosing a university is one of the most critical decisions a young adult will make. The transition from high school to higher education involves navigating a maze of options, ranging from large public universities to specialized academies focusing on law, economics, or diplomacy. Each institution offers a unique environment, and finding the right fit requires careful self-reflection and research.\n\nFor many students, academic reputation and program quality are the primary considerations. A university known for its rigorous curriculum and distinguished faculty can provide a solid foundation for a future career. However, focusing solely on rankings can be misleading. It is equally important to consider the teaching style, class sizes, and the availability of hands-on learning opportunities such as internships and research projects.\n\nBeyond academics, campus culture plays a vital role in student satisfaction. Some students thrive in bustling, competitive environments, while others prefer tight-knit communities where they can easily build relationships with professors and peers. Extracurricular activities, clubs, and sports facilities also contribute significantly to the overall university experience, fostering personal growth and leadership skills.\n\nFinancial considerations cannot be overlooked either. Tuition fees, living expenses, and the availability of scholarships or financial aid often dictate the final choice for many families. Ultimately, the best university is not necessarily the most prestigious one, but rather the one that aligns with the student's academic goals, personality, and financial circumstances.`;
+
+        const thptExamData3 = [
+            { id: 1, group: "Part I. Phonetics", q: "Mark the letter A, B, C, or D to indicate the word whose underlined part differs from the other three in pronunciation.\nA. apply | B. rely | C. deny | D. safely", opts: ["A. apply", "B. rely", "C. deny", "D. safely"], ans: 3, exp: "safely /ˈseɪfli/ (âm /i/). Chữ y cuối từ trạng từ thường phát âm /i/, các từ còn lại /aɪ/." },
+            { id: 2, group: "Part I. Phonetics", q: "A. matches | B. boxes | C. clothes | D. classes", opts: ["A. matches", "B. boxes", "C. clothes", "D. classes"], ans: 2, exp: "clothes /kləʊðz/ (âm /z/). Các từ còn lại đuôi -es phát âm là /ɪz/." },
+            { id: 3, group: "Part I. Phonetics", q: "Mark the letter A, B, C, or D to indicate the word that differs from the other three in the position of primary stress.\nA. academy | B. economics | C. biology | D. geography", opts: ["A. academy", "B. economics", "C. biology", "D. geography"], ans: 1, exp: "economics /ˌiːkəˈnɒmɪks/ (nhấn âm 3). Các từ còn lại nhấn âm 2." },
+            { id: 4, group: "Part I. Phonetics", q: "A. console | B. gamer | C. platform | D. software", opts: ["A. console", "B. gamer", "C. platform", "D. software"], ans: 0, exp: "console /kənˈsəʊl/ (động từ nhấn âm 2). Đề thi thường lấy từ console (động từ) để bẫy. Các từ còn lại nhấn âm 1." },
+            { id: 5, group: "Part II. Vocabulary and Grammar", q: "After meticulously preparing his academic transcript, he submitted his application to the National Economics University ______ Friday morning.", opts: ["A. in", "B. on", "C. at", "D. for"], ans: 1, exp: "Giới từ 'on' được dùng trước một buổi của một ngày cụ thể (on Friday morning)." },
+            { id: 6, group: "Part II. Vocabulary and Grammar", q: "The recent football match between Portugal and Spain was so ______ that fans couldn't take their eyes off the screen.", opts: ["A. captivate", "B. captivating", "C. captivated", "D. captivates"], ans: 1, exp: "Cần tính từ miêu tả tính chất trận đấu. 'Captivating' (hấp dẫn) là tính từ chủ động phù hợp." },
+            { id: 7, group: "Part II. Vocabulary and Grammar", q: "If he ______ more time practicing his speaking skills, he would have achieved a higher band score on the test.", opts: ["A. spends", "B. spent", "C. had spent", "D. has spent"], ans: 2, exp: "Câu điều kiện loại 3 diễn tả sự việc trái với quá khứ: If + S + had + P2, S + would have + P2." },
+            { id: 8, group: "Part II. Vocabulary and Grammar", q: "Many students prefer using digital platforms like Steam for gaming because they offer a wide ______ of titles.", opts: ["A. variety", "B. group", "C. amount", "D. number"], ans: 0, exp: "Cụm cố định: 'a wide variety of + N(số nhiều)' nghĩa là rất nhiều loại, sự đa dạng." },
+            { id: 9, group: "Part II. Vocabulary and Grammar", q: "The Diplomatic Academy of Vietnam is highly ______ for its rigorous academic standards and excellent faculty.", opts: ["A. respected", "B. ignored", "C. neglected", "D. criticized"], ans: 0, exp: "highly respected (rất được tôn trọng). Các phương án còn lại mang nghĩa tiêu cực không hợp ngữ cảnh." },
+            { id: 10, group: "Part II. Vocabulary and Grammar", q: "By the time the new gaming console ______ next year, developers will have created dozens of exclusive games for it.", opts: ["A. releases", "B. will release", "C. released", "D. had released"], ans: 0, exp: "Cấu trúc: By the time + S + V(hiện tại đơn), S + V(tương lai hoàn thành)." },
+            { id: 11, group: "Part II. Vocabulary and Grammar", q: "The teacher suggested that the students ______ past exam papers to familiarize themselves with the test format.", opts: ["A. to review", "B. reviewing", "C. review", "D. reviews"], ans: 2, exp: "Cấu trúc giả định: suggest that + S + (should) + V(nguyên thể không chia)." },
+            { id: 12, group: "Part II. Vocabulary and Grammar", q: "We need to ______ the pros and cons of studying locally versus going abroad.", opts: ["A. take off", "B. weigh up", "C. look into", "D. bring up"], ans: 1, exp: "Phrasal verb 'weigh up' nghĩa là cân nhắc, đánh giá (ưu và nhược điểm)." },
+            { id: 13, group: "Part II. Vocabulary and Grammar", q: "The committee has decided to grant scholarships to students ______ excel in both academics and extracurricular activities.", opts: ["A. who", "B. which", "C. whom", "D. whose"], ans: 0, exp: "Đại từ quan hệ thay thế cho danh từ chỉ người 'students' và làm chủ ngữ cho động từ 'excel'." },
+            { id: 14, group: "Part II. Vocabulary and Grammar", q: "Hardly ______ the exam room when the bell rang to signal the end of the test.", opts: ["A. the students had left", "B. had the students left", "C. the students left", "D. did the students leave"], ans: 1, exp: "Đảo ngữ: Hardly + had + S + P2 + when + S + V(quá khứ đơn) (Vừa mới... thì...)." },
+            { id: 15, group: "Part II. Vocabulary and Grammar", q: "Reading manga and comic books is a great way to relax; ______, it can also help improve visual literacy and vocabulary.", opts: ["A. however", "B. otherwise", "C. therefore", "D. moreover"], ans: 3, exp: "Vế 2 bổ sung thêm lợi ích (có từ also). Cần liên từ chỉ sự bổ sung 'Moreover' (Hơn nữa)." },
+            { id: 16, group: "Part II. Vocabulary and Grammar", q: "She was ______ tired after the three-hour examination that she went straight to bed.", opts: ["A. so", "B. such", "C. too", "D. enough"], ans: 0, exp: "Cấu trúc: S + be + so + adj + that + clause (Quá... đến nỗi mà)." },
+            { id: 17, group: "Part II. Vocabulary and Grammar", q: "The local authorities are planning to ______ a new public library in the city center to promote reading habits.", opts: ["A. build up", "B. set up", "C. turn down", "D. make up"], ans: 1, exp: "Set up (thành lập, xây dựng). Build up (tích lũy); Turn down (từ chối)." },
+            { id: 18, group: "Part II. Vocabulary and Grammar", q: "It is essential that every candidate ______ their identification documents before entering the examination hall.", opts: ["A. present", "B. presents", "C. presenting", "D. to present"], ans: 0, exp: "Cấu trúc giả định: It is essential/important + that + S + (should) + V(nguyên thể)." },
+            { id: 19, group: "Part III. Communication", q: "Jane: 'I think participating in university clubs is a waste of time.' - Mark: '______. It helps you build a strong professional network.'", opts: ["A. I completely agree", "B. I couldn't agree more", "C. I don't quite agree with you", "D. You're right"], ans: 2, exp: "Mark nêu lợi ích tốt của CLB, tức là đang phản đối Jane. Chọn C (Tôi không hoàn toàn đồng ý)." },
+            { id: 20, group: "Part III. Communication", q: "David: 'Would you like me to help you double-check your admission essay?' - Sarah: '______'", opts: ["A. Yes, please. That would be great!", "B. No, I don't care.", "C. You're welcome.", "D. It's my pleasure."], ans: 0, exp: "Sarah đồng ý nhận sự giúp đỡ nên đáp lại lịch sự bằng A." },
+            { id: 21, group: "Part IV. Synonyms and Antonyms", q: "CLOSEST in meaning:\nThe university's admission process is highly competitive, with thousands of applicants vying for a few hundred spots.", opts: ["A. effortless", "B. demanding", "C. relaxed", "D. peaceful"], ans: 1, exp: "Competitive (cạnh tranh cao) đồng nghĩa với demanding (khắt khe, đòi hỏi cao)." },
+            { id: 22, group: "Part IV. Synonyms and Antonyms", q: "CLOSEST in meaning:\nThe new software update will enhance the performance of older computer models.", opts: ["A. improve", "B. worsen", "C. maintain", "D. decline"], ans: 0, exp: "Enhance (nâng cao, cải thiện) = improve." },
+            { id: 23, group: "Part IV. Synonyms and Antonyms", q: "OPPOSITE in meaning:\nDespite the heavy rain, the football match commenced punctually at 7 PM.", opts: ["A. exactly", "B. lately", "C. promptly", "D. on time"], ans: 1, exp: "Punctually (đúng giờ). Trái nghĩa nhất trong các đáp án là lately (dù lately thường nghĩa là gần đây, nhưng A, C, D đều đồng nghĩa)." },
+            { id: 24, group: "Part IV. Synonyms and Antonyms", q: "OPPOSITE in meaning:\nThe government's decision to cut funding for public schools was met with fierce opposition from parents.", opts: ["A. strong", "B. gentle", "C. intense", "D. severe"], ans: 1, exp: "Fierce (dữ dội, mãnh liệt) >< gentle (nhẹ nhàng, ôn hòa)." },
+            { id: 25, passage: clozePassage3, group: "Part V. Guided Cloze Test", q: "Question 25", opts: ["A. who", "B. whose", "C. which", "D. that"], ans: 2, exp: "Thay thế cho 'test format' (vật), dùng sau dấu phẩy (mệnh đề không xác định)." },
+            { id: 26, passage: clozePassage3, group: "Part V. Guided Cloze Test", q: "Question 26", opts: ["A. However", "B. Therefore", "C. Moreover", "D. Consequently"], ans: 0, exp: "Vế trước nói tự học, vế sau nói tự học không đủ, cần đi học thêm -> Tương phản (However)." },
+            { id: 27, passage: clozePassage3, group: "Part V. Guided Cloze Test", q: "Question 27", opts: ["A. decrease", "B. refine", "C. ignore", "D. damage"], ans: 1, exp: "refine their speaking skills (trau chuốt, cải thiện kỹ năng)." },
+            { id: 28, passage: clozePassage3, group: "Part V. Guided Cloze Test", q: "Question 28", opts: ["A. a few", "B. little", "C. many", "D. much"], ans: 3, exp: "practice là danh từ không đếm được -> dùng much." },
+            { id: 29, passage: clozePassage3, group: "Part V. Guided Cloze Test", q: "Question 29", opts: ["A. achievable", "B. impossible", "C. unlikely", "D. helpless"], ans: 0, exp: "Trở thành một mục tiêu 'có thể đạt được' (achievable)." },
+            { id: 30, passage: readingPassage1_3, group: "Part VI. Reading Comprehension 1", q: "What is the main idea of the passage?", opts: ["A. The history of physical game discs.", "B. The decline of the film and music industries.", "C. The evolution and immense growth of the digital gaming industry.", "D. How to become a professional Esports player."], ans: 2, exp: "Bài đọc tập trung vào sự tiến hóa và tăng trưởng khổng lồ của ngành game số." },
+            { id: 31, passage: readingPassage1_3, group: "Part VI. Reading Comprehension 1", q: "According to paragraph 2, digital distribution platforms ______", opts: ["A. require users to buy physical discs.", "B. have made it harder to access game content.", "C. allow developers to easily update games with new features.", "D. only offer games for children."], ans: 2, exp: "Đoạn 2: 'allows developers to frequently update their games with new features'." },
+            { id: 32, passage: readingPassage1_3, group: "Part VI. Reading Comprehension 1", q: "The word 'surpasses' in paragraph 1 is closest in meaning to ______", opts: ["A. falls behind", "B. exceeds", "C. equals", "D. supports"], ans: 1, exp: "Surpass = exceed (vượt qua)." },
+            { id: 33, passage: readingPassage1_3, group: "Part VI. Reading Comprehension 1", q: "Which of the following is NOT mentioned as a reason for gaming's popularity?", opts: ["A. Digital distribution convenience", "B. The ability to connect with friends globally", "C. The high cost of gaming consoles", "D. The rise of Esports and competitive gaming"], ans: 2, exp: "Chi phí cao (C) không được nhắc đến là lý do tạo nên sự phổ biến." },
+            { id: 34, passage: readingPassage1_3, group: "Part VI. Reading Comprehension 1", q: "The word 'their' in paragraph 3 refers to ______", opts: ["A. geographical boundaries", "B. passionate fans", "C. multiplayer titles", "D. stadiums"], ans: 1, exp: "cheering for their favorite professional teams -> their chỉ passionate fans." },
+            { id: 35, passage: readingPassage2_3, group: "Part VII. Reading Comprehension 2", q: "What is the primary purpose of the passage?", opts: ["A. To persuade students to choose specialized academies.", "B. To discuss the various factors involved in choosing the right university.", "C. To argue that university rankings are completely useless.", "D. To explain how to apply for university scholarships."], ans: 1, exp: "Bài bàn về các yếu tố (học thuật, văn hóa, tài chính) khi chọn trường đại học." },
+            { id: 36, passage: readingPassage2_3, group: "Part VII. Reading Comprehension 2", q: "According to paragraph 2, why might focusing only on university rankings be a mistake?", opts: ["A. Because rankings change every single day.", "B. Because rankings do not account for teaching style or hands-on opportunities.", "C. Because prestigious universities always have poor faculty.", "D. Because highly ranked universities are always too expensive."], ans: 1, exp: "Bảng xếp hạng không thể hiện được phong cách giảng dạy hay cơ hội thực hành." },
+            { id: 37, passage: readingPassage2_3, group: "Part VII. Reading Comprehension 2", q: "The word 'thrive' in paragraph 3 is closest in meaning to ______", opts: ["A. fail", "B. struggle", "C. flourish", "D. hide"], ans: 2, exp: "Thrive = flourish (phát triển mạnh, nở rộ)." },
+            { id: 38, passage: readingPassage2_3, group: "Part VII. Reading Comprehension 2", q: "According to the passage, extracurricular activities ______", opts: ["A. are a distraction from academic studies.", "B. help students develop personal growth and leadership skills.", "C. are only available at large public universities.", "D. increase tuition fees significantly."], ans: 1, exp: "Đoạn 3: '...fostering personal growth and leadership skills.'" },
+            { id: 39, passage: readingPassage2_3, group: "Part VII. Reading Comprehension 2", q: "The phrase 'the final choice' in paragraph 4 refers to ______", opts: ["A. the decision of which university to attend.", "B. the choice of which club to join.", "C. the decision to apply for financial aid.", "D. the choice of a future career."], ans: 0, exp: "Sự lựa chọn cuối cùng chính là quyết định học trường nào." },
+            { id: 40, passage: readingPassage2_3, group: "Part VII. Reading Comprehension 2", q: "Which of the following can be inferred from the passage?", opts: ["A. The most famous university is always the best choice for every student.", "B. Financial planning is an important part of the university selection process.", "C. Students should ignore campus culture when choosing a school.", "D. Specialized academies do not offer extracurricular activities."], ans: 1, exp: "Đoạn cuối: chi phí thường quyết định sự lựa chọn -> lập kế hoạch tài chính là quan trọng." }
+        ];
+
+        // ------------------ LOGIC UI VÀ ĐIỀU HƯỚNG BẢO VỆ ------------------
         function showPage(pageId, tabId = 'listening') {
             if (isTakingExam) {
-                if (!confirm("⚠️ CẢNH BÁO: Bạn đang trong phòng thi! Nếu thoát ra, toàn bộ tiến trình làm bài sẽ bị mất. Bạn có chắc chắn muốn thoát?")) return; 
+                if (!confirm("⚠️ CẢNH BÁO: Bạn đang trong phòng thi! Nếu thoát ra, toàn bộ tiến trình làm bài sẽ bị mất. Bạn có chắc chắn muốn thoát?")) {
+                    return; 
+                }
                 isTakingExam = false;
                 clearInterval(thptTimerInterval);
                 clearInterval(ieltsTimerInterval);
-                if(audioElement) audioElement.pause();
                 document.getElementById('thpt-exam-room').classList.add('hidden');
                 document.getElementById('thpt-dashboard').classList.remove('hidden');
                 document.getElementById('ielts-exam-room').classList.add('hidden');
                 document.getElementById('ielts-dashboard').classList.remove('hidden');
+                document.getElementById('audio-time').innerText = "00:00";
             }
 
             document.querySelectorAll('.page-content').forEach(page => page.classList.remove('active'));
-            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('bg-cyan-50', 'dark:bg-slate-700', 'text-[#ff5e00]'));
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('bg-cyan-50', 'dark:bg-slate-700', 'text-[#ff5e00]');
+            });
 
             const targetPage = document.getElementById('page-' + pageId);
             if (targetPage) {
@@ -777,12 +676,18 @@
             });
 
             const navMenu = document.getElementById('nav-menu');
-            if (navMenu && !navMenu.classList.contains('hidden') && window.innerWidth < 768) navMenu.classList.add('hidden');
+            if (navMenu && !navMenu.classList.contains('hidden') && window.innerWidth < 768) {
+                navMenu.classList.add('hidden');
+            }
+
             if (pageId === 'ielts') showIeltsTab(tabId);
         }
 
         window.addEventListener('beforeunload', (e) => {
-            if (isTakingExam) { e.preventDefault(); e.returnValue = ''; }
+            if (isTakingExam) {
+                e.preventDefault();
+                e.returnValue = '';
+            }
         });
 
         function showIeltsTab(tabId) {
@@ -805,34 +710,22 @@
         function initScrollReveal() {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    if (entry.isIntersecting) entry.target.classList.add('active');
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
                 });
             }, { threshold: 0.1 });
             document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         }
 
-        // --- IELTS LOGIC ---
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('nav-menu').classList.toggle('hidden');
+        });
+
+        // ------------------ LOGIC PHÒNG THI IELTS ------------------
         let ieltsTimerInterval;
         let currentIeltsTestName = "";
         const audioElement = document.getElementById('ielts-audio');
-        const ieltsAudioSources = {
-            1: "https://engnovate.com/wp-content/uploads/2026/06/cambridge-ielts-21-academic-listening-test-4-1.mp3",
-            2: "https://engnovate.com/wp-content/uploads/2026/06/cambridge-ielts-21-academic-listening-test-4-2.mp3",
-            3: "https://engnovate.com/wp-content/uploads/2026/06/cambridge-ielts-21-academic-listening-test-4-3.mp3",
-            4: "https://engnovate.com/wp-content/uploads/2026/06/cambridge-ielts-21-academic-listening-test-4-4.mp3"
-        };
-        const ieltsAnswersMap = {
-            1: "leigh", 2: "motorbike", 3: "hairdresser", 4: "suit", 5: "laptop",
-            6: "monday", 7: "coffee", 8: "books", 9: "plants", 10: "cinema",
-            15: "C", 16: "G", 17: "D", 18: "A", 19: "F", 20: "B",
-            21: "B", 22: "A", 23: "B",
-            24: "B", 25: "E", 26: "I", 27: "A", 28: "D", 29: "H", 30: "G",
-            31: "routine", 32: "trials", 33: "calming", 34: "pillows", 35: "anxiety",
-            36: "medication", 37: "awake", 38: "distraction", 39: "nature", 40: "volume"
-        };
-        // Multi-choice arrays
-        const ans11_12 = ["C", "E"];
-        const ans13_14 = ["A", "B"];
 
         window.startIeltsExam = function(testName, isStrict) {
             currentIeltsTestName = testName;
@@ -840,26 +733,28 @@
             
             if (!isStrict) {
                 const userInput = prompt("Nhập thời gian làm bài bạn muốn (tính bằng phút):", "40");
-                if (userInput === null) return; 
+                if (userInput === null) return; // Người dùng bấm Hủy
                 const parsed = parseInt(userInput);
-                if (!isNaN(parsed) && parsed > 0) duration = parsed;
-                else showToast("Thời gian không hợp lệ, mặc định 40 phút.", "warning");
+                if (!isNaN(parsed) && parsed > 0) {
+                    duration = parsed;
+                } else {
+                    showToast("Thời gian không hợp lệ, mặc định 40 phút.", "warning");
+                }
             }
             
             isTakingExam = true;
             document.getElementById('ielts-dashboard').classList.add('hidden');
-            document.getElementById('ielts-result-room').classList.add('hidden');
             document.getElementById('ielts-exam-room').classList.remove('hidden');
+            document.getElementById('ielts-exam-title').innerText = testName;
             
-            // Xóa đáp án cũ
-            document.querySelectorAll('.ielts-input, select').forEach(el => el.value = '');
-            document.querySelectorAll('input[type="checkbox"], input[type="radio"]').forEach(el => el.checked = false);
-            
-            switchIeltsPart(1, false);
+            // Reset Audio
+            audioElement.pause();
             audioElement.currentTime = 0;
+            audioElement.playbackRate = 1.0;
             document.getElementById('audio-speed').value = "1";
             document.getElementById('btn-audio-play').innerHTML = `<svg class="w-5 h-5 ml-1" fill="currentColor" viewBox="0 0 20 20"><path d="M4 4l12 6-12 6z"></path></svg>`;
             
+            // Start Timer
             let timeInSecs = duration * 60;
             const timerDisplay = document.getElementById('ielts-timer-display');
             timerDisplay.parentElement.classList.remove('animate-pulse');
@@ -881,99 +776,33 @@
                     submitIeltsExam(true);
                 }
             }, 1000);
+            
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        window.switchIeltsPart = function(partNum, autoPlay = true) {
-            for(let i=1; i<=4; i++) {
-                document.getElementById(`ielts-p${i}`).classList.add('hidden');
-                document.getElementById(`tab-p${i}`).classList.remove('bg-cyan-500', 'text-white');
-                document.getElementById(`tab-p${i}`).classList.add('bg-gray-200', 'text-gray-700', 'dark:bg-slate-700', 'dark:text-gray-300');
-            }
-            document.getElementById(`ielts-p${partNum}`).classList.remove('hidden');
-            document.getElementById(`tab-p${partNum}`).classList.remove('bg-gray-200', 'text-gray-700', 'dark:bg-slate-700', 'dark:text-gray-300');
-            document.getElementById(`tab-p${partNum}`).classList.add('bg-cyan-500', 'text-white');
-            
-            // Đổi nguồn Audio
-            const wasPlaying = !audioElement.paused;
-            const speed = audioElement.playbackRate;
-            audioElement.src = ieltsAudioSources[partNum];
-            audioElement.playbackRate = speed;
-            if (autoPlay && wasPlaying) audioElement.play();
-            else {
-                audioElement.pause();
-                document.getElementById('btn-audio-play').innerHTML = `<svg class="w-5 h-5 ml-1" fill="currentColor" viewBox="0 0 20 20"><path d="M4 4l12 6-12 6z"></path></svg>`;
-            }
-        }
-
         window.submitIeltsExam = function(isTimeout = false) {
-            if (!isTimeout) { if (!confirm("Bạn có chắc chắn muốn nộp bài?")) return; }
+            if (!isTimeout) {
+                if (!confirm("Bạn có chắc chắn muốn nộp bài?")) return;
+            }
             clearInterval(ieltsTimerInterval);
             isTakingExam = false;
             audioElement.pause();
             
-            let correct = 0;
-            // Chấm điểm điền từ & Trắc nghiệm đơn
-            for (let key in ieltsAnswersMap) {
-                const el = document.getElementById(`ans-${key}`) || document.querySelector(`input[name="q${key}"]:checked`);
-                if (el) {
-                    let userVal = el.value.trim().toLowerCase();
-                    if (userVal === ieltsAnswersMap[key].toLowerCase()) correct++;
-                }
-            }
-            // Chấm 11-12 & 13-14
-            const user11 = Array.from(document.querySelectorAll('input[name="q11_12"]:checked')).map(el => el.value);
-            user11.forEach(val => { if(ans11_12.includes(val)) correct++; });
-            const user13 = Array.from(document.querySelectorAll('input[name="q13_14"]:checked')).map(el => el.value);
-            user13.forEach(val => { if(ans13_14.includes(val)) correct++; });
-
-            // Tính Band Điểm
-            let band = 0.0;
-            if(correct >= 39) band = 9.0;
-            else if(correct >= 37) band = 8.5;
-            else if(correct >= 35) band = 8.0;
-            else if(correct >= 32) band = 7.5;
-            else if(correct >= 30) band = 7.0;
-            else if(correct >= 26) band = 6.5;
-            else if(correct >= 23) band = 6.0;
-            else if(correct >= 18) band = 5.5;
-            else if(correct >= 16) band = 5.0;
-            else if(correct >= 13) band = 4.5;
-            else if(correct >= 10) band = 4.0;
-            else band = 3.5;
-
+            // Random điểm demo 5.5 -> 9.0 để mô phỏng
+            const demoScore = (Math.random() * (9.0 - 5.5) + 5.5).toFixed(1);
+            
             document.getElementById('ielts-exam-room').classList.add('hidden');
-            document.getElementById('ielts-result-room').classList.remove('hidden');
-            document.getElementById('ielts-correct-count').innerText = correct;
-            document.getElementById('ielts-final-score').innerText = band.toFixed(1);
+            document.getElementById('ielts-dashboard').classList.remove('hidden');
             
-            document.getElementById('ielts-transcript-container').innerHTML = `<p class="italic font-bold mb-2">Hệ thống đã tự động chấm điểm bài làm của bạn.</p><p>Các đáp án đúng: <br>1-10: Leigh, motorbike, hairdresser, suit, laptop, Monday, coffee, books, plants, cinema.<br>11-14: C,E | A,B<br>15-20: C, G, D, A, F, B<br>21-23: B, A, B<br>24-30: B, E, I, A, D, H, G<br>31-40: routine, trials, calming, pillows, anxiety, medication, awake, distraction, nature, volume.</p>`;
-            
-            if (typeof window.submitTestResult === 'function') window.submitTestResult(currentIeltsTestName, band);
+            if (typeof window.submitTestResult === 'function') {
+                window.submitTestResult(currentIeltsTestName, parseFloat(demoScore));
+            } else {
+                showToast(`Đã nộp bài. Điểm Demo: ${demoScore}`, 'success');
+            }
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        window.confirmExitIelts = function() {
-            if(confirm("Thoát bài thi sẽ hủy mọi tiến trình. Bạn có chắc muốn thoát?")) {
-                isTakingExam = false;
-                clearInterval(ieltsTimerInterval);
-                audioElement.pause();
-                document.getElementById('ielts-exam-room').classList.add('hidden');
-                document.getElementById('ielts-dashboard').classList.remove('hidden');
-            }
-        }
-        
-        window.redoIeltsExam = function() {
-            document.getElementById('ielts-result-room').classList.add('hidden');
-            startIeltsExam(currentIeltsTestName, false);
-        }
-        
-        window.exitToIeltsDashboard = function() {
-            document.getElementById('ielts-result-room').classList.add('hidden');
-            document.getElementById('ielts-dashboard').classList.remove('hidden');
-        }
-
-        // Audio Controls
+        // --- AUDIO CONTROLS ---
         window.toggleAudio = function() {
             const btn = document.getElementById('btn-audio-play');
             if (audioElement.paused) {
@@ -984,116 +813,418 @@
                 btn.innerHTML = `<svg class="w-5 h-5 ml-1" fill="currentColor" viewBox="0 0 20 20"><path d="M4 4l12 6-12 6z"></path></svg>`;
             }
         };
-        window.rewindAudio = function() { audioElement.currentTime = Math.max(0, audioElement.currentTime - 5); };
-        window.forwardAudio = function() { audioElement.currentTime = Math.min(audioElement.duration, audioElement.currentTime + 5); };
-        window.changeAudioSpeed = function() { audioElement.playbackRate = parseFloat(document.getElementById('audio-speed').value); };
+
+        window.rewindAudio = function() {
+            audioElement.currentTime = Math.max(0, audioElement.currentTime - 5);
+        };
+
+        window.forwardAudio = function() {
+            audioElement.currentTime = Math.min(audioElement.duration, audioElement.currentTime + 5);
+        };
+
+        window.changeAudioSpeed = function() {
+            audioElement.playbackRate = parseFloat(document.getElementById('audio-speed').value);
+        };
+
         audioElement.addEventListener('timeupdate', () => {
             let m = Math.floor(audioElement.currentTime / 60).toString().padStart(2, '0');
             let s = Math.floor(audioElement.currentTime % 60).toString().padStart(2, '0');
             document.getElementById('audio-time').innerText = `${m}:${s}`;
         });
 
-        // --- HIGHLIGHTING LOGIC ---
+        // ------------------ LOGIC HIGHLIGHT VĂN BẢN ------------------
         document.addEventListener('mouseup', function(e) {
             const examText = document.getElementById('ielts-exam-content');
             if(!examText) return;
+            
             const tooltip = document.getElementById('highlight-tooltip');
+            
+            // Ẩn tooltip nếu click ra ngoài
             if (!examText.contains(e.target) && !tooltip.contains(e.target)) {
-                tooltip.classList.add('hidden'); tooltip.classList.add('opacity-0'); return;
+                tooltip.classList.add('hidden');
+                tooltip.classList.add('opacity-0');
+                return;
             }
+
             const selection = window.getSelection();
             if (selection.toString().trim().length > 0 && examText.contains(selection.anchorNode)) {
                 const range = selection.getRangeAt(0);
                 const rect = range.getBoundingClientRect();
+                
                 tooltip.style.top = (rect.top + window.scrollY - 45) + 'px';
                 tooltip.style.left = (rect.left + window.scrollX + rect.width / 2) + 'px';
                 tooltip.classList.remove('hidden');
                 setTimeout(() => tooltip.classList.remove('opacity-0'), 10);
             } else {
-                tooltip.classList.add('hidden'); tooltip.classList.add('opacity-0');
+                tooltip.classList.add('hidden');
+                tooltip.classList.add('opacity-0');
             }
         });
+
         window.applyHighlight = function(colorClass) {
             const selection = window.getSelection();
             if (!selection.rangeCount) return;
             const range = selection.getRangeAt(0);
+            
             try {
                 const span = document.createElement('span');
                 span.className = `${colorClass} rounded px-1 cursor-pointer transition-colors`;
                 span.title = "Nháy đúp để xóa Highlight";
+                
                 span.ondblclick = function() {
                     const parent = this.parentNode;
-                    while(this.firstChild) { parent.insertBefore(this.firstChild, this); }
+                    while(this.firstChild) {
+                        parent.insertBefore(this.firstChild, this);
+                    }
                     parent.removeChild(this);
                 };
+                
                 range.surroundContents(span);
-            } catch (e) { showToast("Vui lòng bôi đen trong phạm vi một dòng hoặc đoạn văn!", "warning"); }
+            } catch (e) {
+                showToast("Vui lòng bôi đen trong phạm vi một dòng hoặc đoạn văn!", "warning");
+            }
+            
             selection.removeAllRanges();
             const tooltip = document.getElementById('highlight-tooltip');
             tooltip.classList.add('opacity-0');
             setTimeout(() => tooltip.classList.add('hidden'), 200);
         }
 
-        // --- THPT LOGIC (Bản thu gọn cho phép chạy) ---
+        // ------------------ LOGIC PHÒNG THI THPT ------------------
+        let currentThptData = [];
+        let userThptAnswers = [];
         let thptTimerInterval;
+        let currentExamTitle = "";
+
         window.startThptExam = function(examId) {
+            if(examId === 3) {
+                currentThptData = thptExamData3;
+                currentExamTitle = "Đề Minh Họa Số 3 - THPTQG";
+            } else {
+                currentThptData = thptExamData2;
+                currentExamTitle = "Đề Minh Họa Số 2 - THPTQG";
+            }
+            
+            userThptAnswers = new Array(currentThptData.length).fill(null);
             isTakingExam = true;
+
             document.getElementById('thpt-dashboard').classList.add('hidden');
             document.getElementById('thpt-exam-room').classList.remove('hidden');
+            document.getElementById('thpt-result-room').classList.add('hidden');
+            document.getElementById('thpt-exam-title').innerText = currentExamTitle;
+            
+            const qContainer = document.getElementById('thpt-questions-container');
+            const navContainer = document.getElementById('thpt-navigator');
+            qContainer.innerHTML = '';
+            navContainer.innerHTML = '';
+
+            let currentGroup = "";
+            let currentPassage = "";
+
+            currentThptData.forEach((item, index) => {
+                if (item.group !== currentGroup) {
+                    currentGroup = item.group;
+                    const groupDiv = document.createElement('div');
+                    groupDiv.className = "bg-cyan-500 text-white font-bold py-2 px-4 rounded-t-xl mt-6 shadow-md";
+                    groupDiv.innerText = currentGroup;
+                    qContainer.appendChild(groupDiv);
+                }
+
+                if (item.passage && item.passage !== currentPassage) {
+                    currentPassage = item.passage;
+                    const passageDiv = document.createElement('div');
+                    passageDiv.className = "bg-cyan-50 dark:bg-slate-700/50 p-6 text-gray-700 dark:text-gray-300 border-x border-cyan-100 dark:border-slate-600 italic whitespace-pre-wrap text-sm md:text-base leading-relaxed shadow-inner";
+                    passageDiv.innerText = currentPassage;
+                    qContainer.appendChild(passageDiv);
+                }
+
+                const qDiv = document.createElement('div');
+                qDiv.className = "bg-white dark:bg-darkCard p-6 border-b border-x border-gray-200 dark:border-slate-700 " + (index === currentThptData.length - 1 || currentThptData[index+1]?.group !== currentGroup ? "rounded-b-xl mb-6 shadow-sm" : "");
+                qDiv.id = `thpt-q-${index}`;
+
+                let html = `
+                    <div class="flex gap-4">
+                        <div class="bg-gray-100 dark:bg-slate-700 text-gray-800 dark:text-white font-bold h-10 w-10 shrink-0 flex items-center justify-center rounded-full shadow-inner">
+                            ${item.id}
+                        </div>
+                        <div class="w-full">
+                            <p class="font-semibold text-gray-800 dark:text-gray-200 mb-4 whitespace-pre-line leading-relaxed">${item.q}</p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                `;
+
+                item.opts.forEach((opt, optIdx) => {
+                    html += `
+                        <button onclick="selectThptOption(${index}, ${optIdx})" id="thpt-opt-${index}-${optIdx}" class="text-left px-4 py-3 border-2 border-gray-200 dark:border-slate-600 rounded-xl hover:bg-cyan-50 dark:hover:bg-slate-700 transition font-medium text-gray-700 dark:text-gray-300 focus:outline-none">
+                            ${opt}
+                        </button>
+                    `;
+                });
+
+                html += `</div></div></div>`;
+                qDiv.innerHTML = html;
+                qContainer.appendChild(qDiv);
+
+                const navBtn = document.createElement('button');
+                navBtn.className = "h-10 w-10 rounded-lg border border-gray-300 dark:border-slate-600 font-bold text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-700 transition flex items-center justify-center focus:outline-none";
+                navBtn.innerText = item.id;
+                navBtn.id = `thpt-nav-${index}`;
+                navBtn.onclick = () => {
+                    document.getElementById(`thpt-q-${index}`).scrollIntoView({ behavior: 'smooth', block: 'center' });
+                };
+                navContainer.appendChild(navBtn);
+            });
+
+            const submitBottomDiv = document.createElement('div');
+            submitBottomDiv.className = "mt-8 mb-12 text-center";
+            submitBottomDiv.innerHTML = `<button onclick="submitThptExam(false)" class="bg-emerald-500 hover:bg-emerald-400 text-white font-extrabold text-xl py-4 px-12 rounded-full shadow-[0_10px_25px_rgba(16,185,129,0.4)] transition transform hover:-translate-y-1">Nộp Bài Ngay</button>`;
+            qContainer.appendChild(submitBottomDiv);
+
             let time = 50 * 60;
-            thptTimerInterval = setInterval(() => { time--; if(time<=0) { clearInterval(thptTimerInterval); submitThptExam(true); } }, 1000);
+            const timerDisplay = document.getElementById('thpt-timer-display');
+            clearInterval(thptTimerInterval);
+            
+            thptTimerInterval = setInterval(() => {
+                time--;
+                let m = Math.floor(time / 60).toString().padStart(2, '0');
+                let s = (time % 60).toString().padStart(2, '0');
+                timerDisplay.innerText = `${m}:${s}`;
+                
+                if (time === 300) {
+                    showToast("Chỉ còn 5 phút nữa, hãy kiểm tra lại bài nhé!", "warning");
+                    timerDisplay.parentElement.classList.add('animate-pulse');
+                }
+                
+                if (time <= 0) {
+                    clearInterval(thptTimerInterval);
+                    submitThptExam(true);
+                }
+            }, 1000);
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-        window.submitThptExam = function(isTimeout) {
-            isTakingExam = false; clearInterval(thptTimerInterval);
+
+        window.selectThptOption = function(qIndex, optIndex) {
+            userThptAnswers[qIndex] = optIndex;
+            
+            for (let i = 0; i < 4; i++) {
+                const btn = document.getElementById(`thpt-opt-${qIndex}-${i}`);
+                if(btn) btn.className = "text-left px-4 py-3 border-2 border-gray-200 dark:border-slate-600 rounded-xl hover:bg-cyan-50 dark:hover:bg-slate-700 transition font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-darkCard";
+            }
+            
+            const selectedBtn = document.getElementById(`thpt-opt-${qIndex}-${optIndex}`);
+            if(selectedBtn) selectedBtn.className = "text-left px-4 py-3 border-2 border-cyan-500 rounded-xl font-bold text-cyan-700 bg-cyan-50 dark:bg-cyan-900/40 dark:text-cyan-300 dark:border-cyan-400 ring-2 ring-cyan-200 transition transform scale-[1.02]";
+
+            const navBtn = document.getElementById(`thpt-nav-${qIndex}`);
+            if(navBtn) navBtn.className = "h-10 w-10 rounded-lg font-bold text-white bg-cyan-500 border border-cyan-600 shadow-sm flex items-center justify-center transition";
+        }
+
+        window.submitThptExam = function(isTimeout = false) {
+            if (!isTimeout) {
+                const unanswered = userThptAnswers.filter(a => a === null).length;
+                if (unanswered > 0) {
+                    if (!confirm(`Bạn còn ${unanswered} câu chưa làm. Bạn có chắc chắn muốn nộp bài?`)) return;
+                }
+            }
+
+            clearInterval(thptTimerInterval);
+            isTakingExam = false; 
+            
+            let correctCount = 0;
+            userThptAnswers.forEach((ans, idx) => {
+                if (ans === currentThptData[idx].ans) correctCount++;
+            });
+            
+            const finalScore = ((correctCount / currentThptData.length) * 10).toFixed(2);
+            
             document.getElementById('thpt-exam-room').classList.add('hidden');
             document.getElementById('thpt-result-room').classList.remove('hidden');
-            if (typeof window.submitTestResult === 'function') window.submitTestResult('Đề THPT', 8.5);
+            
+            document.getElementById('thpt-result-title').innerText = currentExamTitle;
+            document.getElementById('thpt-correct-count').innerText = correctCount;
+            document.getElementById('thpt-final-score').innerText = finalScore;
+            
+            renderThptExplanations();
+            
+            if (typeof window.submitTestResult === 'function') {
+                window.submitTestResult(currentExamTitle, parseFloat(finalScore));
+            } else {
+                showToast(`Nộp bài thành công. Điểm của bạn: ${finalScore}`, 'success');
+            }
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-        window.confirmExitThpt = function() {
-            if(confirm("Thoát bài thi sẽ hủy tiến trình?")) { isTakingExam = false; clearInterval(thptTimerInterval); document.getElementById('thpt-exam-room').classList.add('hidden'); document.getElementById('thpt-dashboard').classList.remove('hidden'); }
+
+        function renderThptExplanations() {
+            const container = document.getElementById('thpt-explanations-container');
+            container.innerHTML = '';
+            
+            currentThptData.forEach((item, index) => {
+                const userAns = userThptAnswers[index];
+                const isCorrect = userAns === item.ans;
+                
+                let html = `
+                    <div class="bg-gray-50 dark:bg-slate-700/50 p-6 rounded-2xl border shadow-sm ${isCorrect ? 'border-emerald-300 dark:border-emerald-700' : 'border-rose-300 dark:border-rose-700'}">
+                        <div class="flex gap-4 items-start mb-4">
+                            <div class="h-8 w-8 rounded-full flex items-center justify-center shrink-0 font-bold text-white shadow-md ${isCorrect ? 'bg-emerald-500' : 'bg-rose-500'}">
+                                ${item.id}
+                            </div>
+                            <div class="w-full">
+                                <p class="font-bold text-gray-800 dark:text-gray-200 whitespace-pre-line leading-relaxed">${item.q}</p>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 ml-12 mb-4">
+                `;
+                
+                item.opts.forEach((opt, optIdx) => {
+                    let optClass = "px-4 py-2 rounded-lg border border-gray-200 dark:border-slate-600 text-gray-600 dark:text-gray-400 bg-white dark:bg-slate-800";
+                    
+                    if (optIdx === item.ans) {
+                        optClass = "px-4 py-2 rounded-lg border-2 border-emerald-500 bg-emerald-50 text-emerald-700 font-bold dark:bg-emerald-900/30 dark:text-emerald-300 shadow-sm";
+                    } else if (optIdx === userAns && !isCorrect) {
+                        optClass = "px-4 py-2 rounded-lg border-2 border-rose-500 bg-rose-50 text-rose-700 font-bold dark:bg-rose-900/30 dark:text-rose-300 line-through opacity-70";
+                    }
+
+                    html += `<div class="${optClass}">${opt}</div>`;
+                });
+
+                html += `
+                        </div>
+                        <div class="ml-12 p-4 bg-cyan-50 dark:bg-cyan-900/20 rounded-xl border border-cyan-100 dark:border-cyan-800">
+                            <p class="text-sm font-bold text-cyan-800 dark:text-cyan-300 mb-2 flex items-center gap-2"><span>💡</span> Giải thích chi tiết:</p>
+                            <p class="text-gray-700 dark:text-gray-300 text-sm italic leading-relaxed">${item.exp}</p>
+                        </div>
+                    </div>
+                `;
+                
+                container.innerHTML += html;
+            });
         }
-        window.exitToThptDashboard = function() { document.getElementById('thpt-result-room').classList.add('hidden'); document.getElementById('thpt-dashboard').classList.remove('hidden'); }
         
-        // Misc Calc & Streak
-        window.calculateIELTS = function() { /* Calc Logic */ }
+        window.exitToThptDashboard = function() {
+            isTakingExam = false;
+            document.getElementById('thpt-result-room').classList.add('hidden');
+            document.getElementById('thpt-dashboard').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.calculateIELTS = function() {
+            const l = parseFloat(document.getElementById('calc-l').value) || 0;
+            const r = parseFloat(document.getElementById('calc-r').value) || 0;
+            const w = parseFloat(document.getElementById('calc-w').value) || 0;
+            const s = parseFloat(document.getElementById('calc-s').value) || 0;
+            const target = parseFloat(document.getElementById('calc-target').value) || 0;
+
+            let avg = (l + r + w + s) / 4;
+            let integerPart = Math.floor(avg);
+            let fractionalPart = avg - integerPart;
+            let overall = integerPart;
+
+            if (fractionalPart >= 0.75) overall = integerPart + 1.0;
+            else if (fractionalPart >= 0.25) overall = integerPart + 0.5;
+
+            document.getElementById('calc-result').innerText = overall.toFixed(1);
+
+            const status = document.getElementById('calc-status');
+            if(target > 0) {
+                if(overall >= target) {
+                    status.innerText = "🎉 Tuyệt vời! Bạn đã đạt mục tiêu!";
+                    status.className = "text-white font-bold text-xs mt-2 transition-colors";
+                } else {
+                    status.innerText = `🔥 Cần thêm ${(target - overall).toFixed(1)} điểm nữa!`;
+                    status.className = "text-rose-200 font-bold text-xs mt-2 transition-colors";
+                }
+            } else {
+                status.innerText = "";
+            }
+        };
+
         window.renderStreakCalendar = function(activeDates = new Set()) {
             const container = document.getElementById('streak-calendar-container');
             if(!container) return;
+
             const currentYear = new Date().getFullYear();
             const monthNames = ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"];
             let html = '<div class="flex gap-6 overflow-x-auto custom-scroll pb-4 pt-2 snap-x">';
+
             for(let month = 0; month < 12; month++) {
                 const daysInMonth = new Date(currentYear, month + 1, 0).getDate();
                 html += `<div class="min-w-[240px] snap-center bg-gray-50 dark:bg-slate-700/50 p-4 rounded-xl border border-gray-100 dark:border-slate-600 shadow-sm">`;
                 html += `<h4 class="text-sm font-bold text-cyan-700 dark:text-cyan-300 mb-3 text-center uppercase tracking-wider">${monthNames[month]} ${currentYear}</h4>`;
-                html += `<div class="grid grid-cols-7 gap-2 text-center text-xs text-gray-400 mb-1"><div>T2</div><div>T3</div><div>T4</div><div>T5</div><div>T6</div><div>T7</div><div>CN</div></div>`;
+                html += `<div class="grid grid-cols-7 gap-2 text-center text-xs text-gray-400 mb-1">
+                            <div>T2</div><div>T3</div><div>T4</div><div>T5</div><div>T6</div><div>T7</div><div>CN</div>
+                         </div>`;
                 html += `<div class="grid grid-cols-7 gap-1">`;
+                
                 let firstDay = new Date(currentYear, month, 1).getDay();
                 firstDay = firstDay === 0 ? 6 : firstDay - 1; 
-                for(let i=0; i<firstDay; i++) { html += `<div></div>`; }
+                
+                for(let i=0; i<firstDay; i++) {
+                    html += `<div></div>`;
+                }
+
                 for(let day = 1; day <= daysInMonth; day++) {
                     const dateStr = `${day.toString().padStart(2, '0')}/${(month+1).toString().padStart(2, '0')}/${currentYear}`;
                     const isActive = activeDates.has(dateStr);
-                    const colorClass = isActive ? 'bg-emerald-500 text-white shadow-[0_0_8px_rgba(16,185,129,0.6)] font-bold transform scale-110 z-10 border border-emerald-400' : 'bg-white dark:bg-slate-800 text-gray-500 hover:bg-cyan-50 border border-gray-100 dark:border-slate-700';
+                    
+                    const colorClass = isActive 
+                        ? 'bg-emerald-500 text-white shadow-[0_0_8px_rgba(16,185,129,0.6)] font-bold transform scale-110 z-10 border border-emerald-400' 
+                        : 'bg-white dark:bg-slate-800 text-gray-500 dark:text-gray-400 hover:bg-cyan-50 dark:hover:bg-slate-600 border border-gray-100 dark:border-slate-700';
+                    
                     const content = isActive ? `${day} <span class="absolute -top-2 -right-2 text-[10px] drop-shadow-md animate-bounce">🔥</span>` : `${day}`;
+                    
                     html += `<div class="relative w-7 h-7 flex items-center justify-center rounded text-[11px] cursor-pointer transition-all duration-300 ${colorClass}" title="${dateStr}">${content}</div>`;
                 }
                 html += `</div></div>`;
             }
             html += '</div>';
             container.innerHTML = html;
+            
             setTimeout(() => {
                 const currentMonth = new Date().getMonth();
                 const scrollArea = container.querySelector('.overflow-x-auto');
                 if(scrollArea) scrollArea.scrollLeft = currentMonth * 260; 
             }, 300);
         };
+
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `px-4 py-3 rounded-lg shadow-lg text-white font-bold pointer-events-auto ${type === 'success' ? 'bg-emerald-500' : type === 'warning' ? 'bg-amber-500' : 'bg-rose-500'} transition-all duration-300 transform translate-y-10 opacity-0`;
+            toast.innerText = message;
+            document.getElementById('toast-container').appendChild(toast);
+            
+            setTimeout(() => { toast.classList.remove('translate-y-10', 'opacity-0'); }, 10);
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
+
+        function openLoginModal() { document.getElementById('auth-modal').classList.remove('hidden'); }
+        function closeModals() { 
+            document.getElementById('auth-modal').classList.add('hidden');
+            document.getElementById('progress-modal').classList.add('hidden');
+        }
+
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            html.classList.toggle('dark');
+            const isDark = html.classList.contains('dark');
+            document.getElementById('theme-icon').innerText = isDark ? '☀️' : '🌙';
+            try { localStorage.setItem('theme', isDark ? 'dark' : 'light'); } catch(e){}
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            showPage('home');
+            initScrollReveal();
+            setTimeout(renderStreakCalendar, 500); 
+        });
     </script>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-analytics.js";
         import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, serverTimestamp, getDocs, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, serverTimestamp, getDocs, doc, setDoc, getDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyALmotmcPgFYE6A1Zxi312X95Lh7OqMRBc",
@@ -1106,6 +1237,7 @@
         };
 
         const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
         window.auth = getAuth(app);
         window.db = getFirestore(app);
         
@@ -1118,15 +1250,22 @@
 
         window.fetchUserStreak = async function() {
             if(typeof window.db === 'undefined' || !window.globalUser) {
-                window.renderStreakCalendar(); return;
+                window.renderStreakCalendar();
+                return;
             }
             try {
                 const progressRef = collection(window.db, 'users', window.globalUser.uid, 'progress');
                 const qSnap = await getDocs(progressRef);
                 const activeDates = new Set();
-                qSnap.forEach(doc => { const data = doc.data(); if(data.dateStr) activeDates.add(data.dateStr); });
+                qSnap.forEach(doc => {
+                    const data = doc.data();
+                    if(data.dateStr) activeDates.add(data.dateStr);
+                });
                 window.renderStreakCalendar(activeDates);
-            } catch(e) { window.renderStreakCalendar(); }
+            } catch(e) { 
+                console.error("Lỗi lấy dữ liệu Streak", e); 
+                window.renderStreakCalendar();
+            }
         };
 
         window.updateIeltsUI = async function() {
@@ -1134,10 +1273,13 @@
             try {
                 const progressRef = collection(window.db, 'users', window.globalUser.uid, 'progress');
                 const querySnapshot = await getDocs(progressRef);
+                
                 querySnapshot.forEach((docSnap) => {
                     const data = docSnap.data();
                     let actionId = "";
-                    if (data.testName === 'Cambridge 21 - Test 4') actionId = "ielts-action-cam21-4";
+                    if (data.testName === 'Cambridge 18 - Test 1') actionId = "ielts-action-cam18-1";
+                    if (data.testName === 'Cambridge 19 - Test 1') actionId = "ielts-action-cam19-1";
+                    if (data.testName === 'Cambridge 20 - Test 1') actionId = "ielts-action-cam20-1";
                     
                     if (actionId) {
                         const actionDiv = document.getElementById(actionId);
@@ -1146,7 +1288,7 @@
                         }
                     }
                 });
-            } catch(e) {}
+            } catch(e) { console.error("Lỗi cập nhật UI IELTS", e); }
         }
 
         onAuthStateChanged(window.auth, async (user) => {
@@ -1155,20 +1297,30 @@
             const profileMenu = document.getElementById('user-profile');
             
             if (user && btnLogin && profileMenu) {
-                btnLogin.classList.add('hidden'); profileMenu.classList.remove('hidden');
+                btnLogin.classList.add('hidden');
+                profileMenu.classList.remove('hidden');
+                
+                const displayName = user.email.split('@')[0];
                 document.getElementById('user-email-display').innerText = user.email;
-                document.getElementById('user-name-display').innerText = user.email.split('@')[0];
+                document.getElementById('user-name-display').innerText = displayName;
+                
                 const avatarUrl = `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.uid}`;
-                document.getElementById('profile-avatar').src = avatarUrl; document.getElementById('dropdown-avatar').src = avatarUrl;
+                document.getElementById('profile-avatar').src = avatarUrl;
+                document.getElementById('dropdown-avatar').src = avatarUrl;
+                
                 try {
                     const docSnap = await getDoc(doc(window.db, "users", user.uid));
-                    if (docSnap.exists() && docSnap.data().goal) document.getElementById('user-goal').value = docSnap.data().goal;
-                } catch(e) {}
+                    if (docSnap.exists() && docSnap.data().goal) {
+                        document.getElementById('user-goal').value = docSnap.data().goal;
+                    }
+                } catch(e) { console.log("Lỗi tải mục tiêu:", e); }
+
                 if(typeof window.fetchUserStreak === 'function') window.fetchUserStreak();
                 if(typeof window.updateIeltsUI === 'function') window.updateIeltsUI();
                 closeModals();
             } else if(btnLogin && profileMenu) {
-                btnLogin.classList.remove('hidden'); profileMenu.classList.add('hidden');
+                btnLogin.classList.remove('hidden');
+                profileMenu.classList.add('hidden');
                 document.getElementById('user-goal').value = '';
                 if(typeof window.renderStreakCalendar === 'function') window.renderStreakCalendar(); 
             }
@@ -1188,52 +1340,104 @@
             const email = document.getElementById('auth-email').value;
             const pass = document.getElementById('auth-password').value;
             try {
-                if (isLoginMode) { await signInWithEmailAndPassword(window.auth, email, pass); showToast("Đăng nhập thành công!", 'success'); } 
-                else { await createUserWithEmailAndPassword(window.auth, email, pass); await signOut(window.auth); showToast("Tạo tài khoản thành công! Vui lòng đăng nhập lại.", 'success'); if (!isLoginMode) toggleAuthMode(); }
-            } catch (error) { showToast("Sai thông tin hoặc mật khẩu yếu!", 'error'); }
+                if (isLoginMode) {
+                    await signInWithEmailAndPassword(window.auth, email, pass);
+                    showToast("Đăng nhập thành công!", 'success');
+                } else {
+                    await createUserWithEmailAndPassword(window.auth, email, pass);
+                    await signOut(window.auth);
+                    showToast("Tạo tài khoản thành công! Vui lòng đăng nhập lại.", 'success');
+                    if (!isLoginMode) toggleAuthMode(); 
+                }
+            } catch (error) {
+                let msg = "Đã xảy ra lỗi: " + error.message;
+                if (error.code === 'auth/email-already-in-use') msg = "Email này đã được sử dụng!";
+                if (error.code === 'auth/weak-password') msg = "Mật khẩu phải từ 6 ký tự trở lên!";
+                if (error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') msg = "Sai mật khẩu hoặc email!";
+                showToast(msg, 'error');
+            }
         }
 
-        window.logoutUser = async function() { await signOut(window.auth); showToast("Đã đăng xuất!", 'success'); }
+        window.logoutUser = async function() {
+            await signOut(auth);
+            showToast("Đã đăng xuất!", 'success');
+        }
 
         window.saveUserGoal = async function() {
-            if (!window.globalUser) return;
+            if (!globalUser) return;
             const goal = document.getElementById('user-goal').value;
-            try { await setDoc(doc(window.db, "users", window.globalUser.uid), { goal: goal }, { merge: true }); showToast("Đã lưu mục tiêu thành công!", 'success'); } catch (error) {}
+            try {
+                await setDoc(doc(db, "users", globalUser.uid), { goal: goal }, { merge: true });
+                showToast("Đã lưu mục tiêu thành công!", 'success');
+            } catch (error) {
+                showToast("Lỗi khi lưu mục tiêu.", 'error');
+            }
         }
 
         window.submitTestResult = async function(testName, score) {
-            if (!window.globalUser) { showToast("Vui lòng đăng nhập để lưu kết quả!", 'error'); openLoginModal(); return; }
+            if (!window.globalUser) {
+                showToast("Vui lòng đăng nhập để lưu kết quả!", 'error');
+                openLoginModal();
+                return;
+            }
             try {
                 const progressRef = collection(window.db, 'users', window.globalUser.uid, 'progress');
-                await addDoc(progressRef, { testName: testName, score: parseFloat(score), timestamp: serverTimestamp(), dateStr: new Date().toLocaleDateString('vi-VN') });
+                await addDoc(progressRef, {
+                    testName: testName,
+                    score: parseFloat(score),
+                    timestamp: serverTimestamp(),
+                    dateStr: new Date().toLocaleDateString('vi-VN')
+                });
                 showToast(`Đã lưu kết quả ${parseFloat(score).toFixed(1)} điểm cho ${testName}.`, 'success');
+                
                 if (typeof window.fetchUserStreak === 'function') window.fetchUserStreak();
                 if (typeof window.updateIeltsUI === 'function') window.updateIeltsUI();
-            } catch (error) { showToast("Không thể lưu kết quả.", 'error'); }
+            } catch (error) {
+                showToast("Không thể lưu kết quả. Vui lòng kiểm tra lại đường truyền.", 'error');
+                console.error(error);
+            }
         }
 
         window.showProgressModal = async function() {
             document.getElementById('progress-modal').classList.remove('hidden');
             const container = document.getElementById('progress-list-container');
             container.innerHTML = '<p class="text-center text-gray-500 my-4">Đang tải dữ liệu...</p>';
+            
             if (!window.globalUser) return;
             try {
                 const progressRef = collection(window.db, 'users', window.globalUser.uid, 'progress');
                 const querySnapshot = await getDocs(progressRef);
-                let historyHTML = '<div class="space-y-4">'; let count = 0;
+                let historyHTML = '<div class="space-y-4">';
+                let count = 0;
+                
                 querySnapshot.forEach((docSnap) => {
-                    count++; const data = docSnap.data();
-                    let scoreColor = "bg-cyan-100 text-cyan-800";
-                    if(parseFloat(data.score) >= 8.0) scoreColor = "bg-emerald-100 text-emerald-800";
+                    count++;
+                    const data = docSnap.data();
+                    
+                    let scoreColor = "bg-cyan-100 text-cyan-800 dark:bg-cyan-900/50 dark:text-cyan-300";
+                    if(parseFloat(data.score) >= 8.0) scoreColor = "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300";
+                    else if(parseFloat(data.score) < 5.0) scoreColor = "bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-300";
+
                     historyHTML += `
-                        <div class="flex justify-between items-center p-4 bg-gray-50 rounded-xl border border-gray-100">
-                            <div><h4 class="font-bold">${data.testName}</h4><p class="text-xs">${data.dateStr}</p></div>
-                            <div class="${scoreColor} font-black text-xl px-4 py-2 rounded-xl">${parseFloat(data.score).toFixed(1)}</div>
-                        </div>`;
+                        <div class="flex justify-between items-center p-4 bg-gray-50 dark:bg-slate-700/50 rounded-xl border border-gray-100 dark:border-slate-600 hover:shadow-md transition">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-full bg-white dark:bg-slate-800 shadow-sm flex items-center justify-center text-xl">📝</div>
+                                <div>
+                                    <h4 class="text-base font-bold text-gray-800 dark:text-gray-200">${data.testName}</h4>
+                                    <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 mt-1 flex items-center gap-1"><span>🕒</span> ${data.dateStr}</p>
+                                </div>
+                            </div>
+                            <div class="${scoreColor} font-black text-xl px-4 py-2 rounded-xl shadow-sm border border-white/20">
+                                ${parseFloat(data.score).toFixed(1)}
+                            </div>
+                        </div>
+                    `;
                 });
                 historyHTML += '</div>';
-                container.innerHTML = count === 0 ? '<p class="text-center py-10">Chưa có bài thi nào.</p>' : historyHTML;
-            } catch (error) {}
+                container.innerHTML = count === 0 ? '<div class="text-center py-10"><div class="text-6xl mb-4">📭</div><p class="text-gray-500 font-medium text-lg">Bạn chưa hoàn thành bài thi nào.<br>Hãy bắt đầu chinh phục đề đầu tiên nhé!</p></div>' : historyHTML;
+            } catch (error) {
+                container.innerHTML = '<p class="text-center text-rose-500 font-bold my-4">Không thể tải dữ liệu.</p>';
+            }
         }
     </script>
 </body>
