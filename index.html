@@ -97,13 +97,11 @@
                         </div>
                         
                         <div class="py-2 bg-white dark:bg-slate-800">
-                            <button onclick="showProgressModal()" class="w-full text-left px-6 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 transition">My Dashboard</button>
-                            <button onclick="showPage('ielts')" class="w-full text-left px-6 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 transition">My IELTS Prep Services</button>
-                            <button onclick="showProgressModal()" class="w-full text-left px-6 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 transition">My Profile</button>
+                            <button onclick="showProgressModal()" class="w-full text-left px-6 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 transition">Hồ sơ & Tiến trình</button>
                         </div>
                         
                         <div class="border-t border-gray-100 dark:border-slate-700 py-2 bg-white dark:bg-slate-800">
-                            <button onclick="logoutUser()" class="w-full text-left px-6 py-2.5 text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-700 transition">Log Out</button>
+                            <button onclick="logoutUser()" class="w-full text-left px-6 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-slate-700 transition font-bold">Đăng xuất</button>
                         </div>
                     </div>
                 </div>
@@ -159,14 +157,14 @@
                     </div>
                 </div>
 
-                <!-- Lịch Streak (Giao diện Mới) -->
+                <!-- Lịch Streak -->
                 <div class="xl:col-span-8 bg-white dark:bg-darkCard p-6 rounded-[30px] shadow-sm border border-gray-100 dark:border-slate-700 flex flex-col">
                     <div class="flex justify-between items-center mb-4">
                         <div>
                             <h3 class="text-2xl font-bold text-[#2b3674] dark:text-indigo-300 flex items-center gap-2">
                                 <span>🔥</span> Lịch Học Tập (Streak)
                             </h3>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">Các ô ngày màu xanh thể hiện bạn đã hoàn thành bài thi.</p>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Các ô có ngọn lửa thể hiện bạn đã hoàn thành bài thi.</p>
                         </div>
                     </div>
                     
@@ -273,19 +271,19 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Đề Số 2 (Demo cũ) -->
+                    <!-- Đề Số 2 -->
                     <div class="bg-white dark:bg-darkCard rounded-2xl p-6 shadow-md border-l-4 border-gray-400 flex flex-col justify-between">
                         <div>
                             <div class="flex justify-between items-start mb-2">
                                 <h3 class="text-xl font-bold text-gray-800 dark:text-white">Đề Minh Họa Số 2</h3>
                             </div>
-                            <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Trình độ: B1 - B2 | Số lượng: 40 Câu (Dữ liệu Demo)</p>
-                            <p class="text-gray-700 dark:text-gray-300 mb-6 text-sm">Chủ đề: Giáo dục, Công nghệ, Môi trường...</p>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Trình độ: B1 - B2 | Số lượng: 40 Câu</p>
+                            <p class="text-gray-700 dark:text-gray-300 mb-6 text-sm">Chủ đề: Giáo dục, Công nghệ, Môi trường, Giao tiếp xã hội.</p>
                         </div>
                         <button onclick="startThptExam(2)" class="w-full bg-gray-500 hover:bg-gray-600 text-white font-bold py-3 rounded-xl shadow transition">Làm Đề Số 2 (50 Phút)</button>
                     </div>
                     
-                    <!-- Đề Số 3 (Mới Nhất) -->
+                    <!-- Đề Số 3 -->
                     <div class="bg-white dark:bg-darkCard rounded-2xl p-6 shadow-md border-l-4 border-orange-500 flex flex-col justify-between transform hover:-translate-y-1 transition">
                         <div>
                             <div class="flex justify-between items-start mb-2">
@@ -337,7 +335,7 @@
                 <div class="bg-white dark:bg-slate-800 rounded-3xl p-8 shadow-xl text-center mb-8 border border-gray-100 dark:border-slate-700">
                     <div class="text-6xl mb-4">🏆</div>
                     <h2 class="text-3xl font-extrabold text-gray-800 dark:text-white mb-2">Kết Quả Bài Thi</h2>
-                    <p class="text-gray-500 mb-6" id="thpt-result-title">Đề Minh Họa Số 3 - THPTQG</p>
+                    <p class="text-gray-500 mb-6" id="thpt-result-title">Đề Minh Họa - THPTQG</p>
                     
                     <div class="flex justify-center items-center gap-12 mb-8">
                         <div>
@@ -375,16 +373,32 @@
                  <button onclick="showPage('home')" class="mt-8 px-6 py-2 bg-indigo-100 text-indigo-700 font-bold rounded-lg hover:bg-indigo-200 transition">Quay lại Trang Chủ</button>
              </div>
         </div>
-
     </main>
 
     <footer class="bg-white dark:bg-darkCard mt-auto py-8 px-6 text-sm border-t border-gray-200 dark:border-slate-800 transition-colors">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
             <p class="text-gray-500 dark:text-gray-400 text-center md:text-left">&copy; 2026 KEL - Nền Tảng Luyện Thi Trực Tuyến.<br>Built by Le Binh Minh only.</p>
+            
+            <div class="flex flex-wrap justify-center gap-6">
+                <!-- Tiktok -->
+                <a href="https://www.tiktok.com/@m_education1" target="_blank" class="flex items-center text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white font-semibold transition" title="Theo dõi TikTok">
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.04-.1z"/></svg>
+                    TikTok: Kelvin Le
+                </a>
+                <!-- Zalo -->
+                <a href="https://zalo.me/84858194454" target="_blank" class="flex items-center text-gray-600 dark:text-gray-400 hover:text-blue-500 font-semibold transition" title="Nhắn tin Zalo">
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M21.2 12.3c-.3 4.6-3.8 8.4-8.4 8.7-2 .1-3.9-.5-5.5-1.5L2 21.6l2.1-5.3c-1-1.6-1.6-3.6-1.5-5.6.3-4.6 3.8-8.4 8.4-8.7 5.1-.3 9.4 3.7 9.8 8.8.1.5.2 1 .1 1.5zm-9.3-6.5c-3.6 0-6.5 2.8-6.5 6.3 0 1.2.3 2.4 1 3.4l-1.1 2.8 2.9-1.1c1 .6 2.1 1 3.3 1 3.6 0 6.5-2.8 6.5-6.3s-2.9-6.4-6.5-6.4zm-2.7 6.1c-.2.2-.4.4-.4.7 0 .5.2.9.4 1.2.2.2.5.4.8.4.3 0 .5-.1.8-.4l.7-.7c.2-.2.5-.2.7 0l1.4 1.4c.2.2.2.5 0 .7l-.7.7c-.2.3-.4.6-.4.9z"/></svg>
+                    Zalo: Lê Bình Minh
+                </a>
+                <!-- Hotline -->
+                <a href="tel:0858194454" class="flex items-center text-gray-600 dark:text-gray-400 hover:text-red-500 font-semibold transition" title="Gọi Hotline">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                    Hotline: 0858194454
+                </a>
+            </div>
         </div>
     </footer>
 
-    <!-- UI Components (Toasts & Modals) -->
     <div id="toast-container" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
     <div id="auth-modal" class="fixed inset-0 bg-black bg-opacity-50 modal-overlay hidden z-[100] flex items-center justify-center">
@@ -428,15 +442,58 @@
 
     <script>
         // ------------------ DỮ LIỆU ĐỀ THI ------------------
-        // Đề Demo Số 2 (Ngắn gọn để làm mồi)
-        const thptExamData2 = [
-            { id: 1, group: "Phần Ngữ âm", q: "A. maintain | B. attain | C. certain | D. complain", opts: ["A. maintain", "B. attain", "C. certain", "D. complain"], ans: 2, exp: "certain /sɜːtən/" },
-            { id: 2, group: "Phần Ngữ âm", q: "A. looked | B. smiled | C. stayed | D. listened", opts: ["A. looked", "B. smiled", "C. stayed", "D. listened"], ans: 0, exp: "looked phát âm là /t/" }
-            // Rút gọn để nhường chỗ cho Đề 3 thực sự
-        ];
-        while(thptExamData2.length < 40) { thptExamData2.push({ id: thptExamData2.length + 1, group: "Dữ liệu Demo", q: "Demo Question", opts: ["A","B","C","D"], ans: 0, exp: "Đây là đề số 2" }); }
+        
+        // --- ĐỀ MINH HỌA SỐ 2 (Đầy đủ 40 câu) ---
+        const clozePassage2 = `The rise of digital technology has profoundly impacted education. In recent years, traditional classrooms have been supplemented by online learning platforms, (25) ______ provide students with greater flexibility. Online courses allow learners to access materials at their own pace, making education more accessible to those with busy schedules. (26) ______, this shift also presents challenges. Some students struggle with time management and lack the discipline needed for self-study. Moreover, the absence of face-to-face interaction can lead to feelings of isolation. To address these issues, many educators are adopting a blended learning approach. This method combines online resources (27) ______ traditional classroom instruction. By blending the two, schools can offer the benefits of digital tools while maintaining the personal connection that is (28) ______ for effective learning. Ultimately, (29) ______ technology continues to evolve, education systems must adapt to ensure that all students can succeed.`;
 
-        // Đề Minh Họa Số 3 (MỚI CẬP NHẬT TỪ DỮ LIỆU CỦA BẠN)
+        const readingPassage1_2 = `Sleep is a vital process that affects our physical and mental health. Despite its importance, many adults do not get the recommended seven to eight hours of sleep per night. The consequences of sleep deprivation are numerous, ranging from decreased concentration and memory issues to a weakened immune system.\n\nOne of the main culprits behind modern sleep problems is the excessive use of electronic devices before bedtime. The blue light emitted by smartphones and tablets interferes with the production of melatonin, a hormone that regulates the sleep-wake cycle. Consequently, people find it harder to fall asleep and experience poorer sleep quality.\n\nTo improve sleep hygiene, experts suggest establishing a regular bedtime routine. This includes going to bed and waking up at the same time every day, even on weekends. Additionally, creating a relaxing pre-sleep ritual, such as reading a book or taking a warm bath, can signal to the body that it is time to wind down. Keeping the bedroom dark, quiet, and cool also promotes better rest. By prioritizing sleep, individuals can significantly enhance their overall well-being and daily performance.`;
+
+        const readingPassage2_2 = `Renewable energy sources, such as wind, solar, and hydroelectric power, are playing an increasingly crucial role in the global fight against climate change. Unlike fossil fuels, which release harmful greenhouse gases when burned, renewable energy generates electricity with little to no emissions. This transition is essential for reducing the world's carbon footprint and mitigating the severe impacts of global warming.\n\nSolar energy has seen remarkable growth over the past decade. The cost of solar panels has plummeted, making it more accessible for both residential and commercial use. Innovations in battery storage technology have also addressed one of solar power's main drawbacks: intermittency. Now, excess energy generated during sunny days can be stored and used at night or during cloudy weather, ensuring a more stable power supply.\n\nWind power is another rapidly expanding sector. Offshore wind farms, in particular, have enormous potential because ocean winds are generally stronger and more consistent than those on land. Countries with long coastlines are investing heavily in this infrastructure to capitalize on the abundant resource. However, the construction of these massive turbines requires significant initial investment and careful environmental planning to avoid disrupting marine ecosystems.\n\nDespite the progress, the shift to 100% renewable energy faces hurdles. Upgrading the existing electrical grid to handle decentralized power sources is a massive logistical and financial challenge. Moreover, political and economic interests tied to the fossil fuel industry often slow down the transition. Nevertheless, the continuous advancement of green technologies provides hope for a sustainable and clean energy future.`;
+
+        const thptExamData2 = [
+            { id: 1, group: "Phần Ngữ âm", q: "Mark the letter A, B, C, or D to indicate the word whose underlined part differs from the other three in pronunciation.\nA. maintain | B. attain | C. certain | D. complain", opts: ["A. maintain", "B. attain", "C. certain", "D. complain"], ans: 2, exp: "certain /sɜːtən/, các từ còn lại chứa âm /eɪ/" },
+            { id: 2, group: "Phần Ngữ âm", q: "A. looked | B. smiled | C. stayed | D. listened", opts: ["A. looked", "B. smiled", "C. stayed", "D. listened"], ans: 0, exp: "looked phát âm là /t/, các từ còn lại là /d/" },
+            { id: 3, group: "Phần Trọng âm", q: "Mark the letter A, B, C, or D to indicate the word that differs from the other three in the position of primary stress.\nA. confide | B. gather | C. divide | D. maintain", opts: ["A. confide", "B. gather", "C. divide", "D. maintain"], ans: 1, exp: "gather nhấn âm 1, các từ còn lại nhấn âm 2" },
+            { id: 4, group: "Phần Trọng âm", q: "A. environment | B. technology | C. agriculture | D. discovery", opts: ["A. environment", "B. technology", "C. agriculture", "D. discovery"], ans: 2, exp: "agriculture nhấn âm 1, các từ còn lại nhấn âm 2" },
+            { id: 5, group: "Phần Từ vựng & Ngữ pháp", q: "The new policy will be implemented ______ the beginning of next month.", opts: ["A. in", "B. on", "C. at", "D. by"], ans: 2, exp: "at the beginning of: vào đầu của" },
+            { id: 6, group: "Phần Từ vựng & Ngữ pháp", q: "If she ______ about the heavy traffic, she would have left earlier.", opts: ["A. knows", "B. knew", "C. had known", "D. has known"], ans: 2, exp: "Câu điều kiện loại 3: If + S + had P2, S + would have P2" },
+            { id: 7, group: "Phần Từ vựng & Ngữ pháp", q: "Despite the bad weather, the outdoor concert ______ as planned.", opts: ["A. went on", "B. put off", "C. took over", "D. brought up"], ans: 0, exp: "went on = continued: tiếp tục diễn ra" },
+            { id: 8, group: "Phần Từ vựng & Ngữ pháp", q: "Students are required to hand in their assignments by Friday, ______?", opts: ["A. are they", "B. aren't they", "C. do they", "D. don't they"], ans: 1, exp: "Câu hỏi đuôi cho 'Students are' là 'aren't they'" },
+            { id: 9, group: "Phần Từ vựng & Ngữ pháp", q: "The ______ of the internet has completely changed the way we communicate.", opts: ["A. invention", "B. discover", "C. creation", "D. maintenance"], ans: 0, exp: "invention: sự phát minh (phát minh ra internet)" },
+            { id: 10, group: "Phần Từ vựng & Ngữ pháp", q: "She is a ______ student who always gets top marks in all subjects.", opts: ["A. hard-working", "B. hard-worked", "C. hardly-working", "D. working-hard"], ans: 0, exp: "hard-working: tính từ ghép (chăm chỉ)" },
+            { id: 11, group: "Phần Từ vựng & Ngữ pháp", q: "The book ______ by my favorite author is a bestseller this year.", opts: ["A. writing", "B. written", "C. wrote", "D. writes"], ans: 1, exp: "Rút gọn mệnh đề quan hệ dạng bị động: The book which was written -> written" },
+            { id: 12, group: "Phần Từ vựng & Ngữ pháp", q: "He didn't have much time, so he just ______ through the report before the meeting.", opts: ["A. glanced", "B. stared", "C. gazed", "D. watched"], ans: 0, exp: "glance through: nhìn lướt qua" },
+            { id: 13, group: "Phần Từ vựng & Ngữ pháp", q: "I remember ______ to the zoo by my parents when I was a child.", opts: ["A. taking", "B. being taken", "C. to take", "D. to be taken"], ans: 1, exp: "remember + V-ing: nhớ đã làm gì; dạng bị động: being + P2" },
+            { id: 14, group: "Phần Từ vựng & Ngữ pháp", q: "The higher the demand for the product, ______ it becomes.", opts: ["A. the most expensive", "B. the more expensive", "C. more expensive", "D. as expensive"], ans: 1, exp: "Cấu trúc so sánh kép: The + so sánh hơn, the + so sánh hơn" },
+            { id: 15, group: "Phần Từ vựng & Ngữ pháp", q: "They have set up a special fund to support people ______ in rural areas.", opts: ["A. living", "B. to live", "C. lived", "D. live"], ans: 0, exp: "Rút gọn mệnh đề quan hệ dạng chủ động: people who live -> living" },
+            { id: 16, group: "Phần Từ vựng & Ngữ pháp", q: "The company is looking for a candidate with strong ______ skills to handle customer complaints.", opts: ["A. interpersonal", "B. international", "C. interchangeable", "D. internal"], ans: 0, exp: "interpersonal skills: kỹ năng giao tiếp, ứng xử" },
+            { id: 17, group: "Phần Từ vựng & Ngữ pháp", q: "We ______ out of milk. Could you buy some on your way home?", opts: ["A. have run", "B. are running", "C. ran", "D. run"], ans: 0, exp: "Thì hiện tại hoàn thành diễn tả sự việc vừa mới xảy ra, kết quả lưu lại ở hiện tại" },
+            { id: 18, group: "Phần Từ vựng & Ngữ pháp", q: "It is crucial that the manager ______ informed of the changes immediately.", opts: ["A. is", "B. be", "C. was", "D. has been"], ans: 1, exp: "Cấu trúc giả định: It is crucial that + S + (should) + V nguyên thể (be)" },
+            { id: 19, group: "Phần Giao tiếp", q: "Tom: 'Would you like to join us for dinner tonight?' - Mary: '______'", opts: ["A. Yes, I'd love to.", "B. No, thanks. I'm full.", "C. I don't think so.", "D. You're welcome."], ans: 0, exp: "Đáp lại lời mời một cách lịch sự" },
+            { id: 20, group: "Phần Giao tiếp", q: "Alex: 'I think we should use public transport to reduce pollution.' - Sarah: '______'", opts: ["A. I couldn't agree more.", "B. You're welcome.", "C. Good luck!", "D. That's a bad idea."], ans: 0, exp: "Bày tỏ sự đồng ý hoàn toàn" },
+            { id: 21, group: "Phần Đồng nghĩa & Trái nghĩa", q: "CLOSEST in meaning:\nThe teacher's explanation was so lucid that everyone understood the complex topic.", opts: ["A. clear", "B. confusing", "C. boring", "D. long"], ans: 0, exp: "lucid = clear: rõ ràng, dễ hiểu" },
+            { id: 22, group: "Phần Đồng nghĩa & Trái nghĩa", q: "CLOSEST in meaning:\nMany species of animals are in peril due to habitat destruction.", opts: ["A. safety", "B. danger", "C. comfort", "D. balance"], ans: 1, exp: "in peril = in danger: gặp nguy hiểm" },
+            { id: 23, group: "Phần Đồng nghĩa & Trái nghĩa", q: "OPPOSITE in meaning:\nThe new law was implemented successfully despite initial opposition.", opts: ["A. executed", "B. applied", "C. delayed", "D. managed"], ans: 2, exp: "implemented: được thi hành >< delayed: bị trì hoãn" },
+            { id: 24, group: "Phần Đồng nghĩa & Trái nghĩa", q: "OPPOSITE in meaning:\nShe was completely exhausted after running the marathon.", opts: ["A. tired", "B. energetic", "C. weak", "D. sleepy"], ans: 1, exp: "exhausted: kiệt sức >< energetic: tràn đầy năng lượng" },
+            { id: 25, passage: clozePassage2, group: "Phần Điền khuyết", q: "Question 25", opts: ["A. who", "B. which", "C. where", "D. that"], ans: 1, exp: "Đại từ quan hệ thay thế cho cụm danh từ chỉ vật phía trước, dùng sau dấu phẩy" },
+            { id: 26, passage: clozePassage2, group: "Phần Điền khuyết", q: "Question 26", opts: ["A. Therefore", "B. However", "C. For instance", "D. Furthermore"], ans: 1, exp: "Liên từ chỉ sự tương phản giữa lợi ích ở câu trước và khó khăn ở câu sau" },
+            { id: 27, passage: clozePassage2, group: "Phần Điền khuyết", q: "Question 27", opts: ["A. with", "B. to", "C. for", "D. about"], ans: 0, exp: "combine sth with sth: kết hợp cái gì với cái gì" },
+            { id: 28, passage: clozePassage2, group: "Phần Điền khuyết", q: "Question 28", opts: ["A. vital", "B. trivial", "C. optional", "D. harmful"], ans: 0, exp: "vital: quan trọng, thiết yếu" },
+            { id: 29, passage: clozePassage2, group: "Phần Điền khuyết", q: "Question 29", opts: ["A. although", "B. because", "C. as", "D. until"], ans: 2, exp: "as: khi/bởi vì. Ở đây dịch là 'khi công nghệ tiếp tục phát triển'" },
+            { id: 30, passage: readingPassage1_2, group: "Phần Đọc hiểu 1", q: "What is the main idea of the passage?", opts: ["A. The benefits of using electronic devices before bed.", "B. The importance of sleep and how to improve it.", "C. How to cure memory issues with medication.", "D. The physical consequences of working too hard."], ans: 1, exp: "Ý chính của đoạn văn là tầm quan trọng của giấc ngủ và cách cải thiện nó" },
+            { id: 31, passage: readingPassage1_2, group: "Phần Đọc hiểu 1", q: "According to paragraph 1, which of the following is NOT a consequence of sleep deprivation?", opts: ["A. Memory issues", "B. Decreased concentration", "C. A weakened immune system", "D. Increased productivity"], ans: 3, exp: "Tăng năng suất làm việc KHÔNG phải là hậu quả của thiếu ngủ" },
+            { id: 32, passage: readingPassage1_2, group: "Phần Đọc hiểu 1", q: "The word 'interferes' in paragraph 2 is closest in meaning to ______.", opts: ["A. supports", "B. disrupts", "C. creates", "D. improves"], ans: 1, exp: "interfere = disrupt: cản trở, làm gián đoạn" },
+            { id: 33, passage: readingPassage1_2, group: "Phần Đọc hiểu 1", q: "What does the blue light from screens do to the body?", opts: ["A. It increases melatonin production.", "B. It helps people fall asleep faster.", "C. It disrupts the production of melatonin.", "D. It improves overall sleep quality."], ans: 2, exp: "Ánh sáng xanh làm gián đoạn quá trình sản xuất melatonin" },
+            { id: 34, passage: readingPassage1_2, group: "Phần Đọc hiểu 1", q: "According to the passage, maintaining a regular bedtime schedule ______.", opts: ["A. should only be done on weekdays", "B. is a key part of improving sleep hygiene", "C. is less effective than using electronic devices", "D. causes more stress and anxiety"], ans: 1, exp: "Duy trì lịch ngủ đều đặn là một phần quan trọng để cải thiện giấc ngủ" },
+            { id: 35, passage: readingPassage1_2, group: "Phần Đọc hiểu 1", q: "The word 'it' in paragraph 3 refers to ______.", opts: ["A. the body", "B. a book", "C. the pre-sleep ritual", "D. going to bed"], ans: 0, exp: "Đại từ 'it' thay thế cho 'the body' (cơ thể)" },
+            { id: 36, passage: readingPassage2_2, group: "Phần Đọc hiểu 2", q: "What is the primary focus of the passage?", opts: ["A. The history of fossil fuels.", "B. The advantages and challenges of renewable energy.", "C. How to build offshore wind farms.", "D. The cost of upgrading the electrical grid."], ans: 1, exp: "Đoạn văn tập trung vào lợi ích và thách thức của năng lượng tái tạo" },
+            { id: 37, passage: readingPassage2_2, group: "Phần Đọc hiểu 2", q: "Why is renewable energy considered better for the environment than fossil fuels?", opts: ["A. It produces more greenhouse gases.", "B. It is more expensive to produce.", "C. It generates electricity with minimal emissions.", "D. It requires burning natural resources."], ans: 2, exp: "Nó tạo ra điện với lượng khí thải tối thiểu" },
+            { id: 38, passage: readingPassage2_2, group: "Phần Đọc hiểu 2", q: "The word 'plummeted' in paragraph 2 means ______.", opts: ["A. increased sharply", "B. remained stable", "C. decreased significantly", "D. fluctuated randomly"], ans: 2, exp: "plummeted = giảm mạnh (decreased significantly)" },
+            { id: 39, passage: readingPassage2_2, group: "Phần Đọc hiểu 2", q: "How has battery storage technology improved solar energy?", opts: ["A. By making solar panels larger.", "B. By allowing excess energy to be saved for later use.", "C. By generating more sunlight.", "D. By reducing the cost of installation."], ans: 1, exp: "Công nghệ pin lưu trữ giúp lưu lại năng lượng dư thừa để dùng sau" },
+            { id: 40, passage: readingPassage2_2, group: "Phần Đọc hiểu 2", q: "According to paragraph 3, offshore wind farms are advantageous because ______.", opts: ["A. they are cheap to build", "B. they do not require any planning", "C. ocean winds are stronger and more consistent", "D. they are located far away from the coast"], ans: 2, exp: "Gió ngoài khơi mạnh và ổn định hơn so với trên đất liền" }
+        ];
+
+        // --- ĐỀ MINH HỌA SỐ 3 ---
         const clozePassage3 = `Preparing for standardized language proficiency tests can be a daunting task for many high school students. A well-structured study plan is essential for achieving a high band score. Firstly, students should familiarize themselves with the test format, (25) ______ includes different sections such as reading, writing, listening, and speaking. Secondly, consistent practice is vital. Engaging with a variety of materials, from academic articles to podcasts, helps expand one's vocabulary and comprehension skills. (26) ______, relying solely on self-study might not be enough for everyone. Many learners find it beneficial to join study groups or enroll in specialized preparation courses. In these environments, they can receive constructive feedback from experienced instructors and (27) ______ their speaking skills through mock interviews. Furthermore, managing time effectively during the actual exam is a skill that requires (28) ______ practice. By taking full-length practice tests under timed conditions, candidates can train themselves to stay calm and focused. Ultimately, with dedication and the right strategies, conquering these exams becomes an (29) ______ goal.`;
 
         const readingPassage1_3 = `The landscape of digital entertainment has undergone a massive transformation over the last two decades. Gone are the days when video games were solely considered a niche hobby for children. Today, the gaming industry, driven by major platforms and sophisticated hardware consoles, surpasses both the film and music industries in global revenue.\n\nOne of the key drivers of this growth is the shift towards digital distribution. Platforms that allow users to purchase, download, and manage their game libraries online have revolutionized how consumers access content. This convenience eliminates the need for physical discs and allows developers to frequently update their games with new features or downloadable content (DLC), keeping the community engaged for years after a game's initial release.\n\nFurthermore, gaming has become a highly social activity. Multiplayer titles and co-op campaigns enable friends to connect and collaborate regardless of geographical boundaries. Esports—competitive, organized video gaming—has also surged in popularity, drawing massive audiences to live streams and filling stadiums with passionate fans cheering for their favorite professional teams. As technology continues to advance with virtual reality and cloud gaming, the future of digital entertainment promises to be even more immersive.`;
@@ -486,7 +543,6 @@
             { id: 40, passage: readingPassage2_3, group: "Part VII. Reading Comprehension 2", q: "Which of the following can be inferred from the passage?", opts: ["A. The most famous university is always the best choice for every student.", "B. Financial planning is an important part of the university selection process.", "C. Students should ignore campus culture when choosing a school.", "D. Specialized academies do not offer extracurricular activities."], ans: 1, exp: "Đoạn cuối: chi phí thường quyết định sự lựa chọn -> lập kế hoạch tài chính là quan trọng." }
         ];
 
-        // ------------------ LOGIC UI & TIỆN ÍCH ------------------
         function showToast(message, type = 'success') {
             const toast = document.createElement('div');
             toast.className = `px-4 py-3 rounded-lg shadow-lg text-white font-bold pointer-events-auto ${type === 'success' ? 'bg-green-500' : type === 'warning' ? 'bg-orange-500' : 'bg-red-500'} transition-all duration-300 transform translate-y-10 opacity-0`;
@@ -576,9 +632,6 @@
             document.getElementById('nav-menu').classList.toggle('hidden');
         });
 
-        // ------------------ LOGIC ĐẾM GIỜ VÀ MÁY TÍNH IELTS ------------------
-        let examTimerInterval;
-        
         window.calculateIELTS = function() {
             const l = parseFloat(document.getElementById('calc-l').value) || 0;
             const r = parseFloat(document.getElementById('calc-r').value) || 0;
@@ -610,7 +663,6 @@
             }
         };
 
-        // ------------------ LOGIC LỊCH STREAK (LỊCH SỐ 365 NGÀY MỚI) ------------------
         window.renderStreakCalendar = function(activeDates = new Set()) {
             const container = document.getElementById('streak-calendar-container');
             if(!container) return;
@@ -621,16 +673,18 @@
 
             for(let month = 0; month < 12; month++) {
                 const daysInMonth = new Date(currentYear, month + 1, 0).getDate();
-                html += `<div class="min-w-[220px] snap-center bg-gray-50 dark:bg-slate-700/50 p-4 rounded-xl border border-gray-100 dark:border-slate-600 shadow-sm">`;
+                html += `<div class="min-w-[240px] snap-center bg-gray-50 dark:bg-slate-700/50 p-4 rounded-xl border border-gray-100 dark:border-slate-600 shadow-sm">`;
                 html += `<h4 class="text-sm font-bold text-indigo-700 dark:text-indigo-300 mb-3 text-center uppercase tracking-wider">${monthNames[month]} ${currentYear}</h4>`;
+                html += `<div class="grid grid-cols-7 gap-2 text-center text-xs text-gray-400 mb-1">
+                            <div>T2</div><div>T3</div><div>T4</div><div>T5</div><div>T6</div><div>T7</div><div>CN</div>
+                         </div>`;
                 html += `<div class="grid grid-cols-7 gap-1">`;
                 
-                // Căn lề ngày đầu tháng (0 là Chủ nhật, convert sang thứ 2 là đầu tuần)
                 let firstDay = new Date(currentYear, month, 1).getDay();
                 firstDay = firstDay === 0 ? 6 : firstDay - 1; 
                 
                 for(let i=0; i<firstDay; i++) {
-                    html += `<div></div>`; // Ô trống đầu tháng
+                    html += `<div></div>`;
                 }
 
                 for(let day = 1; day <= daysInMonth; day++) {
@@ -638,52 +692,31 @@
                     const isActive = activeDates.has(dateStr);
                     
                     const colorClass = isActive 
-                        ? 'bg-green-500 text-white shadow-[0_0_8px_rgba(34,197,94,0.6)] font-bold transform scale-110' 
-                        : 'bg-white dark:bg-slate-800 text-gray-500 dark:text-gray-400 hover:bg-indigo-50 dark:hover:bg-slate-600';
+                        ? 'bg-green-500 text-white shadow-[0_0_8px_rgba(34,197,94,0.6)] font-bold transform scale-110 z-10 border border-green-400' 
+                        : 'bg-white dark:bg-slate-800 text-gray-500 dark:text-gray-400 hover:bg-indigo-50 dark:hover:bg-slate-600 border border-gray-100 dark:border-slate-700';
                     
-                    html += `<div class="w-7 h-7 flex items-center justify-center rounded text-[11px] cursor-pointer transition-all duration-300 ${colorClass}" title="${dateStr}">${day}</div>`;
+                    const content = isActive ? `${day} <span class="absolute -top-2 -right-2 text-[10px] drop-shadow-md animate-bounce">🔥</span>` : `${day}`;
+                    
+                    html += `<div class="relative w-7 h-7 flex items-center justify-center rounded text-[11px] cursor-pointer transition-all duration-300 ${colorClass}" title="${dateStr}">${content}</div>`;
                 }
                 html += `</div></div>`;
             }
             html += '</div>';
             container.innerHTML = html;
             
-            // Tự động cuộn đến tháng hiện tại
             setTimeout(() => {
                 const currentMonth = new Date().getMonth();
                 const scrollArea = container.querySelector('.overflow-x-auto');
-                if(scrollArea) scrollArea.scrollLeft = currentMonth * 240; 
+                if(scrollArea) scrollArea.scrollLeft = currentMonth * 260; 
             }, 300);
         };
 
-        window.fetchUserStreak = async function() {
-            if(typeof db === 'undefined' || !globalUser) {
-                renderStreakCalendar();
-                return;
-            }
-            try {
-                const progressRef = collection(db, 'users', globalUser.uid, 'progress');
-                const qSnap = await getDocs(progressRef);
-                const activeDates = new Set();
-                qSnap.forEach(doc => {
-                    const data = doc.data();
-                    if(data.dateStr) activeDates.add(data.dateStr);
-                });
-                renderStreakCalendar(activeDates);
-            } catch(e) { 
-                console.error("Lỗi lấy dữ liệu Streak", e); 
-                renderStreakCalendar();
-            }
-        };
-
-        // ------------------ LOGIC THI THPTQG ------------------
         let currentThptData = [];
         let userThptAnswers = [];
         let thptTimerInterval;
         let currentExamTitle = "";
 
         window.startThptExam = function(examId) {
-            // Nạp dữ liệu tương ứng
             if(examId === 3) {
                 currentThptData = thptExamData3;
                 currentExamTitle = "Đề Minh Họa Số 3 - THPTQG";
@@ -760,13 +793,11 @@
                 navContainer.appendChild(navBtn);
             });
 
-            // NÚT NỘP BÀI CỠ LỚN Ở CUỐI TRANG
             const submitBottomDiv = document.createElement('div');
             submitBottomDiv.className = "mt-8 mb-12 text-center";
             submitBottomDiv.innerHTML = `<button onclick="submitThptExam(false)" class="bg-green-500 hover:bg-green-600 text-white font-extrabold text-xl py-4 px-12 rounded-full shadow-[0_10px_25px_rgba(34,197,94,0.4)] transition transform hover:-translate-y-1">Nộp Bài Ngay</button>`;
             qContainer.appendChild(submitBottomDiv);
 
-            // Bắt đầu đếm ngược 50 phút
             let time = 50 * 60;
             const timerDisplay = document.getElementById('thpt-timer-display');
             clearInterval(thptTimerInterval);
@@ -821,7 +852,6 @@
                 if (ans === currentThptData[idx].ans) correctCount++;
             });
             
-            // Tính điểm: Lấy (số câu đúng / tổng số câu) * 10
             const finalScore = ((correctCount / currentThptData.length) * 10).toFixed(2);
             
             document.getElementById('thpt-exam-room').classList.add('hidden');
@@ -833,7 +863,6 @@
             
             renderThptExplanations();
             
-            // Lưu Firebase và kích hoạt lại Streak Calendar
             if (typeof window.submitTestResult === 'function') {
                 window.submitTestResult(currentExamTitle, parseFloat(finalScore));
             } else {
@@ -895,11 +924,10 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Initialize things on load
         document.addEventListener('DOMContentLoaded', () => {
             showPage('home');
             initScrollReveal();
-            setTimeout(renderStreakCalendar, 500); // Tải mặc định giao diện rỗng trước khi Firebase load xong
+            setTimeout(renderStreakCalendar, 500); 
         });
     </script>
 
@@ -924,13 +952,32 @@
         window.auth = getAuth(app);
         window.db = getFirestore(app);
         
-        // Cập nhật giờ hệ thống trên Profile
         setInterval(() => {
             const now = new Date();
             const timeString = now.toLocaleTimeString('vi-VN', {hour: '2-digit', minute:'2-digit'});
             const timeEl = document.getElementById('current-time-display');
             if(timeEl) timeEl.innerText = `${timeString} (GMT+07:00)`;
         }, 1000);
+
+        window.fetchUserStreak = async function() {
+            if(typeof db === 'undefined' || !globalUser) {
+                renderStreakCalendar();
+                return;
+            }
+            try {
+                const progressRef = collection(db, 'users', globalUser.uid, 'progress');
+                const qSnap = await getDocs(progressRef);
+                const activeDates = new Set();
+                qSnap.forEach(doc => {
+                    const data = doc.data();
+                    if(data.dateStr) activeDates.add(data.dateStr);
+                });
+                renderStreakCalendar(activeDates);
+            } catch(e) { 
+                console.error("Lỗi lấy dữ liệu Streak", e); 
+                renderStreakCalendar();
+            }
+        };
 
         onAuthStateChanged(window.auth, async (user) => {
             window.globalUser = user;
@@ -953,16 +1000,24 @@
                     }
                 } catch(e) { console.log("Lỗi tải mục tiêu:", e); }
 
-                // Khi đăng nhập, tải streak từ db
                 if(typeof window.fetchUserStreak === 'function') window.fetchUserStreak();
                 closeModals();
             } else {
                 document.getElementById('btn-login-header').classList.remove('hidden');
                 document.getElementById('user-profile').classList.add('hidden');
                 document.getElementById('user-goal').value = '';
-                if(typeof window.renderStreakCalendar === 'function') window.renderStreakCalendar(); // Trả về lịch rỗng
+                if(typeof window.renderStreakCalendar === 'function') window.renderStreakCalendar(); 
             }
         });
+
+        let isLoginMode = true;
+        window.toggleAuthMode = function() {
+            isLoginMode = !isLoginMode;
+            document.getElementById('auth-title').innerText = isLoginMode ? 'Đăng Nhập' : 'Đăng Ký Tài Khoản';
+            document.getElementById('auth-submit-btn').innerText = isLoginMode ? 'Đăng Nhập' : 'Tạo Tài Khoản';
+            document.getElementById('auth-switch-text').innerText = isLoginMode ? 'Chưa có tài khoản?' : 'Đã có tài khoản?';
+            document.getElementById('auth-switch-btn').innerText = isLoginMode ? 'Đăng ký ngay' : 'Đăng nhập';
+        }
 
         window.handleAuth = async function(e) {
             e.preventDefault();
@@ -1017,7 +1072,6 @@
                     dateStr: new Date().toLocaleDateString('vi-VN')
                 });
                 showToast(`Tuyệt vời! Hệ thống đã ghi nhận ${score} điểm và cộng 1 Streak.`, 'success');
-                // Gọi lại fetch để cập nhật Lịch
                 if(typeof window.fetchUserStreak === 'function') window.fetchUserStreak();
             } catch (error) {
                 console.error(error);
