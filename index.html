@@ -47,6 +47,11 @@
         .custom-scroll::-webkit-scrollbar-thumb { background: #c7c7c7; border-radius: 10px; }
         .dark .custom-scroll::-webkit-scrollbar-track { background: #1e293b; }
         .dark .custom-scroll::-webkit-scrollbar-thumb { background: #475569; }
+        
+        /* Chống select text mặc định ở ngoài phòng thi */
+        .no-select { user-select: none; -webkit-user-select: none; }
+        /* Vùng cho phép select text để highlight */
+        .highlightable-content { user-select: text; -webkit-user-select: text; }
     </style>
 </head>
 <body class="bg-[#f4f7fe] text-[#2b3674] dark:bg-darkBg dark:text-darkText">
@@ -118,7 +123,6 @@
                 <button onclick="showPage('courses')" class="btn-primary bg-amber-400 hover:bg-amber-300 text-white font-extrabold text-xl py-3 px-8 rounded-full text-shadow-sm">Lét Gô!</button>
             </section>
 
-            <!-- Mục Tính điểm IELTS & Streak Calendar -->
             <section class="px-6 mx-4 md:mx-12 my-8 grid grid-cols-1 xl:grid-cols-12 gap-8 reveal">
                 <!-- Máy tính IELTS -->
                 <div class="xl:col-span-4 bg-white dark:bg-darkCard p-6 rounded-[30px] shadow-sm border border-gray-100 dark:border-slate-700">
@@ -217,7 +221,8 @@
         </div>
 
         <div id="page-ielts" class="page-content">
-            <div class="max-w-6xl mx-auto py-12 px-6 reveal">
+            <!-- IELTS Dashboard -->
+            <div id="ielts-dashboard" class="max-w-6xl mx-auto py-12 px-6 reveal">
                 <h2 class="text-4xl font-extrabold text-center text-[#2b3674] dark:text-cyan-300 mb-4">Kho Đề Thi IELTS đa dạng</h2>
                 <p class="text-center text-gray-600 dark:text-gray-400 mb-10 text-lg">Giao diện chuẩn như thi IELTS trên máy</p>
 
@@ -229,37 +234,129 @@
                 </div>
                 
                 <div id="ielts-content-listening" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="bg-white dark:bg-darkCard rounded-2xl p-6 shadow-md border-t-4 border-cyan-500 hover:shadow-xl transition cursor-pointer transform hover:-translate-y-2 flex flex-col justify-between">
+                    <!-- Cambridge 20 -->
+                    <div class="bg-white dark:bg-darkCard rounded-2xl p-6 shadow-md border-t-4 border-cyan-500 hover:shadow-xl transition flex flex-col justify-between">
                         <div>
                             <div class="flex justify-between items-center mb-4">
-                                <span class="bg-cyan-100 text-cyan-800 dark:bg-cyan-900 dark:text-cyan-200 text-xs font-bold px-3 py-1 rounded-full">Part 1 & 2</span>
+                                <span class="bg-cyan-100 text-cyan-800 dark:bg-cyan-900 dark:text-cyan-200 text-xs font-bold px-3 py-1 rounded-full">Cambridge Academic</span>
+                                <span class="text-xs text-rose-500 font-bold bg-rose-50 px-2 py-1 rounded dark:bg-rose-900/30">MỚI NHẤT</span>
                             </div>
-                            <h3 class="text-xl font-bold text-cyan-900 dark:text-cyan-400 mb-2">Listening Practice 1</h3>
-                            <p class="text-gray-600 dark:text-gray-400 text-sm mb-6">Luyện tập nghe điền từ với chủ đề đời sống hàng ngày.</p>
+                            <h3 class="text-xl font-bold text-cyan-900 dark:text-cyan-400 mb-2">Cambridge 20 - Test 1</h3>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm mb-6">4 Section chuẩn format đề thi thật.</p>
                         </div>
-                        <div class="flex flex-col gap-2">
-                            <button onclick="startExamTimer(40)" class="w-full bg-rose-500 hover:bg-rose-400 text-white font-bold py-3 px-4 rounded-xl shadow-lg transition">Thi Ngay (40 Phút)</button>
-                            <button onclick="submitTestResult('Listening Practice 1', 8.5)" class="w-full bg-cyan-50 text-cyan-700 dark:bg-cyan-900/50 dark:text-cyan-300 dark:hover:bg-cyan-800 font-bold py-2 px-4 rounded-xl hover:bg-cyan-100 transition">Nộp Bài Lưu Demo (8.5)</button>
+                        <div class="flex flex-col gap-2" id="ielts-action-cam20-1">
+                            <button onclick="startIeltsExam('Cambridge 20 - Test 1', false)" class="w-full bg-emerald-500 hover:bg-emerald-400 text-white font-bold py-2 px-4 rounded-xl shadow transition">Luyện Tập (Tùy chỉnh thời gian)</button>
+                            <button onclick="startIeltsExam('Cambridge 20 - Test 1', true)" class="w-full bg-rose-500 hover:bg-rose-400 text-white font-bold py-2 px-4 rounded-xl shadow transition">Vào Thi (Chuẩn 40 Phút)</button>
+                        </div>
+                    </div>
+
+                    <!-- Cambridge 19 -->
+                    <div class="bg-white dark:bg-darkCard rounded-2xl p-6 shadow-md border-t-4 border-cyan-500 hover:shadow-xl transition flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="bg-cyan-100 text-cyan-800 dark:bg-cyan-900 dark:text-cyan-200 text-xs font-bold px-3 py-1 rounded-full">Cambridge Academic</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-cyan-900 dark:text-cyan-400 mb-2">Cambridge 19 - Test 1</h3>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm mb-6">4 Section chuẩn format đề thi thật.</p>
+                        </div>
+                        <div class="flex flex-col gap-2" id="ielts-action-cam19-1">
+                            <button onclick="startIeltsExam('Cambridge 19 - Test 1', false)" class="w-full bg-emerald-500 hover:bg-emerald-400 text-white font-bold py-2 px-4 rounded-xl shadow transition">Luyện Tập (Tùy chỉnh thời gian)</button>
+                            <button onclick="startIeltsExam('Cambridge 19 - Test 1', true)" class="w-full bg-rose-500 hover:bg-rose-400 text-white font-bold py-2 px-4 rounded-xl shadow transition">Vào Thi (Chuẩn 40 Phút)</button>
+                        </div>
+                    </div>
+
+                    <!-- Cambridge 18 -->
+                    <div class="bg-white dark:bg-darkCard rounded-2xl p-6 shadow-md border-t-4 border-cyan-500 hover:shadow-xl transition flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="bg-cyan-100 text-cyan-800 dark:bg-cyan-900 dark:text-cyan-200 text-xs font-bold px-3 py-1 rounded-full">Cambridge Academic</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-cyan-900 dark:text-cyan-400 mb-2">Cambridge 18 - Test 1</h3>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm mb-6">4 Section chuẩn format đề thi thật.</p>
+                        </div>
+                        <div class="flex flex-col gap-2" id="ielts-action-cam18-1">
+                            <button onclick="startIeltsExam('Cambridge 18 - Test 1', false)" class="w-full bg-emerald-500 hover:bg-emerald-400 text-white font-bold py-2 px-4 rounded-xl shadow transition">Luyện Tập (Tùy chỉnh thời gian)</button>
+                            <button onclick="startIeltsExam('Cambridge 18 - Test 1', true)" class="w-full bg-rose-500 hover:bg-rose-400 text-white font-bold py-2 px-4 rounded-xl shadow transition">Vào Thi (Chuẩn 40 Phút)</button>
                         </div>
                     </div>
                 </div>
 
                 <div id="ielts-content-reading" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="bg-white dark:bg-darkCard rounded-2xl p-6 shadow-md border-t-4 border-emerald-500 hover:shadow-xl transition cursor-pointer transform hover:-translate-y-2">
-                        <div class="flex justify-between items-center mb-4">
-                            <span class="bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200 text-xs font-bold px-3 py-1 rounded-full">Academic</span>
+                    <p class="text-gray-500 italic col-span-full text-center">Dữ liệu Reading đang cập nhật...</p>
+                </div>
+                <div id="ielts-content-speaking" class="hidden grid grid-cols-1 gap-6"><p class="text-center text-gray-500 italic">Cập nhật sau...</p></div>
+                <div id="ielts-content-writing" class="hidden grid grid-cols-1 gap-6"><p class="text-center text-gray-500 italic">Cập nhật sau...</p></div>
+            </div>
+
+            <!-- IELTS Exam Room (Chứa Audio & Highlighter) -->
+            <div id="ielts-exam-room" class="hidden max-w-7xl mx-auto py-6 px-4">
+                <!-- Header Control -->
+                <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-4 mb-6 sticky top-24 z-40 border border-gray-200 dark:border-slate-700">
+                    <div class="flex flex-wrap justify-between items-center gap-4 mb-4">
+                        <div>
+                            <h3 class="font-bold text-xl text-gray-800 dark:text-white" id="ielts-exam-title">Cambridge 20 - Test 1</h3>
+                            <p class="text-sm text-gray-500">IELTS Listening Test | Bôi đen văn bản để Highlight</p>
                         </div>
-                        <h3 class="text-xl font-bold text-cyan-900 dark:text-cyan-400 mb-2">Reading Test - Vol 1</h3>
-                        <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">Bài đọc học thuật bao gồm các dạng True/False/Not Given.</p>
-                        <div class="flex flex-col gap-2">
-                            <button onclick="startExamTimer(60)" class="w-full bg-rose-500 hover:bg-rose-400 text-white font-bold py-3 px-4 rounded-xl shadow-lg transition">Thi Ngay (60 Phút)</button>
-                            <button onclick="submitTestResult('Reading Test Vol 1', 7.0)" class="w-full bg-emerald-50 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-300 font-bold py-2 px-4 rounded-xl hover:bg-emerald-100 transition">Nộp Bài Lưu Demo (7.0)</button>
+                        <div class="flex items-center gap-4">
+                            <div class="bg-rose-50 dark:bg-rose-900/30 text-rose-500 dark:text-rose-400 font-mono font-bold text-2xl px-4 py-2 rounded-xl border border-rose-200 dark:border-rose-800 flex items-center gap-2">
+                                <span>⏱️</span>
+                                <span id="ielts-timer-display">40:00</span>
+                            </div>
+                            <button onclick="submitIeltsExam()" class="bg-emerald-500 hover:bg-emerald-400 text-white font-bold px-6 py-3 rounded-xl shadow-md transition">Nộp Bài</button>
                         </div>
+                    </div>
+
+                    <!-- Audio Player Control -->
+                    <div class="bg-cyan-50 dark:bg-slate-700 rounded-xl p-3 flex flex-wrap items-center gap-3 border border-cyan-100 dark:border-slate-600 shadow-sm">
+                        <audio id="ielts-audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" preload="metadata"></audio>
+                        <button onclick="toggleAudio()" id="btn-audio-play" class="w-10 h-10 bg-cyan-500 hover:bg-cyan-400 text-white rounded-full flex items-center justify-center shadow-md focus:outline-none transition">
+                            <svg class="w-5 h-5 ml-1" fill="currentColor" viewBox="0 0 20 20"><path d="M4 4l12 6-12 6z"></path></svg>
+                        </button>
+                        <button onclick="rewindAudio()" class="px-3 py-1.5 text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-cyan-500 dark:hover:text-cyan-400 bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-slate-200 dark:border-slate-600 transition">-5s</button>
+                        <button onclick="forwardAudio()" class="px-3 py-1.5 text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-cyan-500 dark:hover:text-cyan-400 bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-slate-200 dark:border-slate-600 transition">+5s</button>
+                        
+                        <div class="flex items-center gap-2 ml-auto">
+                            <span class="text-xs font-bold text-gray-500 dark:text-gray-400">Speed:</span>
+                            <select id="audio-speed" onchange="changeAudioSpeed()" class="bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded text-sm px-2 py-1 font-bold text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                                <option value="0.5">0.5x</option>
+                                <option value="1" selected>1.0x</option>
+                                <option value="1.25">1.25x</option>
+                                <option value="1.5">1.5x</option>
+                                <option value="2">2.0x</option>
+                            </select>
+                        </div>
+                        <div class="text-sm font-mono font-bold text-slate-600 dark:text-slate-300 w-16 text-right" id="audio-time">00:00</div>
                     </div>
                 </div>
 
-                <div id="ielts-content-speaking" class="hidden grid grid-cols-1 gap-6"><p class="text-center text-gray-500 italic">Cập nhật sau...</p></div>
-                <div id="ielts-content-writing" class="hidden grid grid-cols-1 gap-6"><p class="text-center text-gray-500 italic">Cập nhật sau...</p></div>
+                <!-- Exam Content Area -->
+                <div class="flex flex-col lg:flex-row gap-6 relative">
+                    <!-- Left: Questions / Text (Highlightable) -->
+                    <div class="lg:w-full bg-white dark:bg-darkCard p-6 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 highlightable-content" id="ielts-exam-content">
+                        <h4 class="font-bold text-xl mb-4 text-cyan-800 dark:text-cyan-300">SECTION 1: Questions 1-10</h4>
+                        <p class="text-gray-700 dark:text-gray-300 mb-4 font-bold italic">Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.</p>
+                        
+                        <div class="space-y-6 text-gray-800 dark:text-gray-200 leading-relaxed text-lg">
+                            <p><strong>Booking a Table at the Restaurant</strong></p>
+                            <p>Customer Name: <input type="text" class="border-b-2 border-gray-400 dark:border-gray-500 bg-transparent w-48 px-2 focus:outline-none focus:border-cyan-500 inline-block text-center" placeholder="(1)"></p>
+                            <p>Phone number: 07745 <input type="text" class="border-b-2 border-gray-400 dark:border-gray-500 bg-transparent w-40 px-2 focus:outline-none focus:border-cyan-500 inline-block text-center" placeholder="(2)"></p>
+                            <p>Date of booking: 15th <input type="text" class="border-b-2 border-gray-400 dark:border-gray-500 bg-transparent w-32 px-2 focus:outline-none focus:border-cyan-500 inline-block text-center" placeholder="(3)"></p>
+                            <p>Number of people: <input type="text" class="border-b-2 border-gray-400 dark:border-gray-500 bg-transparent w-24 px-2 focus:outline-none focus:border-cyan-500 inline-block text-center" placeholder="(4)"></p>
+                            <p>Special requirement: Wants a table near the <input type="text" class="border-b-2 border-gray-400 dark:border-gray-500 bg-transparent w-40 px-2 focus:outline-none focus:border-cyan-500 inline-block text-center" placeholder="(5)"></p>
+                            
+                            <hr class="my-6 border-gray-200 dark:border-slate-700">
+                            <p><em>(Bạn có thể dùng chuột bôi đen đoạn văn bản bất kỳ trong vùng này để kiểm tra tính năng Highlight 3 màu mô phỏng thi thật. Nháy đúp vào chữ đã bôi để xóa.)</em></p>
+                            <p>The quick brown fox jumps over the lazy dog. Listening carefully to the speaker is essential for catching the correct spelling of names and addresses. Distractors are commonly used in Section 1 to confuse the candidate.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Highlight Tooltip -->
+            <div id="highlight-tooltip" class="absolute hidden z-50 bg-white dark:bg-slate-800 shadow-xl rounded-full border border-gray-200 dark:border-slate-700 flex gap-2 p-2 transform -translate-x-1/2 -translate-y-full transition-opacity">
+                <button onclick="applyHighlight('bg-yellow-300 dark:bg-yellow-500/60 text-black dark:text-white')" class="w-7 h-7 rounded-full bg-yellow-300 border-2 border-white dark:border-slate-800 shadow-sm hover:scale-110 transition"></button>
+                <button onclick="applyHighlight('bg-blue-300 dark:bg-blue-500/60 text-black dark:text-white')" class="w-7 h-7 rounded-full bg-blue-300 border-2 border-white dark:border-slate-800 shadow-sm hover:scale-110 transition"></button>
+                <button onclick="applyHighlight('bg-emerald-300 dark:bg-emerald-500/60 text-black dark:text-white')" class="w-7 h-7 rounded-full bg-emerald-300 border-2 border-white dark:border-slate-800 shadow-sm hover:scale-110 transition"></button>
             </div>
         </div>
 
@@ -283,7 +380,7 @@
                             <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Trình độ: B1 - B2 | Số lượng: 40 Câu</p>
                             <p class="text-gray-700 dark:text-gray-300 mb-6 text-sm">Chủ đề: Giáo dục, Công nghệ, Môi trường, Giao tiếp xã hội.</p>
                         </div>
-                        <button onclick="startThptExam(2)" class="w-full bg-slate-500 hover:bg-slate-400 text-white font-bold py-3 rounded-xl shadow transition">Làm Đề Số 2 (50 Phút)</button>
+                        <button onclick="startThptExam(2)" class="w-full bg-cyan-500 hover:bg-cyan-400 text-white font-bold py-3 rounded-xl shadow transition">Làm Đề Số 2 (50 Phút)</button>
                     </div>
                     
                     <!-- Đề Số 3 -->
@@ -427,7 +524,7 @@
         </div>
     </div>
 
-    <!-- Nâng cấp Modal Lịch Sử -->
+    <!-- Modal Tiến trình -->
     <div id="progress-modal" class="fixed inset-0 bg-black bg-opacity-50 modal-overlay hidden z-[100] flex items-center justify-center">
         <div class="bg-white dark:bg-darkCard w-full max-w-2xl p-8 rounded-2xl shadow-2xl relative max-h-[80vh] flex flex-col">
             <button onclick="closeModals()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white">
@@ -441,7 +538,7 @@
         </div>
     </div>
 
-    <div id="exam-timer" class="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-50 hidden bg-rose-500 text-white font-extrabold text-4xl px-8 py-4 rounded-2xl shadow-[0_0_25px_rgba(244,63,94,0.7)] border-4 border-white dark:border-slate-800 transition-all duration-300 select-none">
+    <div id="exam-timer" class="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-50 hidden bg-rose-500 text-white font-extrabold text-4xl px-8 py-4 rounded-2xl shadow-[0_0_25px_rgba(244,63,94,0.7)] border-4 border-white dark:border-slate-800 transition-all duration-300 select-none pointer-events-none">
         00:00
     </div>
 
@@ -449,8 +546,7 @@
         // ------------------ BIẾN BẢO VỆ TIẾN TRÌNH ------------------
         let isTakingExam = false; 
 
-        // ------------------ DỮ LIỆU ĐỀ THI ------------------
-        // ĐỀ MINH HỌA SỐ 2
+        // ------------------ DỮ LIỆU ĐỀ THI THPT ------------------
         const clozePassage2 = `The rise of digital technology has profoundly impacted education. In recent years, traditional classrooms have been supplemented by online learning platforms, (25) ______ provide students with greater flexibility. Online courses allow learners to access materials at their own pace, making education more accessible to those with busy schedules. (26) ______, this shift also presents challenges. Some students struggle with time management and lack the discipline needed for self-study. Moreover, the absence of face-to-face interaction can lead to feelings of isolation. To address these issues, many educators are adopting a blended learning approach. This method combines online resources (27) ______ traditional classroom instruction. By blending the two, schools can offer the benefits of digital tools while maintaining the personal connection that is (28) ______ for effective learning. Ultimately, (29) ______ technology continues to evolve, education systems must adapt to ensure that all students can succeed.`;
         const readingPassage1_2 = `Sleep is a vital process that affects our physical and mental health. Despite its importance, many adults do not get the recommended seven to eight hours of sleep per night. The consequences of sleep deprivation are numerous, ranging from decreased concentration and memory issues to a weakened immune system.\n\nOne of the main culprits behind modern sleep problems is the excessive use of electronic devices before bedtime. The blue light emitted by smartphones and tablets interferes with the production of melatonin, a hormone that regulates the sleep-wake cycle. Consequently, people find it harder to fall asleep and experience poorer sleep quality.\n\nTo improve sleep hygiene, experts suggest establishing a regular bedtime routine. This includes going to bed and waking up at the same time every day, even on weekends. Additionally, creating a relaxing pre-sleep ritual, such as reading a book or taking a warm bath, can signal to the body that it is time to wind down. Keeping the bedroom dark, quiet, and cool also promotes better rest. By prioritizing sleep, individuals can significantly enhance their overall well-being and daily performance.`;
         const readingPassage2_2 = `Renewable energy sources, such as wind, solar, and hydroelectric power, are playing an increasingly crucial role in the global fight against climate change. Unlike fossil fuels, which release harmful greenhouse gases when burned, renewable energy generates electricity with little to no emissions. This transition is essential for reducing the world's carbon footprint and mitigating the severe impacts of global warming.\n\nSolar energy has seen remarkable growth over the past decade. The cost of solar panels has plummeted, making it more accessible for both residential and commercial use. Innovations in battery storage technology have also addressed one of solar power's main drawbacks: intermittency. Now, excess energy generated during sunny days can be stored and used at night or during cloudy weather, ensuring a more stable power supply.\n\nWind power is another rapidly expanding sector. Offshore wind farms, in particular, have enormous potential because ocean winds are generally stronger and more consistent than those on land. Countries with long coastlines are investing heavily in this infrastructure to capitalize on the abundant resource. However, the construction of these massive turbines requires significant initial investment and careful environmental planning to avoid disrupting marine ecosystems.\n\nDespite the progress, the shift to 100% renewable energy faces hurdles. Upgrading the existing electrical grid to handle decentralized power sources is a massive logistical and financial challenge. Moreover, political and economic interests tied to the fossil fuel industry often slow down the transition. Nevertheless, the continuous advancement of green technologies provides hope for a sustainable and clean energy future.`;
@@ -498,7 +594,6 @@
             { id: 40, passage: readingPassage2_2, group: "Phần Đọc hiểu 2", q: "According to paragraph 3, offshore wind farms are advantageous because ______.", opts: ["A. they are cheap to build", "B. they do not require any planning", "C. ocean winds are stronger and more consistent", "D. they are located far away from the coast"], ans: 2, exp: "Gió ngoài khơi mạnh và ổn định hơn so với trên đất liền" }
         ];
 
-        // ĐỀ MINH HỌA SỐ 3
         const clozePassage3 = `Preparing for standardized language proficiency tests can be a daunting task for many high school students. A well-structured study plan is essential for achieving a high band score. Firstly, students should familiarize themselves with the test format, (25) ______ includes different sections such as reading, writing, listening, and speaking. Secondly, consistent practice is vital. Engaging with a variety of materials, from academic articles to podcasts, helps expand one's vocabulary and comprehension skills. (26) ______, relying solely on self-study might not be enough for everyone. Many learners find it beneficial to join study groups or enroll in specialized preparation courses. In these environments, they can receive constructive feedback from experienced instructors and (27) ______ their speaking skills through mock interviews. Furthermore, managing time effectively during the actual exam is a skill that requires (28) ______ practice. By taking full-length practice tests under timed conditions, candidates can train themselves to stay calm and focused. Ultimately, with dedication and the right strategies, conquering these exams becomes an (29) ______ goal.`;
         const readingPassage1_3 = `The landscape of digital entertainment has undergone a massive transformation over the last two decades. Gone are the days when video games were solely considered a niche hobby for children. Today, the gaming industry, driven by major platforms and sophisticated hardware consoles, surpasses both the film and music industries in global revenue.\n\nOne of the key drivers of this growth is the shift towards digital distribution. Platforms that allow users to purchase, download, and manage their game libraries online have revolutionized how consumers access content. This convenience eliminates the need for physical discs and allows developers to frequently update their games with new features or downloadable content (DLC), keeping the community engaged for years after a game's initial release.\n\nFurthermore, gaming has become a highly social activity. Multiplayer titles and co-op campaigns enable friends to connect and collaborate regardless of geographical boundaries. Esports—competitive, organized video gaming—has also surged in popularity, drawing massive audiences to live streams and filling stadiums with passionate fans cheering for their favorite professional teams. As technology continues to advance with virtual reality and cloud gaming, the future of digital entertainment promises to be even more immersive.`;
         const readingPassage2_3 = `Choosing a university is one of the most critical decisions a young adult will make. The transition from high school to higher education involves navigating a maze of options, ranging from large public universities to specialized academies focusing on law, economics, or diplomacy. Each institution offers a unique environment, and finding the right fit requires careful self-reflection and research.\n\nFor many students, academic reputation and program quality are the primary considerations. A university known for its rigorous curriculum and distinguished faculty can provide a solid foundation for a future career. However, focusing solely on rankings can be misleading. It is equally important to consider the teaching style, class sizes, and the availability of hands-on learning opportunities such as internships and research projects.\n\nBeyond academics, campus culture plays a vital role in student satisfaction. Some students thrive in bustling, competitive environments, while others prefer tight-knit communities where they can easily build relationships with professors and peers. Extracurricular activities, clubs, and sports facilities also contribute significantly to the overall university experience, fostering personal growth and leadership skills.\n\nFinancial considerations cannot be overlooked either. Tuition fees, living expenses, and the availability of scholarships or financial aid often dictate the final choice for many families. Ultimately, the best university is not necessarily the most prestigious one, but rather the one that aligns with the student's academic goals, personality, and financial circumstances.`;
@@ -546,17 +641,20 @@
             { id: 40, passage: readingPassage2_3, group: "Part VII. Reading Comprehension 2", q: "Which of the following can be inferred from the passage?", opts: ["A. The most famous university is always the best choice for every student.", "B. Financial planning is an important part of the university selection process.", "C. Students should ignore campus culture when choosing a school.", "D. Specialized academies do not offer extracurricular activities."], ans: 1, exp: "Đoạn cuối: chi phí thường quyết định sự lựa chọn -> lập kế hoạch tài chính là quan trọng." }
         ];
 
+        // ------------------ LOGIC UI VÀ ĐIỀU HƯỚNG BẢO VỆ ------------------
         function showPage(pageId, tabId = 'listening') {
-            // Nâng cấp: Xử lý cảnh báo chống thoát khi đang trong phòng thi
             if (isTakingExam) {
                 if (!confirm("⚠️ CẢNH BÁO: Bạn đang trong phòng thi! Nếu thoát ra, toàn bộ tiến trình làm bài sẽ bị mất. Bạn có chắc chắn muốn thoát?")) {
                     return; 
                 }
-                // Hủy thi
                 isTakingExam = false;
                 clearInterval(thptTimerInterval);
+                clearInterval(ieltsTimerInterval);
                 document.getElementById('thpt-exam-room').classList.add('hidden');
                 document.getElementById('thpt-dashboard').classList.remove('hidden');
+                document.getElementById('ielts-exam-room').classList.add('hidden');
+                document.getElementById('ielts-dashboard').classList.remove('hidden');
+                document.getElementById('audio-time').innerText = "00:00";
             }
 
             document.querySelectorAll('.page-content').forEach(page => page.classList.remove('active'));
@@ -585,7 +683,6 @@
             if (pageId === 'ielts') showIeltsTab(tabId);
         }
 
-        // Chặn đóng Tab trình duyệt khi đang thi
         window.addEventListener('beforeunload', (e) => {
             if (isTakingExam) {
                 e.preventDefault();
@@ -625,6 +722,175 @@
             document.getElementById('nav-menu').classList.toggle('hidden');
         });
 
+        // ------------------ LOGIC PHÒNG THI IELTS ------------------
+        let ieltsTimerInterval;
+        let currentIeltsTestName = "";
+        const audioElement = document.getElementById('ielts-audio');
+
+        window.startIeltsExam = function(testName, isStrict) {
+            currentIeltsTestName = testName;
+            let duration = 40; 
+            
+            if (!isStrict) {
+                const userInput = prompt("Nhập thời gian làm bài bạn muốn (tính bằng phút):", "40");
+                if (userInput === null) return; // Người dùng bấm Hủy
+                const parsed = parseInt(userInput);
+                if (!isNaN(parsed) && parsed > 0) {
+                    duration = parsed;
+                } else {
+                    showToast("Thời gian không hợp lệ, mặc định 40 phút.", "warning");
+                }
+            }
+            
+            isTakingExam = true;
+            document.getElementById('ielts-dashboard').classList.add('hidden');
+            document.getElementById('ielts-exam-room').classList.remove('hidden');
+            document.getElementById('ielts-exam-title').innerText = testName;
+            
+            // Reset Audio
+            audioElement.pause();
+            audioElement.currentTime = 0;
+            audioElement.playbackRate = 1.0;
+            document.getElementById('audio-speed').value = "1";
+            document.getElementById('btn-audio-play').innerHTML = `<svg class="w-5 h-5 ml-1" fill="currentColor" viewBox="0 0 20 20"><path d="M4 4l12 6-12 6z"></path></svg>`;
+            
+            // Start Timer
+            let timeInSecs = duration * 60;
+            const timerDisplay = document.getElementById('ielts-timer-display');
+            timerDisplay.parentElement.classList.remove('animate-pulse');
+            clearInterval(ieltsTimerInterval);
+            
+            ieltsTimerInterval = setInterval(() => {
+                timeInSecs--;
+                let m = Math.floor(timeInSecs / 60).toString().padStart(2, '0');
+                let s = (timeInSecs % 60).toString().padStart(2, '0');
+                timerDisplay.innerText = `${m}:${s}`;
+                
+                if (timeInSecs === 300) {
+                    showToast("Chỉ còn 5 phút nữa!", "warning");
+                    timerDisplay.parentElement.classList.add('animate-pulse');
+                }
+                
+                if (timeInSecs <= 0) {
+                    clearInterval(ieltsTimerInterval);
+                    submitIeltsExam(true);
+                }
+            }, 1000);
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.submitIeltsExam = function(isTimeout = false) {
+            if (!isTimeout) {
+                if (!confirm("Bạn có chắc chắn muốn nộp bài?")) return;
+            }
+            clearInterval(ieltsTimerInterval);
+            isTakingExam = false;
+            audioElement.pause();
+            
+            // Random điểm demo 5.5 -> 9.0 để mô phỏng
+            const demoScore = (Math.random() * (9.0 - 5.5) + 5.5).toFixed(1);
+            
+            document.getElementById('ielts-exam-room').classList.add('hidden');
+            document.getElementById('ielts-dashboard').classList.remove('hidden');
+            
+            if (typeof window.submitTestResult === 'function') {
+                window.submitTestResult(currentIeltsTestName, parseFloat(demoScore));
+            } else {
+                showToast(`Đã nộp bài. Điểm Demo: ${demoScore}`, 'success');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- AUDIO CONTROLS ---
+        window.toggleAudio = function() {
+            const btn = document.getElementById('btn-audio-play');
+            if (audioElement.paused) {
+                audioElement.play();
+                btn.innerHTML = `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M5 4h3v12H5V4zm7 0h3v12h-3V4z"></path></svg>`;
+            } else {
+                audioElement.pause();
+                btn.innerHTML = `<svg class="w-5 h-5 ml-1" fill="currentColor" viewBox="0 0 20 20"><path d="M4 4l12 6-12 6z"></path></svg>`;
+            }
+        };
+
+        window.rewindAudio = function() {
+            audioElement.currentTime = Math.max(0, audioElement.currentTime - 5);
+        };
+
+        window.forwardAudio = function() {
+            audioElement.currentTime = Math.min(audioElement.duration, audioElement.currentTime + 5);
+        };
+
+        window.changeAudioSpeed = function() {
+            audioElement.playbackRate = parseFloat(document.getElementById('audio-speed').value);
+        };
+
+        audioElement.addEventListener('timeupdate', () => {
+            let m = Math.floor(audioElement.currentTime / 60).toString().padStart(2, '0');
+            let s = Math.floor(audioElement.currentTime % 60).toString().padStart(2, '0');
+            document.getElementById('audio-time').innerText = `${m}:${s}`;
+        });
+
+        // ------------------ LOGIC HIGHLIGHT VĂN BẢN ------------------
+        document.addEventListener('mouseup', function(e) {
+            const examText = document.getElementById('ielts-exam-content');
+            if(!examText) return;
+            
+            const tooltip = document.getElementById('highlight-tooltip');
+            
+            // Ẩn tooltip nếu click ra ngoài
+            if (!examText.contains(e.target) && !tooltip.contains(e.target)) {
+                tooltip.classList.add('hidden');
+                tooltip.classList.add('opacity-0');
+                return;
+            }
+
+            const selection = window.getSelection();
+            if (selection.toString().trim().length > 0 && examText.contains(selection.anchorNode)) {
+                const range = selection.getRangeAt(0);
+                const rect = range.getBoundingClientRect();
+                
+                tooltip.style.top = (rect.top + window.scrollY - 45) + 'px';
+                tooltip.style.left = (rect.left + window.scrollX + rect.width / 2) + 'px';
+                tooltip.classList.remove('hidden');
+                setTimeout(() => tooltip.classList.remove('opacity-0'), 10);
+            } else {
+                tooltip.classList.add('hidden');
+                tooltip.classList.add('opacity-0');
+            }
+        });
+
+        window.applyHighlight = function(colorClass) {
+            const selection = window.getSelection();
+            if (!selection.rangeCount) return;
+            const range = selection.getRangeAt(0);
+            
+            try {
+                const span = document.createElement('span');
+                span.className = `${colorClass} rounded px-1 cursor-pointer transition-colors`;
+                span.title = "Nháy đúp để xóa Highlight";
+                
+                span.ondblclick = function() {
+                    const parent = this.parentNode;
+                    while(this.firstChild) {
+                        parent.insertBefore(this.firstChild, this);
+                    }
+                    parent.removeChild(this);
+                };
+                
+                range.surroundContents(span);
+            } catch (e) {
+                showToast("Vui lòng bôi đen trong phạm vi một dòng hoặc đoạn văn!", "warning");
+            }
+            
+            selection.removeAllRanges();
+            const tooltip = document.getElementById('highlight-tooltip');
+            tooltip.classList.add('opacity-0');
+            setTimeout(() => tooltip.classList.add('hidden'), 200);
+        }
+
+        // ------------------ LOGIC PHÒNG THI THPT ------------------
         let currentThptData = [];
         let userThptAnswers = [];
         let thptTimerInterval;
@@ -708,7 +974,6 @@
                 navContainer.appendChild(navBtn);
             });
 
-            // Nút Nộp Bài Ngay dưới cùng
             const submitBottomDiv = document.createElement('div');
             submitBottomDiv.className = "mt-8 mb-12 text-center";
             submitBottomDiv.innerHTML = `<button onclick="submitThptExam(false)" class="bg-emerald-500 hover:bg-emerald-400 text-white font-extrabold text-xl py-4 px-12 rounded-full shadow-[0_10px_25px_rgba(16,185,129,0.4)] transition transform hover:-translate-y-1">Nộp Bài Ngay</button>`;
@@ -921,42 +1186,6 @@
             }, 300);
         };
 
-        let examTimerInterval;
-        function startExamTimer(minutes) {
-            const timerEl = document.getElementById('exam-timer');
-            timerEl.classList.remove('hidden', 'animate-pulse');
-            timerEl.classList.add('bg-rose-500');
-            
-            let time = minutes * 60;
-            
-            clearInterval(examTimerInterval);
-            updateTimerDisplay(timerEl, time);
-            showToast(`Bắt đầu tính giờ làm bài (${minutes} phút)!`, "success");
-
-            examTimerInterval = setInterval(() => {
-                time--;
-                updateTimerDisplay(timerEl, time);
-                
-                if (time === 300) {
-                    timerEl.classList.add('animate-pulse');
-                    showToast("Chú ý: Chỉ còn 5 phút làm bài!", "error");
-                }
-                
-                if (time <= 0) {
-                    clearInterval(examTimerInterval);
-                    timerEl.classList.add('hidden');
-                    timerEl.classList.remove('animate-pulse');
-                    showToast("Đã hết thời gian làm bài! Hệ thống tự động thu bài.", "error");
-                }
-            }, 1000);
-        }
-
-        function updateTimerDisplay(el, timeInSeconds) {
-            let m = Math.floor(timeInSeconds / 60);
-            let s = timeInSeconds % 60;
-            el.innerText = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-        }
-
         function showToast(message, type = 'success') {
             const toast = document.createElement('div');
             toast.className = `px-4 py-3 rounded-lg shadow-lg text-white font-bold pointer-events-auto ${type === 'success' ? 'bg-emerald-500' : type === 'warning' ? 'bg-amber-500' : 'bg-rose-500'} transition-all duration-300 transform translate-y-10 opacity-0`;
@@ -995,7 +1224,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-analytics.js";
         import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, serverTimestamp, getDocs, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, serverTimestamp, getDocs, doc, setDoc, getDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyALmotmcPgFYE6A1Zxi312X95Lh7OqMRBc",
@@ -1020,24 +1249,47 @@
         }, 1000);
 
         window.fetchUserStreak = async function() {
-            if(typeof db === 'undefined' || !globalUser) {
-                renderStreakCalendar();
+            if(typeof window.db === 'undefined' || !window.globalUser) {
+                window.renderStreakCalendar();
                 return;
             }
             try {
-                const progressRef = collection(db, 'users', globalUser.uid, 'progress');
+                const progressRef = collection(window.db, 'users', window.globalUser.uid, 'progress');
                 const qSnap = await getDocs(progressRef);
                 const activeDates = new Set();
                 qSnap.forEach(doc => {
                     const data = doc.data();
                     if(data.dateStr) activeDates.add(data.dateStr);
                 });
-                renderStreakCalendar(activeDates);
+                window.renderStreakCalendar(activeDates);
             } catch(e) { 
                 console.error("Lỗi lấy dữ liệu Streak", e); 
-                renderStreakCalendar();
+                window.renderStreakCalendar();
             }
         };
+
+        window.updateIeltsUI = async function() {
+            if (!window.globalUser || !window.db) return;
+            try {
+                const progressRef = collection(window.db, 'users', window.globalUser.uid, 'progress');
+                const querySnapshot = await getDocs(progressRef);
+                
+                querySnapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    let actionId = "";
+                    if (data.testName === 'Cambridge 18 - Test 1') actionId = "ielts-action-cam18-1";
+                    if (data.testName === 'Cambridge 19 - Test 1') actionId = "ielts-action-cam19-1";
+                    if (data.testName === 'Cambridge 20 - Test 1') actionId = "ielts-action-cam20-1";
+                    
+                    if (actionId) {
+                        const actionDiv = document.getElementById(actionId);
+                        if (actionDiv) {
+                            actionDiv.innerHTML = `<div class="bg-indigo-100 text-indigo-800 dark:bg-indigo-900/60 dark:text-indigo-200 font-black text-xl py-3 px-4 rounded-xl text-center shadow-inner border border-indigo-200 dark:border-indigo-700 animate-pulse">Điểm bài thi: ${parseFloat(data.score).toFixed(1)}</div>`;
+                        }
+                    }
+                });
+            } catch(e) { console.error("Lỗi cập nhật UI IELTS", e); }
+        }
 
         onAuthStateChanged(window.auth, async (user) => {
             window.globalUser = user;
@@ -1064,6 +1316,7 @@
                 } catch(e) { console.log("Lỗi tải mục tiêu:", e); }
 
                 if(typeof window.fetchUserStreak === 'function') window.fetchUserStreak();
+                if(typeof window.updateIeltsUI === 'function') window.updateIeltsUI();
                 closeModals();
             } else if(btnLogin && profileMenu) {
                 btnLogin.classList.remove('hidden');
@@ -1106,15 +1359,15 @@
         }
 
         window.logoutUser = async function() {
-            await signOut(window.auth);
+            await signOut(auth);
             showToast("Đã đăng xuất!", 'success');
         }
-        
+
         window.saveUserGoal = async function() {
-            if (!window.globalUser) return;
+            if (!globalUser) return;
             const goal = document.getElementById('user-goal').value;
             try {
-                await setDoc(doc(window.db, "users", window.globalUser.uid), { goal: goal }, { merge: true });
+                await setDoc(doc(db, "users", globalUser.uid), { goal: goal }, { merge: true });
                 showToast("Đã lưu mục tiêu thành công!", 'success');
             } catch (error) {
                 showToast("Lỗi khi lưu mục tiêu.", 'error');
@@ -1123,26 +1376,28 @@
 
         window.submitTestResult = async function(testName, score) {
             if (!window.globalUser) {
-                showToast(`Nộp bài thành công! Bạn đạt ${score} điểm. Hãy đăng nhập để lưu vào lịch sử.`, 'warning');
+                showToast("Vui lòng đăng nhập để lưu kết quả!", 'error');
+                openLoginModal();
                 return;
             }
             try {
                 const progressRef = collection(window.db, 'users', window.globalUser.uid, 'progress');
                 await addDoc(progressRef, {
                     testName: testName,
-                    score: score,
+                    score: parseFloat(score),
                     timestamp: serverTimestamp(),
                     dateStr: new Date().toLocaleDateString('vi-VN')
                 });
-                showToast(`Tuyệt vời! Hệ thống đã ghi nhận ${score} điểm và cộng 1 Streak.`, 'success');
-                if(typeof window.fetchUserStreak === 'function') window.fetchUserStreak();
+                showToast(`Đã lưu kết quả ${parseFloat(score).toFixed(1)} điểm cho ${testName}.`, 'success');
+                
+                if (typeof window.fetchUserStreak === 'function') window.fetchUserStreak();
+                if (typeof window.updateIeltsUI === 'function') window.updateIeltsUI();
             } catch (error) {
+                showToast("Không thể lưu kết quả. Vui lòng kiểm tra lại đường truyền.", 'error');
                 console.error(error);
-                showToast("Lỗi kết nối máy chủ, không thể lưu tiến trình.", 'error');
             }
         }
 
-        // Bổ sung: Nâng cấp đồ họa bảng Tiến trình
         window.showProgressModal = async function() {
             document.getElementById('progress-modal').classList.remove('hidden');
             const container = document.getElementById('progress-list-container');
@@ -1152,14 +1407,13 @@
             try {
                 const progressRef = collection(window.db, 'users', window.globalUser.uid, 'progress');
                 const querySnapshot = await getDocs(progressRef);
-                let historyHTML = '<div class="space-y-4">'; // Dùng không gian khối (Card) thay cho danh sách (list)
+                let historyHTML = '<div class="space-y-4">';
                 let count = 0;
                 
                 querySnapshot.forEach((docSnap) => {
                     count++;
                     const data = docSnap.data();
                     
-                    // Highlight điểm số (Màu xanh nếu điểm cao, vàng/đỏ nếu thấp)
                     let scoreColor = "bg-cyan-100 text-cyan-800 dark:bg-cyan-900/50 dark:text-cyan-300";
                     if(parseFloat(data.score) >= 8.0) scoreColor = "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300";
                     else if(parseFloat(data.score) < 5.0) scoreColor = "bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-300";
@@ -1174,7 +1428,7 @@
                                 </div>
                             </div>
                             <div class="${scoreColor} font-black text-xl px-4 py-2 rounded-xl shadow-sm border border-white/20">
-                                ${data.score}
+                                ${parseFloat(data.score).toFixed(1)}
                             </div>
                         </div>
                     `;
