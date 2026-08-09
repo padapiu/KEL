@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <!-- STREAMING_CHUNK: Initializing HTML structure, styles, and custom Tailwind configuration... -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KEL - Nền Tảng Luyện Thi Trực Tuyến</title>
@@ -37,10 +36,11 @@
         .skill-card:hover { transform: translateY(-10px) scale(1.02); border-bottom-color: #00c6ff; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
         .btn-primary { transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s; }
         .btn-primary:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 10px 25px rgba(0, 198, 255, 0.4); }
-        .page-content { display: none; animation: fadeIn 0.5s ease-in-out; }
-        .page-content.active { display: block; }
+        .page-content { display: none; }
+        .page-content.active { display: block; animation: fadeIn 0.5s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s ease-out; }
+        /* Tối ưu Reveal: Để tránh lỗi lúc mới load do display:none, ta không ẩn opacity về 0 ngay từ đầu nếu không thực sự cần */
+        .reveal { transition: all 0.8s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
         .modal-overlay { backdrop-filter: blur(5px); transition: opacity 0.3s ease; }
         .custom-scroll::-webkit-scrollbar { height: 8px; width: 8px; }
@@ -61,16 +61,10 @@
         
         .highlight-correct { background-color: #dcfce7; padding: 0.125rem 0.25rem; border-radius: 0.25rem; font-weight: 700; border-left: 4px solid #22c55e;}
         .dark .highlight-correct { background-color: rgba(34, 197, 94, 0.2); color: #86efac; border-color: #4ade80;}
-        .nav-number-btn { width: 2rem; height: 2rem; border-radius: 0.375rem; display: flex; align-items: center; justify-content: center; font-size: 0.875rem; font-weight: 600; cursor: pointer; transition: all 0.2s;}
-        .nav-number-correct { background-color: #22c55e; color: white; border-color: #16a34a;}
-        .nav-number-incorrect { background-color: #ef4444; color: white; border-color: #dc2626;}
-        .nav-number-skipped { background-color: #e5e7eb; color: #4b5563; border-color: #d1d5db;}
-        .dark .nav-number-skipped { background-color: #374151; color: #9ca3af; border-color: #4b5563;}
     </style>
 </head>
 <body class="bg-[#f4f7fe] text-[#2b3674] dark:bg-darkBg dark:text-darkText">
 
-    <!-- STREAMING_CHUNK: Setting up navigation bar and responsive header... -->
     <header class="bg-white dark:bg-darkCard shadow-sm rounded-b-3xl sticky top-0 z-50 px-6 py-4 flex flex-wrap justify-between items-center md:px-12 transition-colors duration-300">
         <div class="text-3xl md:text-4xl font-extrabold tracking-wider logo-text cursor-pointer" onclick="showPage('home')">KEL</div>
         
@@ -131,7 +125,6 @@
     </header>
 
     <main class="flex-grow">
-        <!-- STREAMING_CHUNK: Loading Home Page content including IELTS Calculator and Streak... -->
         <div id="page-home" class="page-content active">
             <section class="hero-gradient text-white text-center py-20 px-6 rounded-[30px] mx-4 md:mx-12 my-8 shadow-lg reveal">
                 <h1 class="text-4xl md:text-5xl font-extrabold mb-4 drop-shadow-md">Chỉ cần 1 click - KEL sẽ giúp bạn đạt AIM</h1>
@@ -140,6 +133,7 @@
             </section>
 
             <section class="px-6 mx-4 md:mx-12 my-8 grid grid-cols-1 xl:grid-cols-12 gap-8 reveal">
+                <!-- Máy tính IELTS -->
                 <div class="xl:col-span-4 bg-white dark:bg-darkCard p-6 rounded-[30px] shadow-sm border border-gray-100 dark:border-slate-700">
                     <h3 class="text-2xl font-bold text-[#2b3674] dark:text-cyan-300 mb-4 flex items-center gap-2">
                         <span>🎯</span> Mục Tiêu IELTS
@@ -177,6 +171,7 @@
                     </div>
                 </div>
 
+                <!-- Lịch Streak -->
                 <div class="xl:col-span-8 bg-white dark:bg-darkCard p-6 rounded-[30px] shadow-sm border border-gray-100 dark:border-slate-700 flex flex-col">
                     <div class="flex justify-between items-center mb-4">
                         <div>
@@ -234,7 +229,7 @@
             </section>
         </div>
 
-        <!-- STREAMING_CHUNK: Setting up IELTS module with Listening and Reading Dashboards... -->
+        <!-- IELTS MODULE -->
         <div id="page-ielts" class="page-content">
             <div id="ielts-dashboard" class="max-w-6xl mx-auto py-12 px-6 reveal">
                 <h2 class="text-4xl font-extrabold text-center text-[#2b3674] dark:text-cyan-300 mb-4">Kho Đề Thi IELTS đa dạng</h2>
@@ -280,12 +275,10 @@
                         </div>
                     </div>
                 </div>
-                
                 <div id="ielts-content-speaking" class="hidden grid grid-cols-1 gap-6"><p class="text-center text-gray-500 italic">Cập nhật sau...</p></div>
                 <div id="ielts-content-writing" class="hidden grid grid-cols-1 gap-6"><p class="text-center text-gray-500 italic">Cập nhật sau...</p></div>
             </div>
 
-            <!-- STREAMING_CHUNK: Building IELTS Listening exam room structure... -->
             <div id="ielts-exam-room" class="hidden max-w-7xl mx-auto py-6 px-4">
                 <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-4 mb-6 sticky top-24 z-40 border border-gray-200 dark:border-slate-700">
                     <div class="flex flex-wrap justify-between items-center gap-4 mb-4">
@@ -300,6 +293,7 @@
                             </div>
                             <button id="btn-submit-ielts" onclick="submitIeltsExam()" class="bg-emerald-500 hover:bg-emerald-400 text-white font-bold px-6 py-3 rounded-xl shadow-md transition">Nộp Bài</button>
                             <button id="btn-retake-ielts" onclick="retakeIeltsExam()" class="hidden bg-amber-500 hover:bg-amber-400 text-white font-bold px-6 py-3 rounded-xl shadow-md transition">Làm Lại Bài</button>
+                            <button onclick="exitToIeltsDashboard()" class="bg-slate-500 hover:bg-slate-400 text-white font-bold px-6 py-3 rounded-xl shadow-md transition">Về Danh Sách Đề</button>
                         </div>
                     </div>
 
@@ -334,11 +328,10 @@
 
                 <div class="flex flex-col lg:flex-row gap-6 relative">
                     <div class="lg:w-full bg-white dark:bg-darkCard p-6 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 highlightable-content" id="ielts-exam-content">
-                        <!-- Part 1 Content -->
+                        <!-- Content of parts populated by JS -->
                         <div id="ielts-part-1-content">
                             <h4 class="font-bold text-xl mb-4 text-cyan-800 dark:text-cyan-300">PART 1: Questions 1-10</h4>
                             <p class="text-gray-700 dark:text-gray-300 mb-4 font-bold italic">Complete the form below. Write ONE WORD ONLY for each answer.</p>
-                            
                             <div class="bg-gray-50 dark:bg-slate-700/50 p-6 rounded-xl border border-gray-200 dark:border-slate-600">
                                 <h5 class="text-center font-bold text-lg mb-6 dark:text-white">Survey about shopping in Broadbeach</h5>
                                 <div class="space-y-4 text-gray-800 dark:text-gray-200">
@@ -365,8 +358,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Part 2 Content -->
                         <div id="ielts-part-2-content" class="hidden">
                             <h4 class="font-bold text-xl mb-4 text-cyan-800 dark:text-cyan-300">PART 2: Questions 11-20</h4>
                             <p class="text-gray-700 dark:text-gray-300 mb-2 font-bold italic">Questions 11-12: Choose TWO letters, A-E.</p>
@@ -408,8 +399,6 @@
                                 <p>20. Annie Craven <input type="text" id="ielts-ans-20" class="border-b-2 border-gray-400 bg-transparent w-16 px-2 text-center uppercase focus:outline-none focus:border-cyan-500 font-bold text-cyan-700 dark:text-cyan-300" maxlength="1"></p>
                             </div>
                         </div>
-
-                        <!-- Part 3 Content -->
                         <div id="ielts-part-3-content" class="hidden">
                             <h4 class="font-bold text-xl mb-4 text-cyan-800 dark:text-cyan-300">PART 3: Questions 21-30</h4>
                             <p class="text-gray-700 dark:text-gray-300 mb-4 font-bold italic">Questions 21-23: Choose the correct letter, A, B or C.</p>
@@ -461,8 +450,6 @@
                                 <p>30. communal vegetable plots <input type="text" id="ielts-ans-30" class="border-b-2 border-gray-400 bg-transparent w-16 px-2 text-center uppercase focus:outline-none focus:border-cyan-500 font-bold text-cyan-700 dark:text-cyan-300" maxlength="1"></p>
                             </div>
                         </div>
-
-                        <!-- Part 4 Content -->
                         <div id="ielts-part-4-content" class="hidden">
                             <h4 class="font-bold text-xl mb-4 text-cyan-800 dark:text-cyan-300">PART 4: Questions 31-40</h4>
                             <p class="text-gray-700 dark:text-gray-300 mb-4 font-bold italic">Complete the notes below. Write ONE WORD ONLY for each answer.</p>
@@ -790,6 +777,7 @@
         </div>
     </div>
 
+    <!-- Modal Tiến trình -->
     <div id="progress-modal" class="fixed inset-0 bg-black bg-opacity-50 modal-overlay hidden z-[100] flex items-center justify-center">
         <div class="bg-white dark:bg-darkCard w-full max-w-2xl p-8 rounded-2xl shadow-2xl relative max-h-[80vh] flex flex-col">
             <button onclick="closeModals()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white">
@@ -802,7 +790,9 @@
         </div>
     </div>
 
-    <!-- STREAMING_CHUNK: Setting up Javascript global variables, timers and THPT logic... -->
+    <div id="exam-timer" class="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-50 hidden bg-rose-500 text-white font-extrabold text-4xl px-8 py-4 rounded-2xl shadow-[0_0_25px_rgba(244,63,94,0.7)] border-4 border-white dark:border-slate-800 transition-all duration-300 select-none pointer-events-none">00:00</div>
+
+    <!-- STREAMING_CHUNK: Integrating full exam logic, audio switching, grading and highlights... -->
     <script>
         let isTakingExam = false; 
 
@@ -916,6 +906,13 @@
                 document.getElementById('thpt-dashboard').classList.remove('hidden');
                 document.getElementById('ielts-exam-room').classList.add('hidden');
                 document.getElementById('ielts-reading-exam-room').classList.add('hidden');
+                
+                // Đóng luôn Dashboard kết quả và phần giải thích Reading nếu đang mở
+                const resultDash = document.getElementById('ielts-reading-result-dashboard');
+                if(resultDash) resultDash.classList.add('hidden');
+                const expArea = document.getElementById('ielts-reading-explanation-area');
+                if(expArea) expArea.classList.add('hidden');
+
                 document.getElementById('ielts-dashboard').classList.remove('hidden');
                 if(document.getElementById('audio-time')) document.getElementById('audio-time').innerText = "00:00";
             }
@@ -1042,6 +1039,11 @@
             document.getElementById('ielts-exam-room').classList.remove('hidden');
             document.getElementById('ielts-exam-title').innerText = testName;
             
+            // Xóa các elements tạo lúc chấm điểm
+            if(document.getElementById('btn-exit-listening')) {
+                document.getElementById('btn-exit-listening').remove();
+            }
+
             document.getElementById('btn-submit-ielts').classList.remove('hidden');
             document.getElementById('btn-retake-ielts').classList.add('hidden');
             const transcriptArea = document.getElementById('ielts-transcript-area');
@@ -1195,14 +1197,12 @@
             else if(correctCount >= 10) bandScore = 4.0;
             else bandScore = 3.5;
 
-            // STREAMING_CHUNK: Processing IELTS Listening submission UI...
             document.getElementById('btn-submit-ielts').classList.add('hidden');
             
-            // Xử lý nút Về Danh Sách cho Listening
             const exitBtnList = document.createElement('button');
             exitBtnList.id = 'btn-exit-listening';
             exitBtnList.className = "bg-slate-500 hover:bg-slate-400 text-white font-bold px-6 py-3 rounded-xl shadow-md transition ml-2";
-            exitBtnList.innerText = "Về Danh Sách";
+            exitBtnList.innerText = "Về Danh Sách Đề";
             exitBtnList.onclick = () => {
                 document.getElementById('ielts-exam-room').classList.add('hidden');
                 document.getElementById('ielts-dashboard').classList.remove('hidden');
@@ -1270,12 +1270,14 @@
             // Check cả content Listening và Reading
             const examTextList = document.getElementById('ielts-exam-content');
             const examTextRead = document.getElementById('reading-passage-container');
+            const examTextExp = document.getElementById('exp-passage-container');
             
             const tooltip = document.getElementById('highlight-tooltip');
             
             let targetNode = null;
             if (examTextList && examTextList.contains(e.target)) targetNode = examTextList;
             else if (examTextRead && examTextRead.contains(e.target)) targetNode = examTextRead;
+            else if (examTextExp && examTextExp.contains(e.target)) targetNode = examTextExp;
             
             if (!targetNode && !tooltip.contains(e.target)) {
                 tooltip.classList.add('hidden');
@@ -1689,6 +1691,9 @@
             document.querySelector('.reading-split-layout').classList.remove('hidden');
             document.getElementById('ielts-reading-exam-title').innerText = testName;
             
+            // Hiện nút "Nộp bài", Ẩn nút trở về ban đầu
+            document.getElementById('btn-submit-reading').classList.remove('hidden');
+            
             // Xóa dữ liệu cũ trong RAM mô phỏng
             for (let i = 1; i <= 40; i++) {
                 window[`userAnsRead${i}`] = null;
@@ -1696,13 +1701,7 @@
             
             if(typeof window.switchIeltsReadingPart === 'function') window.switchIeltsReadingPart(1);
             
-            // Khởi tạo Navigator Number Board
-            let navHtml = '';
-            for(let i=1; i<=40; i++) {
-                navHtml += `<div id="read-nav-btn-${i}" class="nav-number-btn border border-gray-300 text-gray-500 hover:bg-gray-100" onclick="scrollToQuestion(${i})">${i}</div>`;
-            }
-            document.getElementById('reading-question-nav').innerHTML = navHtml;
-            document.getElementById('reading-question-nav').classList.remove('hidden');
+            // Khởi tạo Navigator Number Board ẩn (Bạn đã yêu cầu xóa ở giao diện)
             document.getElementById('reading-controls-container').classList.remove('hidden');
             
             let timeInSecs = duration * 60;
@@ -1730,51 +1729,12 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        window.scrollToQuestion = function(qNum) {
-            let targetPart = 1;
-            if(qNum >= 14 && qNum <= 26) targetPart = 2;
-            else if (qNum >= 27) targetPart = 3;
-            
-            switchIeltsReadingPart(targetPart);
-            
-            setTimeout(() => {
-                let qContainer = document.getElementById(`read-ans-${qNum}`) || document.getElementById(`rq${qNum}-container`);
-                if(qContainer) {
-                    qContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    // Hiệu ứng nháy
-                    qContainer.classList.add('bg-yellow-100', 'transition', 'duration-500');
-                    setTimeout(() => qContainer.classList.remove('bg-yellow-100'), 1500);
-                }
-            }, 100);
-        }
-
         window.updateReadNav = function(qNum) {
             let el = document.getElementById(`read-ans-${qNum}`);
-            let isFilled = false;
-            
-            if(el) {
-                isFilled = el.value.trim() !== "";
-            } else {
-                let radios = document.querySelectorAll(`input[name="rq${qNum}"]:checked`);
-                isFilled = radios.length > 0;
-            }
-            
-            // Lưu dữ liệu vào biến global để khi chuyển tab không bị mất
             if(el) window[`userAnsRead${qNum}`] = el.value;
             else {
                 let radioChecked = document.querySelector(`input[name="rq${qNum}"]:checked`);
                 window[`userAnsRead${qNum}`] = radioChecked ? radioChecked.value : null;
-            }
-            
-            let navBtn = document.getElementById(`read-nav-btn-${qNum}`);
-            if(navBtn) {
-                if(isFilled) {
-                    navBtn.classList.remove('text-gray-500', 'hover:bg-gray-100', 'border-gray-300');
-                    navBtn.classList.add('bg-cyan-500', 'text-white', 'border-cyan-600');
-                } else {
-                    navBtn.classList.add('text-gray-500', 'hover:bg-gray-100', 'border-gray-300');
-                    navBtn.classList.remove('bg-cyan-500', 'text-white', 'border-cyan-600');
-                }
             }
         }
 
@@ -1820,7 +1780,6 @@
             document.querySelector('.reading-questions-pane').scrollTop = 0;
         }
 
-        // STREAMING_CHUNK: Processing Result Dashboard UI and Explanations...
         window.submitIeltsReadingExam = function(isTimeout = false) {
             if (!isTimeout) {
                 if (!confirm("Bạn có chắc chắn muốn nộp bài? Các câu chưa điền sẽ tính là sai.")) return;
@@ -1833,7 +1792,7 @@
             let skippedCount = 0;
             let resultsMap = {}; // Lưu trạng thái từng câu (C, I, S) để build bảng
 
-            // Quét 40 câu
+            // Quét 40 câu dựa vào bộ nhớ (Memory)
             for (let i = 1; i <= 40; i++) {
                 let userAns = window[`userAnsRead${i}`];
                 let correctAns = String(ieltsReadingAnswers[i]).toUpperCase();
@@ -1867,21 +1826,20 @@
             // Render Dashboard Kết quả
             document.querySelector('.reading-split-layout').classList.add('hidden');
             document.getElementById('reading-controls-container').classList.add('hidden');
-            document.getElementById('reading-question-nav').classList.add('hidden');
             
             document.getElementById('ielts-reading-exam-title').innerText = "Dashboard Kết Quả";
             document.getElementById('reading-exam-subtitle').innerText = currentIeltsReadingTestName;
             
             document.getElementById('ielts-reading-result-dashboard').classList.remove('hidden');
             
-            // Vẽ biểu đồ tròn
+            // Cập nhật số liệu trên biểu đồ và bảng
             document.getElementById('reading-correct-count-display').innerText = correctCount;
             document.getElementById('reading-stat-correct').innerText = correctCount;
             document.getElementById('reading-stat-incorrect').innerText = incorrectCount;
             document.getElementById('reading-stat-skipped').innerText = skippedCount;
             
             const circle = document.getElementById('reading-score-circle');
-            const circumference = 552; // 2 * pi * r (r=88)
+            const circumference = 552;
             const offset = circumference - (correctCount / 40) * circumference;
             circle.style.strokeDashoffset = offset;
             
@@ -1892,14 +1850,14 @@
             else if(bandScore >= 6.5) advice = "Làm tốt lắm! Bạn đã rất gần với aim 7.0+ rồi, luyện thêm chút nữa nhé! 💪";
             document.getElementById('reading-advice-text').innerText = advice;
             
-            // Render Bảng Phân Tích
+            // Phân bổ bảng
             const analyticsBody = document.getElementById('reading-analytics-body');
             let groups = {
                 "True - False - Not Given": [1,2,3,4,5,6,7],
-                "Gap Filling": [8,9,10,11,12,13,24,25,26,27,28,29,30],
-                "Matching Information": [14,15,16,17,18,19,27,28,29,30,31,32],
+                "Gap Filling": [8,9,10,11,12,13,24,25,26,27,28,29,30,31,32],
+                "Matching Information": [14,15,16,17,18,19],
                 "Yes - No - Not Given": [20,21,22,23,33,34,35,36],
-                "Multiple Choice (One Answer)": [24,25,26,37,38,39,40]
+                "Multiple Choice": [37,38,39,40]
             };
             
             let tableHtml = '';
@@ -1923,14 +1881,12 @@
             }
             analyticsBody.innerHTML = tableHtml;
 
-            // Xây dựng kho dữ liệu giải thích để dùng lúc ấn "Xem giải thích"
             window.tempReadingResultsMap = resultsMap;
-            window.tempReadingCorrectCount = correctCount;
-            window.tempReadingBandScore = bandScore;
 
             if (typeof window.submitTestResult === 'function') {
                 window.submitTestResult(currentIeltsReadingTestName, parseFloat(bandScore));
             }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         window.showReadingExplanations = function() {
@@ -1944,7 +1900,6 @@
             let combinedPassage = "";
             for(let p=1; p<=3; p++) {
                 let pText = ieltsReadingData[p].content;
-                // Thay thế chuỗi để tạo highlight mô phỏng. Thực tế cần Engine regex phức tạp, ở đây ta giả lập replace cứng.
                 for(let i=1; i<=40; i++) {
                     if(ieltsReadingExplanations[i] && ieltsReadingExplanations[i].length > 10) {
                         let toReplace = ieltsReadingExplanations[i];
@@ -1969,7 +1924,6 @@
                              : "border-gray-300 bg-gray-50 dark:bg-slate-800";
                 
                 let icon = status === "C" ? "✅" : status === "I" ? "❌" : "➖";
-
                 let expl = ieltsReadingExplanations[i] || "Thông tin dựa trên tổng quan đoạn văn.";
 
                 expHtml += `
@@ -1992,18 +1946,16 @@
 
         window.exitToIeltsDashboard = function() {
             isTakingExam = false;
-            // Ẩn phòng thi Reading và Result Dashboard
             document.getElementById('ielts-reading-exam-room').classList.add('hidden');
             document.getElementById('ielts-reading-result-dashboard').classList.add('hidden');
             document.getElementById('ielts-reading-explanation-area').classList.add('hidden');
             
-            // Xóa sạch nội dung cũ
             for(let i=1; i<=3; i++) {
                 document.getElementById(`read-passage-${i}`).innerHTML = '';
                 document.getElementById(`read-question-${i}`).innerHTML = '';
             }
             
-            // Hiện lại Dashboard
+            document.querySelector('.reading-split-layout').classList.remove('hidden');
             document.getElementById('ielts-dashboard').classList.remove('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
