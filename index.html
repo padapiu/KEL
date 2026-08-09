@@ -31,7 +31,7 @@
         .dark .logo-text { text-shadow: 2px 2px 0px #7c2d12; }
         .nav-link { transition: all 0.3s ease; }
         .nav-link:hover { transform: scale(1.05); }
-        .hero-gradient { background: linear-gradient(135deg, #00c6ff, #0072ff); }
+        .hero-gradient { background: linear-gradient(135deg, #00c6ff, #0072ff); } /* Nâng cấp màu tươi sáng hơn */
         .dark .hero-gradient { background: linear-gradient(135deg, #005c99, #003366); }
         .skill-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border-bottom: 5px solid transparent; }
         .skill-card:hover { transform: translateY(-10px) scale(1.02); border-bottom-color: #00c6ff; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
@@ -49,9 +49,11 @@
         .dark .custom-scroll::-webkit-scrollbar-track { background: #1e293b; }
         .dark .custom-scroll::-webkit-scrollbar-thumb { background: #475569; }
         
+        /* Chống select text mặc định ở ngoài phòng thi */
         .no-select { user-select: none; -webkit-user-select: none; }
+        /* Vùng cho phép select text để highlight */
         .highlightable-content { user-select: text; -webkit-user-select: text; }
-        
+
         /* Layout phòng thi Reading */
         .reading-split-layout { display: flex; flex-direction: column; gap: 1.5rem; }
         @media (min-width: 1024px) {
@@ -132,6 +134,7 @@
             </section>
 
             <section class="px-6 mx-4 md:mx-12 my-8 grid grid-cols-1 xl:grid-cols-12 gap-8 reveal">
+                <!-- Máy tính IELTS -->
                 <div class="xl:col-span-4 bg-white dark:bg-darkCard p-6 rounded-[30px] shadow-sm border border-gray-100 dark:border-slate-700">
                     <h3 class="text-2xl font-bold text-[#2b3674] dark:text-cyan-300 mb-4 flex items-center gap-2">
                         <span>🎯</span> Mục Tiêu IELTS
@@ -169,6 +172,7 @@
                     </div>
                 </div>
 
+                <!-- Lịch Streak -->
                 <div class="xl:col-span-8 bg-white dark:bg-darkCard p-6 rounded-[30px] shadow-sm border border-gray-100 dark:border-slate-700 flex flex-col">
                     <div class="flex justify-between items-center mb-4">
                         <div>
@@ -263,7 +267,7 @@
                                 <span class="bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200 text-xs font-bold px-3 py-1 rounded-full">Cambridge Academic</span>
                                 <span class="text-xs text-rose-500 font-bold bg-rose-50 px-2 py-1 rounded dark:bg-rose-900/30">HOT</span>
                             </div>
-                            <h3 class="text-xl font-bold text-cyan-900 dark:text-cyan-400 mb-2">Cambridge 21 - Test 4</h3>
+                            <h3 class="text-xl font-bold text-cyan-900 dark:text-cyan-400 mb-2">Cambridge 21 - Reading Test 4</h3>
                             <p class="text-gray-600 dark:text-gray-400 text-sm mb-6">3 Passage chuẩn máy (Water hyacinth, Multilingualism, Globemakers).</p>
                         </div>
                         <div class="flex flex-col gap-2" id="ielts-read-action-cam21-4">
@@ -516,11 +520,17 @@
                     </div>
                 </div>
 
-                <div class="reading-split-layout relative highlightable-content">
-                    <div class="reading-passage-pane bg-white dark:bg-darkCard p-6 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 custom-scroll text-gray-800 dark:text-gray-200 text-lg leading-relaxed" id="reading-passage-container">
+                <div class="reading-split-layout relative highlightable-content" id="reading-split-container">
+                    <div class="reading-passage-pane bg-white dark:bg-darkCard p-6 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 custom-scroll text-gray-800 dark:text-gray-200 text-lg leading-relaxed">
+                        <div id="read-passage-1"></div>
+                        <div id="read-passage-2" class="hidden"></div>
+                        <div id="read-passage-3" class="hidden"></div>
                     </div>
 
-                    <div class="reading-questions-pane bg-white dark:bg-darkCard p-6 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 custom-scroll" id="reading-questions-container">
+                    <div class="reading-questions-pane bg-white dark:bg-darkCard p-6 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 custom-scroll">
+                        <div id="read-question-1"></div>
+                        <div id="read-question-2" class="hidden"></div>
+                        <div id="read-question-3" class="hidden"></div>
                     </div>
                 </div>
                 
@@ -549,6 +559,7 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Đề Số 2 -->
                     <div class="bg-white dark:bg-darkCard rounded-2xl p-6 shadow-md border-l-4 border-slate-400 flex flex-col justify-between transform hover:-translate-y-1 transition">
                         <div>
                             <div class="flex justify-between items-start mb-2">
@@ -560,6 +571,7 @@
                         <button onclick="startThptExam(2)" class="w-full bg-cyan-500 hover:bg-cyan-400 text-white font-bold py-3 rounded-xl shadow transition">Làm Đề Số 2 (50 Phút)</button>
                     </div>
                     
+                    <!-- Đề Số 3 -->
                     <div class="bg-white dark:bg-darkCard rounded-2xl p-6 shadow-md border-l-4 border-amber-500 flex flex-col justify-between transform hover:-translate-y-1 transition">
                         <div>
                             <div class="flex justify-between items-start mb-2">
@@ -702,6 +714,8 @@
             </div>
         </div>
     </div>
+
+    <div id="exam-timer" class="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-50 hidden bg-rose-500 text-white font-extrabold text-4xl px-8 py-4 rounded-2xl shadow-[0_0_25px_rgba(244,63,94,0.7)] border-4 border-white dark:border-slate-800 transition-all duration-300 select-none pointer-events-none">00:00</div>
 
     <script>
         let isTakingExam = false; 
@@ -1209,7 +1223,6 @@
             setTimeout(() => tooltip.classList.add('hidden'), 200);
         }
 
-        // STREAMING_CHUNK: Integrating IELTS Reading Logic...
         // ------------------ LOGIC PHÒNG THI IELTS READING ------------------
         let ieltsReadingTimerInterval;
         let currentIeltsReadingTestName = "";
@@ -1714,11 +1727,28 @@
             }
         }
 
+        window.exitToIeltsDashboard = function() {
+            isTakingExam = false;
+            // Ẩn phòng thi Reading và nút Trở về
+            document.getElementById('ielts-reading-exam-room').classList.add('hidden');
+            if (document.getElementById('btn-exit-reading')) {
+                document.getElementById('btn-exit-reading').classList.add('hidden');
+            }
+            
+            // Khôi phục layout cho lần thi sau
+            document.querySelector('.reading-split-layout').classList.remove('hidden');
+            
+            // Hiện Dashboard
+            document.getElementById('ielts-dashboard').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
         window.retakeIeltsReadingExam = function() {
             startIeltsReadingExam(currentIeltsReadingTestName, false);
         }
     </script>
     
+    <!-- STREAMING_CHUNK: Setting up Firebase modules and progress query logic... -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-analytics.js";
