@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
+    <!-- STREAMING_CHUNK: Initializing HTML structure, styles, and custom Tailwind configuration... -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KEL - Nền Tảng Luyện Thi Trực Tuyến</title>
@@ -39,7 +40,6 @@
         .page-content { display: none; }
         .page-content.active { display: block; animation: fadeIn 0.5s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-        /* Tối ưu Reveal: Để tránh lỗi lúc mới load do display:none, ta không ẩn opacity về 0 ngay từ đầu nếu không thực sự cần */
         .reveal { transition: all 0.8s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
         .modal-overlay { backdrop-filter: blur(5px); transition: opacity 0.3s ease; }
@@ -61,10 +61,16 @@
         
         .highlight-correct { background-color: #dcfce7; padding: 0.125rem 0.25rem; border-radius: 0.25rem; font-weight: 700; border-left: 4px solid #22c55e;}
         .dark .highlight-correct { background-color: rgba(34, 197, 94, 0.2); color: #86efac; border-color: #4ade80;}
+        .nav-number-btn { width: 2rem; height: 2rem; border-radius: 0.375rem; display: flex; align-items: center; justify-content: center; font-size: 0.875rem; font-weight: 600; cursor: pointer; transition: all 0.2s;}
+        .nav-number-correct { background-color: #22c55e; color: white; border-color: #16a34a;}
+        .nav-number-incorrect { background-color: #ef4444; color: white; border-color: #dc2626;}
+        .nav-number-skipped { background-color: #e5e7eb; color: #4b5563; border-color: #d1d5db;}
+        .dark .nav-number-skipped { background-color: #374151; color: #9ca3af; border-color: #4b5563;}
     </style>
 </head>
 <body class="bg-[#f4f7fe] text-[#2b3674] dark:bg-darkBg dark:text-darkText">
 
+    <!-- STREAMING_CHUNK: Setting up navigation bar and responsive header... -->
     <header class="bg-white dark:bg-darkCard shadow-sm rounded-b-3xl sticky top-0 z-50 px-6 py-4 flex flex-wrap justify-between items-center md:px-12 transition-colors duration-300">
         <div class="text-3xl md:text-4xl font-extrabold tracking-wider logo-text cursor-pointer" onclick="showPage('home')">KEL</div>
         
@@ -125,6 +131,7 @@
     </header>
 
     <main class="flex-grow">
+        <!-- STREAMING_CHUNK: Loading Home Page content including IELTS Calculator and Streak... -->
         <div id="page-home" class="page-content active">
             <section class="hero-gradient text-white text-center py-20 px-6 rounded-[30px] mx-4 md:mx-12 my-8 shadow-lg reveal">
                 <h1 class="text-4xl md:text-5xl font-extrabold mb-4 drop-shadow-md">Chỉ cần 1 click - KEL sẽ giúp bạn đạt AIM</h1>
@@ -133,7 +140,6 @@
             </section>
 
             <section class="px-6 mx-4 md:mx-12 my-8 grid grid-cols-1 xl:grid-cols-12 gap-8 reveal">
-                <!-- Máy tính IELTS -->
                 <div class="xl:col-span-4 bg-white dark:bg-darkCard p-6 rounded-[30px] shadow-sm border border-gray-100 dark:border-slate-700">
                     <h3 class="text-2xl font-bold text-[#2b3674] dark:text-cyan-300 mb-4 flex items-center gap-2">
                         <span>🎯</span> Mục Tiêu IELTS
@@ -171,7 +177,6 @@
                     </div>
                 </div>
 
-                <!-- Lịch Streak -->
                 <div class="xl:col-span-8 bg-white dark:bg-darkCard p-6 rounded-[30px] shadow-sm border border-gray-100 dark:border-slate-700 flex flex-col">
                     <div class="flex justify-between items-center mb-4">
                         <div>
@@ -229,7 +234,7 @@
             </section>
         </div>
 
-        <!-- IELTS MODULE -->
+        <!-- STREAMING_CHUNK: Setting up IELTS module with Listening and Reading Dashboards... -->
         <div id="page-ielts" class="page-content">
             <div id="ielts-dashboard" class="max-w-6xl mx-auto py-12 px-6 reveal">
                 <h2 class="text-4xl font-extrabold text-center text-[#2b3674] dark:text-cyan-300 mb-4">Kho Đề Thi IELTS đa dạng</h2>
@@ -279,6 +284,7 @@
                 <div id="ielts-content-writing" class="hidden grid grid-cols-1 gap-6"><p class="text-center text-gray-500 italic">Cập nhật sau...</p></div>
             </div>
 
+            <!-- STREAMING_CHUNK: Building IELTS Listening exam room structure... -->
             <div id="ielts-exam-room" class="hidden max-w-7xl mx-auto py-6 px-4">
                 <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-4 mb-6 sticky top-24 z-40 border border-gray-200 dark:border-slate-700">
                     <div class="flex flex-wrap justify-between items-center gap-4 mb-4">
@@ -293,7 +299,6 @@
                             </div>
                             <button id="btn-submit-ielts" onclick="submitIeltsExam()" class="bg-emerald-500 hover:bg-emerald-400 text-white font-bold px-6 py-3 rounded-xl shadow-md transition">Nộp Bài</button>
                             <button id="btn-retake-ielts" onclick="retakeIeltsExam()" class="hidden bg-amber-500 hover:bg-amber-400 text-white font-bold px-6 py-3 rounded-xl shadow-md transition">Làm Lại Bài</button>
-                            <button onclick="exitToIeltsDashboard()" class="bg-slate-500 hover:bg-slate-400 text-white font-bold px-6 py-3 rounded-xl shadow-md transition">Về Danh Sách Đề</button>
                         </div>
                     </div>
 
@@ -328,10 +333,11 @@
 
                 <div class="flex flex-col lg:flex-row gap-6 relative">
                     <div class="lg:w-full bg-white dark:bg-darkCard p-6 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 highlightable-content" id="ielts-exam-content">
-                        <!-- Content of parts populated by JS -->
+                        <!-- Part 1 Content -->
                         <div id="ielts-part-1-content">
                             <h4 class="font-bold text-xl mb-4 text-cyan-800 dark:text-cyan-300">PART 1: Questions 1-10</h4>
                             <p class="text-gray-700 dark:text-gray-300 mb-4 font-bold italic">Complete the form below. Write ONE WORD ONLY for each answer.</p>
+                            
                             <div class="bg-gray-50 dark:bg-slate-700/50 p-6 rounded-xl border border-gray-200 dark:border-slate-600">
                                 <h5 class="text-center font-bold text-lg mb-6 dark:text-white">Survey about shopping in Broadbeach</h5>
                                 <div class="space-y-4 text-gray-800 dark:text-gray-200">
@@ -358,6 +364,8 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Part 2 Content -->
                         <div id="ielts-part-2-content" class="hidden">
                             <h4 class="font-bold text-xl mb-4 text-cyan-800 dark:text-cyan-300">PART 2: Questions 11-20</h4>
                             <p class="text-gray-700 dark:text-gray-300 mb-2 font-bold italic">Questions 11-12: Choose TWO letters, A-E.</p>
@@ -399,6 +407,8 @@
                                 <p>20. Annie Craven <input type="text" id="ielts-ans-20" class="border-b-2 border-gray-400 bg-transparent w-16 px-2 text-center uppercase focus:outline-none focus:border-cyan-500 font-bold text-cyan-700 dark:text-cyan-300" maxlength="1"></p>
                             </div>
                         </div>
+
+                        <!-- Part 3 Content -->
                         <div id="ielts-part-3-content" class="hidden">
                             <h4 class="font-bold text-xl mb-4 text-cyan-800 dark:text-cyan-300">PART 3: Questions 21-30</h4>
                             <p class="text-gray-700 dark:text-gray-300 mb-4 font-bold italic">Questions 21-23: Choose the correct letter, A, B or C.</p>
@@ -450,6 +460,8 @@
                                 <p>30. communal vegetable plots <input type="text" id="ielts-ans-30" class="border-b-2 border-gray-400 bg-transparent w-16 px-2 text-center uppercase focus:outline-none focus:border-cyan-500 font-bold text-cyan-700 dark:text-cyan-300" maxlength="1"></p>
                             </div>
                         </div>
+
+                        <!-- Part 4 Content -->
                         <div id="ielts-part-4-content" class="hidden">
                             <h4 class="font-bold text-xl mb-4 text-cyan-800 dark:text-cyan-300">PART 4: Questions 31-40</h4>
                             <p class="text-gray-700 dark:text-gray-300 mb-4 font-bold italic">Complete the notes below. Write ONE WORD ONLY for each answer.</p>
@@ -509,10 +521,6 @@
                             </div>
                             <button id="btn-submit-reading" onclick="submitIeltsReadingExam()" class="bg-emerald-500 hover:bg-emerald-400 text-white font-bold px-6 py-3 rounded-xl shadow-md transition">Nộp Bài</button>
                         </div>
-                    </div>
-                    <!-- Thanh điều hướng số câu thông minh (ẩn mặc định, chỉ hiện lúc thi) -->
-                    <div id="reading-question-nav" class="hidden mt-4 pt-4 border-t border-gray-200 dark:border-slate-700 flex flex-wrap gap-2">
-                        <!-- Sẽ render bằng JS -->
                     </div>
                 </div>
 
@@ -617,11 +625,15 @@
 
             </div>
 
-            <!-- Highlight Tooltip for Both -->
+            <!-- Highlight Tooltip for Both (Thêm nút Xóa Highlight) -->
             <div id="highlight-tooltip" class="absolute hidden z-50 bg-white dark:bg-slate-800 shadow-xl rounded-full border border-gray-200 dark:border-slate-700 flex gap-2 p-2 transform -translate-x-1/2 -translate-y-full transition-opacity">
-                <button onclick="applyHighlight('bg-yellow-300 dark:bg-yellow-500/60 text-black dark:text-white')" class="w-7 h-7 rounded-full bg-yellow-300 border-2 border-white dark:border-slate-800 shadow-sm hover:scale-110 transition"></button>
-                <button onclick="applyHighlight('bg-blue-300 dark:bg-blue-500/60 text-black dark:text-white')" class="w-7 h-7 rounded-full bg-blue-300 border-2 border-white dark:border-slate-800 shadow-sm hover:scale-110 transition"></button>
-                <button onclick="applyHighlight('bg-emerald-300 dark:bg-emerald-500/60 text-black dark:text-white')" class="w-7 h-7 rounded-full bg-emerald-300 border-2 border-white dark:border-slate-800 shadow-sm hover:scale-110 transition"></button>
+                <button onclick="applyHighlight('bg-yellow-300 dark:bg-yellow-500/60 text-black dark:text-white')" class="w-7 h-7 rounded-full bg-yellow-300 border-2 border-white dark:border-slate-800 shadow-sm hover:scale-110 transition" title="Highlight Vàng"></button>
+                <button onclick="applyHighlight('bg-blue-300 dark:bg-blue-500/60 text-black dark:text-white')" class="w-7 h-7 rounded-full bg-blue-300 border-2 border-white dark:border-slate-800 shadow-sm hover:scale-110 transition" title="Highlight Xanh Dương"></button>
+                <button onclick="applyHighlight('bg-emerald-300 dark:bg-emerald-500/60 text-black dark:text-white')" class="w-7 h-7 rounded-full bg-emerald-300 border-2 border-white dark:border-slate-800 shadow-sm hover:scale-110 transition" title="Highlight Xanh Lá"></button>
+                <div class="w-px h-6 bg-gray-300 dark:bg-gray-600 mx-1 self-center"></div>
+                <button onclick="removeHighlight()" class="w-7 h-7 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 flex items-center justify-center transition border border-gray-300 dark:border-gray-500" title="Xóa Highlight">
+                    <svg class="w-4 h-4 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                </button>
             </div>
         </div>
 
@@ -636,6 +648,7 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Đề Số 2 -->
                     <div class="bg-white dark:bg-darkCard rounded-2xl p-6 shadow-md border-l-4 border-slate-400 flex flex-col justify-between transform hover:-translate-y-1 transition">
                         <div>
                             <div class="flex justify-between items-start mb-2">
@@ -647,6 +660,7 @@
                         <button onclick="startThptExam(2)" class="w-full bg-cyan-500 hover:bg-cyan-400 text-white font-bold py-3 rounded-xl shadow transition">Làm Đề Số 2 (50 Phút)</button>
                     </div>
                     
+                    <!-- Đề Số 3 -->
                     <div class="bg-white dark:bg-darkCard rounded-2xl p-6 shadow-md border-l-4 border-amber-500 flex flex-col justify-between transform hover:-translate-y-1 transition">
                         <div>
                             <div class="flex justify-between items-start mb-2">
@@ -926,7 +940,8 @@
             if (targetPage) {
                 targetPage.classList.add('active');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
-                setTimeout(initScrollReveal, 100);
+                // Kích hoạt reveal nếu có nội dung bên trong thay vì dùng setTimeout dễ lỗi
+                targetPage.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
             }
 
             document.querySelectorAll('.nav-link').forEach(link => {
@@ -967,6 +982,7 @@
             });
         }
 
+        // Tối ưu hàm reveal khi người dùng scroll chuột
         function initScrollReveal() {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -974,7 +990,7 @@
                         entry.target.classList.add('active');
                     }
                 });
-            }, { threshold: 0.1 });
+            }, { threshold: 0.05 }); // Giảm threshold để nhạy hơn
             document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         }
 
@@ -1197,12 +1213,14 @@
             else if(correctCount >= 10) bandScore = 4.0;
             else bandScore = 3.5;
 
+            // STREAMING_CHUNK: Processing IELTS Listening submission UI...
             document.getElementById('btn-submit-ielts').classList.add('hidden');
             
+            // Xử lý nút Về Danh Sách cho Listening
             const exitBtnList = document.createElement('button');
             exitBtnList.id = 'btn-exit-listening';
             exitBtnList.className = "bg-slate-500 hover:bg-slate-400 text-white font-bold px-6 py-3 rounded-xl shadow-md transition ml-2";
-            exitBtnList.innerText = "Về Danh Sách Đề";
+            exitBtnList.innerText = "Về Danh Sách";
             exitBtnList.onclick = () => {
                 document.getElementById('ielts-exam-room').classList.add('hidden');
                 document.getElementById('ielts-dashboard').classList.remove('hidden');
@@ -1265,18 +1283,19 @@
             document.getElementById('audio-time').innerText = `${m}:${s}`;
         });
 
-        // ------------------ LOGIC HIGHLIGHT VĂN BẢN ------------------
+        // ------------------ LOGIC HIGHLIGHT VĂN BẢN (CHUNG) ------------------
         document.addEventListener('mouseup', function(e) {
-            // Check cả content Listening và Reading
             const examTextList = document.getElementById('ielts-exam-content');
-            const examTextRead = document.getElementById('reading-passage-container');
+            const examTextReadPassage = document.getElementById('reading-passage-container');
+            const examTextReadQuestions = document.getElementById('reading-questions-container'); // Cho phép highlight câu hỏi
             const examTextExp = document.getElementById('exp-passage-container');
             
             const tooltip = document.getElementById('highlight-tooltip');
             
             let targetNode = null;
             if (examTextList && examTextList.contains(e.target)) targetNode = examTextList;
-            else if (examTextRead && examTextRead.contains(e.target)) targetNode = examTextRead;
+            else if (examTextReadPassage && examTextReadPassage.contains(e.target)) targetNode = examTextReadPassage;
+            else if (examTextReadQuestions && examTextReadQuestions.contains(e.target)) targetNode = examTextReadQuestions;
             else if (examTextExp && examTextExp.contains(e.target)) targetNode = examTextExp;
             
             if (!targetNode && !tooltip.contains(e.target)) {
@@ -1307,7 +1326,8 @@
             
             try {
                 const span = document.createElement('span');
-                span.className = `${colorClass} rounded px-1 cursor-pointer transition-colors`;
+                // Lưu thêm class định dạng để dễ xóa
+                span.className = `highlight-active ${colorClass} rounded px-1 cursor-pointer transition-colors`;
                 span.title = "Nháy đúp để xóa Highlight";
                 
                 span.ondblclick = function() {
@@ -1321,6 +1341,34 @@
                 range.surroundContents(span);
             } catch (e) {
                 showToast("Vui lòng bôi đen trong phạm vi một dòng hoặc đoạn văn!", "warning");
+            }
+            
+            selection.removeAllRanges();
+            const tooltip = document.getElementById('highlight-tooltip');
+            tooltip.classList.add('opacity-0');
+            setTimeout(() => tooltip.classList.add('hidden'), 200);
+        }
+
+        // TÍNH NĂNG MỚI: Xóa Highlight (Nút Tẩy)
+        window.removeHighlight = function() {
+            const selection = window.getSelection();
+            if (!selection.rangeCount) return;
+
+            let node = selection.anchorNode;
+            if (node.nodeType === 3) {
+                node = node.parentNode;
+            }
+
+            // Kiểm tra xem vùng được chọn có phải là span highlight không
+            if (node.classList && node.classList.contains('highlight-active')) {
+                const parent = node.parentNode;
+                while(node.firstChild) {
+                    parent.insertBefore(node.firstChild, node);
+                }
+                parent.removeChild(node);
+                showToast("Đã xóa highlight thành công!", "success");
+            } else {
+                showToast("Vui lòng bôi đen đúng vào vùng chữ đang được highlight để xóa!", "warning");
             }
             
             selection.removeAllRanges();
@@ -1691,18 +1739,13 @@
             document.querySelector('.reading-split-layout').classList.remove('hidden');
             document.getElementById('ielts-reading-exam-title').innerText = testName;
             
-            // Hiện nút "Nộp bài", Ẩn nút trở về ban đầu
             document.getElementById('btn-submit-reading').classList.remove('hidden');
             
-            // Xóa dữ liệu cũ trong RAM mô phỏng
             for (let i = 1; i <= 40; i++) {
                 window[`userAnsRead${i}`] = null;
             }
             
             if(typeof window.switchIeltsReadingPart === 'function') window.switchIeltsReadingPart(1);
-            
-            // Khởi tạo Navigator Number Board ẩn (Bạn đã yêu cầu xóa ở giao diện)
-            document.getElementById('reading-controls-container').classList.remove('hidden');
             
             let timeInSecs = duration * 60;
             const timerDisplay = document.getElementById('ielts-reading-timer-display');
@@ -1753,7 +1796,6 @@
             document.getElementById('reading-passage-container').innerHTML = ieltsReadingData[partNum].content;
             document.getElementById('reading-questions-container').innerHTML = ieltsReadingData[partNum].questions;
             
-            // Restore answers from memory
             for(let i=1; i<=40; i++) {
                 if(window[`userAnsRead${i}`]) {
                     let el = document.getElementById(`read-ans-${i}`);
@@ -1765,7 +1807,6 @@
                     }
                 }
                 
-                // Add event listeners on the fly
                 let elInput = document.getElementById(`read-ans-${i}`);
                 if(elInput) {
                     elInput.addEventListener('input', () => updateReadNav(i));
@@ -1780,6 +1821,7 @@
             document.querySelector('.reading-questions-pane').scrollTop = 0;
         }
 
+        // STREAMING_CHUNK: Processing Result Dashboard UI and Explanations...
         window.submitIeltsReadingExam = function(isTimeout = false) {
             if (!isTimeout) {
                 if (!confirm("Bạn có chắc chắn muốn nộp bài? Các câu chưa điền sẽ tính là sai.")) return;
@@ -1790,9 +1832,8 @@
             let correctCount = 0;
             let incorrectCount = 0;
             let skippedCount = 0;
-            let resultsMap = {}; // Lưu trạng thái từng câu (C, I, S) để build bảng
+            let resultsMap = {};
 
-            // Quét 40 câu dựa vào bộ nhớ (Memory)
             for (let i = 1; i <= 40; i++) {
                 let userAns = window[`userAnsRead${i}`];
                 let correctAns = String(ieltsReadingAnswers[i]).toUpperCase();
@@ -1823,16 +1864,14 @@
             else if(correctCount >= 10) bandScore = 4.0;
             else bandScore = 3.5;
 
-            // Render Dashboard Kết quả
             document.querySelector('.reading-split-layout').classList.add('hidden');
-            document.getElementById('reading-controls-container').classList.add('hidden');
+            document.getElementById('btn-submit-reading').classList.add('hidden');
             
             document.getElementById('ielts-reading-exam-title').innerText = "Dashboard Kết Quả";
             document.getElementById('reading-exam-subtitle').innerText = currentIeltsReadingTestName;
             
             document.getElementById('ielts-reading-result-dashboard').classList.remove('hidden');
             
-            // Cập nhật số liệu trên biểu đồ và bảng
             document.getElementById('reading-correct-count-display').innerText = correctCount;
             document.getElementById('reading-stat-correct').innerText = correctCount;
             document.getElementById('reading-stat-incorrect').innerText = incorrectCount;
@@ -1850,7 +1889,6 @@
             else if(bandScore >= 6.5) advice = "Làm tốt lắm! Bạn đã rất gần với aim 7.0+ rồi, luyện thêm chút nữa nhé! 💪";
             document.getElementById('reading-advice-text').innerText = advice;
             
-            // Phân bổ bảng
             const analyticsBody = document.getElementById('reading-analytics-body');
             let groups = {
                 "True - False - Not Given": [1,2,3,4,5,6,7],
@@ -1896,7 +1934,6 @@
             let passageContainer = document.getElementById('exp-passage-container');
             let expContainer = document.getElementById('reading-explanation-content');
             
-            // Render Passage Text gộp (Có highlight tĩnh sẵn)
             let combinedPassage = "";
             for(let p=1; p<=3; p++) {
                 let pText = ieltsReadingData[p].content;
@@ -1912,7 +1949,6 @@
             }
             passageContainer.innerHTML = combinedPassage;
 
-            // Render Explanations
             let expHtml = `<h3 class="text-xl font-bold mb-6 text-gray-800 dark:text-white sticky top-0 bg-white dark:bg-darkCard z-10 py-2">Chi tiết đáp án</h3><div class="space-y-4">`;
             for(let i=1; i<=40; i++) {
                 let status = window.tempReadingResultsMap[i];
