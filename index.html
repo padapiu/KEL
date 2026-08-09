@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
+    <!-- STREAMING_CHUNK: Setting up page meta and head elements... -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KEL - Nền Tảng Luyện Thi Trực Tuyến</title>
@@ -30,7 +31,7 @@
         .dark .logo-text { text-shadow: 2px 2px 0px #7c2d12; }
         .nav-link { transition: all 0.3s ease; }
         .nav-link:hover { transform: scale(1.05); }
-        .hero-gradient { background: linear-gradient(135deg, #00c6ff, #0072ff); } /* Nâng cấp màu tươi sáng hơn */
+        .hero-gradient { background: linear-gradient(135deg, #00c6ff, #0072ff); }
         .dark .hero-gradient { background: linear-gradient(135deg, #005c99, #003366); }
         .skill-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border-bottom: 5px solid transparent; }
         .skill-card:hover { transform: translateY(-10px) scale(1.02); border-bottom-color: #00c6ff; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
@@ -48,14 +49,13 @@
         .dark .custom-scroll::-webkit-scrollbar-track { background: #1e293b; }
         .dark .custom-scroll::-webkit-scrollbar-thumb { background: #475569; }
         
-        /* Chống select text mặc định ở ngoài phòng thi */
         .no-select { user-select: none; -webkit-user-select: none; }
-        /* Vùng cho phép select text để highlight */
         .highlightable-content { user-select: text; -webkit-user-select: text; }
     </style>
 </head>
 <body class="bg-[#f4f7fe] text-[#2b3674] dark:bg-darkBg dark:text-darkText">
 
+    <!-- STREAMING_CHUNK: Rendering header navigation bar... -->
     <header class="bg-white dark:bg-darkCard shadow-sm rounded-b-3xl sticky top-0 z-50 px-6 py-4 flex flex-wrap justify-between items-center md:px-12 transition-colors duration-300">
         <div class="text-3xl md:text-4xl font-extrabold tracking-wider logo-text cursor-pointer" onclick="showPage('home')">KEL</div>
         
@@ -115,6 +115,7 @@
         </nav>
     </header>
 
+    <!-- STREAMING_CHUNK: Building main home section and streak components... -->
     <main class="flex-grow">
         <div id="page-home" class="page-content active">
             <section class="hero-gradient text-white text-center py-20 px-6 rounded-[30px] mx-4 md:mx-12 my-8 shadow-lg reveal">
@@ -220,6 +221,7 @@
             </section>
         </div>
 
+        <!-- STREAMING_CHUNK: Building IELTS Listening exam room and multi-part questions... -->
         <div id="page-ielts" class="page-content">
             <!-- IELTS Dashboard -->
             <div id="ielts-dashboard" class="max-w-6xl mx-auto py-12 px-6 reveal">
@@ -423,25 +425,25 @@
                                 <div id="q21-container">
                                     <p class="font-semibold mb-2" id="q21-text">21. Which aspect of their presentation are Mia and Leo both concerned about?</p>
                                     <div class="ml-4 space-y-1">
-                                        <label class="block"><input type="radio" name="q21" value="A"> A. meeting the deadline</label>
-                                        <label class="block"><input type="radio" name="q21" value="B"> B. finding suitable examples</label>
-                                        <label class="block"><input type="radio" name="q21" value="C"> C. including original ideas</label>
+                                        <label class="block cursor-pointer hover:text-cyan-500"><input type="radio" name="q21" value="A"> A. meeting the deadline</label>
+                                        <label class="block cursor-pointer hover:text-cyan-500"><input type="radio" name="q21" value="B"> B. finding suitable examples</label>
+                                        <label class="block cursor-pointer hover:text-cyan-500"><input type="radio" name="q21" value="C"> C. including original ideas</label>
                                     </div>
                                 </div>
                                 <div id="q22-container">
                                     <p class="font-semibold mb-2" id="q22-text">22. The students decide to focus their assignment on housing for</p>
                                     <div class="ml-4 space-y-1">
-                                        <label class="block"><input type="radio" name="q22" value="A"> A. family groups.</label>
-                                        <label class="block"><input type="radio" name="q22" value="B"> B. old people.</label>
-                                        <label class="block"><input type="radio" name="q22" value="C"> C. single people.</label>
+                                        <label class="block cursor-pointer hover:text-cyan-500"><input type="radio" name="q22" value="A"> A. family groups.</label>
+                                        <label class="block cursor-pointer hover:text-cyan-500"><input type="radio" name="q22" value="B"> B. old people.</label>
+                                        <label class="block cursor-pointer hover:text-cyan-500"><input type="radio" name="q22" value="C"> C. single people.</label>
                                     </div>
                                 </div>
                                 <div id="q23-container">
                                     <p class="font-semibold mb-2" id="q23-text">23. The students agree that demand for accommodation in urban areas should be met by</p>
                                     <div class="ml-4 space-y-1">
-                                        <label class="block"><input type="radio" name="q23" value="A"> A. repurposing offices and factories.</label>
-                                        <label class="block"><input type="radio" name="q23" value="B"> B. constructing tall buildings.</label>
-                                        <label class="block"><input type="radio" name="q23" value="C"> C. developing creative ideas for smaller homes.</label>
+                                        <label class="block cursor-pointer hover:text-cyan-500"><input type="radio" name="q23" value="A"> A. repurposing offices and factories.</label>
+                                        <label class="block cursor-pointer hover:text-cyan-500"><input type="radio" name="q23" value="B"> B. constructing tall buildings.</label>
+                                        <label class="block cursor-pointer hover:text-cyan-500"><input type="radio" name="q23" value="C"> C. developing creative ideas for smaller homes.</label>
                                     </div>
                                 </div>
                             </div>
@@ -510,7 +512,7 @@
                         
                         <!-- Transcript Area (Chỉ hiện sau khi nộp bài) -->
                         <div id="ielts-transcript-area" class="hidden mt-8 pt-8 border-t-2 border-dashed border-gray-300 dark:border-slate-600">
-                            <h3 class="text-2xl font-black text-rose-500 mb-6 flex items-center gap-2"><span>📜</span> Transcript & Giải Thích Chi Tiết</h3>
+                            <h3 class="text-2xl font-black text-rose-500 mb-6 flex items-center justify-between gap-2"><span>📜</span> Transcript & Giải Thích Chi Tiết</h3>
                             <div class="bg-gray-50 dark:bg-slate-800 p-6 rounded-xl text-gray-800 dark:text-gray-300 leading-relaxed text-lg" id="transcript-text">
                                 <!-- Transcript sẽ được inject bằng JS -->
                             </div>
@@ -527,6 +529,7 @@
                 <button onclick="applyHighlight('bg-emerald-300 dark:bg-emerald-500/60 text-black dark:text-white')" class="w-7 h-7 rounded-full bg-emerald-300 border-2 border-white dark:border-slate-800 shadow-sm hover:scale-110 transition"></button>
             </div>
         </div>
+        <!-- ... existing code ... -->
 
         <div id="page-thpt" class="page-content">
             <!-- Dashboard Danh Sách Đề THPT -->
@@ -710,6 +713,7 @@
         00:00
     </div>
 
+    <!-- STREAMING_CHUNK: Integrating full exam logic, audio switching, grading and highlights... -->
     <script>
         // ------------------ BIẾN BẢO VỆ TIẾN TRÌNH ------------------
         let isTakingExam = false; 
@@ -812,9 +816,9 @@
         // ------------------ LOGIC UI VÀ ĐIỀU HƯỚNG BẢO VỆ ------------------
         function showPage(pageId, tabId = 'listening') {
             if (isTakingExam) {
-                if (!confirm("⚠️ CẢNH BÁO: Bạn đang trong phòng thi! Nếu thoát ra, toàn bộ tiến trình làm bài sẽ bị mất. Bạn có chắc chắn muốn thoát?")) {
-                    return; 
-                }
+                const confirmExit = confirm("⚠️ CẢNH BÁO: Bạn đang trong phòng thi! Nếu thoát ra, toàn bộ tiến trình làm bài sẽ bị mất. Bạn có chắc chắn muốn thoát?");
+                if (!confirmExit) return; 
+                
                 isTakingExam = false;
                 clearInterval(thptTimerInterval);
                 clearInterval(ieltsTimerInterval);
@@ -895,13 +899,45 @@
         let currentIeltsTestName = "";
         const audioElement = document.getElementById('ielts-audio');
 
+        const ieltsAnswersCam21T4 = {
+            1: "leigh", 2: "motorbike", 3: "hairdresser", 4: "suit", 5: "laptop",
+            6: "monday", 7: "coffee", 8: "books", 9: "plants", 10: "cinema",
+            11: ["C", "E"], 12: ["C", "E"], 13: ["A", "B"], 14: ["A", "B"],
+            15: "C", 16: "G", 17: "D", 18: "A", 19: "F", 20: "B",
+            21: "B", 22: "A", 23: "B", 24: "B", 25: "E", 26: "I", 27: "A", 28: "D", 29: "H", 30: "G",
+            31: "routine", 32: "trials", 33: "calming", 34: "pillows", 35: "anxiety", 
+            36: "medication", 37: "awake", 38: "distraction", 39: "nature", 40: "volume"
+        };
+        
+        const ieltsTranscriptHTML = `
+            <h5 class="font-bold text-xl mb-4 text-cyan-700">Part 1 & 2</h5>
+            <p><strong>MAN:</strong> <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 1">Martyn Leigh. Martyn's with a Y. It's L-E-I-G-H.</span></p>
+            <p><strong>MAN:</strong> <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 2">...I'm on my motorbike today.</span></p>
+            <p><strong>MAN:</strong> <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 3, 4, 5">I've just been to the hairdresser... on my way to buy a suit... pick up my laptop...</span></p>
+            <p><strong>SPEAKER 2:</strong> <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 11, 12">We used the Breakout area (C)... sponsored the Business Connections Zone (E).</span></p>
+            <p class="text-sm italic text-rose-500 mt-2 mb-6">=> Giải thích Part 1&2: Đáp án bám rất sát các từ khóa được nhấn mạnh trong audio.</p>
+            
+            <h5 class="font-bold text-xl mb-4 text-cyan-700">Part 3</h5>
+            <p><strong>LEO:</strong> But we mustn't be too general, <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 21">we've got to support our points by referring to specific cases (B).</span></p>
+            <p><strong>MIA:</strong> <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 22">How about housing for different generations living together (A)?</span></p>
+            <p><strong>LEO:</strong> <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 23">I think the solution is to design multi-storey apartment blocks (B).</span></p>
+            <p class="text-sm italic text-rose-500 mt-2 mb-6">=> Giải thích Part 3: Phân tích kỹ thái độ đồng ý/phản đối của 2 người nói.</p>
+
+            <h5 class="font-bold text-xl mb-4 text-cyan-700">Part 4</h5>
+            <p><strong>LECTURER:</strong> <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 31, 32">unwelcome changes to their routine (31) ... nearly a hundred trials (32).</span></p>
+            <p><strong>LECTURER:</strong> <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 33, 34">had a calming quality (33) ... known as music pillows (34).</span></p>
+            <p><strong>LECTURER:</strong> <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 35, 36">no feelings of anxiety (35) ... didn't need as much medication (36).</span></p>
+            <p><strong>LECTURER:</strong> <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 37, 38">greater when patients were awake (37) ... worked on patients by distraction (38).</span></p>
+            <p><strong>LECTURER:</strong> <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 39, 40">taken from nature (39) ... most appropriate volume (40).</span></p>
+        `;
+
         window.startIeltsExam = function(testName, isStrict) {
             currentIeltsTestName = testName;
             let duration = 40; 
             
             if (!isStrict) {
                 const userInput = prompt("Nhập thời gian làm bài bạn muốn (tính bằng phút):", "40");
-                if (userInput === null) return; // Người dùng bấm Hủy
+                if (userInput === null) return; 
                 const parsed = parseInt(userInput);
                 if (!isNaN(parsed) && parsed > 0) {
                     duration = parsed;
@@ -915,14 +951,30 @@
             document.getElementById('ielts-exam-room').classList.remove('hidden');
             document.getElementById('ielts-exam-title').innerText = testName;
             
-            // Reset Audio
+            document.getElementById('btn-submit-ielts').classList.remove('hidden');
+            document.getElementById('btn-retake-ielts').classList.add('hidden');
+            const transcriptArea = document.getElementById('ielts-transcript-area');
+            if(transcriptArea) transcriptArea.classList.add('hidden');
+            
+            document.querySelectorAll('#ielts-exam-content input[type="text"]').forEach(input => {
+                input.value = '';
+                input.classList.remove('text-emerald-500', 'text-rose-500', 'line-through', 'font-black');
+                input.classList.add('text-cyan-700', 'dark:text-cyan-300');
+            });
+            document.querySelectorAll('#ielts-exam-content input[type="checkbox"], #ielts-exam-content input[type="radio"]').forEach(cb => {
+                cb.checked = false;
+                cb.parentElement.classList.remove('text-emerald-500', 'text-rose-500', 'line-through', 'font-bold');
+            });
+            document.querySelectorAll('#ielts-exam-content span.text-emerald-500.ml-2').forEach(span => span.remove());
+            
             audioElement.pause();
             audioElement.currentTime = 0;
             audioElement.playbackRate = 1.0;
             document.getElementById('audio-speed').value = "1";
             document.getElementById('btn-audio-play').innerHTML = `<svg class="w-5 h-5 ml-1" fill="currentColor" viewBox="0 0 20 20"><path d="M4 4l12 6-12 6z"></path></svg>`;
             
-            // Start Timer
+            if(typeof window.switchIeltsPart === 'function') window.switchIeltsPart(1);
+            
             let timeInSecs = duration * 60;
             const timerDisplay = document.getElementById('ielts-timer-display');
             timerDisplay.parentElement.classList.remove('animate-pulse');
@@ -948,26 +1000,130 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        window.switchIeltsPart = function(partNum) {
+            for(let i=1; i<=4; i++) {
+                const tab = document.getElementById(`tab-part-${i}`);
+                const content = document.getElementById(`ielts-part-${i}-content`);
+                if(tab && content) {
+                    if(i === partNum) {
+                        tab.className = "px-6 py-2 border-b-4 border-cyan-500 font-bold text-cyan-600 dark:text-cyan-400 focus:outline-none whitespace-nowrap";
+                        content.classList.remove('hidden');
+                    } else {
+                        tab.className = "px-6 py-2 border-b-4 border-transparent font-medium text-gray-500 hover:text-cyan-600 focus:outline-none whitespace-nowrap";
+                        content.classList.add('hidden');
+                    }
+                }
+            }
+            
+            audioElement.pause();
+            audioElement.currentTime = 0;
+            if(partNum === 1) audioElement.src = "https://engnovate.com/wp-content/uploads/2026/06/cambridge-ielts-21-academic-listening-test-4-1.mp3";
+            if(partNum === 2) audioElement.src = "https://engnovate.com/wp-content/uploads/2026/06/cambridge-ielts-21-academic-listening-test-4-2.mp3";
+            if(partNum === 3) audioElement.src = "https://engnovate.com/wp-content/uploads/2026/06/cambridge-ielts-21-academic-listening-test-4-3.mp3";
+            if(partNum === 4) audioElement.src = "https://engnovate.com/wp-content/uploads/2026/06/cambridge-ielts-21-academic-listening-test-4-4.mp3";
+            
+            audioElement.playbackRate = parseFloat(document.getElementById('audio-speed').value);
+            document.getElementById('btn-audio-play').innerHTML = `<svg class="w-5 h-5 ml-1" fill="currentColor" viewBox="0 0 20 20"><path d="M4 4l12 6-12 6z"></path></svg>`;
+        }
+
         window.submitIeltsExam = function(isTimeout = false) {
             if (!isTimeout) {
-                if (!confirm("Bạn có chắc chắn muốn nộp bài?")) return;
+                if (!confirm("Bạn có chắc chắn muốn nộp bài? Các câu chưa điền sẽ tính là sai.")) return;
             }
             clearInterval(ieltsTimerInterval);
             isTakingExam = false;
             audioElement.pause();
             
-            // Random điểm demo 5.5 -> 9.0 để mô phỏng
-            const demoScore = (Math.random() * (9.0 - 5.5) + 5.5).toFixed(1);
-            
-            document.getElementById('ielts-exam-room').classList.add('hidden');
-            document.getElementById('ielts-dashboard').classList.remove('hidden');
-            
-            if (typeof window.submitTestResult === 'function') {
-                window.submitTestResult(currentIeltsTestName, parseFloat(demoScore));
-            } else {
-                showToast(`Đã nộp bài. Điểm Demo: ${demoScore}`, 'success');
+            let correctCount = 0;
+
+            const checkText = (start, end) => {
+                for(let i=start; i<=end; i++) {
+                    const el = document.getElementById(`ielts-ans-${i}`);
+                    if(el) {
+                        const userVal = el.value.trim().toLowerCase();
+                        const correctVal = String(ieltsAnswersCam21T4[i]).toLowerCase();
+                        el.classList.remove('text-cyan-700', 'dark:text-cyan-300');
+                        if(userVal === correctVal) {
+                            correctCount++;
+                            el.classList.add('text-emerald-500', 'font-black');
+                        } else {
+                            el.classList.add('text-rose-500', 'line-through');
+                            if (!el.nextElementSibling || el.nextElementSibling.tagName !== 'SPAN') {
+                                const span = document.createElement('span');
+                                span.className = "text-emerald-500 font-bold ml-2 text-sm";
+                                span.innerText = `(${ieltsAnswersCam21T4[i]})`;
+                                el.parentNode.insertBefore(span, el.nextSibling);
+                            }
+                        }
+                    }
+                }
+            };
+
+            checkText(1, 10);
+            checkText(15, 20);
+            checkText(24, 30);
+            checkText(31, 40);
+
+            const checkMCQ = (id, correctArr) => {
+                const checkedNodes = document.querySelectorAll(`#${id} input[type="checkbox"]:checked`);
+                const checked = Array.from(checkedNodes).map(cb => cb.value);
+                let score = 0;
+                checked.forEach(val => { if(correctArr.includes(val)) score++; });
+                correctCount += score;
+                
+                document.querySelectorAll(`#${id} input[type="checkbox"]`).forEach(cb => {
+                    if (correctArr.includes(cb.value)) cb.parentElement.classList.add('text-emerald-500', 'font-bold');
+                    else if (cb.checked) cb.parentElement.classList.add('text-rose-500', 'line-through');
+                });
+            };
+            checkMCQ('ielts-mcq-11-12', ieltsAnswersCam21T4[11]);
+            checkMCQ('ielts-mcq-13-14', ieltsAnswersCam21T4[13]);
+
+            for (let i = 21; i <= 23; i++) {
+                const selected = document.querySelector(`input[name="q${i}"]:checked`);
+                const correctAns = ieltsAnswersCam21T4[i];
+                if (selected && selected.value === correctAns) correctCount++;
+                
+                document.querySelectorAll(`input[name="q${i}"]`).forEach(radio => {
+                    if (radio.value === correctAns) radio.parentElement.classList.add('text-emerald-500', 'font-bold');
+                    else if (radio.checked) radio.parentElement.classList.add('text-rose-500', 'line-through');
+                });
             }
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            let bandScore = 1.0;
+            if(correctCount >= 39) bandScore = 9.0;
+            else if(correctCount >= 37) bandScore = 8.5;
+            else if(correctCount >= 35) bandScore = 8.0;
+            else if(correctCount >= 32) bandScore = 7.5;
+            else if(correctCount >= 30) bandScore = 7.0;
+            else if(correctCount >= 26) bandScore = 6.5;
+            else if(correctCount >= 23) bandScore = 6.0;
+            else if(correctCount >= 18) bandScore = 5.5;
+            else if(correctCount >= 16) bandScore = 5.0;
+            else if(correctCount >= 13) bandScore = 4.5;
+            else if(correctCount >= 10) bandScore = 4.0;
+            else bandScore = 3.5;
+
+            document.getElementById('btn-submit-ielts').classList.add('hidden');
+            document.getElementById('btn-retake-ielts').classList.remove('hidden');
+            
+            const transcriptArea = document.getElementById('ielts-transcript-area');
+            if(transcriptArea) {
+                transcriptArea.classList.remove('hidden');
+                transcriptArea.querySelector('h3').innerHTML = `<span>📜</span> Transcript & Giải Thích Chi Tiết <span class="text-emerald-500 ml-auto bg-emerald-100 px-3 py-1 rounded-lg">Score: ${correctCount}/40 (Band ${bandScore.toFixed(1)})</span>`;
+                document.getElementById('transcript-text').innerHTML = ieltsTranscriptHTML;
+                transcriptArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            if (typeof window.submitTestResult === 'function') {
+                window.submitTestResult(currentIeltsTestName, parseFloat(bandScore));
+            } else {
+                showToast(`Nộp bài thành công. Band điểm đạt: ${bandScore.toFixed(1)}`, 'success');
+            }
+        }
+
+        window.retakeIeltsExam = function() {
+            startIeltsExam(currentIeltsTestName, false);
         }
 
         // --- AUDIO CONTROLS ---
@@ -1007,7 +1163,6 @@
             
             const tooltip = document.getElementById('highlight-tooltip');
             
-            // Ẩn tooltip nếu click ra ngoài
             if (!examText.contains(e.target) && !tooltip.contains(e.target)) {
                 tooltip.classList.add('hidden');
                 tooltip.classList.add('opacity-0');
@@ -1388,6 +1543,7 @@
         });
     </script>
 
+    <!-- STREAMING_CHUNK: Setting up Firebase modules and progress query logic... -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-analytics.js";
@@ -1447,12 +1603,12 @@
                     let actionId = "";
                     if (data.testName === 'Cambridge 18 - Test 1') actionId = "ielts-action-cam18-1";
                     if (data.testName === 'Cambridge 19 - Test 1') actionId = "ielts-action-cam19-1";
-                    if (data.testName === 'Cambridge 20 - Test 1') actionId = "ielts-action-cam20-1";
+                    if (data.testName === 'Cambridge 21 - Test 4') actionId = "ielts-action-cam21-4";
                     
                     if (actionId) {
                         const actionDiv = document.getElementById(actionId);
                         if (actionDiv) {
-                            actionDiv.innerHTML = `<div class="bg-indigo-100 text-indigo-800 dark:bg-indigo-900/60 dark:text-indigo-200 font-black text-xl py-3 px-4 rounded-xl text-center shadow-inner border border-indigo-200 dark:border-indigo-700 animate-pulse">Điểm bài thi: ${parseFloat(data.score).toFixed(1)}</div>`;
+                            actionDiv.innerHTML = `<div class="bg-cyan-100 text-cyan-800 dark:bg-cyan-900/60 dark:text-cyan-200 font-black text-xl py-3 px-4 rounded-xl text-center shadow-inner border border-cyan-200 dark:border-cyan-700 animate-pulse">Band điểm: ${parseFloat(data.score).toFixed(1)}</div>`;
                         }
                     }
                 });
@@ -1574,7 +1730,9 @@
             if (!window.globalUser) return;
             try {
                 const progressRef = collection(window.db, 'users', window.globalUser.uid, 'progress');
-                const querySnapshot = await getDocs(progressRef);
+                const q = query(progressRef, orderBy("timestamp", "desc"));
+                const querySnapshot = await getDocs(q);
+                
                 let historyHTML = '<div class="space-y-4">';
                 let count = 0;
                 
@@ -1582,20 +1740,30 @@
                     count++;
                     const data = docSnap.data();
                     
-                    let scoreColor = "bg-cyan-100 text-cyan-800 dark:bg-cyan-900/50 dark:text-cyan-300";
-                    if(parseFloat(data.score) >= 8.0) scoreColor = "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300";
-                    else if(parseFloat(data.score) < 5.0) scoreColor = "bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-300";
+                    let scoreColor = "bg-sky-100 text-sky-700 border-sky-300 dark:bg-sky-900/50 dark:text-sky-300 dark:border-sky-700";
+                    let emoji = "👍";
+                    
+                    if(parseFloat(data.score) >= 8.0) {
+                        scoreColor = "bg-emerald-100 text-emerald-700 border-emerald-300 dark:bg-emerald-900/50 dark:text-emerald-300 dark:border-emerald-700";
+                        emoji = "🏆";
+                    }
+                    else if(parseFloat(data.score) < 5.0) {
+                        scoreColor = "bg-rose-100 text-rose-700 border-rose-300 dark:bg-rose-900/50 dark:text-rose-300 dark:border-rose-700";
+                        emoji = "💪";
+                    }
 
                     historyHTML += `
-                        <div class="flex justify-between items-center p-4 bg-gray-50 dark:bg-slate-700/50 rounded-xl border border-gray-100 dark:border-slate-600 hover:shadow-md transition">
+                        <div class="flex justify-between items-center p-5 bg-white dark:bg-slate-800 rounded-2xl border shadow-sm hover:shadow-md transition duration-300 transform hover:-translate-y-1">
                             <div class="flex items-center gap-4">
-                                <div class="w-10 h-10 rounded-full bg-white dark:bg-slate-800 shadow-sm flex items-center justify-center text-xl">📝</div>
+                                <div class="w-12 h-12 rounded-full ${scoreColor} shadow-inner flex items-center justify-center text-2xl border">
+                                    ${emoji}
+                                </div>
                                 <div>
-                                    <h4 class="text-base font-bold text-gray-800 dark:text-gray-200">${data.testName}</h4>
-                                    <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 mt-1 flex items-center gap-1"><span>🕒</span> ${data.dateStr}</p>
+                                    <h4 class="text-lg font-black text-slate-800 dark:text-white">${data.testName}</h4>
+                                    <p class="text-sm font-semibold text-slate-500 dark:text-slate-400 mt-1 flex items-center gap-1"><span>🕒</span> ${data.dateStr}</p>
                                 </div>
                             </div>
-                            <div class="${scoreColor} font-black text-xl px-4 py-2 rounded-xl shadow-sm border border-white/20">
+                            <div class="${scoreColor} font-black text-3xl px-5 py-2 rounded-xl shadow-sm border bg-opacity-50 backdrop-blur-sm">
                                 ${parseFloat(data.score).toFixed(1)}
                             </div>
                         </div>
