@@ -2016,7 +2016,89 @@
 
         window.retakeIeltsReadingExam = function() {
             startIeltsReadingExam(currentIeltsReadingTestName, false);
+        }// ------------------ LOGIC VẼ LỊCH HỌC TẬP (STREAK CALENDAR) ------------------
+
+window.renderStreakCalendar = function(activeDates = new Set()) {
+    const container = document.getElementById('streak-calendar-container');
+    if (!container) return;
+
+    // Lấy thông tin ngày tháng năm hiện tại
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth(); // Lưu ý: Tháng trong JS bắt đầu từ 0 (0 = Tháng 1)
+
+    // Xác định ngày đầu tiên của tháng là thứ mấy (0 = Chủ Nhật, 1 = Thứ 2,...)
+    const firstDayIndex = new Date(year, month, 1).getDay(); 
+    // Số ngày trong tháng hiện tại
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    // Điều chỉnh để Thứ 2 là cột đầu tiên (T2, T3, T4, T5, T6, T7, CN)
+    let startDay = firstDayIndex === 0 ? 6 : firstDayIndex - 1;
+
+    // Định dạng chuỗi tháng (ví dụ: 08)
+    const monthNames = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
+    const currentMonthStr = monthNames[month];
+
+    // Xây dựng khung HTML cho bộ lịch
+    let html = `
+        <div class="flex justify-between items-center mb-6">
+            <h4 class="font-extrabold text-lg text-gray-800 dark:text-gray-200">Tháng ${currentMonthStr} / ${year}</h4>
+            <div class="flex items-center gap-2 text-xs font-bold text-gray-500">
+                <span class="w-3 h-3 rounded-full bg-[#22c55e] inline-block shadow-sm"></span> Có nộp bài
+            </div>
+        </div>
+        <div class="grid grid-cols-7 gap-1 text-center text-xs font-bold text-gray-400 mb-3 uppercase tracking-wider">
+            <div>T2</div><div>T3</div><div>T4</div><div>T5</div><div>T6</div><div>T7</div><div>CN</div>
+        </div>
+        <div class="grid grid-cols-7 gap-y-3 text-center text-sm font-semibold">
+    `;
+
+    // Tạo các ô trống cho những ngày của tháng trước nằm ở tuần đầu tiên
+    for (let i = 0; i < startDay; i++) {
+        html += `<div></div>`;
+    }
+
+    // Vòng lặp tạo các ô cho từng ngày trong tháng
+    for (let day = 1; day <= daysInMonth; day++) {
+        // Tạo chuỗi ngày định dạng DD/MM/YYYY để so sánh với cơ sở dữ liệu Firebase
+        const dateStr = `${day.toString().padStart(2, '0')}/${currentMonthStr}/${year}`;
+        
+        // Kiểm tra xem ngày này học viên có nộp bài không
+        const isCompleted = activeDates.has(dateStr);
+        // Kiểm tra xem ngày này có phải là hôm nay không
+        const isToday = (day === today.getDate());
+
+        // Lớp CSS mặc định cho một ô ngày
+        let classes = "w-9 h-9 mx-auto flex items-center justify-center rounded-full transition-all duration-300 ";
+        
+        if (isCompleted) {
+            // NẾU CÓ NỘP BÀI: Đổ nền xanh lá, chữ trắng (Giống hình ảnh bạn cung cấp)
+            classes += "bg-[#16a34a] text-white font-black shadow-md transform hover:scale-110 cursor-pointer";
+        } else if (isToday) {
+            // NẾU LÀ HÔM NAY (nhưng chưa nộp bài): Đóng khung đỏ nhạt để nhận diện
+            classes += "text-rose-500 font-bold border-2 border-rose-300 bg-rose-50 dark:bg-rose-900/30 dark:border-rose-700";
+        } else {
+            // CÁC NGÀY BÌNH THƯỜNG: Chữ xám, khi trỏ chuột vào hiện nền xám nhạt
+            classes += "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 cursor-default";
         }
+
+        html += `
+            <div class="py-1">
+                <div class="${classes}" title="${isCompleted ? 'Bạn đã hoàn thành bài thi ngày này!' : dateStr}">
+                    ${day}
+                </div>
+            </div>
+        `;
+    }
+
+    html += `</div>`;
+    
+    // Đổ mã HTML vừa tạo vào giao diện
+    container.innerHTML = html;
+}
+
+// Gọi hàm ngay lập tức khi tải trang để hiển thị lịch trống ban đầu (khi chưa đăng nhập)
+window.renderStreakCalendar();
     </script>
     
     <script type="module">
