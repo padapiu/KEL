@@ -2129,51 +2129,93 @@ window.renderStreakCalendar();
             if(timeEl) timeEl.innerText = `${timeString} (GMT+07:00)`;
         }, 1000);
 
+       // Hàm lấy dữ liệu tiến trình và vẽ lịch
         window.fetchUserStreak = async function() {
-            if(typeof window.db === 'undefined' || !window.globalUser) {
-                window.renderStreakCalendar();
+            if (typeof window.db === 'undefined' || !window.globalUser) {
+                if (typeof window.renderStreakCalendar === 'function') window.renderStreakCalendar();
                 return;
             }
+            
             try {
+                // 1. Báo cho người dùng biết hệ thống đang tải dữ liệu
+                const container = document.getElementById('streak-calendar-container');
+                if (container) {
+                    container.innerHTML = '<p class="text-cyan-500 font-bold text-sm text-center italic mt-4 animate-pulse">Đang đồng bộ dữ liệu học tập...</p>';
+                }
+
+                // 2. Kéo dữ liệu từ Firebase
                 const progressRef = collection(window.db, 'users', window.globalUser.uid, 'progress');
                 const qSnap = await getDocs(progressRef);
                 const activeDates = new Set();
+                
+                // 3. Trích xuất các ngày đã nộp bài
                 qSnap.forEach(doc => {
                     const data = doc.data();
-                    if(data.dateStr) activeDates.add(data.dateStr);
+                    if (data.dateStr) {
+                        activeDates.add(data.dateStr);
+                    }
                 });
-                window.renderStreakCalendar(activeDates);
+                
+                // 4. Vẽ lại lịch với các ngày đã được tô xanh
+                if (typeof window.renderStreakCalendar === 'function') {
+                    window.renderStreakCalendar(activeDates);
+                }
             } catch(e) { 
-                console.error("Lỗi lấy dữ liệu Streak", e); 
-                window.renderStreakCalendar();
+                console.error("Lỗi lấy dữ liệu Streak:", e); 
+                if (typeof window.renderStreakCalendar === 'function') window.renderStreakCalendar();
             }
         };
 
-        window.updateIeltsUI = async function() {
-            if (!window.globalUser || !window.db) return;
-            try {
-                const progressRef = collection(window.db, 'users', window.globalUser.uid, 'progress');
-                const querySnapshot = await getDocs(progressRef);
-                
-                querySnapshot.forEach((docSnap) => {
-                    const data = docSnap.data();
-                    let actionId = "";
-                    if (data.testName === 'Cambridge 18 - Test 1') actionId = "ielts-action-cam18-1";
-                    if (data.testName === 'Cambridge 19 - Test 1') actionId = "ielts-action-cam19-1";
-                    if (data.testName === 'Cambridge 21 - Test 4') actionId = "ielts-action-cam21-4";
-                    if (data.testName === 'Cambridge 21 - Reading Test 4') actionId = "ielts-read-action-cam21-4";
-                    
-                    if (actionId) {
-                        const actionDiv = document.getElementById(actionId);
-                        if (actionDiv) {
-                            actionDiv.innerHTML = `<div class="bg-cyan-100 text-cyan-800 dark:bg-cyan-900/60 dark:text-cyan-200 font-black text-xl py-3 px-4 rounded-xl text-center shadow-inner border border-cyan-200 dark:border-cyan-700 animate-pulse">Band điểm: ${parseFloat(data.score).toFixed(1)}</div>`;
-                        }
-                    }
-                });
-            } catch(e) { console.error("Lỗi cập nhật UI IELTS", e); }
-        }
-
+        // Hàm theo dõi trạng thái đăng nhập của người dùng
         onAuthStateChanged(window.auth, async (user) => {
+            window.globalUser = user;
+            const btnLogin = document.getElementById('btn-login-header');
+            const profileMenu = document.getElementById('user-profile');
+            
+            if (user && btnLogin && profileMenu) {
+                // --- KHI NGƯỜI DÙNG ĐÃ ĐĂNG NHẬP ---
+                btnLogin.classList.add('hidden');
+                profileMenu.classList.remove('hidden');
+                
+                // Hiển thị tên và Avatar
+                const displayName = user.email.split('@')[0];
+                document.getElementById('user-email-display').innerText = user.email;
+                document.getElementById('user-name-display').innerText = displayName;
+                
+                const avatarUrl = `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.uid}`;
+                document.getElementById('profile-avatar').src = avatarUrl;
+                document.getElementById('dropdown-avatar').src = avatarUrl;
+                
+                try {
+                    // Tải mục tiêu điểm số
+                    const docSnap = await getDoc(doc(window.db, "users", user.uid));
+                    if (docSnap.exists() && docSnap.data().goal) {
+                        document.getElementById('user-goal').value = docSnap.data().goal;
+                    }
+                } catch(e) { console.log("Lỗi tải mục tiêu:", e); }
+
+                // QUAN TRỌNG: Gọi các hàm cập nhật giao diện sau khi đã đăng nhập thành công
+                if (typeof window.fetchUserStreak === 'function') {
+                    await window.fetchUserStreak(); 
+                }
+                if (typeof window.updateIeltsUI === 'function') {
+                    window.updateIeltsUI();
+                }
+                
+                if (typeof window.closeModals === 'function') window.closeModals();
+                
+            } else if (btnLogin && profileMenu) {
+                // --- KHI NGƯỜI DÙNG CHƯA ĐĂNG NHẬP (HOẶC ĐÃ ĐĂNG XUẤT) ---
+                btnLogin.classList.remove('hidden');
+                profileMenu.classList.add('hidden');
+                document.getElementById('user-goal').value = '';
+                
+                // Vẽ lại lịch trống
+                if (typeof window.renderStreakCalendar === 'function') {
+                    window.renderStreakCalendar(); 
+                }
+            }
+        });
             window.globalUser = user;
             const btnLogin = document.getElementById('btn-login-header');
             const profileMenu = document.getElementById('user-profile');
