@@ -2101,7 +2101,7 @@ window.renderStreakCalendar = function(activeDates = new Set()) {
 window.renderStreakCalendar();
     </script>
     
-    <script type="module">
+<script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-analytics.js";
         import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
@@ -2122,6 +2122,34 @@ window.renderStreakCalendar();
         window.auth = getAuth(app);
         window.db = getFirestore(app);
         
+        // --- 1. CÁC HÀM TIỆN ÍCH GIAO DIỆN (UI UTILITIES) ---
+        window.showToast = function(message, type = 'success') {
+            const toastContainer = document.getElementById('toast-container');
+            if (!toastContainer) return;
+            const bgColor = type === 'success' ? 'bg-emerald-500' : (type === 'error' ? 'bg-rose-500' : 'bg-amber-500');
+            const toast = document.createElement('div');
+            toast.className = `${bgColor} text-white px-6 py-3 rounded-xl shadow-lg transform transition-all duration-300 translate-y-10 opacity-0 flex items-center gap-2`;
+            toast.innerHTML = `<span class="font-bold">${message}</span>`;
+            toastContainer.appendChild(toast);
+            setTimeout(() => toast.classList.remove('translate-y-10', 'opacity-0'), 10);
+            setTimeout(() => {
+                toast.classList.add('opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        };
+
+        window.openLoginModal = function() {
+            const modal = document.getElementById('auth-modal');
+            if (modal) modal.classList.remove('hidden');
+        };
+
+        window.closeModals = function() {
+            const authModal = document.getElementById('auth-modal');
+            const progressModal = document.getElementById('progress-modal');
+            if (authModal) authModal.classList.add('hidden');
+            if (progressModal) progressModal.classList.add('hidden');
+        };
+
         setInterval(() => {
             const now = new Date();
             const timeString = now.toLocaleTimeString('vi-VN', {hour: '2-digit', minute:'2-digit'});
@@ -2129,93 +2157,30 @@ window.renderStreakCalendar();
             if(timeEl) timeEl.innerText = `${timeString} (GMT+07:00)`;
         }, 1000);
 
-       // Hàm lấy dữ liệu tiến trình và vẽ lịch
+        // --- 2. LOGIC LỊCH HỌC TẬP & NGƯỜI DÙNG ---
         window.fetchUserStreak = async function() {
             if (typeof window.db === 'undefined' || !window.globalUser) {
                 if (typeof window.renderStreakCalendar === 'function') window.renderStreakCalendar();
                 return;
             }
-            
             try {
-                // 1. Báo cho người dùng biết hệ thống đang tải dữ liệu
                 const container = document.getElementById('streak-calendar-container');
-                if (container) {
-                    container.innerHTML = '<p class="text-cyan-500 font-bold text-sm text-center italic mt-4 animate-pulse">Đang đồng bộ dữ liệu học tập...</p>';
-                }
-
-                // 2. Kéo dữ liệu từ Firebase
+                if (container) container.innerHTML = '<p class="text-cyan-500 font-bold text-sm text-center italic mt-4 animate-pulse">Đang đồng bộ dữ liệu học tập...</p>';
                 const progressRef = collection(window.db, 'users', window.globalUser.uid, 'progress');
                 const qSnap = await getDocs(progressRef);
                 const activeDates = new Set();
-                
-                // 3. Trích xuất các ngày đã nộp bài
                 qSnap.forEach(doc => {
                     const data = doc.data();
-                    if (data.dateStr) {
-                        activeDates.add(data.dateStr);
-                    }
+                    if (data.dateStr) activeDates.add(data.dateStr);
                 });
-                
-                // 4. Vẽ lại lịch với các ngày đã được tô xanh
-                if (typeof window.renderStreakCalendar === 'function') {
-                    window.renderStreakCalendar(activeDates);
-                }
+                if (typeof window.renderStreakCalendar === 'function') window.renderStreakCalendar(activeDates);
             } catch(e) { 
                 console.error("Lỗi lấy dữ liệu Streak:", e); 
                 if (typeof window.renderStreakCalendar === 'function') window.renderStreakCalendar();
             }
         };
 
-        // Hàm theo dõi trạng thái đăng nhập của người dùng
         onAuthStateChanged(window.auth, async (user) => {
-            window.globalUser = user;
-            const btnLogin = document.getElementById('btn-login-header');
-            const profileMenu = document.getElementById('user-profile');
-            
-            if (user && btnLogin && profileMenu) {
-                // --- KHI NGƯỜI DÙNG ĐÃ ĐĂNG NHẬP ---
-                btnLogin.classList.add('hidden');
-                profileMenu.classList.remove('hidden');
-                
-                // Hiển thị tên và Avatar
-                const displayName = user.email.split('@')[0];
-                document.getElementById('user-email-display').innerText = user.email;
-                document.getElementById('user-name-display').innerText = displayName;
-                
-                const avatarUrl = `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.uid}`;
-                document.getElementById('profile-avatar').src = avatarUrl;
-                document.getElementById('dropdown-avatar').src = avatarUrl;
-                
-                try {
-                    // Tải mục tiêu điểm số
-                    const docSnap = await getDoc(doc(window.db, "users", user.uid));
-                    if (docSnap.exists() && docSnap.data().goal) {
-                        document.getElementById('user-goal').value = docSnap.data().goal;
-                    }
-                } catch(e) { console.log("Lỗi tải mục tiêu:", e); }
-
-                // QUAN TRỌNG: Gọi các hàm cập nhật giao diện sau khi đã đăng nhập thành công
-                if (typeof window.fetchUserStreak === 'function') {
-                    await window.fetchUserStreak(); 
-                }
-                if (typeof window.updateIeltsUI === 'function') {
-                    window.updateIeltsUI();
-                }
-                
-                if (typeof window.closeModals === 'function') window.closeModals();
-                
-            } else if (btnLogin && profileMenu) {
-                // --- KHI NGƯỜI DÙNG CHƯA ĐĂNG NHẬP (HOẶC ĐÃ ĐĂNG XUẤT) ---
-                btnLogin.classList.remove('hidden');
-                profileMenu.classList.add('hidden');
-                document.getElementById('user-goal').value = '';
-                
-                // Vẽ lại lịch trống
-                if (typeof window.renderStreakCalendar === 'function') {
-                    window.renderStreakCalendar(); 
-                }
-            }
-        });
             window.globalUser = user;
             const btnLogin = document.getElementById('btn-login-header');
             const profileMenu = document.getElementById('user-profile');
@@ -2241,8 +2206,8 @@ window.renderStreakCalendar();
 
                 if(typeof window.fetchUserStreak === 'function') window.fetchUserStreak();
                 if(typeof window.updateIeltsUI === 'function') window.updateIeltsUI();
-                closeModals();
-            } else if(btnLogin && profileMenu) {
+                if(typeof window.closeModals === 'function') window.closeModals();
+            } else if (btnLogin && profileMenu) {
                 btnLogin.classList.remove('hidden');
                 profileMenu.classList.add('hidden');
                 document.getElementById('user-goal').value = '';
@@ -2250,6 +2215,7 @@ window.renderStreakCalendar();
             }
         });
 
+        // --- 3. LOGIC ĐĂNG NHẬP / ĐĂNG KÝ ---
         let isLoginMode = true;
         window.toggleAuthMode = function() {
             isLoginMode = !isLoginMode;
@@ -2266,74 +2232,67 @@ window.renderStreakCalendar();
             try {
                 if (isLoginMode) {
                     await signInWithEmailAndPassword(window.auth, email, pass);
-                    showToast("Đăng nhập thành công!", 'success');
+                    window.showToast("Đăng nhập thành công!", 'success');
                 } else {
                     await createUserWithEmailAndPassword(window.auth, email, pass);
                     await signOut(window.auth);
-                    showToast("Tạo tài khoản thành công! Vui lòng đăng nhập lại.", 'success');
-                    if (!isLoginMode) toggleAuthMode(); 
+                    window.showToast("Tạo tài khoản thành công! Vui lòng đăng nhập lại.", 'success');
+                    if (!isLoginMode) window.toggleAuthMode(); 
                 }
             } catch (error) {
                 let msg = "Đã xảy ra lỗi: " + error.message;
                 if (error.code === 'auth/email-already-in-use') msg = "Email này đã được sử dụng!";
                 if (error.code === 'auth/weak-password') msg = "Mật khẩu phải từ 6 ký tự trở lên!";
                 if (error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') msg = "Sai mật khẩu hoặc email!";
-                showToast(msg, 'error');
+                window.showToast(msg, 'error');
             }
         }
 
         window.logoutUser = async function() {
-            await signOut(auth);
-            showToast("Đã đăng xuất!", 'success');
+            await signOut(window.auth);
+            window.showToast("Đã đăng xuất!", 'success');
         }
 
+        // --- 4. LOGIC LƯU DỮ LIỆU ---
         window.saveUserGoal = async function() {
-            if (!globalUser) return;
+            if (!window.globalUser) return;
             const goal = document.getElementById('user-goal').value;
             try {
-                await setDoc(doc(db, "users", globalUser.uid), { goal: goal }, { merge: true });
-                showToast("Đã lưu mục tiêu thành công!", 'success');
+                await setDoc(doc(window.db, "users", window.globalUser.uid), { goal: goal }, { merge: true });
+                window.showToast("Đã lưu mục tiêu thành công!", 'success');
             } catch (error) {
-                showToast("Lỗi khi lưu mục tiêu.", 'error');
+                window.showToast("Lỗi khi lưu mục tiêu.", 'error');
             }
         }
 
         window.submitTestResult = async function(testName, score) {
             if (!window.globalUser) {
-                showToast("Vui lòng đăng nhập để lưu kết quả!", 'error');
-                openLoginModal();
+                window.showToast("Vui lòng đăng nhập để lưu kết quả!", 'error');
+                window.openLoginModal();
                 return;
             }
-            
             try {
-                // 1. Tạo chuỗi ngày chuẩn định dạng DD/MM/YYYY để đồng bộ với Lịch
                 const today = new Date();
                 const dd = String(today.getDate()).padStart(2, '0');
-                const mm = String(today.getMonth() + 1).padStart(2, '0'); // Tháng trong JS bắt đầu từ 0
+                const mm = String(today.getMonth() + 1).padStart(2, '0');
                 const yyyy = today.getFullYear();
                 const standardDateStr = `${dd}/${mm}/${yyyy}`;
 
-                // 2. Lưu kết quả lên Firebase Firestore
                 const progressRef = collection(window.db, 'users', window.globalUser.uid, 'progress');
                 await addDoc(progressRef, {
                     testName: testName,
                     score: parseFloat(score),
                     timestamp: serverTimestamp(),
-                    dateStr: standardDateStr // Sử dụng chuỗi ngày đã chuẩn hóa
+                    dateStr: standardDateStr 
                 });
                 
-                showToast(`Đã lưu kết quả ${parseFloat(score).toFixed(1)} điểm cho ${testName}.`, 'success');
+                window.showToast(`Đã lưu kết quả ${parseFloat(score).toFixed(1)} điểm cho ${testName}.`, 'success');
                 
-                // 3. Tự động tải lại dữ liệu lịch học và giao diện điểm số
-                if (typeof window.fetchUserStreak === 'function') {
-                    window.fetchUserStreak(); 
-                }
-                if (typeof window.updateIeltsUI === 'function') {
-                    window.updateIeltsUI();
-                }
+                if (typeof window.fetchUserStreak === 'function') window.fetchUserStreak(); 
+                if (typeof window.updateIeltsUI === 'function') window.updateIeltsUI();
             } catch (error) {
-                showToast("Không thể lưu kết quả. Vui lòng kiểm tra lại đường truyền hoặc Database Rules.", 'error');
-                console.error("Lỗi khi lưu kết quả Firebase:", error);
+                window.showToast("Không thể lưu kết quả. Vui lòng kiểm tra lại đường truyền.", 'error');
+                console.error(error);
             }
         }
 
@@ -2354,15 +2313,12 @@ window.renderStreakCalendar();
                 querySnapshot.forEach((docSnap) => {
                     count++;
                     const data = docSnap.data();
-                    
                     let scoreColor = "bg-sky-100 text-sky-700 border-sky-300 dark:bg-sky-900/50 dark:text-sky-300 dark:border-sky-700";
                     let emoji = "👍";
-                    
                     if(parseFloat(data.score) >= 8.0) {
                         scoreColor = "bg-emerald-100 text-emerald-700 border-emerald-300 dark:bg-emerald-900/50 dark:text-emerald-300 dark:border-emerald-700";
                         emoji = "🏆";
-                    }
-                    else if(parseFloat(data.score) < 5.0) {
+                    } else if(parseFloat(data.score) < 5.0) {
                         scoreColor = "bg-rose-100 text-rose-700 border-rose-300 dark:bg-rose-900/50 dark:text-rose-300 dark:border-rose-700";
                         emoji = "💪";
                     }
