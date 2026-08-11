@@ -2262,21 +2262,36 @@ window.renderStreakCalendar();
                 openLoginModal();
                 return;
             }
+            
             try {
+                // 1. Tạo chuỗi ngày chuẩn định dạng DD/MM/YYYY để đồng bộ với Lịch
+                const today = new Date();
+                const dd = String(today.getDate()).padStart(2, '0');
+                const mm = String(today.getMonth() + 1).padStart(2, '0'); // Tháng trong JS bắt đầu từ 0
+                const yyyy = today.getFullYear();
+                const standardDateStr = `${dd}/${mm}/${yyyy}`;
+
+                // 2. Lưu kết quả lên Firebase Firestore
                 const progressRef = collection(window.db, 'users', window.globalUser.uid, 'progress');
                 await addDoc(progressRef, {
                     testName: testName,
                     score: parseFloat(score),
                     timestamp: serverTimestamp(),
-                    dateStr: new Date().toLocaleDateString('vi-VN')
+                    dateStr: standardDateStr // Sử dụng chuỗi ngày đã chuẩn hóa
                 });
+                
                 showToast(`Đã lưu kết quả ${parseFloat(score).toFixed(1)} điểm cho ${testName}.`, 'success');
                 
-                if (typeof window.fetchUserStreak === 'function') window.fetchUserStreak();
-                if (typeof window.updateIeltsUI === 'function') window.updateIeltsUI();
+                // 3. Tự động tải lại dữ liệu lịch học và giao diện điểm số
+                if (typeof window.fetchUserStreak === 'function') {
+                    window.fetchUserStreak(); 
+                }
+                if (typeof window.updateIeltsUI === 'function') {
+                    window.updateIeltsUI();
+                }
             } catch (error) {
-                showToast("Không thể lưu kết quả. Vui lòng kiểm tra lại đường truyền.", 'error');
-                console.error(error);
+                showToast("Không thể lưu kết quả. Vui lòng kiểm tra lại đường truyền hoặc Database Rules.", 'error');
+                console.error("Lỗi khi lưu kết quả Firebase:", error);
             }
         }
 
