@@ -66,6 +66,36 @@
         .nav-number-incorrect { background-color: #ef4444; color: white; border-color: #dc2626;}
         .nav-number-skipped { background-color: #e5e7eb; color: #4b5563; border-color: #d1d5db;}
         .dark .nav-number-skipped { background-color: #374151; color: #9ca3af; border-color: #4b5563;}
+
+/* HIỆU ỨNG LẬT THẺ FLASHCARD */
+        .flashcard-container {
+            perspective: 1000px;
+        }
+        .flashcard-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        .flashcard-container.flipped .flashcard-inner {
+            transform: rotateY(180deg);
+        }
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            border-radius: 1.5rem;
+        }
+        .flashcard-back {
+            transform: rotateY(180deg);
+        }
+        
     </style>
 </head>
 <body class="bg-[#f4f7fe] text-[#2b3674] dark:bg-darkBg dark:text-darkText">
@@ -833,12 +863,116 @@
             </div>
         </div>
 
+       <!-- MỤC TỪ VỰNG / COLLOCATIONS -->
         <div id="page-vocab" class="page-content">
-            <div class="max-w-6xl mx-auto py-12 px-6 reveal">
-                <h2 class="text-4xl font-extrabold text-center text-[#2b3674] dark:text-cyan-300 mb-4">Từ vựng / Collocations</h2>
-                <p class="text-center text-gray-600 dark:text-gray-400 mb-10 text-lg">Kho từ vựng siêu cấp đang được xây dựng.</p>
+            <!-- 1. Màn hình Thống kê (Dashboard) -->
+            <div id="vocab-dashboard" class="max-w-5xl mx-auto py-12 px-6 reveal active">
+                <h2 class="text-3xl font-extrabold text-center text-[#2b3674] dark:text-cyan-300 mb-8">Flashcards: Từ vựng Tiếng Anh giao tiếp</h2>
+                
+                <div class="text-center mb-8">
+                    <button onclick="startFlashcard()" class="bg-cyan-500 hover:bg-cyan-400 text-white font-bold py-3 px-10 rounded-xl shadow-lg transition transform hover:-translate-y-1">
+                        Luyện tập Flashcards
+                    </button>
+                </div>
+
+                <!-- Bảng Thống kê -->
+                <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 p-6 flex justify-around items-center text-center">
+                    <div>
+                        <p class="text-3xl font-black text-gray-800 dark:text-white" id="vocab-total">5</p>
+                        <p class="text-sm font-bold text-gray-500 mt-1">Tổng số từ</p>
+                    </div>
+                    <div class="w-px h-12 bg-gray-200 dark:bg-slate-700"></div>
+                    <div>
+                        <p class="text-3xl font-black text-emerald-500" id="vocab-learned">0</p>
+                        <p class="text-sm font-bold text-gray-500 mt-1">Đã học</p>
+                    </div>
+                    <div class="w-px h-12 bg-gray-200 dark:bg-slate-700"></div>
+                    <div>
+                        <p class="text-3xl font-black text-rose-500" id="vocab-review">5</p>
+                        <p class="text-sm font-bold text-gray-500 mt-1">Cần ôn tập</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Màn hình Học Flashcard (Study Room) -->
+            <div id="vocab-study-room" class="hidden max-w-3xl mx-auto py-8 px-4">
+                <div class="flex justify-between items-center mb-4">
+                    <button onclick="exitFlashcard()" class="text-gray-500 hover:text-cyan-500 font-bold flex items-center gap-1 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> Trở lại
+                    </button>
+                    <span class="text-sm font-bold text-gray-400" id="flashcard-progress">1 / 5</span>
+                </div>
+
+                <!-- Lời khuyên -->
+                <div class="bg-amber-50 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-700 text-amber-800 dark:text-amber-300 text-sm p-4 rounded-xl mb-6 font-medium">
+                    Chú ý: bạn được học tối đa 20 từ mới một ngày. Đây là lượng từ phù hợp để bạn có thể học hiệu quả.
+                </div>
+
+                <!-- Thẻ Flashcard -->
+                <div class="flashcard-container w-full h-80 sm:h-96 cursor-pointer group" onclick="toggleFlashcard()">
+                    <div class="flashcard-inner shadow-lg rounded-3xl" id="flashcard-element">
+                        
+                        <!-- Mặt trước (Front) -->
+                        <div class="flashcard-front bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 flex flex-col items-center justify-center relative p-6">
+                            <span class="absolute top-4 right-4 text-xs font-bold text-gray-400 bg-gray-100 dark:bg-slate-700 px-2 py-1 rounded">Từ mới</span>
+                            
+                            <div class="flex items-center gap-3 mb-2">
+                                <h3 class="text-4xl sm:text-5xl font-black text-gray-800 dark:text-white" id="fc-word">late</h3>
+                                <!-- Nút loa đọc từ vựng -->
+                                <button onclick="playAudio(event, document.getElementById('fc-word').innerText)" class="text-cyan-500 hover:text-cyan-600 bg-cyan-50 dark:bg-slate-700 p-2 rounded-full transition">
+                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 10a5.984 5.984 0 01-1.757 4.243 1 1 0 01-1.415-1.415A3.984 3.984 0 0013 10a3.983 3.983 0 00-1.172-2.828 1 1 0 010-1.415z" clip-rule="evenodd"></path></svg>
+                                </button>
+                            </div>
+                            <p class="text-lg text-gray-500 dark:text-gray-400 font-medium">(<span id="fc-type">adverb</span>) <span id="fc-phonetic">/leɪt/</span></p>
+                            
+                            <div class="absolute bottom-4 right-4 text-gray-400">
+                                <svg class="w-6 h-6 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                            </div>
+                        </div>
+
+                        <!-- Mặt sau (Back) -->
+                        <div class="flashcard-back bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 flex flex-col items-center justify-center relative p-8">
+                            <span class="absolute top-4 right-4 text-xs font-bold text-gray-400 bg-gray-100 dark:bg-slate-700 px-2 py-1 rounded">Định nghĩa</span>
+                            
+                            <div class="w-full text-left space-y-4">
+                                <div>
+                                    <h4 class="font-bold text-cyan-600 dark:text-cyan-400 mb-1">Định nghĩa:</h4>
+                                    <p class="text-xl font-medium text-gray-800 dark:text-white" id="fc-meaning">trễ, muộn</p>
+                                </div>
+                                <div class="bg-gray-50 dark:bg-slate-700/50 p-4 rounded-xl border border-gray-100 dark:border-slate-600">
+                                    <h4 class="font-bold text-amber-500 mb-1">Ví dụ:</h4>
+                                    <ul class="list-disc pl-5 text-gray-700 dark:text-gray-300 italic">
+                                        <li id="fc-example">Don't stay up too late.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cụm Nút Đánh Giá (Mô phỏng Spaced Repetition) -->
+                <div class="mt-6 flex flex-wrap sm:flex-nowrap justify-between gap-3 bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700">
+                    <button onclick="nextCard('easy')" class="flex-1 flex flex-col items-center p-2 rounded-xl hover:bg-emerald-50 dark:hover:bg-emerald-900/20 text-emerald-500 transition">
+                        <span class="text-2xl mb-1">😁</span>
+                        <span class="text-xs font-bold">Dễ</span>
+                    </button>
+                    <button onclick="nextCard('medium')" class="flex-1 flex flex-col items-center p-2 rounded-xl hover:bg-amber-50 dark:hover:bg-amber-900/20 text-amber-500 transition">
+                        <span class="text-2xl mb-1">😐</span>
+                        <span class="text-xs font-bold">Trung bình</span>
+                    </button>
+                    <button onclick="nextCard('hard')" class="flex-1 flex flex-col items-center p-2 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-900/20 text-rose-500 transition">
+                        <span class="text-2xl mb-1">😣</span>
+                        <span class="text-xs font-bold">Khó</span>
+                    </button>
+                    <div class="w-px bg-gray-200 dark:bg-slate-700 hidden sm:block"></div>
+                    <button onclick="nextCard('known')" class="flex-1 flex flex-col items-center p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-500 transition">
+                        <span class="text-2xl mb-1">⏩</span>
+                        <span class="text-xs font-bold text-center">Đã biết, loại khỏi<br>danh sách</span>
+                    </button>
+                </div>
             </div>
         </div>
+        
         <div id="page-courses" class="page-content">
              <div class="max-w-4xl mx-auto py-20 px-6 text-center reveal">
                  <div class="text-6xl mb-6">🚀</div>
@@ -2513,6 +2647,101 @@ window.renderStreakCalendar = function(activeDates = new Set()) {
 
 // Gọi hàm ngay lập tức khi tải trang để hiển thị lịch trống ban đầu (khi chưa đăng nhập)
 window.renderStreakCalendar();
+
+// ==========================================
+        // LOGIC FLASHCARD TỪ VỰNG
+        // ==========================================
+        
+        // 1. Cơ sở dữ liệu từ vựng mẫu
+        const vocabDatabase = [
+            { word: "late", type: "adverb", phonetic: "/leɪt/", meaning: "trễ, muộn", example: "Don't stay up too late." },
+            { word: "lazy", type: "adjective", phonetic: "/ˈleɪ.zi/", meaning: "lười biếng", example: "He is too lazy to clean his room." },
+            { word: "kiss", type: "verb", phonetic: "/kɪs/", meaning: "hôn", example: "She kissed him on the cheek." },
+            { word: "count", type: "verb", phonetic: "/kaʊnt/", meaning: "đếm", example: "Can your daughter count yet?" },
+            { word: "accept", type: "verb", phonetic: "/əkˈsept/", meaning: "nhận, chấp nhận", example: "We accept payment by Visa or cash." }
+        ];
+
+        let currentCardIndex = 0;
+        let learnedCount = 0;
+
+        // 2. Hàm bắt đầu học
+        window.startFlashcard = function() {
+            document.getElementById('vocab-dashboard').classList.add('hidden');
+            document.getElementById('vocab-study-room').classList.remove('hidden');
+            currentCardIndex = 0;
+            learnedCount = 0;
+            loadCardData(currentCardIndex);
+        };
+
+        // 3. Hàm thoát ra ngoài
+        window.exitFlashcard = function() {
+            document.getElementById('vocab-study-room').classList.add('hidden');
+            document.getElementById('vocab-dashboard').classList.remove('hidden');
+            // Cập nhật lại số liệu thống kê
+            document.getElementById('vocab-learned').innerText = learnedCount;
+            document.getElementById('vocab-review').innerText = vocabDatabase.length - learnedCount;
+        };
+
+        // 4. Hàm nạp dữ liệu từ vựng lên thẻ
+        function loadCardData(index) {
+            const data = vocabDatabase[index];
+            document.getElementById('fc-word').innerText = data.word;
+            document.getElementById('fc-type').innerText = data.type;
+            document.getElementById('fc-phonetic').innerText = data.phonetic;
+            document.getElementById('fc-meaning').innerText = data.meaning;
+            document.getElementById('fc-example').innerText = data.example;
+            
+            // Cập nhật tiến trình (VD: 1 / 5)
+            document.getElementById('flashcard-progress').innerText = `${index + 1} / ${vocabDatabase.length}`;
+            
+            // Đảm bảo thẻ luôn ngửa mặt trước khi tải từ mới
+            const container = document.querySelector('.flashcard-container');
+            container.classList.remove('flipped');
+        }
+
+        // 5. Hàm Lật Thẻ
+        window.toggleFlashcard = function() {
+            const container = document.querySelector('.flashcard-container');
+            container.classList.toggle('flipped');
+        };
+
+        // 6. Hàm chuyển sang thẻ tiếp theo khi bấm nút Đánh giá
+        window.nextCard = function(rating) {
+            // Ngăn thẻ lật lại nếu nó đang úp (tạo cảm giác mượt hơn)
+            const container = document.querySelector('.flashcard-container');
+            container.classList.remove('flipped');
+
+            // Tính điểm đã học
+            if(rating !== 'hard') learnedCount++;
+
+            setTimeout(() => {
+                currentCardIndex++;
+                if (currentCardIndex < vocabDatabase.length) {
+                    loadCardData(currentCardIndex);
+                } else {
+                    showToast("🎉 Chúc mừng! Bạn đã hoàn thành danh sách ôn tập hôm nay.");
+                    exitFlashcard(); // Quay lại màn hình chính
+                }
+            }, 300); // Đợi 300ms cho thẻ lật về trước khi đổi chữ
+        };
+
+        // 7. Hàm Đọc phát âm (Web Speech API)
+        window.playAudio = function(event, text) {
+            event.stopPropagation(); // Ngăn việc click nút loa làm lật thẻ
+            
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US'; // Giọng Mỹ
+                utterance.rate = 0.9; // Đọc chậm lại một chút cho dễ nghe
+                window.speechSynthesis.speak(utterance);
+            } else {
+                showToast("Trình duyệt của bạn không hỗ trợ đọc âm thanh.", "error");
+            }
+        };
+        
+        // Cập nhật số liệu ban đầu
+        document.getElementById('vocab-total').innerText = vocabDatabase.length;
+        document.getElementById('vocab-review').innerText = vocabDatabase.length;
     </script>
     
 <script type="module">
