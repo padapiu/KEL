@@ -532,7 +532,89 @@
                     </div>
                 </div>
             </div>
+<!-- BẮT ĐẦU: Màn hình Kết Quả Listening (MỚI) -->
+            <div id="ielts-listening-result-dashboard" class="hidden max-w-5xl mx-auto py-8 px-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <!-- Khối Điểm Số -->
+                    <div class="bg-white dark:bg-slate-800 rounded-3xl p-8 shadow-md border border-gray-100 dark:border-slate-700 flex flex-col items-center justify-center relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-2 bg-[#ff5e00]"></div>
+                        <h3 class="text-xl font-bold text-gray-800 dark:text-gray-200 mb-2">Band Score</h3>
+                        <div class="text-7xl font-black text-[#ff5e00] drop-shadow-sm mb-4" id="listen-band-score-display">0.0</div>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm text-center px-4" id="listen-advice-text">Cố gắng lên nhé, luyện tập thêm sẽ giúp bạn cải thiện!</p>
+                    </div>
 
+                    <!-- Khối Thống Kê & Hành Động -->
+                    <div class="bg-white dark:bg-slate-800 rounded-3xl p-8 shadow-md border border-gray-100 dark:border-slate-700 flex flex-col justify-between">
+                        <div class="flex justify-between items-center mb-6 border-b pb-6 dark:border-slate-700">
+                            <div class="text-center px-4">
+                                <span class="text-4xl font-black text-gray-800 dark:text-white block" id="listen-correct-count-display">0/40</span>
+                                <span class="text-sm font-bold text-gray-400 uppercase tracking-wider">Câu đúng</span>
+                            </div>
+                            <div class="space-y-3 border-l pl-6 dark:border-slate-700">
+                                <div class="flex items-center gap-2 text-emerald-600 font-bold"><span class="w-3 h-3 rounded-full bg-emerald-500"></span> <span id="listen-stat-correct">0</span> Đúng</div>
+                                <div class="flex items-center gap-2 text-rose-600 font-bold"><span class="w-3 h-3 rounded-full bg-rose-500"></span> <span id="listen-stat-incorrect">0</span> Sai</div>
+                                <div class="flex items-center gap-2 text-gray-500 font-bold"><span class="w-3 h-3 rounded-full bg-gray-300"></span> <span id="listen-stat-skipped">0</span> Bỏ qua</div>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <button onclick="showListeningExplanations()" class="flex-1 bg-[#ff5e00] hover:bg-[#e05300] text-white font-bold py-3.5 rounded-xl shadow-md transition transform hover:-translate-y-1">Sửa từng bước</button>
+                            <button onclick="exitToIeltsDashboardFromListen()" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 dark:bg-slate-700 dark:text-gray-200 dark:hover:bg-slate-600 font-bold py-3.5 rounded-xl transition">Quay lại</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bảng Phân Tích Dạng Bài -->
+                <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 overflow-hidden">
+                    <div class="px-6 py-4 bg-gray-50 dark:bg-slate-750 border-b border-gray-200 dark:border-slate-700">
+                        <h3 class="font-bold text-gray-800 dark:text-gray-200">Bảng dữ liệu chi tiết</h3>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-gray-50 dark:bg-slate-800 text-gray-500 dark:text-gray-400 text-sm">
+                                    <th class="py-4 px-6 font-semibold">Loại câu hỏi</th>
+                                    <th class="py-4 px-6 font-semibold text-center">Số câu</th>
+                                    <th class="py-4 px-6 font-semibold text-center text-emerald-600 dark:text-emerald-400">Đúng</th>
+                                    <th class="py-4 px-6 font-semibold text-center text-rose-600 dark:text-rose-400">Sai</th>
+                                    <th class="py-4 px-6 font-semibold text-center">Bỏ qua</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-700 dark:text-gray-300 font-medium" id="listen-analytics-body">
+                                <!-- Rendered by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- KẾT THÚC: Màn hình Kết Quả Listening -->
+
+            <!-- BẮT ĐẦU: Màn hình Xem Giải Thích Listening (Chia đôi màn hình) -->
+            <div id="ielts-listening-explanation-area" class="hidden max-w-full mx-auto py-6 px-4 md:px-8">
+                <div class="flex justify-between items-center mb-4 bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700">
+                    <h3 class="font-bold text-xl text-gray-800 dark:text-white" id="listen-exp-title">Chi tiết đáp án - Cambridge 21 Test 4</h3>
+                    <div class="flex gap-3">
+                        <button onclick="retakeIeltsExam()" class="bg-amber-500 hover:bg-amber-400 text-white font-bold px-6 py-2 rounded-lg shadow-sm transition">Làm lại</button>
+                        <button onclick="exitToIeltsDashboardFromListen()" class="bg-gray-500 hover:bg-gray-400 text-white font-bold px-6 py-2 rounded-lg shadow-sm transition">Thoát</button>
+                    </div>
+                </div>
+                
+                <div class="reading-split-layout">
+                    <!-- Bên trái: Mang nguyên nội dung bài thi vào đây -->
+                    <div class="reading-passage-pane bg-white dark:bg-darkCard p-6 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 custom-scroll" id="listen-exp-questions-container">
+                        <!-- Nội dung được clone từ ielts-exam-content qua JS -->
+                    </div>
+                    
+                    <!-- Bên phải: Transcript -->
+                    <div class="reading-questions-pane bg-white dark:bg-darkCard p-6 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 custom-scroll">
+                        <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-6 border-b pb-2">Transcript & Giải thích</h3>
+                        <div class="text-gray-800 dark:text-gray-300 leading-relaxed text-lg space-y-4" id="listen-exp-transcript-container">
+                            <!-- Nội dung Transcript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- KẾT THÚC: Màn hình Xem Giải Thích Listening -->
+            
             <!-- STREAMING_CHUNK: Building IELTS Reading exam room with split-screen layout and result dashboard... -->
             <div id="ielts-reading-exam-room" class="hidden max-w-full mx-auto py-6 px-4 md:px-8">
                 <!-- Header Control Reading -->
@@ -1304,6 +1386,9 @@
             document.getElementById('btn-audio-play').innerHTML = `<svg class="w-5 h-5 ml-1" fill="currentColor" viewBox="0 0 20 20"><path d="M4 4l12 6-12 6z"></path></svg>`;
         }
 
+       // Biến toàn cục lưu trạng thái bài làm Listening để phân tích
+        window.tempListeningResultsMap = {};
+
         window.submitIeltsExam = function(isTimeout = false) {
             if (!isTimeout) {
                 if (!confirm("Bạn có chắc chắn muốn nộp bài? Các câu chưa điền sẽ tính là sai.")) return;
@@ -1313,19 +1398,36 @@
             audioElement.pause();
             
             let correctCount = 0;
+            let incorrectCount = 0;
+            let skippedCount = 0;
+            let resultsMap = {};
 
+            // 1. Chấm điểm Text Input (Câu 1-10, 15-20, 24-40)
             const checkText = (start, end) => {
                 for(let i=start; i<=end; i++) {
                     const el = document.getElementById(`ielts-ans-${i}`);
                     if(el) {
                         const userVal = el.value.trim().toLowerCase();
                         const correctVal = String(ieltsAnswersCam21T4[i]).toLowerCase();
+                        
+                        // Đánh dấu UI cho bài thi
                         el.classList.remove('text-cyan-700', 'dark:text-cyan-300');
-                        if(userVal === correctVal) {
+                        
+                        if(userVal === "") {
+                            skippedCount++;
+                            resultsMap[i] = "S";
+                        } else if(userVal === correctVal) {
                             correctCount++;
+                            resultsMap[i] = "C";
                             el.classList.add('text-emerald-500', 'font-black');
                         } else {
+                            incorrectCount++;
+                            resultsMap[i] = "I";
                             el.classList.add('text-rose-500', 'line-through');
+                        }
+
+                        // Thêm đáp án đúng vào bên cạnh nếu sai hoặc trống
+                        if (userVal !== correctVal) {
                             if (!el.nextElementSibling || el.nextElementSibling.tagName !== 'SPAN') {
                                 const span = document.createElement('span');
                                 span.className = "text-emerald-500 font-bold ml-2 text-sm";
@@ -1342,25 +1444,52 @@
             checkText(24, 30);
             checkText(31, 40);
 
-            const checkMCQ = (id, correctArr) => {
+            // 2. Chấm điểm Checkbox Multiple Choice (Câu 11-14)
+            const checkMCQ = (id, correctArr, startQ, endQ) => {
                 const checkedNodes = document.querySelectorAll(`#${id} input[type="checkbox"]:checked`);
                 const checked = Array.from(checkedNodes).map(cb => cb.value);
-                let score = 0;
-                checked.forEach(val => { if(correctArr.includes(val)) score++; });
-                correctCount += score;
+                
+                // Giả lập logic: coi mỗi lựa chọn đúng là 1 câu
+                let localScore = 0;
+                checked.forEach(val => { if(correctArr.includes(val)) localScore++; });
+                
+                for(let i=startQ; i<=endQ; i++) {
+                    if (localScore > 0) {
+                        correctCount++;
+                        resultsMap[i] = "C";
+                        localScore--;
+                    } else if (checked.length === 0) {
+                        skippedCount++;
+                        resultsMap[i] = "S";
+                    } else {
+                        incorrectCount++;
+                        resultsMap[i] = "I";
+                    }
+                }
                 
                 document.querySelectorAll(`#${id} input[type="checkbox"]`).forEach(cb => {
                     if (correctArr.includes(cb.value)) cb.parentElement.classList.add('text-emerald-500', 'font-bold');
                     else if (cb.checked) cb.parentElement.classList.add('text-rose-500', 'line-through');
                 });
             };
-            checkMCQ('ielts-mcq-11-12', ieltsAnswersCam21T4[11]);
-            checkMCQ('ielts-mcq-13-14', ieltsAnswersCam21T4[13]);
+            checkMCQ('ielts-mcq-11-12', ieltsAnswersCam21T4[11], 11, 12);
+            checkMCQ('ielts-mcq-13-14', ieltsAnswersCam21T4[13], 13, 14);
 
+            // 3. Chấm điểm Radio Multiple Choice (Câu 21-23)
             for (let i = 21; i <= 23; i++) {
                 const selected = document.querySelector(`input[name="q${i}"]:checked`);
                 const correctAns = ieltsAnswersCam21T4[i];
-                if (selected && selected.value === correctAns) correctCount++;
+                
+                if (!selected) {
+                    skippedCount++;
+                    resultsMap[i] = "S";
+                } else if (selected.value === correctAns) {
+                    correctCount++;
+                    resultsMap[i] = "C";
+                } else {
+                    incorrectCount++;
+                    resultsMap[i] = "I";
+                }
                 
                 document.querySelectorAll(`input[name="q${i}"]`).forEach(radio => {
                     if (radio.value === correctAns) radio.parentElement.classList.add('text-emerald-500', 'font-bold');
@@ -1368,6 +1497,7 @@
                 });
             }
 
+            // Tính Band Score
             let bandScore = 1.0;
             if(correctCount >= 39) bandScore = 9.0;
             else if(correctCount >= 37) bandScore = 8.5;
@@ -1382,41 +1512,88 @@
             else if(correctCount >= 10) bandScore = 4.0;
             else bandScore = 3.5;
 
-            // STREAMING_CHUNK: Processing IELTS Listening submission UI...
-            document.getElementById('btn-submit-ielts').classList.add('hidden');
+            // Lưu trạng thái
+            window.tempListeningResultsMap = resultsMap;
+
+            // Cập nhật giao diện Dashboard Kết Quả
+            document.getElementById('ielts-exam-room').classList.add('hidden');
+            document.getElementById('ielts-listening-result-dashboard').classList.remove('hidden');
             
-            // Xử lý nút Về Danh Sách cho Listening
-            const exitBtnList = document.createElement('button');
-            exitBtnList.id = 'btn-exit-listening';
-            exitBtnList.className = "bg-slate-500 hover:bg-slate-400 text-white font-bold px-6 py-3 rounded-xl shadow-md transition ml-2";
-            exitBtnList.innerText = "Về Danh Sách";
-            exitBtnList.onclick = () => {
-                document.getElementById('ielts-exam-room').classList.add('hidden');
-                document.getElementById('ielts-dashboard').classList.remove('hidden');
-                exitBtnList.remove();
+            document.getElementById('listen-band-score-display').innerText = bandScore.toFixed(1);
+            document.getElementById('listen-correct-count-display').innerText = `${correctCount}/40`;
+            document.getElementById('listen-stat-correct').innerText = correctCount;
+            document.getElementById('listen-stat-incorrect').innerText = incorrectCount;
+            document.getElementById('listen-stat-skipped').innerText = skippedCount;
+
+            let advice = "Giai đoạn đầu luôn khó khăn, hãy kiên trì mỗi ngày nhé!";
+            if(bandScore >= 8.0) advice = "Xuất sắc! Kỹ năng nghe của bạn đã ở mức thượng thừa.";
+            else if(bandScore >= 6.5) advice = "Rất tốt! Giữ vững phong độ này khi thi thật nhé.";
+            document.getElementById('listen-advice-text').innerText = advice;
+
+            // Vẽ Bảng Phân Tích Dựa Theo Đề Cambridge 21 Test 4
+            const listenGroups = {
+                "Form Completion": [1,2,3,4,5,6,7,8,9,10],
+                "Multiple Choice (Many Answers)": [11,12,13,14],
+                "Matching": [15,16,17,18,19,20,24,25,26,27,28,29,30],
+                "Multiple Choice (One Answer)": [21,22,23],
+                "Notes Completion": [31,32,33,34,35,36,37,38,39,40]
             };
             
-            const btnContainerList = document.getElementById('btn-retake-ielts').parentElement;
-            if(!document.getElementById('btn-exit-listening')) {
-                btnContainerList.appendChild(exitBtnList);
+            let tableHtml = '';
+            for (const [type, qList] of Object.entries(listenGroups)) {
+                let gC = 0, gI = 0, gS = 0;
+                qList.forEach(q => {
+                    if(resultsMap[q] === "C") gC++;
+                    else if(resultsMap[q] === "I") gI++;
+                    else gS++;
+                });
+                tableHtml += `
+                    <tr class="border-b border-gray-100 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-800 transition">
+                        <td class="py-4 px-6 font-bold text-gray-800 dark:text-gray-200">${type}</td>
+                        <td class="py-4 px-6 text-center font-bold">${qList.length}</td>
+                        <td class="py-4 px-6 text-center text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-50 dark:bg-emerald-900/10 rounded-lg">${gC}</td>
+                        <td class="py-4 px-6 text-center text-rose-500 font-bold">${gI}</td>
+                        <td class="py-4 px-6 text-center text-gray-400 font-bold">${gS}</td>
+                    </tr>
+                `;
             }
-            
-            document.getElementById('btn-retake-ielts').classList.remove('hidden');
-            
-            const transcriptArea = document.getElementById('ielts-transcript-area');
-            if(transcriptArea) {
-                transcriptArea.classList.remove('hidden');
-                transcriptArea.querySelector('h3').innerHTML = `<span>📜</span> Transcript & Giải Thích Chi Tiết <span class="text-emerald-500 ml-auto bg-emerald-100 px-3 py-1 rounded-lg">Score: ${correctCount}/40 (Band ${bandScore.toFixed(1)})</span>`;
-                document.getElementById('transcript-text').innerHTML = ieltsTranscriptHTML;
-                transcriptArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
+            document.getElementById('listen-analytics-body').innerHTML = tableHtml;
 
             if (typeof window.submitTestResult === 'function') {
                 window.submitTestResult(currentIeltsTestName, parseFloat(bandScore));
-            } else {
-                showToast(`Nộp bài thành công. Band điểm đạt: ${bandScore.toFixed(1)}`, 'success');
             }
-        }
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        // Kích hoạt giao diện Sửa Từng Bước (Split-screen)
+        window.showListeningExplanations = function() {
+            document.getElementById('ielts-listening-result-dashboard').classList.add('hidden');
+            document.getElementById('ielts-listening-explanation-area').classList.remove('hidden');
+            
+            // Sao chép nội dung bài làm từ ielts-exam-content sang cột bên trái
+            const originalContent = document.getElementById('ielts-exam-content').innerHTML;
+            document.getElementById('listen-exp-questions-container').innerHTML = originalContent;
+            
+            // Xóa class 'hidden' của các Part bị ẩn để hiện toàn bộ bài thi
+            const expContainer = document.getElementById('listen-exp-questions-container');
+            for(let i=1; i<=4; i++) {
+                let partDiv = expContainer.querySelector(`#ielts-part-${i}-content`);
+                if(partDiv) partDiv.classList.remove('hidden');
+            }
+
+            // Đổ dữ liệu Transcript vào cột bên phải
+            document.getElementById('listen-exp-transcript-container').innerHTML = ieltsTranscriptHTML;
+        };
+
+        // Thoát hoàn toàn về Danh sách
+        window.exitToIeltsDashboardFromListen = function() {
+            document.getElementById('ielts-exam-room').classList.add('hidden');
+            document.getElementById('ielts-listening-result-dashboard').classList.add('hidden');
+            document.getElementById('ielts-listening-explanation-area').classList.add('hidden');
+            document.getElementById('ielts-dashboard').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
 
         window.retakeIeltsExam = function() {
             startIeltsExam(currentIeltsTestName, false);
