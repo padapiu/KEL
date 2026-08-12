@@ -908,12 +908,13 @@
                     Chú ý: bạn được học tối đa 20 từ mới một ngày. Đây là lượng từ phù hợp để bạn có thể học hiệu quả.
                 </div>
 
-                <!-- Thẻ Flashcard -->
+<!-- Thẻ Flashcard -->
                 <div class="flashcard-container w-full h-80 sm:h-96 cursor-pointer group" onclick="toggleFlashcard()">
                     <div class="flashcard-inner shadow-lg rounded-3xl" id="flashcard-element">
                         
                         <!-- Mặt trước (Front) -->
-                        <div class="flashcard-front bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 flex flex-col items-center justify-center relative p-6">
+                        <!-- ĐÃ SỬA: Thay 'relative' bằng 'absolute inset-0' -->
+                        <div class="flashcard-front absolute inset-0 bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 flex flex-col items-center justify-center p-6">
                             <span class="absolute top-4 right-4 text-xs font-bold text-gray-400 bg-gray-100 dark:bg-slate-700 px-2 py-1 rounded">Từ mới</span>
                             
                             <div class="flex items-center gap-3 mb-2">
@@ -931,7 +932,8 @@
                         </div>
 
                         <!-- Mặt sau (Back) -->
-                        <div class="flashcard-back bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 flex flex-col items-center justify-center relative p-8">
+                        <!-- ĐÃ SỬA: Thay 'relative' bằng 'absolute inset-0' -->
+                        <div class="flashcard-back absolute inset-0 bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 flex flex-col items-center justify-center p-8">
                             <span class="absolute top-4 right-4 text-xs font-bold text-gray-400 bg-gray-100 dark:bg-slate-700 px-2 py-1 rounded">Định nghĩa</span>
                             
                             <div class="w-full text-left space-y-4">
@@ -949,7 +951,7 @@
                         </div>
                     </div>
                 </div>
-
+                
                 <!-- Cụm Nút Đánh Giá (Mô phỏng Spaced Repetition) -->
                 <div class="mt-6 flex flex-wrap sm:flex-nowrap justify-between gap-3 bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700">
                     <button onclick="nextCard('easy')" class="flex-1 flex flex-col items-center p-2 rounded-xl hover:bg-emerald-50 dark:hover:bg-emerald-900/20 text-emerald-500 transition">
