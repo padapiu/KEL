@@ -780,7 +780,7 @@
                     </div>
                 </div>
 
-             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- Đề Số 2 -->
                     <div class="bg-white dark:bg-darkCard rounded-2xl p-6 shadow-md border-l-4 border-slate-400 flex flex-col justify-between transform hover:-translate-y-1 transition h-full">
                         <div>
@@ -791,7 +791,6 @@
                             <p class="text-gray-700 dark:text-gray-300 mb-6 text-sm">Chủ đề: Giáo dục, Công nghệ, Môi trường, Giao tiếp xã hội.</p>
                         </div>
                         
-                        <!-- Cập nhật: Khối hiển thị điểm bên trái và Nút làm bài bên phải -->
                         <div class="mt-auto pt-5 border-t border-gray-100 dark:border-slate-700 flex items-center justify-between">
                             <div class="flex items-center gap-3">
                                 <div class="w-12 h-12 rounded-full border-2 border-gray-200 dark:border-slate-600 text-gray-400 flex items-center justify-center font-bold text-lg shadow-sm transition-colors" id="thpt-score-2">
@@ -802,7 +801,11 @@
                                     <p class="text-xs text-gray-500 dark:text-gray-400 font-medium" id="thpt-status-2">Chưa làm bài</p>
                                 </div>
                             </div>
-                            <button onclick="startThptExam(2)" class="bg-cyan-500 hover:bg-cyan-400 text-white font-bold py-2.5 px-6 rounded-xl shadow-[0_4px_14px_rgba(6,182,212,0.3)] transition-transform hover:scale-105">Làm Lại</button>
+                            <!-- CỤM NÚT BẤM (ĐÃ SỬA) -->
+                            <div id="btn-group-thpt-2">
+                                <button id="btn-start-thpt-2" onclick="startThptExam(2)" class="bg-cyan-500 hover:bg-cyan-400 text-white font-bold py-2.5 px-6 rounded-xl shadow-[0_4px_14px_rgba(6,182,212,0.3)] transition-transform hover:scale-105">Làm Bài</button>
+                                <button id="btn-retake-thpt-2" onclick="startThptExam(2)" class="hidden bg-amber-500 hover:bg-amber-400 text-white font-bold py-2.5 px-6 rounded-xl shadow-[0_4px_14px_rgba(245,158,11,0.3)] transition-transform hover:scale-105">Làm Lại</button>
+                            </div>
                         </div>
                     </div>
                     
@@ -817,7 +820,6 @@
                             <p class="text-gray-700 dark:text-gray-300 mb-6 text-sm">Chủ đề: Giáo dục đại học, Giải trí kỹ thuật số, Thể thao, Giao tiếp.</p>
                         </div>
 
-                        <!-- Cập nhật: Khối hiển thị điểm bên trái và Nút làm bài bên phải -->
                         <div class="mt-auto pt-5 border-t border-gray-100 dark:border-slate-700 flex items-center justify-between">
                             <div class="flex items-center gap-3">
                                 <div class="w-12 h-12 rounded-full border-2 border-gray-200 dark:border-slate-600 text-gray-400 flex items-center justify-center font-bold text-lg shadow-sm transition-colors" id="thpt-score-3">
@@ -828,7 +830,11 @@
                                     <p class="text-xs text-gray-500 dark:text-gray-400 font-medium" id="thpt-status-3">Chưa làm bài</p>
                                 </div>
                             </div>
-                            <button onclick="startThptExam(3)" class="bg-amber-500 hover:bg-amber-400 text-white font-bold py-2.5 px-6 rounded-xl shadow-[0_4px_14px_rgba(245,158,11,0.3)] transition-transform hover:scale-105">Làm Lại</button>
+                            <!-- CỤM NÚT BẤM (ĐÃ SỬA) -->
+                            <div id="btn-group-thpt-3">
+                                <button id="btn-start-thpt-3" onclick="startThptExam(3)" class="bg-cyan-500 hover:bg-cyan-400 text-white font-bold py-2.5 px-6 rounded-xl shadow-[0_4px_14px_rgba(6,182,212,0.3)] transition-transform hover:scale-105">Làm Bài</button>
+                                <button id="btn-retake-thpt-3" onclick="startThptExam(3)" class="hidden bg-amber-500 hover:bg-amber-400 text-white font-bold py-2.5 px-6 rounded-xl shadow-[0_4px_14px_rgba(245,158,11,0.3)] transition-transform hover:scale-105">Làm Lại</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -2306,40 +2312,56 @@ window.switchIeltsPart = function(partNum) {
         let thptTimerInterval;
         let userThptAnswers = {};
 
-        // 1. Hàm bắt đầu làm bài thi
+       // 1. Hàm bắt đầu làm bài thi (Đã trang bị tính năng chống crash)
         window.startThptExam = function(examId) {
-            currentThptExamId = examId;
-            userThptAnswers = {}; // Reset lại đáp án người dùng
-            isTakingExam = true;
-
-            // Chuyển đổi giao diện
-            document.getElementById('thpt-dashboard').classList.add('hidden');
-            document.getElementById('thpt-exam-room').classList.remove('hidden');
-            document.getElementById('thpt-result-room').classList.add('hidden');
-            document.getElementById('thpt-exam-title').innerText = 'Đề Minh Họa Số ' + examId;
-
-            // Render câu hỏi
-            renderThptQuestions(examId);
-
-            // Thiết lập đồng hồ đếm ngược 50 phút
-            let timeInSecs = 50 * 60;
-            const timerDisplay = document.getElementById('thpt-timer-display');
-            clearInterval(thptTimerInterval);
-            timerDisplay.innerText = "50:00";
-
-            thptTimerInterval = setInterval(() => {
-                timeInSecs--;
-                let m = Math.floor(timeInSecs / 60).toString().padStart(2, '0');
-                let s = (timeInSecs % 60).toString().padStart(2, '0');
-                timerDisplay.innerText = `${m}:${s}`;
-                
-                if (timeInSecs <= 0) {
-                    clearInterval(thptTimerInterval);
-                    submitThptExam(true); // Tự động nộp khi hết giờ
+            try {
+                // Kiểm tra dữ liệu đề thi có tồn tại không
+                const data = examId === 2 ? thptExamData2 : thptExamData3;
+                if (!data || data.length === 0) {
+                    showToast("Đề thi đang được cập nhật, vui lòng quay lại sau!", "warning");
+                    return;
                 }
-            }, 1000);
 
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+                currentThptExamId = examId;
+                userThptAnswers = {}; 
+                isTakingExam = true;
+
+                // Chuyển đổi giao diện
+                document.getElementById('thpt-dashboard').classList.add('hidden');
+                document.getElementById('thpt-exam-room').classList.remove('hidden');
+                document.getElementById('thpt-result-room').classList.add('hidden');
+                document.getElementById('thpt-exam-title').innerText = 'Đề Minh Họa Số ' + examId;
+
+                // Render câu hỏi
+                renderThptQuestions(examId);
+
+                // Thiết lập đồng hồ
+                let timeInSecs = 50 * 60;
+                const timerDisplay = document.getElementById('thpt-timer-display');
+                clearInterval(thptTimerInterval);
+                timerDisplay.innerText = "50:00";
+
+                thptTimerInterval = setInterval(() => {
+                    timeInSecs--;
+                    let m = Math.floor(timeInSecs / 60).toString().padStart(2, '0');
+                    let s = (timeInSecs % 60).toString().padStart(2, '0');
+                    timerDisplay.innerText = `${m}:${s}`;
+                    
+                    if (timeInSecs <= 0) {
+                        clearInterval(thptTimerInterval);
+                        submitThptExam(true);
+                    }
+                }, 1000);
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            } catch (error) {
+                console.error("Lỗi khi mở phòng thi THPT:", error);
+                // Khôi phục lại giao diện nếu có lỗi
+                document.getElementById('thpt-dashboard').classList.remove('hidden');
+                document.getElementById('thpt-exam-room').classList.add('hidden');
+                showToast("Đã xảy ra sự cố tải đề thi. Vui lòng làm mới trang (F5)!", "error");
+            }
         };
 
         // 2. Hàm vẽ danh sách câu hỏi ra màn hình
@@ -3157,28 +3179,50 @@ window.renderStreakCalendar();
             }
         }
 
-// HÀM MỚI: Tự động kéo điểm từ Firebase xuống và cập nhật giao diện khi F5
+// HÀM ĐÃ NÂNG CẤP: Kéo điểm từ Firebase và cập nhật giao diện (Cả IELTS và THPT)
         window.updateIeltsUI = async function() {
-            // Kiểm tra xem người dùng đã đăng nhập và Firebase đã sẵn sàng chưa
             if (!window.globalUser || typeof window.db === 'undefined') return;
             
             try {
-                // Trỏ tới bộ sưu tập 'progress' (lịch sử làm bài) của người dùng hiện tại
                 const progressRef = collection(window.db, 'users', window.globalUser.uid, 'progress');
-                
-                // Lấy dữ liệu và sắp xếp theo thời gian (cũ -> mới)
-                // Việc này đảm bảo nếu làm 1 đề nhiều lần, điểm của lần làm mới nhất sẽ ghi đè lên UI
                 const q = query(progressRef, orderBy("timestamp", "asc"));
                 const querySnapshot = await getDocs(q);
                 
-                // Lặp qua từng bài thi đã lưu và cập nhật điểm lên vòng tròn tương ứng
                 querySnapshot.forEach((docSnap) => {
                     const data = docSnap.data();
                     
-                    // Nếu dữ liệu hợp lệ, gọi hàm cập nhật giao diện
                     if (data.testName && data.score !== undefined) {
-                        if (typeof window.updateDashboardScore === 'function') {
-                            window.updateDashboardScore(data.testName, data.score);
+                        // 1. NẾU LÀ ĐỀ THPT QUỐC GIA
+                        if (data.testName.includes('THPTQG - Đề Số')) {
+                            // Trích xuất số ID của đề (2 hoặc 3)
+                            let examId = data.testName.includes('2') ? 2 : (data.testName.includes('3') ? 3 : null);
+                            
+                            if (examId !== null) {
+                                const scoreCircle = document.getElementById(`thpt-score-${examId}`);
+                                const statusText = document.getElementById(`thpt-status-${examId}`);
+                                const btnStart = document.getElementById(`btn-start-thpt-${examId}`);
+                                const btnRetake = document.getElementById(`btn-retake-thpt-${examId}`);
+
+                                // Đổ điểm và tô màu
+                                if(scoreCircle && statusText) {
+                                    scoreCircle.innerHTML = data.score.toFixed(2);
+                                    scoreCircle.className = "w-12 h-12 rounded-full border-2 border-emerald-400 text-emerald-600 bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center font-bold text-lg shadow-sm transition-colors";
+                                    statusText.innerText = "Đã hoàn thành";
+                                    statusText.className = "text-xs text-emerald-600 dark:text-emerald-400 font-bold";
+                                }
+                                
+                                // Ẩn "Làm bài", Hiện "Làm lại"
+                                if(btnStart && btnRetake) {
+                                    btnStart.classList.add('hidden');
+                                    btnRetake.classList.remove('hidden');
+                                }
+                            }
+                        } 
+                        // 2. NẾU LÀ ĐỀ IELTS (Như cũ)
+                        else {
+                            if (typeof window.updateDashboardScore === 'function') {
+                                window.updateDashboardScore(data.testName, data.score);
+                            }
                         }
                     }
                 });
