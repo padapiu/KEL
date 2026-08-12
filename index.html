@@ -236,106 +236,86 @@
                 <h2 class="text-4xl font-extrabold text-center text-[#2b3674] dark:text-cyan-300 mb-4">Kho Đề Thi IELTS đa dạng</h2>
                 <p class="text-center text-gray-600 dark:text-gray-400 mb-10 text-lg">Giao diện chuẩn như thi IELTS trên máy</p>
 
+              <!-- BẮT ĐẦU: Khối Danh sách các Tab (Đã fix lỗi màn hình trắng) -->
                 <div class="flex flex-wrap justify-center gap-3 mb-12">
-                    <button id="ielts-btn-listening" onclick="showIeltsTab('listening')" class="px-6 py-2 rounded-full font-bold transition shadow-md bg-cyan-500 text-white">🎧 Listening</button>
+                    <button id="ielts-btn-listening" onclick="showIeltsTab('listening')" class="px-6 py-2 rounded-full font-bold transition shadow-md bg-cyan-500 text-white transform scale-105">🎧 Listening</button>
                     <button id="ielts-btn-reading" onclick="showIeltsTab('reading')" class="px-6 py-2 rounded-full font-bold transition bg-gray-100 text-gray-600 dark:bg-slate-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-600">📖 Reading</button>
                     <button id="ielts-btn-speaking" onclick="showIeltsTab('speaking')" class="px-6 py-2 rounded-full font-bold transition bg-gray-100 text-gray-600 dark:bg-slate-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-600">🗣️ Speaking</button>
                     <button id="ielts-btn-writing" onclick="showIeltsTab('writing')" class="px-6 py-2 rounded-full font-bold transition bg-gray-100 text-gray-600 dark:bg-slate-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-600">✍️ Writing</button>
                 </div>
                 
-               <div id="ielts-content-listening" class="w-full">
-    <!-- BẮT ĐẦU: Danh sách nhóm bài thi (Không có bìa sách) -->
-    <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 md:p-8 shadow-md border border-gray-100 dark:border-slate-700 mb-8 transition-all hover:shadow-lg w-full">
-        
-        <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">IELTS Mock Test 2026</h3>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <!-- Bài Test 1 (Đã làm - Có điểm số) -->
-            <div onclick="openModeModal('January Listening Practice Test 1')" class="group bg-white dark:bg-slate-700 p-4 rounded-2xl border-2 border-gray-100 dark:border-slate-600 hover:border-cyan-500 dark:hover:border-cyan-400 cursor-pointer transition-all flex items-center gap-4">
-                <div class="w-12 h-12 rounded-full border-2 border-emerald-400 flex items-center justify-center font-bold text-emerald-600 dark:text-emerald-400 text-lg flex-shrink-0 group-hover:bg-emerald-50 dark:group-hover:bg-emerald-900/30 transition-colors">
-                    4.5
-                </div>
-                <div>
-                    <h4 class="font-bold text-gray-800 dark:text-gray-100 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">January Listening Practice Test 1</h4>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">112,162 tests taken</p>
-                </div>
-            </div>
-
-            <!-- Bài Test 2 (Đã làm - Có điểm số) -->
-            <div onclick="openModeModal('January Listening Practice Test 2')" class="group bg-white dark:bg-slate-700 p-4 rounded-2xl border-2 border-gray-100 dark:border-slate-600 hover:border-cyan-500 dark:hover:border-cyan-400 cursor-pointer transition-all flex items-center gap-4">
-                <div class="w-12 h-12 rounded-full border-2 border-blue-400 flex items-center justify-center font-bold text-blue-600 dark:text-blue-400 text-lg flex-shrink-0 group-hover:bg-blue-50 dark:group-hover:bg-blue-900/30 transition-colors">
-                    5.5
-                </div>
-                <div>
-                    <h4 class="font-bold text-gray-800 dark:text-gray-100 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">January Listening Practice Test 2</h4>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">57,038 tests taken</p>
-                </div>
-            </div>
-
-            <!-- Bài Test 3 (Chưa làm - Thay điểm bằng Icon) -->
-            <div onclick="openModeModal('January Listening Practice Test 3')" class="group bg-white dark:bg-slate-700 p-4 rounded-2xl border-2 border-gray-100 dark:border-slate-600 hover:border-cyan-500 dark:hover:border-cyan-400 cursor-pointer transition-all flex items-center gap-4">
-                <div class="w-12 h-12 rounded-full border-2 border-gray-200 dark:border-gray-500 flex items-center justify-center text-gray-400 dark:text-gray-400 text-xl flex-shrink-0 group-hover:border-cyan-400 group-hover:text-cyan-500 transition-colors">
-                    🎧
-                </div>
-                <div>
-                    <h4 class="font-bold text-gray-800 dark:text-gray-100 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">January Listening Practice Test 3</h4>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Chưa hoàn thành</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- KẾT THÚC: Danh sách nhóm bài thi -->
-
-              <!-- BẮT ĐẦU: Nội dung tab Reading -->
-    <div id="ielts-content-reading" class="hidden w-full">
-        <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 md:p-8 shadow-md border border-gray-100 dark:border-slate-700 mb-8 transition-all hover:shadow-lg w-full">
-            <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">IELTS Reading Mock Test 2026</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <!-- Reading Test 1 (Đã làm) -->
-                <div onclick="openModeModal('January Reading Practice Test 1')" class="group bg-white dark:bg-slate-700 p-4 rounded-2xl border-2 border-gray-100 dark:border-slate-600 hover:border-emerald-500 dark:hover:border-emerald-400 cursor-pointer transition-all flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-full border-2 border-emerald-400 flex items-center justify-center font-bold text-emerald-600 dark:text-emerald-400 text-lg flex-shrink-0 group-hover:bg-emerald-50 dark:group-hover:bg-emerald-900/30 transition-colors">
-                        7.5
+                <!-- Tab Listening -->
+                <div id="ielts-content-listening" class="w-full">
+                    <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 md:p-8 shadow-md border border-gray-100 dark:border-slate-700 mb-8 transition-all hover:shadow-lg w-full">
+                        <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">IELTS Mock Test 2026</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div onclick="openModeModal('January Listening Practice Test 1')" class="group bg-white dark:bg-slate-700 p-4 rounded-2xl border-2 border-gray-100 dark:border-slate-600 hover:border-cyan-500 dark:hover:border-cyan-400 cursor-pointer transition-all flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full border-2 border-emerald-400 flex items-center justify-center font-bold text-emerald-600 dark:text-emerald-400 text-lg flex-shrink-0 group-hover:bg-emerald-50 dark:group-hover:bg-emerald-900/30 transition-colors">4.5</div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 dark:text-gray-100 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">January Listening Practice Test 1</h4>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">112,162 tests taken</p>
+                                </div>
+                            </div>
+                            <div onclick="openModeModal('January Listening Practice Test 2')" class="group bg-white dark:bg-slate-700 p-4 rounded-2xl border-2 border-gray-100 dark:border-slate-600 hover:border-cyan-500 dark:hover:border-cyan-400 cursor-pointer transition-all flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full border-2 border-blue-400 flex items-center justify-center font-bold text-blue-600 dark:text-blue-400 text-lg flex-shrink-0 group-hover:bg-blue-50 dark:group-hover:bg-blue-900/30 transition-colors">5.5</div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 dark:text-gray-100 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">January Listening Practice Test 2</h4>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">57,038 tests taken</p>
+                                </div>
+                            </div>
+                            <div onclick="openModeModal('January Listening Practice Test 3')" class="group bg-white dark:bg-slate-700 p-4 rounded-2xl border-2 border-gray-100 dark:border-slate-600 hover:border-cyan-500 dark:hover:border-cyan-400 cursor-pointer transition-all flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full border-2 border-gray-200 dark:border-gray-500 flex items-center justify-center text-gray-400 dark:text-gray-400 text-xl flex-shrink-0 group-hover:border-cyan-400 group-hover:text-cyan-500 transition-colors">🎧</div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 dark:text-gray-100 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">January Listening Practice Test 3</h4>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Chưa hoàn thành</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <h4 class="font-bold text-gray-800 dark:text-gray-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">January Reading Practice Test 1</h4>
-                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">89,234 tests taken</p>
+                </div> <!-- QUAN TRỌNG: Thẻ đóng của ielts-content-listening -->
+
+                <!-- Tab Reading -->
+                <div id="ielts-content-reading" class="hidden w-full">
+                    <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 md:p-8 shadow-md border border-gray-100 dark:border-slate-700 mb-8 transition-all hover:shadow-lg w-full">
+                        <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">IELTS Reading Mock Test 2026</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div onclick="openModeModal('January Reading Practice Test 1')" class="group bg-white dark:bg-slate-700 p-4 rounded-2xl border-2 border-gray-100 dark:border-slate-600 hover:border-emerald-500 dark:hover:border-emerald-400 cursor-pointer transition-all flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full border-2 border-emerald-400 flex items-center justify-center font-bold text-emerald-600 dark:text-emerald-400 text-lg flex-shrink-0 group-hover:bg-emerald-50 dark:group-hover:bg-emerald-900/30 transition-colors">7.5</div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 dark:text-gray-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">January Reading Practice Test 1</h4>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">89,234 tests taken</p>
+                                </div>
+                            </div>
+                            <div onclick="openModeModal('January Reading Practice Test 2')" class="group bg-white dark:bg-slate-700 p-4 rounded-2xl border-2 border-gray-100 dark:border-slate-600 hover:border-emerald-500 dark:hover:border-emerald-400 cursor-pointer transition-all flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full border-2 border-gray-200 dark:border-gray-500 flex items-center justify-center text-gray-400 dark:text-gray-400 text-xl flex-shrink-0 group-hover:border-emerald-400 group-hover:text-emerald-500 transition-colors">📖</div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 dark:text-gray-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">January Reading Practice Test 2</h4>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Chưa hoàn thành</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Reading Test 2 (Chưa làm) -->
-                <div onclick="openModeModal('January Reading Practice Test 2')" class="group bg-white dark:bg-slate-700 p-4 rounded-2xl border-2 border-gray-100 dark:border-slate-600 hover:border-emerald-500 dark:hover:border-emerald-400 cursor-pointer transition-all flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-full border-2 border-gray-200 dark:border-gray-500 flex items-center justify-center text-gray-400 dark:text-gray-400 text-xl flex-shrink-0 group-hover:border-emerald-400 group-hover:text-emerald-500 transition-colors">
-                        📖
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-gray-800 dark:text-gray-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">January Reading Practice Test 2</h4>
-                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Chưa hoàn thành</p>
+                <!-- Tab Speaking -->
+                <div id="ielts-content-speaking" class="hidden w-full">
+                    <div class="bg-white dark:bg-slate-800 rounded-3xl p-12 shadow-md border border-gray-100 dark:border-slate-700 text-center flex flex-col items-center justify-center mb-8">
+                        <div class="text-6xl mb-4 animate-bounce">🗣️</div>
+                        <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Speaking Mock Tests</h3>
+                        <p class="text-gray-500 dark:text-gray-400 max-w-md mx-auto">Tính năng Luyện nói cùng AI đang được đội ngũ KEL phát triển và sẽ sớm ra mắt trong thời gian tới!</p>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <!-- KẾT THÚC: Nội dung tab Reading -->
 
-    <!-- BẮT ĐẦU: Nội dung tab Speaking -->
-    <div id="ielts-content-speaking" class="hidden w-full">
-        <div class="bg-white dark:bg-slate-800 rounded-3xl p-12 shadow-md border border-gray-100 dark:border-slate-700 text-center flex flex-col items-center justify-center mb-8">
-            <div class="text-6xl mb-4 animate-bounce">🗣️</div>
-            <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Speaking Mock Tests</h3>
-            <p class="text-gray-500 dark:text-gray-400 max-w-md mx-auto">Tính năng Luyện nói cùng AI đang được đội ngũ KEL phát triển và sẽ sớm ra mắt trong thời gian tới!</p>
-        </div>
-    </div>
-    <!-- KẾT THÚC: Nội dung tab Speaking -->
-
-    <!-- BẮT ĐẦU: Nội dung tab Writing -->
-    <div id="ielts-content-writing" class="hidden w-full">
-        <div class="bg-white dark:bg-slate-800 rounded-3xl p-12 shadow-md border border-gray-100 dark:border-slate-700 text-center flex flex-col items-center justify-center mb-8">
-            <div class="text-6xl mb-4 animate-pulse">✍️</div>
-            <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Writing Mock Tests</h3>
-            <p class="text-gray-500 dark:text-gray-400 max-w-md mx-auto">Hệ thống chấm điểm Writing tự động đang được hoàn thiện. Vui lòng quay lại sau nhé!</p>
-        </div>
-    </div>
-    <!-- KẾT THÚC: Nội dung tab Writing -->
+                <!-- Tab Writing -->
+                <div id="ielts-content-writing" class="hidden w-full">
+                    <div class="bg-white dark:bg-slate-800 rounded-3xl p-12 shadow-md border border-gray-100 dark:border-slate-700 text-center flex flex-col items-center justify-center mb-8">
+                        <div class="text-6xl mb-4 animate-pulse">✍️</div>
+                        <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Writing Mock Tests</h3>
+                        <p class="text-gray-500 dark:text-gray-400 max-w-md mx-auto">Hệ thống chấm điểm Writing tự động đang được hoàn thiện. Vui lòng quay lại sau nhé!</p>
+                    </div>
+                </div>
+            </div> <!-- QUAN TRỌNG: Thẻ đóng của toàn bộ ielts-dashboard -->
+            <!-- KẾT THÚC: Khối Danh sách các Tab -->
 
             <!-- STREAMING_CHUNK: Building IELTS Listening exam room structure... -->
             <div id="ielts-exam-room" class="hidden max-w-7xl mx-auto py-6 px-4">
