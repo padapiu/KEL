@@ -963,17 +963,17 @@
                             </div>
                             <div>
                                 <p class="font-bold text-gray-700 dark:text-gray-200 mb-2 text-sm">2. Choose a time limit:</p>
-                                <select class="w-full p-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-700/50 text-gray-700 dark:text-white focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-200 transition">
-                                    <option value="32">32 mins</option>
-                                    <option value="40">40 mins</option>
-                                    <option value="none">No time limit</option>
-                                </select>
+                               <select id="practice-time-select" class="w-full p-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-700/50 text-gray-700 dark:text-white focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-200 transition">
+    <option value="32">32 mins</option>
+    <option value="40">40 mins</option>
+    <option value="none">No time limit</option>
+</select>
                             </div>
                         </div>
                         
                         <!-- mt-auto giúp nút luôn bị đẩy xuống đáy -->
                         <div class="mt-8 pt-2">
-                            <button class="w-full bg-cyan-500 hover:bg-cyan-400 text-white font-bold py-3.5 rounded-xl shadow-[0_4px_14px_rgba(6,182,212,0.3)] transition-all hover:-translate-y-1">Start Now</button>
+                           <button onclick="startExamFromModal(false)" class="w-full bg-cyan-500 hover:bg-cyan-400 text-white font-bold py-3.5 rounded-xl shadow-[0_4px_14px_rgba(6,182,212,0.3)] transition-all hover:-translate-y-1">Start Now</button>
                         </div>
                     </div>
 
@@ -996,7 +996,7 @@
                         </div>
                         
                         <div class="mt-8 pt-2">
-                            <button class="w-full bg-emerald-500 hover:bg-emerald-400 text-white font-bold py-3.5 rounded-xl shadow-[0_4px_14px_rgba(16,185,129,0.3)] transition-all hover:-translate-y-1">Start Now</button>
+                           <button onclick="startExamFromModal(true)" class="w-full bg-emerald-500 hover:bg-emerald-400 text-white font-bold py-3.5 rounded-xl shadow-[0_4px_14px_rgba(16,185,129,0.3)] transition-all hover:-translate-y-1">Start Now</button>
                         </div>
                     </div>
                 </div>
