@@ -244,12 +244,11 @@
                     <button id="ielts-btn-writing" onclick="showIeltsTab('writing')" class="px-6 py-2 rounded-full font-bold transition bg-gray-100 text-gray-600 dark:bg-slate-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-600">✍️ Writing</button>
                 </div>
                 
-           <!-- Tab Listening -->
+<!-- Tab Listening -->
                 <div id="ielts-content-listening" class="w-full">
                     <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 md:p-8 shadow-md border border-gray-100 dark:border-slate-700 mb-8 transition-all hover:shadow-lg w-full">
                         <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">Cambridge IELTS 21 Academic</h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                            <!-- Chú ý tham số 'listening' được thêm vào -->
                             <div onclick="openModeModal('Cambridge 21 - Test 4', 'listening')" class="group bg-white dark:bg-slate-700 p-4 rounded-2xl border-2 border-gray-100 dark:border-slate-600 hover:border-cyan-500 dark:hover:border-cyan-400 cursor-pointer transition-all flex items-center gap-4">
                                 <div class="w-12 h-12 rounded-full border-2 border-emerald-400 flex items-center justify-center font-bold text-emerald-600 dark:text-emerald-400 text-lg flex-shrink-0 group-hover:bg-emerald-50 dark:group-hover:bg-emerald-900/30 transition-colors">4.5</div>
                                 <div>
@@ -266,11 +265,11 @@
                     <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 md:p-8 shadow-md border border-gray-100 dark:border-slate-700 mb-8 transition-all hover:shadow-lg w-full">
                         <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">Cambridge IELTS 21 Academic</h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                            <!-- Chú ý tham số 'reading' được thêm vào -->
-                            <div onclick="openModeModal('Cambridge 21 - Reading Test 4', 'reading')" class="group bg-white dark:bg-slate-700 p-4 rounded-2xl border-2 border-gray-100 dark:border-slate-600 hover:border-emerald-500 dark:hover:border-emerald-400 cursor-pointer transition-all flex items-center gap-4">
+                            <!-- QUAN TRỌNG: Đã thêm tham số 'reading' để hệ thống mở đúng phòng thi -->
+                            <div onclick="openModeModal('Cambridge 21 - Test 4', 'reading')" class="group bg-white dark:bg-slate-700 p-4 rounded-2xl border-2 border-gray-100 dark:border-slate-600 hover:border-emerald-500 dark:hover:border-emerald-400 cursor-pointer transition-all flex items-center gap-4">
                                 <div class="w-12 h-12 rounded-full border-2 border-emerald-400 flex items-center justify-center font-bold text-emerald-600 dark:text-emerald-400 text-lg flex-shrink-0 group-hover:bg-emerald-50 dark:group-hover:bg-emerald-900/30 transition-colors">7.5</div>
                                 <div>
-                                    <h4 class="font-bold text-gray-800 dark:text-gray-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">Cambridge 21 - Reading Test 4</h4>
+                                    <h4 class="font-bold text-gray-800 dark:text-gray-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">Cambridge 21 - Test 4</h4>
                                     <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Reading Practice Test</p>
                                 </div>
                             </div>
@@ -1864,14 +1863,9 @@ window.switchIeltsPart = function(partNum) {
             40: "His book, beautifully illustrated with photographs of the various stages of his venture and a few illustrations of historic globes and maps, is hardly a blueprint for commercial success"
         };
 
-        window.startIeltsReadingExam = function(testName, isStrict) {
-            currentIeltsReadingTestName = testName;
-            let duration = 60; 
-            window.startIeltsReadingExam = function(testName, isStrict, customDuration = 60) {
+window.startIeltsReadingExam = function(testName, isStrict, customDuration = 60) {
             currentIeltsReadingTestName = testName;
             let duration = customDuration; 
-            
-            isTakingExam = true;
             
             isTakingExam = true;
             document.getElementById('ielts-dashboard').classList.add('hidden');
@@ -1879,8 +1873,9 @@ window.switchIeltsPart = function(partNum) {
             document.getElementById('ielts-reading-result-dashboard').classList.add('hidden');
             document.getElementById('ielts-reading-explanation-area').classList.add('hidden');
             document.querySelector('.reading-split-layout').classList.remove('hidden');
-            document.getElementById('ielts-reading-exam-title').innerText = testName;
             
+            // Gắn tên bài thi lên Header
+            document.getElementById('ielts-reading-exam-title').innerText = testName + " (Reading)";
             document.getElementById('btn-submit-reading').classList.remove('hidden');
             
             for (let i = 1; i <= 40; i++) {
@@ -1912,7 +1907,7 @@ window.switchIeltsPart = function(partNum) {
             }, 1000);
             
             window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+        };
 
         window.updateReadNav = function(qNum) {
             let el = document.getElementById(`read-ans-${qNum}`);
