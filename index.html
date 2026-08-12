@@ -1262,15 +1262,19 @@
             }
         };
 
-        // 2. HÀM TỰ ĐỘNG CẬP NHẬT ĐIỂM SỐ LÊN VÒNG TRÒN DASHBOARD
+     // HÀM ĐÃ SỬA: Tự động cập nhật điểm lên vòng tròn cho TẤT CẢ các kỹ năng (Listening, Reading,...)
         window.updateDashboardScore = function(testName, score) {
-            const testTitles = document.querySelectorAll('#ielts-content-listening h4');
+            // Thay vì chỉ tìm trong #ielts-content-listening, ta tìm trong toàn bộ #ielts-dashboard
+            const testTitles = document.querySelectorAll('#ielts-dashboard h4');
+            
             testTitles.forEach(title => {
+                // Kiểm tra xem tên bài thi có khớp không
                 if (title.innerText.trim() === testName) {
                     const card = title.closest('.group');
                     if (card) {
                         const circle = card.querySelector('.rounded-full');
                         if (circle) {
+                            // Cập nhật điểm số
                             circle.innerHTML = score.toFixed(1);
                             
                             // Đổi màu sắc vòng tròn dựa trên điểm số
@@ -1284,7 +1288,7 @@
                             }
                             circle.className = newClass;
                             
-                            // Cập nhật trạng thái "Chưa hoàn thành" thành "Đã làm"
+                            // Cập nhật dòng trạng thái
                             const statusText = card.querySelector('p');
                             if(statusText && statusText.innerText.includes('Chưa hoàn thành')) {
                                 statusText.innerText = "Vừa hoàn thành";
@@ -2134,11 +2138,11 @@ window.switchIeltsPart = function(partNum) {
             40: "His book, beautifully illustrated with photographs of the various stages of his venture and a few illustrations of historic globes and maps, is hardly a blueprint for commercial success"
         };
 
-        // HÀM ĐÃ SỬA: Nhận trực tiếp customDuration, bỏ prompt() gây phiền hà
+// HÀM ĐÃ SỬA: Đổi lại customDuration mặc định là 60
         window.startIeltsReadingExam = function(testName, isStrict, customDuration = 60) {
             currentIeltsReadingTestName = testName;
             
-            // Lấy thời gian từ Modal truyền sang (hoặc mặc định 60p)
+            // Lấy thời gian từ Modal truyền sang
             let duration = customDuration; 
             
             isTakingExam = true;
@@ -2531,7 +2535,33 @@ window.renderStreakCalendar();
         const analytics = getAnalytics(app);
         window.auth = getAuth(app);
         window.db = getFirestore(app);
-        
+
+    // HÀM MỚI: Xử lý bật/tắt chế độ ban đêm (Dark Mode)
+        window.toggleDarkMode = function() {
+            const htmlEl = document.documentElement; // Lấy thẻ <html>
+            const themeIcon = document.getElementById('theme-icon');
+            
+            // Nếu đang ở Dark Mode thì tắt đi
+            if (htmlEl.classList.contains('dark')) {
+                htmlEl.classList.remove('dark');
+                localStorage.setItem('theme', 'light'); // Lưu vào bộ nhớ
+                if(themeIcon) themeIcon.innerText = '🌙';
+            } 
+            // Nếu chưa có Dark Mode thì bật lên
+            else {
+                htmlEl.classList.add('dark');
+                localStorage.setItem('theme', 'dark'); // Lưu vào bộ nhớ
+                if(themeIcon) themeIcon.innerText = '☀️';
+            }
+        };
+
+        // KIỂM TRA TRẠNG THÁI KHI VỪA TẢI TRANG
+        // Tự động giữ nguyên chế độ ban đêm nếu người dùng đã bật trước đó
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            const themeIcon = document.getElementById('theme-icon');
+            if(themeIcon) themeIcon.innerText = '☀️';
+        }
         // --- 1. CÁC HÀM TIỆN ÍCH GIAO DIỆN (UI UTILITIES) ---
         window.showToast = function(message, type = 'success') {
             const toastContainer = document.getElementById('toast-container');
