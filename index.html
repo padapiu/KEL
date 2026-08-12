@@ -780,9 +780,9 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- Đề Số 2 -->
-                    <div class="bg-white dark:bg-darkCard rounded-2xl p-6 shadow-md border-l-4 border-slate-400 flex flex-col justify-between transform hover:-translate-y-1 transition">
+                    <div class="bg-white dark:bg-darkCard rounded-2xl p-6 shadow-md border-l-4 border-slate-400 flex flex-col justify-between transform hover:-translate-y-1 transition h-full">
                         <div>
                             <div class="flex justify-between items-start mb-2">
                                 <h3 class="text-xl font-bold text-gray-800 dark:text-white">Đề Minh Họa Số 2</h3>
@@ -790,11 +790,24 @@
                             <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Trình độ: B1 - B2 | Số lượng: 40 Câu</p>
                             <p class="text-gray-700 dark:text-gray-300 mb-6 text-sm">Chủ đề: Giáo dục, Công nghệ, Môi trường, Giao tiếp xã hội.</p>
                         </div>
-                        <button onclick="startThptExam(2)" class="w-full bg-cyan-500 hover:bg-cyan-400 text-white font-bold py-3 rounded-xl shadow transition">Làm Đề Số 2 (50 Phút)</button>
+                        
+                        <!-- Cập nhật: Khối hiển thị điểm bên trái và Nút làm bài bên phải -->
+                        <div class="mt-auto pt-5 border-t border-gray-100 dark:border-slate-700 flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-full border-2 border-gray-200 dark:border-slate-600 text-gray-400 flex items-center justify-center font-bold text-lg shadow-sm transition-colors" id="thpt-score-2">
+                                    -
+                                </div>
+                                <div>
+                                    <p class="text-sm font-extrabold text-gray-800 dark:text-gray-200">Điểm số</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 font-medium" id="thpt-status-2">Chưa làm bài</p>
+                                </div>
+                            </div>
+                            <button onclick="startThptExam(2)" class="bg-cyan-500 hover:bg-cyan-400 text-white font-bold py-2.5 px-6 rounded-xl shadow-[0_4px_14px_rgba(6,182,212,0.3)] transition-transform hover:scale-105">Làm Lại</button>
+                        </div>
                     </div>
                     
                     <!-- Đề Số 3 -->
-                    <div class="bg-white dark:bg-darkCard rounded-2xl p-6 shadow-md border-l-4 border-amber-500 flex flex-col justify-between transform hover:-translate-y-1 transition">
+                    <div class="bg-white dark:bg-darkCard rounded-2xl p-6 shadow-md border-l-4 border-amber-500 flex flex-col justify-between transform hover:-translate-y-1 transition h-full">
                         <div>
                             <div class="flex justify-between items-start mb-2">
                                 <h3 class="text-xl font-bold text-gray-800 dark:text-white">Đề Minh Họa Số 3</h3>
@@ -803,11 +816,23 @@
                             <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Trình độ: B1 - B2 | Số lượng: 40 Câu</p>
                             <p class="text-gray-700 dark:text-gray-300 mb-6 text-sm">Chủ đề: Giáo dục đại học, Giải trí kỹ thuật số, Thể thao, Giao tiếp.</p>
                         </div>
-                        <button onclick="startThptExam(3)" class="w-full bg-amber-500 hover:bg-amber-400 text-white font-bold py-3 rounded-xl shadow-[0_10px_20px_rgba(245,158,11,0.3)] transition">Làm Đề Số 3 (50 Phút)</button>
+
+                        <!-- Cập nhật: Khối hiển thị điểm bên trái và Nút làm bài bên phải -->
+                        <div class="mt-auto pt-5 border-t border-gray-100 dark:border-slate-700 flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-full border-2 border-gray-200 dark:border-slate-600 text-gray-400 flex items-center justify-center font-bold text-lg shadow-sm transition-colors" id="thpt-score-3">
+                                    -
+                                </div>
+                                <div>
+                                    <p class="text-sm font-extrabold text-gray-800 dark:text-gray-200">Điểm số</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 font-medium" id="thpt-status-3">Chưa làm bài</p>
+                                </div>
+                            </div>
+                            <button onclick="startThptExam(3)" class="bg-amber-500 hover:bg-amber-400 text-white font-bold py-2.5 px-6 rounded-xl shadow-[0_4px_14px_rgba(245,158,11,0.3)] transition-transform hover:scale-105">Làm Lại</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-
+                
             <!-- Giao diện Phòng Thi THPT -->
             <div id="thpt-exam-room" class="hidden max-w-5xl mx-auto py-6 px-4">
                 <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-4 mb-6 sticky top-24 z-40 border border-gray-200 dark:border-slate-700 flex flex-wrap justify-between items-center gap-4">
