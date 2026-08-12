@@ -2274,6 +2274,171 @@ window.switchIeltsPart = function(partNum) {
             40: "His book, beautifully illustrated with photographs of the various stages of his venture and a few illustrations of historic globes and maps, is hardly a blueprint for commercial success"
         };
 
+// ==========================================
+        // LOGIC PHÒNG THI THPT QUỐC GIA
+        // ==========================================
+        let currentThptExamId = null;
+        let thptTimerInterval;
+        let userThptAnswers = {};
+
+        // 1. Hàm bắt đầu làm bài thi
+        window.startThptExam = function(examId) {
+            currentThptExamId = examId;
+            userThptAnswers = {}; // Reset lại đáp án người dùng
+            isTakingExam = true;
+
+            // Chuyển đổi giao diện
+            document.getElementById('thpt-dashboard').classList.add('hidden');
+            document.getElementById('thpt-exam-room').classList.remove('hidden');
+            document.getElementById('thpt-result-room').classList.add('hidden');
+            document.getElementById('thpt-exam-title').innerText = 'Đề Minh Họa Số ' + examId;
+
+            // Render câu hỏi
+            renderThptQuestions(examId);
+
+            // Thiết lập đồng hồ đếm ngược 50 phút
+            let timeInSecs = 50 * 60;
+            const timerDisplay = document.getElementById('thpt-timer-display');
+            clearInterval(thptTimerInterval);
+            timerDisplay.innerText = "50:00";
+
+            thptTimerInterval = setInterval(() => {
+                timeInSecs--;
+                let m = Math.floor(timeInSecs / 60).toString().padStart(2, '0');
+                let s = (timeInSecs % 60).toString().padStart(2, '0');
+                timerDisplay.innerText = `${m}:${s}`;
+                
+                if (timeInSecs <= 0) {
+                    clearInterval(thptTimerInterval);
+                    submitThptExam(true); // Tự động nộp khi hết giờ
+                }
+            }, 1000);
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        // 2. Hàm vẽ danh sách câu hỏi ra màn hình
+        function renderThptQuestions(examId) {
+            const data = examId === 2 ? thptExamData2 : thptExamData3;
+            const container = document.getElementById('thpt-questions-container');
+            const navContainer = document.getElementById('thpt-navigator');
+            
+            let html = '';
+            let navHtml = '';
+            let currentGroup = '';
+
+            data.forEach(item => {
+                // Hiển thị tiêu đề Nhóm câu hỏi (VD: Phần Ngữ âm)
+                if (item.group !== currentGroup) {
+                    html += `<div class="bg-cyan-50 dark:bg-slate-700 p-3 rounded-lg font-bold text-cyan-800 dark:text-cyan-300 mt-6 mb-4">${item.group}</div>`;
+                    currentGroup = item.group;
+                }
+
+                // Hiển thị đoạn văn (nếu là câu hỏi đọc hiểu/điền từ)
+                if (item.passage && (item.id === 25 || item.id === 30 || item.id === 35 || item.id === 36)) {
+                    html += `<div class="bg-gray-50 dark:bg-slate-800 p-5 rounded-xl border border-gray-200 dark:border-slate-600 mb-6 text-gray-800 dark:text-gray-200 leading-relaxed text-base">${item.passage.replace(/\n/g, '<br><br>')}</div>`;
+                }
+
+                // Vẽ từng câu hỏi trắc nghiệm
+                html += `
+                    <div class="mb-6 bg-white dark:bg-darkCard p-5 rounded-xl border border-gray-100 dark:border-slate-700 shadow-sm transition hover:shadow-md" id="thpt-q-${item.id}">
+                        <p class="font-bold text-gray-800 dark:text-white mb-4"><span class="text-cyan-600 dark:text-cyan-400">Câu ${item.id}:</span> ${item.q.replace(/\n/g, '<br>')}</p>
+                        <div class="space-y-3 ml-2">
+                `;
+                
+                item.opts.forEach((opt, idx) => {
+                    html += `
+                        <label class="flex items-start gap-3 cursor-pointer text-gray-700 dark:text-gray-300 hover:text-cyan-600 transition">
+                            <input type="radio" name="thpt_q_${item.id}" value="${idx}" class="mt-1 w-4 h-4 text-cyan-500 focus:ring-cyan-500" onchange="updateThptNav(${item.id})">
+                            <span class="leading-tight">${opt}</span>
+                        </label>
+                    `;
+                });
+                html += `</div></div>`;
+
+                // Vẽ lưới nút điều hướng
+                navHtml += `<button id="thpt-nav-btn-${item.id}" onclick="document.getElementById('thpt-q-${item.id}').scrollIntoView({behavior: 'smooth', block: 'center'})" class="w-10 h-10 rounded-lg border border-gray-300 dark:border-slate-600 flex items-center justify-center font-bold text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-700 transition">${item.id}</button>`;
+            });
+
+            container.innerHTML = html;
+            navContainer.innerHTML = navHtml;
+        }
+
+        // 3. Hàm tô màu nút điều hướng khi đã chọn đáp án
+        window.updateThptNav = function(qId) {
+            const selected = document.querySelector(`input[name="thpt_q_${qId}"]:checked`);
+            if (selected) {
+                userThptAnswers[qId] = parseInt(selected.value);
+                const btn = document.getElementById(`thpt-nav-btn-${qId}`);
+                if (btn) {
+                    btn.classList.remove('border-gray-300', 'text-gray-600', 'dark:text-gray-400');
+                    btn.classList.add('bg-cyan-500', 'text-white', 'border-cyan-600');
+                }
+            }
+        };
+
+        // 4. Hàm Nộp bài và Chấm điểm
+        window.submitThptExam = function(isTimeout = false) {
+            if (!isTimeout) {
+                if (!confirm("Bạn có chắc chắn muốn nộp bài? Các câu chưa làm sẽ bị tính là sai.")) return;
+            }
+            clearInterval(thptTimerInterval);
+            isTakingExam = false;
+
+            const data = currentThptExamId === 2 ? thptExamData2 : thptExamData3;
+            let correctCount = 0;
+            let explanationsHtml = '';
+
+            data.forEach(item => {
+                const userAns = userThptAnswers[item.id];
+                const isCorrect = userAns === item.ans;
+                
+                if (isCorrect) correctCount++;
+
+                // Tạo giao diện giải thích
+                const statusColor = isCorrect ? 'text-emerald-500' : 'text-rose-500';
+                const statusIcon = isCorrect ? '✅' : '❌';
+                const userAnsText = userAns !== undefined ? item.opts[userAns] : 'Chưa chọn';
+                const correctAnsText = item.opts[item.ans];
+
+                explanationsHtml += `
+                    <div class="bg-gray-50 dark:bg-slate-700/50 p-5 rounded-xl border border-gray-200 dark:border-slate-600">
+                        <p class="font-bold text-gray-800 dark:text-white mb-3"><span class="text-cyan-600">Câu ${item.id}:</span> ${item.q.replace(/\n/g, '<br>')}</p>
+                        <p class="text-sm mb-1 font-medium ${statusColor}">Bạn chọn: ${userAnsText} ${statusIcon}</p>
+                        <p class="text-sm mb-3 font-medium text-emerald-600 dark:text-emerald-400">Đáp án đúng: ${correctAnsText}</p>
+                        <div class="bg-white dark:bg-slate-800 p-4 rounded-lg border border-gray-100 dark:border-slate-700 text-sm text-gray-700 dark:text-gray-300">
+                            <span class="font-bold text-amber-500">💡 Giải thích:</span> ${item.exp}
+                        </div>
+                    </div>
+                `;
+            });
+
+            const score10 = (correctCount / 40) * 10;
+
+            // Chuyển sang màn hình kết quả
+            document.getElementById('thpt-exam-room').classList.add('hidden');
+            document.getElementById('thpt-result-room').classList.remove('hidden');
+            
+            document.getElementById('thpt-correct-count').innerText = correctCount;
+            document.getElementById('thpt-final-score').innerText = score10.toFixed(2);
+            document.getElementById('thpt-explanations-container').innerHTML = explanationsHtml;
+            document.getElementById('thpt-result-title').innerText = 'Đề Minh Họa Số ' + currentThptExamId;
+
+            // Lưu điểm lên Firebase (nếu đã đăng nhập)
+            if (typeof window.submitTestResult === 'function') {
+                window.submitTestResult('THPTQG - Đề Số ' + currentThptExamId, parseFloat(score10.toFixed(2)));
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        // 5. Hàm quay lại danh sách
+        window.exitToThptDashboard = function() {
+            document.getElementById('thpt-result-room').classList.add('hidden');
+            document.getElementById('thpt-dashboard').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+        
 // HÀM ĐÃ SỬA: Đổi lại customDuration mặc định là 60
         window.startIeltsReadingExam = function(testName, isStrict, customDuration = 60) {
             currentIeltsReadingTestName = testName;
