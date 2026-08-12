@@ -280,11 +280,11 @@
                         <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">Cambridge IELTS 21 Academic</h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <!-- Bài Test Duy Nhất -->
-                            <div onclick="openModeModal('Cambridge 21 - Test 4')" class="group bg-white dark:bg-slate-700 p-4 rounded-2xl border-2 border-gray-100 dark:border-slate-600 hover:border-cyan-500 dark:hover:border-cyan-400 cursor-pointer transition-all flex items-center gap-4">
+                            <div onclick="openModeModal('Cambridge 21 - Listening Test 4')" class="group bg-white dark:bg-slate-700 p-4 rounded-2xl border-2 border-gray-100 dark:border-slate-600 hover:border-cyan-500 dark:hover:border-cyan-400 cursor-pointer transition-all flex items-center gap-4">
                                 <div class="w-12 h-12 rounded-full border-2 border-emerald-400 flex items-center justify-center font-bold text-emerald-600 dark:text-emerald-400 text-lg flex-shrink-0 group-hover:bg-emerald-50 dark:group-hover:bg-emerald-900/30 transition-colors">4.5</div>
                                 <div>
-                                    <h4 class="font-bold text-gray-800 dark:text-gray-100 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">Cambridge 21 - Test 4</h4>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Listening Practice Test</p>
+                                    <h4 class="font-bold text-gray-800 dark:text-gray-100 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">Cambridge 21 - Listening Test 4</h4>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1"></p>
                                 </div>
                             </div>
                         </div>
@@ -297,10 +297,10 @@
                     <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 md:p-8 shadow-md border border-gray-100 dark:border-slate-700 mb-8 transition-all hover:shadow-lg w-full">
                         <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">Cambridge IELTS 21 Academic</h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                            <div onclick="openModeModal('Cambridge 21 - Test 4')" class="group bg-white dark:bg-slate-700 p-4 rounded-2xl border-2 border-gray-100 dark:border-slate-600 hover:border-emerald-500 dark:hover:border-emerald-400 cursor-pointer transition-all flex items-center gap-4">
+                            <div onclick="openModeModal('Cambridge 21 - Reading Test 4')" class="group bg-white dark:bg-slate-700 p-4 rounded-2xl border-2 border-gray-100 dark:border-slate-600 hover:border-emerald-500 dark:hover:border-emerald-400 cursor-pointer transition-all flex items-center gap-4">
                                 <div class="w-12 h-12 rounded-full border-2 border-emerald-400 flex items-center justify-center font-bold text-emerald-600 dark:text-emerald-400 text-lg flex-shrink-0 group-hover:bg-emerald-50 dark:group-hover:bg-emerald-900/30 transition-colors">7.5</div>
                                 <div>
-                                    <h4 class="font-bold text-gray-800 dark:text-gray-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">Cambridge 21 - Test 4</h4>
+                                    <h4 class="font-bold text-gray-800 dark:text-gray-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">Cambridge 21 - Reading Test 4</h4>
                                     <p class="text-xs text-gray-500 dark:text-gray-400 mt-1"></p>
                                 </div>
                             </div>
@@ -1379,7 +1379,7 @@
         const audioElement = document.getElementById('ielts-audio');
 // 1. TẠO KHO DỮ LIỆU ĐỘNG CHO TỪNG BÀI THI
         const ieltsListeningDatabase = {
-            "Cambridge 21 - Test 4": {
+            "Cambridge 21 -  Test 4": {
                 answers: {
                     1: "leigh", 2: "motorbike", 3: "hairdresser", 4: "suit", 5: "laptop",
                     6: "monday", 7: "coffee", 8: "books", 9: "plants", 10: "cinema",
@@ -2967,6 +2967,36 @@ window.renderStreakCalendar();
             }
         }
 
+// HÀM MỚI: Tự động kéo điểm từ Firebase xuống và cập nhật giao diện khi F5
+        window.updateIeltsUI = async function() {
+            // Kiểm tra xem người dùng đã đăng nhập và Firebase đã sẵn sàng chưa
+            if (!window.globalUser || typeof window.db === 'undefined') return;
+            
+            try {
+                // Trỏ tới bộ sưu tập 'progress' (lịch sử làm bài) của người dùng hiện tại
+                const progressRef = collection(window.db, 'users', window.globalUser.uid, 'progress');
+                
+                // Lấy dữ liệu và sắp xếp theo thời gian (cũ -> mới)
+                // Việc này đảm bảo nếu làm 1 đề nhiều lần, điểm của lần làm mới nhất sẽ ghi đè lên UI
+                const q = query(progressRef, orderBy("timestamp", "asc"));
+                const querySnapshot = await getDocs(q);
+                
+                // Lặp qua từng bài thi đã lưu và cập nhật điểm lên vòng tròn tương ứng
+                querySnapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    
+                    // Nếu dữ liệu hợp lệ, gọi hàm cập nhật giao diện
+                    if (data.testName && data.score !== undefined) {
+                        if (typeof window.updateDashboardScore === 'function') {
+                            window.updateDashboardScore(data.testName, data.score);
+                        }
+                    }
+                });
+            } catch (error) {
+                console.error("Lỗi khi tải dữ liệu điểm lên Dashboard:", error);
+            }
+        };
+    
         window.showProgressModal = async function() {
             document.getElementById('progress-modal').classList.remove('hidden');
             const container = document.getElementById('progress-list-container');
