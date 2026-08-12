@@ -1317,24 +1317,40 @@
             <p><strong>LECTURER:</strong> <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 39, 40">taken from nature (39) ... most appropriate volume (40).</span></p>
         `;
 
-       // Hàm mới để nhận lệnh từ Modal
+      // HÀM ĐÃ SỬA: Phân luồng Listening và Reading từ Modal
         window.startExamFromModal = function(isStrict) {
             closeModeModal(); // Đóng hộp thoại
-            let duration = 40; // Mặc định 40 phút cho thi thật
+            let duration = 40; // Mặc định tạm thời
             
+            // Xử lý thời gian thi
             if (!isStrict) {
+                // Nếu thi Practice, lấy thời gian từ ô Select
                 const timeSelect = document.getElementById('practice-time-select');
                 if (timeSelect) {
                     if (timeSelect.value === 'none') {
-                        duration = 999; // Số phút rất lớn cho chế độ không giới hạn
+                        duration = 999; // Không giới hạn thời gian
                     } else {
                         duration = parseInt(timeSelect.value);
                     }
                 }
+            } else {
+                // Nếu thi Simulation (Thi thật), tự động set cứng thời gian
+                // IELTS Reading là 60 phút, Listening là 40 phút
+                if (selectedTestForModal.toLowerCase().includes('reading')) {
+                    duration = 60;
+                } else {
+                    duration = 40;
+                }
             }
             
-            // Khởi động phòng thi
-            startIeltsExam(selectedTestForModal, isStrict, duration);
+            // PHÂN LUỒNG MỞ PHÒNG THI
+            if (selectedTestForModal.toLowerCase().includes('reading')) {
+                // Nếu tên đề có chữ "Reading" -> Mở phòng thi Reading
+                startIeltsReadingExam(selectedTestForModal, isStrict, duration);
+            } else {
+                // Ngược lại -> Mở phòng thi Listening
+                startIeltsExam(selectedTestForModal, isStrict, duration);
+            }
         };
 
         // CẬP NHẬT: Thay thế hàm startIeltsExam cũ bằng hàm này
@@ -2118,40 +2134,39 @@ window.switchIeltsPart = function(partNum) {
             40: "His book, beautifully illustrated with photographs of the various stages of his venture and a few illustrations of historic globes and maps, is hardly a blueprint for commercial success"
         };
 
-        window.startIeltsReadingExam = function(testName, isStrict) {
+        // HÀM ĐÃ SỬA: Nhận trực tiếp customDuration, bỏ prompt() gây phiền hà
+        window.startIeltsReadingExam = function(testName, isStrict, customDuration = 60) {
             currentIeltsReadingTestName = testName;
-            let duration = 60; 
             
-            if (!isStrict) {
-                const userInput = prompt("Nhập thời gian làm bài bạn muốn (tính bằng phút):", "60");
-                if (userInput === null) return; 
-                const parsed = parseInt(userInput);
-                if (!isNaN(parsed) && parsed > 0) {
-                    duration = parsed;
-                } else {
-                    showToast("Thời gian không hợp lệ, mặc định 60 phút.", "warning");
-                }
-            }
+            // Lấy thời gian từ Modal truyền sang (hoặc mặc định 60p)
+            let duration = customDuration; 
             
             isTakingExam = true;
+            
+            // Ẩn Dashboard và hiện Phòng thi Reading
             document.getElementById('ielts-dashboard').classList.add('hidden');
             document.getElementById('ielts-reading-exam-room').classList.remove('hidden');
             document.getElementById('ielts-reading-result-dashboard').classList.add('hidden');
             document.getElementById('ielts-reading-explanation-area').classList.add('hidden');
             document.querySelector('.reading-split-layout').classList.remove('hidden');
-            document.getElementById('ielts-reading-exam-title').innerText = testName;
             
+            // Cập nhật tiêu đề
+            document.getElementById('ielts-reading-exam-title').innerText = testName;
             document.getElementById('btn-submit-reading').classList.remove('hidden');
             
+            // Reset đáp án cũ
             for (let i = 1; i <= 40; i++) {
                 window[`userAnsRead${i}`] = null;
             }
             
+            // Mở Passage 1 đầu tiên
             if(typeof window.switchIeltsReadingPart === 'function') window.switchIeltsReadingPart(1);
             
+            // Thiết lập đồng hồ đếm ngược
             let timeInSecs = duration * 60;
             const timerDisplay = document.getElementById('ielts-reading-timer-display');
             timerDisplay.parentElement.classList.remove('animate-pulse');
+            
             if(typeof ieltsReadingTimerInterval !== 'undefined') clearInterval(ieltsReadingTimerInterval);
             
             ieltsReadingTimerInterval = setInterval(() => {
@@ -2167,13 +2182,14 @@ window.switchIeltsPart = function(partNum) {
                 
                 if (timeInSecs <= 0) {
                     clearInterval(ieltsReadingTimerInterval);
-                    submitIeltsReadingExam(true);
+                    submitIeltsReadingExam(true); // Hết giờ tự động nộp bài
                 }
             }, 1000);
             
+            // Cuộn lên đầu trang
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-
+        
         window.updateReadNav = function(qNum) {
             let el = document.getElementById(`read-ans-${qNum}`);
             if(el) window[`userAnsRead${qNum}`] = el.value;
