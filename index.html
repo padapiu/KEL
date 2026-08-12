@@ -1286,27 +1286,37 @@
             <p><strong>LECTURER:</strong> <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 39, 40">taken from nature (39) ... most appropriate volume (40).</span></p>
         `;
 
-        window.startIeltsExam = function(testName, isStrict) {
-            currentIeltsTestName = testName;
-            let duration = 40; 
+       // Hàm mới để nhận lệnh từ Modal
+        window.startExamFromModal = function(isStrict) {
+            closeModeModal(); // Đóng hộp thoại
+            let duration = 40; // Mặc định 40 phút cho thi thật
             
             if (!isStrict) {
-                const userInput = prompt("Nhập thời gian làm bài bạn muốn (tính bằng phút):", "40");
-                if (userInput === null) return; 
-                const parsed = parseInt(userInput);
-                if (!isNaN(parsed) && parsed > 0) {
-                    duration = parsed;
-                } else {
-                    showToast("Thời gian không hợp lệ, mặc định 40 phút.", "warning");
+                const timeSelect = document.getElementById('practice-time-select');
+                if (timeSelect) {
+                    if (timeSelect.value === 'none') {
+                        duration = 999; // Số phút rất lớn cho chế độ không giới hạn
+                    } else {
+                        duration = parseInt(timeSelect.value);
+                    }
                 }
             }
+            
+            // Khởi động phòng thi
+            startIeltsExam(selectedTestForModal, isStrict, duration);
+        };
+
+        // CẬP NHẬT: Thay thế hàm startIeltsExam cũ bằng hàm này
+        window.startIeltsExam = function(testName, isStrict, customDuration = 40) {
+            currentIeltsTestName = testName;
+            let duration = customDuration; 
             
             isTakingExam = true;
             document.getElementById('ielts-dashboard').classList.add('hidden');
             document.getElementById('ielts-exam-room').classList.remove('hidden');
             document.getElementById('ielts-exam-title').innerText = testName;
             
-            // Xóa các elements tạo lúc chấm điểm
+            // Xóa các elements tạo lúc chấm điểm (nếu có)
             if(document.getElementById('btn-exit-listening')) {
                 document.getElementById('btn-exit-listening').remove();
             }
@@ -1316,6 +1326,7 @@
             const transcriptArea = document.getElementById('ielts-transcript-area');
             if(transcriptArea) transcriptArea.classList.add('hidden');
             
+            // Làm mới các ô nhập liệu
             document.querySelectorAll('#ielts-exam-content input[type="text"]').forEach(input => {
                 input.value = '';
                 input.classList.remove('text-emerald-500', 'text-rose-500', 'line-through', 'font-black');
@@ -1327,6 +1338,7 @@
             });
             document.querySelectorAll('#ielts-exam-content span.text-emerald-500.ml-2').forEach(span => span.remove());
             
+            // Reset âm thanh
             audioElement.pause();
             audioElement.currentTime = 0;
             audioElement.playbackRate = 1.0;
@@ -1335,6 +1347,7 @@
             
             if(typeof window.switchIeltsPart === 'function') window.switchIeltsPart(1);
             
+            // Thiết lập đồng hồ đếm ngược
             let timeInSecs = duration * 60;
             const timerDisplay = document.getElementById('ielts-timer-display');
             timerDisplay.parentElement.classList.remove('animate-pulse');
