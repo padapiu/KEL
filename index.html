@@ -1253,15 +1253,66 @@
         let ieltsTimerInterval;
         let currentIeltsTestName = "";
         const audioElement = document.getElementById('ielts-audio');
+// 1. TẠO KHO DỮ LIỆU ĐỘNG CHO TỪNG BÀI THI
+        const ieltsListeningDatabase = {
+            "January Listening Practice Test 1": {
+                answers: {
+                    1: "leigh", 2: "motorbike", 3: "hairdresser", 4: "suit", 5: "laptop",
+                    6: "monday", 7: "coffee", 8: "books", 9: "plants", 10: "cinema",
+                    11: ["C", "E"], 12: ["C", "E"], 13: ["A", "B"], 14: ["A", "B"],
+                    15: "C", 16: "G", 17: "D", 18: "A", 19: "F", 20: "B",
+                    21: "B", 22: "A", 23: "B", 24: "B", 25: "E", 26: "I", 27: "A", 28: "D", 29: "H", 30: "G",
+                    31: "routine", 32: "trials", 33: "calming", 34: "pillows", 35: "anxiety", 
+                    36: "medication", 37: "awake", 38: "distraction", 39: "nature", 40: "volume"
+                },
+                audio: {
+                    1: "https://engnovate.com/wp-content/uploads/2026/06/cambridge-ielts-21-academic-listening-test-4-1.mp3",
+                    2: "https://engnovate.com/wp-content/uploads/2026/06/cambridge-ielts-21-academic-listening-test-4-2.mp3",
+                    3: "https://engnovate.com/wp-content/uploads/2026/06/cambridge-ielts-21-academic-listening-test-4-3.mp3",
+                    4: "https://engnovate.com/wp-content/uploads/2026/06/cambridge-ielts-21-academic-listening-test-4-4.mp3"
+                }
+            },
+            "January Listening Practice Test 2": {
+                answers: { /* Cập nhật đáp án bài 2 vào đây sau */ 1: "apple" },
+                audio: { 1: "", 2: "", 3: "", 4: "" }
+            },
+            "January Listening Practice Test 3": {
+                answers: { /* Cập nhật đáp án bài 3 vào đây sau */ 1: "banana" },
+                audio: { 1: "", 2: "", 3: "", 4: "" }
+            }
+        };
 
-        const ieltsAnswersCam21T4 = {
-            1: "leigh", 2: "motorbike", 3: "hairdresser", 4: "suit", 5: "laptop",
-            6: "monday", 7: "coffee", 8: "books", 9: "plants", 10: "cinema",
-            11: ["C", "E"], 12: ["C", "E"], 13: ["A", "B"], 14: ["A", "B"],
-            15: "C", 16: "G", 17: "D", 18: "A", 19: "F", 20: "B",
-            21: "B", 22: "A", 23: "B", 24: "B", 25: "E", 26: "I", 27: "A", 28: "D", 29: "H", 30: "G",
-            31: "routine", 32: "trials", 33: "calming", 34: "pillows", 35: "anxiety", 
-            36: "medication", 37: "awake", 38: "distraction", 39: "nature", 40: "volume"
+        // 2. HÀM TỰ ĐỘNG CẬP NHẬT ĐIỂM SỐ LÊN VÒNG TRÒN DASHBOARD
+        window.updateDashboardScore = function(testName, score) {
+            const testTitles = document.querySelectorAll('#ielts-content-listening h4');
+            testTitles.forEach(title => {
+                if (title.innerText.trim() === testName) {
+                    const card = title.closest('.group');
+                    if (card) {
+                        const circle = card.querySelector('.rounded-full');
+                        if (circle) {
+                            circle.innerHTML = score.toFixed(1);
+                            
+                            // Đổi màu sắc vòng tròn dựa trên điểm số
+                            let newClass = "w-12 h-12 rounded-full border-2 flex items-center justify-center font-bold text-lg flex-shrink-0 transition-colors ";
+                            if (score >= 7.0) {
+                                newClass += "border-emerald-400 text-emerald-600 bg-emerald-50 dark:bg-emerald-900/30";
+                            } else if (score >= 5.0) {
+                                newClass += "border-blue-400 text-blue-600 bg-blue-50 dark:bg-blue-900/30";
+                            } else {
+                                newClass += "border-amber-400 text-amber-600 bg-amber-50 dark:bg-amber-900/30";
+                            }
+                            circle.className = newClass;
+                            
+                            // Cập nhật trạng thái "Chưa hoàn thành" thành "Đã làm"
+                            const statusText = card.querySelector('p');
+                            if(statusText && statusText.innerText.includes('Chưa hoàn thành')) {
+                                statusText.innerText = "Vừa hoàn thành";
+                            }
+                        }
+                    }
+                }
+            });
         };
         
         const ieltsTranscriptHTML = `
@@ -1372,8 +1423,7 @@
             
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-
-        window.switchIeltsPart = function(partNum) {
+window.switchIeltsPart = function(partNum) {
             for(let i=1; i<=4; i++) {
                 const tab = document.getElementById(`tab-part-${i}`);
                 const content = document.getElementById(`ielts-part-${i}-content`);
@@ -1388,12 +1438,16 @@
                 }
             }
             
+            // Lấy URL Audio dựa trên Tên Bài Thi và Part đang chọn
             audioElement.pause();
             audioElement.currentTime = 0;
-            if(partNum === 1) audioElement.src = "https://engnovate.com/wp-content/uploads/2026/06/cambridge-ielts-21-academic-listening-test-4-1.mp3";
-            if(partNum === 2) audioElement.src = "https://engnovate.com/wp-content/uploads/2026/06/cambridge-ielts-21-academic-listening-test-4-2.mp3";
-            if(partNum === 3) audioElement.src = "https://engnovate.com/wp-content/uploads/2026/06/cambridge-ielts-21-academic-listening-test-4-3.mp3";
-            if(partNum === 4) audioElement.src = "https://engnovate.com/wp-content/uploads/2026/06/cambridge-ielts-21-academic-listening-test-4-4.mp3";
+            
+            const currentTestData = ieltsListeningDatabase[currentIeltsTestName];
+            if (currentTestData && currentTestData.audio && currentTestData.audio[partNum]) {
+                audioElement.src = currentTestData.audio[partNum];
+            } else {
+                audioElement.src = ""; // Nếu chưa có audio thì để trống
+            }
             
             audioElement.playbackRate = parseFloat(document.getElementById('audio-speed').value);
             document.getElementById('btn-audio-play').innerHTML = `<svg class="w-5 h-5 ml-1" fill="currentColor" viewBox="0 0 20 20"><path d="M4 4l12 6-12 6z"></path></svg>`;
@@ -1415,15 +1469,18 @@
             let skippedCount = 0;
             let resultsMap = {};
 
+            // Lấy bộ đáp án của bài thi hiện tại
+            const currentTestData = ieltsListeningDatabase[currentIeltsTestName];
+            const activeAnswers = currentTestData ? currentTestData.answers : {};
+
             // 1. Chấm điểm Text Input (Câu 1-10, 15-20, 24-40)
             const checkText = (start, end) => {
                 for(let i=start; i<=end; i++) {
                     const el = document.getElementById(`ielts-ans-${i}`);
                     if(el) {
                         const userVal = el.value.trim().toLowerCase();
-                        const correctVal = String(ieltsAnswersCam21T4[i]).toLowerCase();
+                        const correctVal = activeAnswers[i] ? String(activeAnswers[i]).toLowerCase() : "";
                         
-                        // Đánh dấu UI cho bài thi
                         el.classList.remove('text-cyan-700', 'dark:text-cyan-300');
                         
                         if(userVal === "") {
@@ -1440,11 +1497,11 @@
                         }
 
                         // Thêm đáp án đúng vào bên cạnh nếu sai hoặc trống
-                        if (userVal !== correctVal) {
+                        if (userVal !== correctVal && correctVal !== "") {
                             if (!el.nextElementSibling || el.nextElementSibling.tagName !== 'SPAN') {
                                 const span = document.createElement('span');
                                 span.className = "text-emerald-500 font-bold ml-2 text-sm";
-                                span.innerText = `(${ieltsAnswersCam21T4[i]})`;
+                                span.innerText = `(${activeAnswers[i]})`;
                                 el.parentNode.insertBefore(span, el.nextSibling);
                             }
                         }
@@ -1485,13 +1542,13 @@
                     else if (cb.checked) cb.parentElement.classList.add('text-rose-500', 'line-through');
                 });
             };
-            checkMCQ('ielts-mcq-11-12', ieltsAnswersCam21T4[11], 11, 12);
-            checkMCQ('ielts-mcq-13-14', ieltsAnswersCam21T4[13], 13, 14);
-
+            checkMCQ('ielts-mcq-11-12', activeAnswers[11], 11, 12);
+            checkMCQ('ielts-mcq-13-14', activeAnswers[13], 13, 14);
+ 
             // 3. Chấm điểm Radio Multiple Choice (Câu 21-23)
             for (let i = 21; i <= 23; i++) {
                 const selected = document.querySelector(`input[name="q${i}"]:checked`);
-                const correctAns = ieltsAnswersCam21T4[i];
+                const correctAns = activeAnswers[i];
                 
                 if (!selected) {
                     skippedCount++;
@@ -1571,6 +1628,12 @@
                 `;
             }
             document.getElementById('listen-analytics-body').innerHTML = tableHtml;
+
+            if (typeof window.submitTestResult === 'function') {
+                window.submitTestResult(currentIeltsTestName, parseFloat(bandScore));
+            }
+// Cập nhật lại hình tròn điểm số ngoài màn hình chính
+            updateDashboardScore(currentIeltsTestName, parseFloat(bandScore));
 
             if (typeof window.submitTestResult === 'function') {
                 window.submitTestResult(currentIeltsTestName, parseFloat(bandScore));
