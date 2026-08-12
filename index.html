@@ -1908,7 +1908,6 @@ window.startIeltsReadingExam = function(testName, isStrict, customDuration = 60)
             
             window.scrollTo({ top: 0, behavior: 'smooth' });
         };
-
         window.updateReadNav = function(qNum) {
             let el = document.getElementById(`read-ans-${qNum}`);
             if(el) window[`userAnsRead${qNum}`] = el.value;
