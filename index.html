@@ -308,74 +308,91 @@
     </div>
     <!-- KẾT THÚC: Danh sách nhóm bài thi -->
 
-    <!-- BẮT ĐẦU: Modal Chọn Chế Độ Làm Bài -->
-    <div id="mode-selection-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[110] hidden flex items-center justify-center opacity-0 transition-opacity duration-300">
-        <div class="bg-white dark:bg-slate-800 w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl shadow-2xl relative transform scale-95 transition-transform duration-300" id="mode-modal-content">
+   <!-- BẮT ĐẦU: Modal Chọn Chế Độ Làm Bài (ĐÃ SỬA LỖI GIAO DIỆN) -->
+<div id="mode-selection-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[110] hidden flex items-center justify-center opacity-0 transition-opacity duration-300 p-4 sm:p-6">
+    
+    <!-- Khung Modal Chính -->
+    <div class="bg-white dark:bg-slate-800 w-full max-w-4xl max-h-[90vh] rounded-3xl shadow-2xl relative transform scale-95 transition-transform duration-300 flex flex-col overflow-hidden" id="mode-modal-content">
+        
+        <!-- Nút Đóng (Ghim cố định ở góc, luôn nổi) -->
+        <button onclick="closeModeModal()" class="absolute top-4 right-4 z-20 text-gray-500 hover:text-rose-500 transition-colors p-2 bg-white/90 dark:bg-slate-700/90 hover:bg-rose-100 rounded-full shadow-sm backdrop-blur-sm border border-gray-100 dark:border-slate-600">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+
+        <!-- Vùng Nội Dung Có Thể Cuộn -->
+        <div class="overflow-y-auto custom-scroll p-6 md:p-10 flex-grow">
             
-            <!-- Nút Đóng -->
-            <button onclick="closeModeModal()" class="absolute top-6 right-6 text-gray-400 hover:text-rose-500 transition-colors p-2 bg-gray-100 dark:bg-slate-700 hover:bg-rose-100 rounded-full">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
-
-            <div class="p-8 md:p-10">
-                <h2 class="text-3xl font-extrabold text-center text-cyan-900 dark:text-cyan-300 mb-8" id="modal-test-name">Choose a mode</h2>
+            <!-- Tiêu đề -->
+            <h2 class="text-2xl md:text-3xl font-extrabold text-center text-cyan-900 dark:text-cyan-300 mb-8 mt-2 px-8" id="modal-test-name">Choose a mode</h2>
+            
+            <!-- Khu vực 2 thẻ chọn chế độ -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- Chế độ Luyện Tập (Practice Mode) -->
-                    <div class="bg-gray-50 dark:bg-slate-700/50 rounded-2xl p-6 border-2 border-transparent hover:border-cyan-400 transition-all flex flex-col h-full">
-                        <div class="text-center mb-6">
-                            <div class="w-16 h-16 bg-cyan-100 dark:bg-cyan-900 text-cyan-600 dark:text-cyan-300 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">🎯</div>
-                            <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Practice mode</h3>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">Practice mode is suitable for improving accuracy and time spent on each part.</p>
-                        </div>
-
-                        <div class="flex-grow space-y-6">
-                            <div>
-                                <p class="font-bold text-gray-700 dark:text-gray-200 mb-3 text-sm">1. Choose part/task(s) you want to practice:</p>
-                                <div class="space-y-2 text-sm text-gray-600 dark:text-gray-300 ml-2">
-                                    <label class="flex items-center gap-3 cursor-pointer hover:text-cyan-600 transition"><input type="checkbox" checked class="w-4 h-4 text-cyan-500 rounded focus:ring-cyan-500"> Full parts (4 parts - 40 questions)</label>
-                                    <label class="flex items-center gap-3 cursor-pointer hover:text-cyan-600 transition"><input type="checkbox" checked class="w-4 h-4 text-cyan-500 rounded focus:ring-cyan-500"> Part 1 (10 questions)</label>
-                                    <label class="flex items-center gap-3 cursor-pointer hover:text-cyan-600 transition"><input type="checkbox" checked class="w-4 h-4 text-cyan-500 rounded focus:ring-cyan-500"> Part 2 (10 questions)</label>
-                                    <label class="flex items-center gap-3 cursor-pointer hover:text-cyan-600 transition"><input type="checkbox" checked class="w-4 h-4 text-cyan-500 rounded focus:ring-cyan-500"> Part 3 (10 questions)</label>
-                                    <label class="flex items-center gap-3 cursor-pointer hover:text-cyan-600 transition"><input type="checkbox" checked class="w-4 h-4 text-cyan-500 rounded focus:ring-cyan-500"> Part 4 (10 questions)</label>
-                                </div>
-                            </div>
-                            <div>
-                                <p class="font-bold text-gray-700 dark:text-gray-200 mb-2 text-sm">2. Choose a time limit:</p>
-                                <select class="w-full p-3 rounded-xl border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-700 dark:text-white focus:outline-none focus:border-cyan-500">
-                                    <option value="32">32 mins</option>
-                                    <option value="40">40 mins</option>
-                                    <option value="none">No time limit</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <button class="w-full mt-8 bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-3 rounded-xl shadow-md transition-transform hover:-translate-y-1">Start Now</button>
+                <!-- Thẻ Practice Mode -->
+                <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 border-2 border-cyan-100 dark:border-slate-600 hover:border-cyan-400 hover:shadow-lg shadow-sm transition-all flex flex-col h-full relative overflow-hidden group">
+                    <!-- Hiệu ứng viền màu trên cùng -->
+                    <div class="absolute top-0 left-0 w-full h-1 bg-cyan-400 opacity-50 group-hover:opacity-100 transition-opacity"></div>
+                    
+                    <div class="text-center mb-6 mt-2">
+                        <div class="w-16 h-16 bg-cyan-50 dark:bg-cyan-900/50 border border-cyan-100 dark:border-cyan-800 text-cyan-500 dark:text-cyan-300 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 shadow-sm">🎯</div>
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-800 dark:text-white mb-2">Practice mode</h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 px-2">Practice mode is suitable for improving accuracy and time spent on each part.</p>
                     </div>
 
-                    <!-- Chế độ Thi Thật (Simulation Mode) -->
-                    <div class="bg-gray-50 dark:bg-slate-700/50 rounded-2xl p-6 border-2 border-transparent hover:border-emerald-400 transition-all flex flex-col h-full">
-                        <div class="text-center mb-6">
-                            <div class="w-16 h-16 bg-emerald-100 dark:bg-emerald-900 text-emerald-600 dark:text-emerald-300 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">⏱️</div>
-                            <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Simulation test mode</h3>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">Simulation test mode is the best option to experience the real IELTS on computer.</p>
-                        </div>
-
-                        <div class="flex-grow">
-                            <p class="font-bold text-gray-700 dark:text-gray-200 mb-3 text-sm">Test information</p>
-                            <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-gray-200 dark:border-slate-600 text-sm text-gray-600 dark:text-gray-300 flex items-center gap-3">
-                                <span class="text-xl">📄</span> Full parts (32 minutes - 4 parts - 40 questions)
+                    <div class="flex-grow space-y-6">
+                        <div>
+                            <p class="font-bold text-gray-700 dark:text-gray-200 mb-3 text-sm">1. Choose part/task(s) you want to practice:</p>
+                            <div class="space-y-2 text-sm text-gray-600 dark:text-gray-300 ml-2">
+                                <label class="flex items-center gap-3 cursor-pointer hover:text-cyan-600 transition"><input type="checkbox" checked class="w-4 h-4 text-cyan-500 border-gray-300 rounded focus:ring-cyan-500"> Full parts (4 parts - 40 questions)</label>
+                                <label class="flex items-center gap-3 cursor-pointer hover:text-cyan-600 transition"><input type="checkbox" checked class="w-4 h-4 text-cyan-500 border-gray-300 rounded focus:ring-cyan-500"> Part 1 (10 questions)</label>
+                                <label class="flex items-center gap-3 cursor-pointer hover:text-cyan-600 transition"><input type="checkbox" checked class="w-4 h-4 text-cyan-500 border-gray-300 rounded focus:ring-cyan-500"> Part 2 (10 questions)</label>
+                                <label class="flex items-center gap-3 cursor-pointer hover:text-cyan-600 transition"><input type="checkbox" checked class="w-4 h-4 text-cyan-500 border-gray-300 rounded focus:ring-cyan-500"> Part 3 (10 questions)</label>
+                                <label class="flex items-center gap-3 cursor-pointer hover:text-cyan-600 transition"><input type="checkbox" checked class="w-4 h-4 text-cyan-500 border-gray-300 rounded focus:ring-cyan-500"> Part 4 (10 questions)</label>
                             </div>
                         </div>
-                        
-                        <button class="w-full mt-8 bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 rounded-xl shadow-md transition-transform hover:-translate-y-1">Start Now</button>
+                        <div>
+                            <p class="font-bold text-gray-700 dark:text-gray-200 mb-2 text-sm">2. Choose a time limit:</p>
+                            <select class="w-full p-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-700/50 text-gray-700 dark:text-white focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-200 transition">
+                                <option value="32">32 mins</option>
+                                <option value="40">40 mins</option>
+                                <option value="none">No time limit</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- mt-auto giúp nút luôn bị đẩy xuống đáy -->
+                    <div class="mt-8 pt-2">
+                        <button class="w-full bg-cyan-500 hover:bg-cyan-400 text-white font-bold py-3.5 rounded-xl shadow-[0_4px_14px_rgba(6,182,212,0.3)] transition-all hover:-translate-y-1">Start Now</button>
+                    </div>
+                </div>
+
+                <!-- Thẻ Simulation Mode -->
+                <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 border-2 border-emerald-100 dark:border-slate-600 hover:border-emerald-400 hover:shadow-lg shadow-sm transition-all flex flex-col h-full relative overflow-hidden group">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-emerald-400 opacity-50 group-hover:opacity-100 transition-opacity"></div>
+
+                    <div class="text-center mb-6 mt-2">
+                        <div class="w-16 h-16 bg-emerald-50 dark:bg-emerald-900/50 border border-emerald-100 dark:border-emerald-800 text-emerald-500 dark:text-emerald-300 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 shadow-sm">⏱️</div>
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-800 dark:text-white mb-2">Simulation test mode</h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 px-2">Simulation test mode is the best option to experience the real IELTS on computer.</p>
+                    </div>
+
+                    <div class="flex-grow">
+                        <p class="font-bold text-gray-700 dark:text-gray-200 mb-3 text-sm">Test information</p>
+                        <div class="bg-gray-50 dark:bg-slate-700/50 p-4 rounded-xl border border-gray-200 dark:border-slate-600 text-sm text-gray-600 dark:text-gray-300 flex items-start gap-3">
+                            <span class="text-xl mt-0.5">📄</span> 
+                            <span>Full parts<br><span class="text-xs opacity-70">(32 minutes - 4 parts - 40 questions)</span></span>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 pt-2">
+                        <button class="w-full bg-emerald-500 hover:bg-emerald-400 text-white font-bold py-3.5 rounded-xl shadow-[0_4px_14px_rgba(16,185,129,0.3)] transition-all hover:-translate-y-1">Start Now</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- KẾT THÚC: Modal Chọn Chế Độ -->
 </div>
+<!-- KẾT THÚC: Modal Chọn Chế Độ -->
 
                 <div id="ielts-content-reading" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <div class="bg-white dark:bg-darkCard rounded-2xl p-6 shadow-md border-t-4 border-emerald-500 hover:shadow-xl transition flex flex-col justify-between">
