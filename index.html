@@ -923,32 +923,52 @@
             { id: 40, passage: readingPassage2_3, group: "Part VII. Reading Comprehension 2", q: "Which of the following can be inferred from the passage?", opts: ["A. The most famous university is always the best choice for every student.", "B. Financial planning is an important part of the university selection process.", "C. Students should ignore campus culture when choosing a school.", "D. Specialized academies do not offer extracurricular activities."], ans: 1, exp: "Đoạn cuối: chi phí thường quyết định sự lựa chọn -> lập kế hoạch tài chính là quan trọng." }
         ];
 
-        // ------------------ LOGIC UI VÀ ĐIỀU HƯỚNG BẢO VỆ ------------------
+     // ------------------ LOGIC UI VÀ ĐIỀU HƯỚNG BẢO VỆ ------------------
         function showPage(pageId, tabId = 'listening') {
             if (isTakingExam) {
                 const confirmExit = confirm("⚠️ CẢNH BÁO: Bạn đang trong phòng thi! Nếu thoát ra, toàn bộ tiến trình làm bài sẽ bị mất. Bạn có chắc chắn muốn thoát?");
                 if (!confirmExit) return; 
                 
                 isTakingExam = false;
-                clearInterval(thptTimerInterval);
-                clearInterval(ieltsTimerInterval);
-                if(typeof ieltsReadingTimerInterval !== 'undefined') clearInterval(ieltsReadingTimerInterval);
-
-                document.getElementById('thpt-exam-room').classList.add('hidden');
-                document.getElementById('thpt-dashboard').classList.remove('hidden');
-                document.getElementById('ielts-exam-room').classList.add('hidden');
-                document.getElementById('ielts-reading-exam-room').classList.add('hidden');
                 
-                // Đóng luôn Dashboard kết quả và phần giải thích Reading nếu đang mở
-                const resultDash = document.getElementById('ielts-reading-result-dashboard');
-                if(resultDash) resultDash.classList.add('hidden');
-                const expArea = document.getElementById('ielts-reading-explanation-area');
-                if(expArea) expArea.classList.add('hidden');
+                // 1. Dừng tất cả các bộ đếm giờ một cách an toàn (tránh Lỗi ngầm)
+                if (typeof thptTimerInterval !== 'undefined') clearInterval(thptTimerInterval);
+                if (typeof ieltsTimerInterval !== 'undefined') clearInterval(ieltsTimerInterval);
+                if (typeof ieltsReadingTimerInterval !== 'undefined') clearInterval(ieltsReadingTimerInterval);
 
-                document.getElementById('ielts-dashboard').classList.remove('hidden');
-                if(document.getElementById('audio-time')) document.getElementById('audio-time').innerText = "00:00";
+                // 2. Dừng audio IELTS Listening (nếu đang phát)
+                const audioEl = document.getElementById('ielts-audio');
+                if (audioEl) {
+                    audioEl.pause();
+                    audioEl.currentTime = 0;
+                }
+
+                // 3. Đóng tất cả các phòng thi và màn hình kết quả một cách an toàn
+                const elementsToHide = [
+                    'thpt-exam-room', 
+                    'ielts-exam-room', 
+                    'ielts-reading-exam-room',
+                    'ielts-reading-result-dashboard',
+                    'ielts-reading-explanation-area'
+                ];
+                elementsToHide.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.classList.add('hidden');
+                });
+
+                // 4. Khôi phục lại màn hình danh sách đề (Dashboard)
+                const elementsToShow = ['thpt-dashboard', 'ielts-dashboard'];
+                elementsToShow.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.classList.remove('hidden');
+                });
+
+                // 5. Đặt lại hiển thị thời gian audio
+                const audioTimeEl = document.getElementById('audio-time');
+                if (audioTimeEl) audioTimeEl.innerText = "00:00";
             }
 
+            // --- Logic chuyển trang mặc định ---
             document.querySelectorAll('.page-content').forEach(page => page.classList.remove('active'));
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.classList.remove('bg-cyan-50', 'dark:bg-slate-700', 'text-[#ff5e00]');
@@ -975,14 +995,6 @@
 
             if (pageId === 'ielts') showIeltsTab(tabId);
         }
-
-        window.addEventListener('beforeunload', (e) => {
-            if (isTakingExam) {
-                e.preventDefault();
-                e.returnValue = '';
-            }
-        });
-
         function showIeltsTab(tabId) {
             const tabs = ['listening', 'reading', 'speaking', 'writing'];
             tabs.forEach(tab => {
