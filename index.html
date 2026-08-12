@@ -1998,19 +1998,29 @@
             expContainer.innerHTML = expHtml;
         }
 
+       // Hàm thoát khỏi phòng thi Reading và quay lại màn hình danh sách
         window.exitToIeltsDashboard = function() {
             isTakingExam = false;
+            
+            // 1. Ẩn các khu vực liên quan đến làm bài và kết quả Reading
             document.getElementById('ielts-reading-exam-room').classList.add('hidden');
             document.getElementById('ielts-reading-result-dashboard').classList.add('hidden');
             document.getElementById('ielts-reading-explanation-area').classList.add('hidden');
             
-            for(let i=1; i<=3; i++) {
-                document.getElementById(`read-passage-${i}`).innerHTML = '';
-                document.getElementById(`read-question-${i}`).innerHTML = '';
-            }
+            // 2. Sửa lỗi: Xóa sạch nội dung cũ trong các container chính xác để giải phóng bộ nhớ
+            const passageContainer = document.getElementById('reading-passage-container');
+            const questionsContainer = document.getElementById('reading-questions-container');
             
-            document.querySelector('.reading-split-layout').classList.remove('hidden');
+            if (passageContainer) passageContainer.innerHTML = '';
+            if (questionsContainer) questionsContainer.innerHTML = '';
+            
+            // 3. Hiển thị lại Layout chia đôi (chuẩn bị cho lần thi sau) và hiện Dashboard IELTS
+            const splitLayout = document.querySelector('.reading-split-layout');
+            if (splitLayout) splitLayout.classList.remove('hidden');
+            
             document.getElementById('ielts-dashboard').classList.remove('hidden');
+            
+            // 4. Cuộn trang lên trên cùng cho mượt mà
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
