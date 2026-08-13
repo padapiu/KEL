@@ -1147,23 +1147,30 @@
                         <div class="flex-grow space-y-6">
                             <div>
                                 <p class="font-bold text-gray-700 dark:text-gray-200 mb-3 text-sm">1. Choose part/task(s) you want to practice:</p>
-                               <div class="space-y-2 text-sm text-gray-600 dark:text-gray-300 ml-2">
+                               <!-- BẮT ĐẦU: KHỐI CHECKBOX ĐÃ GẮN ID -->
+                                <div class="space-y-2 text-sm text-gray-600 dark:text-gray-300 ml-2">
                                     <label class="flex items-center gap-3 cursor-pointer hover:text-cyan-600 transition">
-                                        <input type="checkbox" id="cb-part-full" checked class="w-4 h-4 text-cyan-500 border-gray-300 rounded focus:ring-cyan-500" onchange="toggleAllParts(this)"> Full parts (4 parts - 40 questions)
+                                        <input type="checkbox" id="cb-part-full" checked class="w-4 h-4 text-cyan-500 border-gray-300 rounded focus:ring-cyan-500" onchange="toggleAllParts(this)"> 
+                                        <span id="label-part-full">Full parts (4 parts - 40 questions)</span>
                                     </label>
                                     <label class="flex items-center gap-3 cursor-pointer hover:text-cyan-600 transition">
-                                        <input type="checkbox" id="cb-part-1" checked class="w-4 h-4 text-cyan-500 border-gray-300 rounded focus:ring-cyan-500" onchange="checkIndividualPart()"> Part 1 (10 questions)
+                                        <input type="checkbox" id="cb-part-1" checked class="w-4 h-4 text-cyan-500 border-gray-300 rounded focus:ring-cyan-500" onchange="checkIndividualPart()"> 
+                                        <span id="label-part-1">Part 1 (10 questions)</span>
                                     </label>
                                     <label class="flex items-center gap-3 cursor-pointer hover:text-cyan-600 transition">
-                                        <input type="checkbox" id="cb-part-2" checked class="w-4 h-4 text-cyan-500 border-gray-300 rounded focus:ring-cyan-500" onchange="checkIndividualPart()"> Part 2 (10 questions)
+                                        <input type="checkbox" id="cb-part-2" checked class="w-4 h-4 text-cyan-500 border-gray-300 rounded focus:ring-cyan-500" onchange="checkIndividualPart()"> 
+                                        <span id="label-part-2">Part 2 (10 questions)</span>
                                     </label>
                                     <label class="flex items-center gap-3 cursor-pointer hover:text-cyan-600 transition">
-                                        <input type="checkbox" id="cb-part-3" checked class="w-4 h-4 text-cyan-500 border-gray-300 rounded focus:ring-cyan-500" onchange="checkIndividualPart()"> Part 3 (10 questions)
+                                        <input type="checkbox" id="cb-part-3" checked class="w-4 h-4 text-cyan-500 border-gray-300 rounded focus:ring-cyan-500" onchange="checkIndividualPart()"> 
+                                        <span id="label-part-3">Part 3 (10 questions)</span>
                                     </label>
-                                    <label class="flex items-center gap-3 cursor-pointer hover:text-cyan-600 transition">
-                                        <input type="checkbox" id="cb-part-4" checked class="w-4 h-4 text-cyan-500 border-gray-300 rounded focus:ring-cyan-500" onchange="checkIndividualPart()"> Part 4 (10 questions)
+                                    <label id="label-container-part-4" class="flex items-center gap-3 cursor-pointer hover:text-cyan-600 transition">
+                                        <input type="checkbox" id="cb-part-4" checked class="w-4 h-4 text-cyan-500 border-gray-300 rounded focus:ring-cyan-500" onchange="checkIndividualPart()"> 
+                                        <span id="label-part-4">Part 4 (10 questions)</span>
                                     </label>
                                 </div>
+                                <!-- KẾT THÚC: KHỐI CHECKBOX ĐÃ GẮN ID -->
                             </div>
                             <div>
                                 <p class="font-bold text-gray-700 dark:text-gray-200 mb-2 text-sm">2. Choose a time limit:</p>
@@ -1217,41 +1224,7 @@
         // ------------------ LOGIC ĐÓNG/MỞ MODAL CHỌN CHẾ ĐỘ ------------------
         let selectedTestForModal = "";
 
-        window.openModeModal = function(testName) {
-            selectedTestForModal = testName;
-            const modal = document.getElementById('mode-selection-modal');
-            const content = document.getElementById('mode-modal-content');
-            
-            if (modal && content) {
-                modal.classList.remove('hidden');
-                // Thay đổi tiêu đề modal (Tùy chọn)
-                const titleEl = document.getElementById('modal-test-name');
-                if(titleEl) titleEl.innerText = testName;
 
-                // Thêm độ trễ nhỏ để hiệu ứng CSS mượt mà
-                setTimeout(() => {
-                    modal.classList.remove('opacity-0');
-                    content.classList.remove('scale-95');
-                    content.classList.add('scale-100');
-                }, 10);
-            }
-        };
-
-        window.closeModeModal = function() {
-            const modal = document.getElementById('mode-selection-modal');
-            const content = document.getElementById('mode-modal-content');
-            
-            if (modal && content) {
-                modal.classList.add('opacity-0');
-                content.classList.remove('scale-100');
-                content.classList.add('scale-95');
-                
-                // Đợi hiệu ứng mờ kết thúc rồi ẩn khỏi màn hình
-                setTimeout(() => {
-                    modal.classList.add('hidden');
-                }, 300); 
-            }
-        };
 
         // ------------------ DỮ LIỆU ĐỀ THI THPT ------------------
         const clozePassage2 = `The rise of digital technology has profoundly impacted education. In recent years, traditional classrooms have been supplemented by online learning platforms, (25) ______ provide students with greater flexibility. Online courses allow learners to access materials at their own pace, making education more accessible to those with busy schedules. (26) ______, this shift also presents challenges. Some students struggle with time management and lack the discipline needed for self-study. Moreover, the absence of face-to-face interaction can lead to feelings of isolation. To address these issues, many educators are adopting a blended learning approach. This method combines online resources (27) ______ traditional classroom instruction. By blending the two, schools can offer the benefits of digital tools while maintaining the personal connection that is (28) ______ for effective learning. Ultimately, (29) ______ technology continues to evolve, education systems must adapt to ensure that all students can succeed.`;
@@ -1557,51 +1530,106 @@
             if(cbFull) cbFull.checked = allChecked;
         };
 
-        // HÀM ĐÃ SỬA: Đọc xem Part nào được chọn và truyền vào phòng thi
+let selectedTestForModal = "";
+
+        // 1. HÀM MỞ MODAL THÔNG MINH: Tự động nhận diện Đọc/Nghe
+        window.openModeModal = function(testName) {
+            selectedTestForModal = testName;
+            const modal = document.getElementById('mode-selection-modal');
+            const content = document.getElementById('mode-modal-content');
+            
+            // Logic đổi tên và ẩn hiện Part 4
+            const isReading = testName.toLowerCase().includes('reading');
+            if (isReading) {
+                document.getElementById('label-part-full').innerText = "Full passages (3 passages - 40 questions)";
+                document.getElementById('label-part-1').innerText = "Passage 1 (13 questions)";
+                document.getElementById('label-part-2').innerText = "Passage 2 (13 questions)";
+                document.getElementById('label-part-3').innerText = "Passage 3 (14 questions)";
+                
+                const label4 = document.getElementById('label-container-part-4');
+                if(label4) label4.classList.add('hidden'); 
+                
+                const cb4 = document.getElementById('cb-part-4');
+                if(cb4) cb4.checked = false; 
+            } else {
+                document.getElementById('label-part-full').innerText = "Full parts (4 parts - 40 questions)";
+                document.getElementById('label-part-1').innerText = "Part 1 (10 questions)";
+                document.getElementById('label-part-2').innerText = "Part 2 (10 questions)";
+                document.getElementById('label-part-3').innerText = "Part 3 (10 questions)";
+                
+                const label4 = document.getElementById('label-container-part-4');
+                if(label4) label4.classList.remove('hidden');
+                
+                const cb4 = document.getElementById('cb-part-4');
+                const cbFull = document.getElementById('cb-part-full');
+                if(cb4 && cbFull) cb4.checked = cbFull.checked; 
+            }
+
+            if (modal && content) {
+                modal.classList.remove('hidden');
+                const titleEl = document.getElementById('modal-test-name');
+                if(titleEl) titleEl.innerText = testName;
+                setTimeout(() => {
+                    modal.classList.remove('opacity-0');
+                    content.classList.remove('scale-95');
+                    content.classList.add('scale-100');
+                }, 10);
+            }
+        };
+
+        // 2. Logic Checkbox linh hoạt cho 3 hoặc 4 parts
+        window.toggleAllParts = function(checkbox) {
+            const isChecked = checkbox.checked;
+            const isReading = selectedTestForModal.toLowerCase().includes('reading');
+            const totalParts = isReading ? 3 : 4;
+            for(let i=1; i<=totalParts; i++) {
+                const cb = document.getElementById('cb-part-' + i);
+                if(cb) cb.checked = isChecked;
+            }
+        };
+
+        window.checkIndividualPart = function() {
+            let allChecked = true;
+            const isReading = selectedTestForModal.toLowerCase().includes('reading');
+            const totalParts = isReading ? 3 : 4;
+            for(let i=1; i<=totalParts; i++) {
+                const cb = document.getElementById('cb-part-' + i);
+                if(cb && !cb.checked) allChecked = false;
+            }
+            const cbFull = document.getElementById('cb-part-full');
+            if(cbFull) cbFull.checked = allChecked;
+        };
+
+        // 3. Hàm phân luồng thi nhận danh sách Parts
         window.startExamFromModal = function(isStrict) {
-            closeModeModal(); // Đóng hộp thoại
+            closeModeModal();
             let duration = 40; 
-            let selectedParts = [1, 2, 3, 4]; // Mặc định chọn tất cả
+            const isReading = selectedTestForModal.toLowerCase().includes('reading');
+            const totalParts = isReading ? 3 : 4;
+            let selectedParts = Array.from({length: totalParts}, (_, i) => i + 1);
             
             if (!isStrict) {
-                // Chế độ Practice: Lấy thời gian
                 const timeSelect = document.getElementById('practice-time-select');
-                if (timeSelect) {
-                    if (timeSelect.value === 'none') {
-                        duration = 999;
-                    } else {
-                        duration = parseInt(timeSelect.value);
-                    }
-                }
+                if (timeSelect) duration = timeSelect.value === 'none' ? 999 : parseInt(timeSelect.value);
 
-                // Chế độ Practice: Đọc danh sách các Part được tick
                 selectedParts = [];
-                for(let i=1; i<=4; i++) {
+                for(let i=1; i<=totalParts; i++) {
                     const cb = document.getElementById('cb-part-' + i);
-                    if (cb && cb.checked) {
-                        selectedParts.push(i);
-                    }
+                    if (cb && cb.checked) selectedParts.push(i);
                 }
-                // Nếu người dùng lỡ tay bỏ tick hết, mặc định cho thi full
-                if(selectedParts.length === 0) selectedParts = [1, 2, 3, 4];
-
+                if(selectedParts.length === 0) selectedParts = Array.from({length: totalParts}, (_, i) => i + 1);
             } else {
-                // Chế độ Simulation (Thi thật) -> Bắt buộc full part
-                selectedParts = [1, 2, 3, 4];
-                if (selectedTestForModal.toLowerCase().includes('reading')) {
-                    duration = 60;
-                } else {
-                    duration = 40;
-                }
+                duration = isReading ? 60 : 40;
             }
             
-            // Phân luồng mở phòng thi
-            if (selectedTestForModal.toLowerCase().includes('reading')) {
-                // Mở rộng tham số selectedParts cho Reading (nếu sau này bạn cần)
-                startIeltsReadingExam(selectedTestForModal, isStrict, duration, selectedParts); 
+            if (isReading) {
+                if(typeof startIeltsReadingExam === 'function') {
+                    startIeltsReadingExam(selectedTestForModal, isStrict, duration, selectedParts); 
+                }
             } else {
-                // Truyền mảng part được chọn vào hàm mở phòng thi Listening
-                startIeltsExam(selectedTestForModal, isStrict, duration, selectedParts);
+                if(typeof startIeltsExam === 'function') {
+                    startIeltsExam(selectedTestForModal, isStrict, duration, selectedParts);
+                }
             }
         };
 
@@ -2590,35 +2618,40 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         };
         
-// HÀM ĐÃ SỬA: Đổi lại customDuration mặc định là 60
-        window.startIeltsReadingExam = function(testName, isStrict, customDuration = 60) {
+// Biến toàn cục lưu danh sách Passage đang được chọn
+        window.activeReadingParts = [1, 2, 3];
+
+        // HÀM MỞ PHÒNG THI READING MỚI
+        window.startIeltsReadingExam = function(testName, isStrict, customDuration = 60, selectedParts = [1, 2, 3]) {
             currentIeltsReadingTestName = testName;
-            
-            // Lấy thời gian từ Modal truyền sang
             let duration = customDuration; 
-            
+            window.activeReadingParts = selectedParts; // Lưu lại các phần người dùng chọn
             isTakingExam = true;
             
-            // Ẩn Dashboard và hiện Phòng thi Reading
             document.getElementById('ielts-dashboard').classList.add('hidden');
             document.getElementById('ielts-reading-exam-room').classList.remove('hidden');
             document.getElementById('ielts-reading-result-dashboard').classList.add('hidden');
             document.getElementById('ielts-reading-explanation-area').classList.add('hidden');
             document.querySelector('.reading-split-layout').classList.remove('hidden');
             
-            // Cập nhật tiêu đề
             document.getElementById('ielts-reading-exam-title').innerText = testName;
             document.getElementById('btn-submit-reading').classList.remove('hidden');
             
-            // Reset đáp án cũ
             for (let i = 1; i <= 40; i++) {
                 window[`userAnsRead${i}`] = null;
             }
             
-            // Mở Passage 1 đầu tiên
-            if(typeof window.switchIeltsReadingPart === 'function') window.switchIeltsReadingPart(1);
+            // Ẩn/Hiện Tab Passage dựa trên lựa chọn
+            for(let i=1; i<=3; i++) {
+                const tab = document.getElementById(`tab-read-${i}`);
+                if (tab) {
+                    tab.style.display = selectedParts.includes(i) ? 'inline-block' : 'none';
+                }
+            }
             
-            // Thiết lập đồng hồ đếm ngược
+            // Mở Passage đầu tiên có trong danh sách chọn
+            if(typeof window.switchIeltsReadingPart === 'function') window.switchIeltsReadingPart(selectedParts[0]);
+            
             let timeInSecs = duration * 60;
             const timerDisplay = document.getElementById('ielts-reading-timer-display');
             timerDisplay.parentElement.classList.remove('animate-pulse');
@@ -2630,35 +2663,20 @@
                 let m = Math.floor(timeInSecs / 60).toString().padStart(2, '0');
                 let s = (timeInSecs % 60).toString().padStart(2, '0');
                 timerDisplay.innerText = `${m}:${s}`;
-                
-                if (timeInSecs === 300) {
-                    showToast("Chỉ còn 5 phút nữa!", "warning");
-                    timerDisplay.parentElement.classList.add('animate-pulse');
-                }
-                
                 if (timeInSecs <= 0) {
                     clearInterval(ieltsReadingTimerInterval);
-                    submitIeltsReadingExam(true); // Hết giờ tự động nộp bài
+                    submitIeltsReadingExam(true); 
                 }
             }, 1000);
             
-            // Cuộn lên đầu trang
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
         
-        window.updateReadNav = function(qNum) {
-            let el = document.getElementById(`read-ans-${qNum}`);
-            if(el) window[`userAnsRead${qNum}`] = el.value;
-            else {
-                let radioChecked = document.querySelector(`input[name="rq${qNum}"]:checked`);
-                window[`userAnsRead${qNum}`] = radioChecked ? radioChecked.value : null;
-            }
-        }
-
+        // HÀM CHUYỂN TAB READING MỚI
         window.switchIeltsReadingPart = function(partNum) {
             for(let i=1; i<=3; i++) {
                 const tab = document.getElementById(`tab-read-${i}`);
-                if(tab) {
+                if(tab && window.activeReadingParts.includes(i)) {
                     if(i === partNum) {
                         tab.className = "px-4 py-2 font-bold bg-emerald-500 text-white transition focus:outline-none";
                     } else {
@@ -2667,28 +2685,35 @@
                 }
             }
             
-            document.getElementById('reading-passage-container').innerHTML = ieltsReadingData[partNum].content;
-            document.getElementById('reading-questions-container').innerHTML = ieltsReadingData[partNum].questions;
-            
-            for(let i=1; i<=40; i++) {
-                if(window[`userAnsRead${i}`]) {
-                    let el = document.getElementById(`read-ans-${i}`);
-                    if(el) {
-                        el.value = window[`userAnsRead${i}`];
+            // Chỉ nạp nội dung nếu Passage đó được phép thi
+            if (window.activeReadingParts.includes(partNum)) {
+                document.getElementById('reading-passage-container').innerHTML = ieltsReadingData[partNum].content;
+                document.getElementById('reading-questions-container').innerHTML = ieltsReadingData[partNum].questions;
+                
+                // Khôi phục đáp án cũ
+                for(let i=1; i<=40; i++) {
+                    if(window[`userAnsRead${i}`]) {
+                        let el = document.getElementById(`read-ans-${i}`);
+                        if(el) {
+                            el.value = window[`userAnsRead${i}`];
+                        } else {
+                            let radio = document.querySelector(`input[name="rq${i}"][value="${window[`userAnsRead${i}`]}"]`);
+                            if(radio) radio.checked = true;
+                        }
+                    }
+                    
+                    let elInput = document.getElementById(`read-ans-${i}`);
+                    if(elInput) {
+                        elInput.addEventListener('input', () => updateReadNav(i));
+                        elInput.addEventListener('change', () => updateReadNav(i));
                     } else {
-                        let radio = document.querySelector(`input[name="rq${i}"][value="${window[`userAnsRead${i}`]}"]`);
-                        if(radio) radio.checked = true;
+                        let radios = document.querySelectorAll(`input[name="rq${i}"]`);
+                        radios.forEach(r => r.addEventListener('change', () => updateReadNav(i)));
                     }
                 }
-                
-                let elInput = document.getElementById(`read-ans-${i}`);
-                if(elInput) {
-                    elInput.addEventListener('input', () => updateReadNav(i));
-                    elInput.addEventListener('change', () => updateReadNav(i));
-                } else {
-                    let radios = document.querySelectorAll(`input[name="rq${i}"]`);
-                    radios.forEach(r => r.addEventListener('change', () => updateReadNav(i)));
-                }
+            } else {
+                document.getElementById('reading-passage-container').innerHTML = "";
+                document.getElementById('reading-questions-container').innerHTML = "";
             }
             
             document.querySelector('.reading-passage-pane').scrollTop = 0;
