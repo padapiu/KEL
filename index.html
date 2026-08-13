@@ -42,7 +42,7 @@
         .btn-primary:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 10px 25px rgba(0, 198, 255, 0.4); }
         .page-content { display: none; }
         .page-content.active { display: block; animation: fadeIn 0.5s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+      @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         .reveal { transition: all 0.8s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
         .modal-overlay { backdrop-filter: blur(5px); transition: opacity 0.3s ease; }
@@ -343,7 +343,7 @@
 
             <!-- STREAMING_CHUNK: Building IELTS Listening exam room structure... -->
             <div id="ielts-exam-room" class="hidden max-w-7xl mx-auto py-6 px-4">
-                <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-4 mb-6 sticky top-24 z-40 border border-gray-200 dark:border-slate-700">
+               <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-4 mb-6 sticky top-[75px] md:top-[88px] z-[60] border border-gray-200 dark:border-slate-700 transition-all">
                     <div class="flex flex-wrap justify-between items-center gap-4 mb-4">
                         <div>
                             <h3 class="font-bold text-xl text-gray-800 dark:text-white" id="ielts-exam-title">Cambridge 21 - Test 4</h3>
@@ -642,7 +642,7 @@
             <!-- STREAMING_CHUNK: Building IELTS Reading exam room with split-screen layout and result dashboard... -->
             <div id="ielts-reading-exam-room" class="hidden max-w-full mx-auto py-6 px-4 md:px-8">
                 <!-- Header Control Reading -->
-                <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-4 mb-6 sticky top-24 z-40 border border-gray-200 dark:border-slate-700">
+               <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-4 mb-6 sticky top-[75px] md:top-[88px] z-[60] border border-gray-200 dark:border-slate-700 transition-all">
                     <div class="flex flex-wrap justify-between items-center gap-4">
                         <div>
                             <h3 class="font-bold text-xl text-gray-800 dark:text-white" id="ielts-reading-exam-title">Cambridge 21 - Reading Test 4</h3>
@@ -843,7 +843,7 @@
 
             <!-- Giao diện Phòng Thi THPT -->
             <div id="thpt-exam-room" class="hidden max-w-5xl mx-auto py-6 px-4">
-                <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-4 mb-6 sticky top-24 z-40 border border-gray-200 dark:border-slate-700 flex flex-wrap justify-between items-center gap-4">
+                <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-4 mb-6 sticky top-[75px] md:top-[88px] z-[60] border border-gray-200 dark:border-slate-700 flex flex-wrap justify-between items-center gap-4 transition-all">
                     <div>
                         <h3 class="font-bold text-lg text-gray-800 dark:text-white" id="thpt-exam-title">Đề Minh Họa</h3>
                         <p class="text-sm text-gray-500">Môn: Tiếng Anh | 40 Câu</p>
