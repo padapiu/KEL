@@ -343,8 +343,7 @@
 
             <!-- STREAMING_CHUNK: Building IELTS Listening exam room structure... -->
             <div id="ielts-exam-room" class="hidden max-w-7xl mx-auto py-6 px-4">
-               <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-4 mb-6 sticky top-[75px] md:top-[88px] z-[60] border border-gray-200 dark:border-slate-700 transition-all">
-                    <div class="flex flex-wrap justify-between items-center gap-4 mb-4">
+<div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-4 mb-6 fixed top-[75px] md:top-[88px] left-0 right-0 z-[60] mx-4 md:mx-12 border border-gray-200 dark:border-slate-700 transition-all" style="width: auto;">                    <div class="flex flex-wrap justify-between items-center gap-4 mb-4">
                         <div>
                             <h3 class="font-bold text-xl text-gray-800 dark:text-white" id="ielts-exam-title">Cambridge 21 - Test 4</h3>
                             <p class="text-sm text-gray-500">IELTS Listening Test | Bôi đen văn bản để Highlight 3 màu</p>
@@ -388,7 +387,7 @@
                     </div>
                 </div>
 
-                <div class="flex flex-col lg:flex-row gap-6 relative">
+                <div class="flex flex-col lg:flex-row gap-6 relative mt-48">
                     <div class="lg:w-full bg-white dark:bg-darkCard p-6 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 highlightable-content" id="ielts-exam-content">
                         <!-- Part 1 Content -->
                         <div id="ielts-part-1-content">
@@ -642,8 +641,7 @@
             <!-- STREAMING_CHUNK: Building IELTS Reading exam room with split-screen layout and result dashboard... -->
             <div id="ielts-reading-exam-room" class="hidden max-w-full mx-auto py-6 px-4 md:px-8">
                 <!-- Header Control Reading -->
-               <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-4 mb-6 sticky top-[75px] md:top-[88px] z-[60] border border-gray-200 dark:border-slate-700 transition-all">
-                    <div class="flex flex-wrap justify-between items-center gap-4">
+<div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-4 mb-6 fixed top-[75px] md:top-[88px] left-0 right-0 z-[60] mx-4 md:mx-8 border border-gray-200 dark:border-slate-700 transition-all" style="width: auto;">                    <div class="flex flex-wrap justify-between items-center gap-4">
                         <div>
                             <h3 class="font-bold text-xl text-gray-800 dark:text-white" id="ielts-reading-exam-title">Cambridge 21 - Reading Test 4</h3>
                             <p class="text-sm text-gray-500" id="reading-exam-subtitle">IELTS Reading Test | Bôi đen văn bản để Highlight 3 màu</p>
@@ -664,7 +662,7 @@
                 </div>
 
                 <!-- Màn hình làm bài (Split-screen) -->
-                <div class="reading-split-layout relative highlightable-content" id="reading-split-container">
+                <div class="reading-split-layout relative highlightable-content mt-32" id="reading-split-container">
                     <!-- Text (Bên trái) -->
                     <div class="reading-passage-pane bg-white dark:bg-darkCard p-6 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 custom-scroll text-gray-800 dark:text-gray-200 text-lg leading-relaxed" id="reading-passage-container">
                     </div>
@@ -843,7 +841,7 @@
 
             <!-- Giao diện Phòng Thi THPT -->
             <div id="thpt-exam-room" class="hidden max-w-5xl mx-auto py-6 px-4">
-                <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-4 mb-6 sticky top-[75px] md:top-[88px] z-[60] border border-gray-200 dark:border-slate-700 flex flex-wrap justify-between items-center gap-4 transition-all">
+                <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-4 mb-6 fixed top-[75px] md:top-[88px] left-0 right-0 z-[60] mx-4 md:mx-auto max-w-5xl border border-gray-200 dark:border-slate-700 flex flex-wrap justify-between items-center gap-4 transition-all">
                     <div>
                         <h3 class="font-bold text-lg text-gray-800 dark:text-white" id="thpt-exam-title">Đề Minh Họa</h3>
                         <p class="text-sm text-gray-500">Môn: Tiếng Anh | 40 Câu</p>
@@ -856,8 +854,8 @@
                         <button onclick="submitThptExam(false)" class="bg-emerald-500 hover:bg-emerald-400 text-white font-bold px-6 py-3 rounded-xl shadow-md transition">Nộp Bài</button>
                     </div>
                 </div>
-
-                <div class="flex flex-col lg:flex-row gap-6">
+<div class="flex flex-col lg:flex-row gap-6 mt-28">
+                
                     <div class="lg:w-3/4 space-y-6" id="thpt-questions-container"></div>
                     <div class="lg:w-1/4">
                         <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-md p-6 sticky top-48 border border-gray-100 dark:border-slate-700">
