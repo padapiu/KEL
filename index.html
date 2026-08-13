@@ -1032,6 +1032,44 @@
 
     <div id="toast-container" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
+<!-- BẮT ĐẦU: POPUP THÔNG BÁO TRANG CHỦ -->
+    <!-- Sử dụng translate-x-[120%] để giấu nó ra ngoài rìa phải, duration-700 ease-out để tạo hiệu ứng trượt mượt mà -->
+    <div id="home-notification-popup" class="fixed top-24 right-4 z-40 w-80 md:w-96 bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-slate-700 transform translate-x-[120%] transition-transform duration-700 ease-out flex flex-col max-h-[75vh]">
+        
+        <!-- Phần Header của Popup -->
+        <div class="flex justify-between items-center p-4 border-b border-gray-100 dark:border-slate-700 bg-cyan-50 dark:bg-slate-750 rounded-t-2xl">
+            <div class="flex items-center gap-2 text-cyan-700 dark:text-cyan-300 font-bold text-sm">
+                <span class="text-lg animate-bounce">🔔</span>
+                <span>Thông báo ngày: <span id="popup-date-display">13/08/2026</span></span>
+            </div>
+            <!-- Nút Tắt (Close) -->
+            <button onclick="closeNotificationPopup()" class="text-gray-400 hover:text-rose-500 transition-colors bg-white dark:bg-slate-700 hover:bg-rose-50 rounded-full p-1.5 shadow-sm border border-gray-100 dark:border-slate-600">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+        </div>
+        
+        <!-- Phần Nội dung (Có thanh cuộn nếu dài) -->
+        <div class="p-5 overflow-y-auto custom-scroll text-sm text-gray-700 dark:text-gray-300 space-y-4">
+            <div>
+                <h4 class="font-bold text-[#2b3674] dark:text-white text-base mb-1">Cập nhật hệ thống mới nhất! 🎉</h4>
+                <p class="leading-relaxed">Chào mừng bạn đến với KEL. Chúng tôi vừa bổ sung tính năng Flashcard từ vựng và phòng thi THPT mô phỏng chuẩn xác.</p>
+            </div>
+            
+            <div class="bg-amber-50 dark:bg-amber-900/30 p-4 rounded-xl border border-amber-200 dark:border-amber-700/50">
+                <p class="font-bold text-amber-800 dark:text-amber-400 mb-1 flex items-center gap-1"><span>🎁</span> Quà tặng người dùng</p>
+                <p class="text-amber-700 dark:text-amber-300">Nhận ngay bộ tài liệu lộ trình luyện thi IELTS 7.0 từ con số 0. Hãy đăng nhập để lưu trữ tiến trình học tập của bạn nhé!</p>
+            </div>
+            
+            <!-- Hình ảnh minh họa cho sinh động -->
+            <img src="https://images.unsplash.com/photo-1513258496099-48168024aec0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Study" class="w-full h-32 object-cover rounded-xl border border-gray-200 dark:border-slate-700 shadow-sm">
+            
+            <button onclick="closeNotificationPopup(); showPage('ielts')" class="w-full bg-cyan-500 hover:bg-cyan-400 text-white font-bold py-3 rounded-xl transition shadow-md transform hover:-translate-y-0.5">
+                Thi thử IELTS ngay
+            </button>
+        </div>
+    </div>
+    <!-- KẾT THÚC: POPUP THÔNG BÁO TRANG CHỦ -->
+    
     <div id="auth-modal" class="fixed inset-0 bg-black bg-opacity-50 modal-overlay hidden z-[100] flex items-center justify-center">
         <div class="bg-white dark:bg-darkCard w-full max-w-md p-8 rounded-2xl shadow-2xl relative">
             <button onclick="closeModals()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white">
@@ -2951,6 +2989,43 @@ window.renderStreakCalendar();
         // Cập nhật số liệu ban đầu
         document.getElementById('vocab-total').innerText = vocabDatabase.length;
         document.getElementById('vocab-review').innerText = vocabDatabase.length;
+
+        // ==========================================
+        // LOGIC POPUP THÔNG BÁO TRANG CHỦ
+        // ==========================================
+        
+        // 1. Hàm gọi Popup trượt ra
+        window.showNotificationPopup = function() {
+            const popup = document.getElementById('home-notification-popup');
+            if (popup) {
+                // Cập nhật ngày tháng hiện tại cho thông báo
+                const today = new Date();
+                const dd = String(today.getDate()).padStart(2, '0');
+                const mm = String(today.getMonth() + 1).padStart(2, '0'); // Tháng bắt đầu từ 0
+                const yyyy = today.getFullYear();
+                document.getElementById('popup-date-display').innerText = `${dd}/${mm}/${yyyy}`;
+
+                // Tạo độ trễ 1 giây (1000ms) trước khi trượt ra để tạo cảm giác tự nhiên
+                setTimeout(() => {
+                    popup.classList.remove('translate-x-[120%]');
+                    popup.classList.add('translate-x-0');
+                }, 1000);
+            }
+        };
+
+        // 2. Hàm đóng Popup (trượt vào lại)
+        window.closeNotificationPopup = function() {
+            const popup = document.getElementById('home-notification-popup');
+            if (popup) {
+                popup.classList.remove('translate-x-0');
+                popup.classList.add('translate-x-[120%]');
+            }
+        };
+
+        // 3. Tự động kích hoạt khi trang web vừa tải xong
+        window.addEventListener('DOMContentLoaded', (event) => {
+            showNotificationPopup();
+        });
     </script>
     
 <script type="module">
