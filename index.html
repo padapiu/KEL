@@ -1224,7 +1224,23 @@
         // ------------------ LOGIC ĐÓNG/MỞ MODAL CHỌN CHẾ ĐỘ ------------------
         let selectedTestForModal = "";
 
-
+// Hàm đóng Modal Chọn Chế Độ
+        window.closeModeModal = function() {
+            const modal = document.getElementById('mode-selection-modal');
+            const content = document.getElementById('mode-modal-content');
+            
+            if (modal && content) {
+                // 1. Tạo hiệu ứng mờ dần và thu nhỏ (ngược lại với lúc mở)
+                modal.classList.add('opacity-0');
+                content.classList.remove('scale-100');
+                content.classList.add('scale-95');
+                
+                // 2. Chờ hiệu ứng CSS chạy xong (300ms) rồi mới thêm class 'hidden' để ẩn hoàn toàn
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
+            }
+        };
 
         // ------------------ DỮ LIỆU ĐỀ THI THPT ------------------
         const clozePassage2 = `The rise of digital technology has profoundly impacted education. In recent years, traditional classrooms have been supplemented by online learning platforms, (25) ______ provide students with greater flexibility. Online courses allow learners to access materials at their own pace, making education more accessible to those with busy schedules. (26) ______, this shift also presents challenges. Some students struggle with time management and lack the discipline needed for self-study. Moreover, the absence of face-to-face interaction can lead to feelings of isolation. To address these issues, many educators are adopting a blended learning approach. This method combines online resources (27) ______ traditional classroom instruction. By blending the two, schools can offer the benefits of digital tools while maintaining the personal connection that is (28) ______ for effective learning. Ultimately, (29) ______ technology continues to evolve, education systems must adapt to ensure that all students can succeed.`;
