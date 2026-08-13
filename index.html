@@ -1510,27 +1510,7 @@
             <p><strong>LECTURER:</strong> <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 39, 40">taken from nature (39) ... most appropriate volume (40).</span></p>
         `;
 
-// HÀM MỚI: Xử lý tiện ích tích chọn nhanh Checkbox
-        window.toggleAllParts = function(checkbox) {
-            const isChecked = checkbox.checked;
-            for(let i=1; i<=4; i++) {
-                const cb = document.getElementById('cb-part-' + i);
-                if(cb) cb.checked = isChecked;
-            }
-        };
 
-        // HÀM MỚI: Tự động bỏ tích 'Full parts' nếu 1 part con bị bỏ tích
-        window.checkIndividualPart = function() {
-            let allChecked = true;
-            for(let i=1; i<=4; i++) {
-                const cb = document.getElementById('cb-part-' + i);
-                if(cb && !cb.checked) allChecked = false;
-            }
-            const cbFull = document.getElementById('cb-part-full');
-            if(cbFull) cbFull.checked = allChecked;
-        };
-
-let selectedTestForModal = "";
 
         // 1. HÀM MỞ MODAL THÔNG MINH: Tự động nhận diện Đọc/Nghe
         window.openModeModal = function(testName) {
