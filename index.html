@@ -3267,12 +3267,12 @@ btnStopRecord.addEventListener('click', () => {
                 const formData = new FormData();
                 formData.append('audio', audioBlob, 'speaking-record.webm');
 
-                try {
-                    // Gửi dữ liệu lên API Backend của bạn
-                    const response = await fetch('/api/grade-speaking', {
-                        method: 'POST',
-                        body: formData
-                    });
+               try {
+            // Gửi dữ liệu lên API Backend trên máy chủ đám mây Replit
+            const response = await fetch('https://cc1b895a-06bf-431f-9964-533ebf611964-00-2lwhxtv0pkmux.pike.replit.dev//api/grade-speaking', {
+                method: 'POST',
+                body: formData
+            });
 
                     if (!response.ok) throw new Error("Lỗi khi kết nối với máy chủ!");
 
