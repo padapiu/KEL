@@ -321,30 +321,33 @@
                     </div>
                 </div>
 
-               <!-- Khu vực Luyện Nói -->
-<div class="max-w-3xl mx-auto p-6 bg-white shadow-md rounded-xl mt-10">
-    <h3 class="font-bold text-gray-800 mb-4 text-lg">1. PART 1</h3>
-    
-    <div class="flex items-center gap-4 bg-gray-50 p-4 rounded-lg border border-gray-200">
-        <!-- Nút Bắt đầu ghi âm -->
-        <button id="btn-start-record" class="border-2 border-blue-500 text-blue-600 font-bold px-6 py-2 rounded-lg hover:bg-blue-50 transition">
-            THU ÂM
-        </button>
-        
-        <!-- Trình phát Audio (ẩn đi khi chưa có file) -->
-        <audio id="audio-playback" controls class="h-10 flex-grow"></audio>
-        
-        <!-- Nút Dừng ghi âm -->
-        <button id="btn-stop-record" class="border-2 border-gray-300 text-gray-400 font-bold px-6 py-2 rounded-lg cursor-not-allowed" disabled>
-            DỪNG LẠI
-        </button>
-    </div>
+<!-- Tab Speaking -->
+                <div id="ielts-content-speaking" class="hidden w-full">
+                    <!-- Khu vực Luyện Nói -->
+                    <div class="max-w-3xl mx-auto p-6 bg-white dark:bg-slate-800 shadow-md rounded-xl border border-gray-100 dark:border-slate-700 mt-10 transition-all hover:shadow-lg">
+                        <h3 class="font-bold text-gray-800 dark:text-white mb-4 text-lg">1. PART 1</h3>
+                        
+                        <div class="flex items-center gap-4 bg-gray-50 dark:bg-slate-700 p-4 rounded-lg border border-gray-200 dark:border-slate-600">
+                            <!-- Nút Bắt đầu ghi âm -->
+                            <button id="btn-start-record" class="border-2 border-blue-500 text-blue-600 dark:text-blue-400 font-bold px-6 py-2 rounded-lg hover:bg-blue-50 dark:hover:bg-slate-600 transition">
+                                THU ÂM
+                            </button>
+                            
+                            <!-- Trình phát Audio (ẩn đi khi chưa có file) -->
+                            <audio id="audio-playback" controls class="h-10 flex-grow"></audio>
+                            
+                            <!-- Nút Dừng ghi âm -->
+                            <button id="btn-stop-record" class="border-2 border-gray-300 text-gray-400 font-bold px-6 py-2 rounded-lg cursor-not-allowed" disabled>
+                                DỪNG LẠI
+                            </button>
+                        </div>
 
-    <!-- Khu vực hiển thị kết quả AI chấm (sẽ dùng ở bước sau) -->
-    <div id="ai-feedback" class="mt-6 hidden p-4 bg-emerald-50 border border-emerald-200 rounded-lg">
-        <p class="text-emerald-700 font-bold">Đang chờ AI chấm điểm...</p>
-    </div>
-</div>
+                        <!-- Khu vực hiển thị kết quả AI chấm (sẽ dùng ở bước sau) -->
+                        <div id="ai-feedback" class="mt-6 hidden p-4 bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-200 dark:border-emerald-700 rounded-lg">
+                            <p class="text-emerald-700 dark:text-emerald-400 font-bold">Đang chờ AI chấm điểm...</p>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- Tab Writing -->
                 <div id="ielts-content-writing" class="hidden w-full">
