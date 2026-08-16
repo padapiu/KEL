@@ -321,14 +321,30 @@
                     </div>
                 </div>
 
-                <!-- Tab Speaking -->
-                <div id="ielts-content-speaking" class="hidden w-full">
-                    <div class="bg-white dark:bg-slate-800 rounded-3xl p-12 shadow-md border border-gray-100 dark:border-slate-700 text-center flex flex-col items-center justify-center mb-8">
-                        <div class="text-6xl mb-4 animate-bounce">🗣️</div>
-                        <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Speaking Mock Tests</h3>
-                        <p class="text-gray-500 dark:text-gray-400 max-w-md mx-auto">Tính năng Luyện nói cùng AI đang được đội ngũ KEL phát triển và sẽ sớm ra mắt trong thời gian tới!</p>
-                    </div>
-                </div>
+               <!-- Khu vực Luyện Nói -->
+<div class="max-w-3xl mx-auto p-6 bg-white shadow-md rounded-xl mt-10">
+    <h3 class="font-bold text-gray-800 mb-4 text-lg">1. PART 1</h3>
+    
+    <div class="flex items-center gap-4 bg-gray-50 p-4 rounded-lg border border-gray-200">
+        <!-- Nút Bắt đầu ghi âm -->
+        <button id="btn-start-record" class="border-2 border-blue-500 text-blue-600 font-bold px-6 py-2 rounded-lg hover:bg-blue-50 transition">
+            THU ÂM
+        </button>
+        
+        <!-- Trình phát Audio (ẩn đi khi chưa có file) -->
+        <audio id="audio-playback" controls class="h-10 flex-grow"></audio>
+        
+        <!-- Nút Dừng ghi âm -->
+        <button id="btn-stop-record" class="border-2 border-gray-300 text-gray-400 font-bold px-6 py-2 rounded-lg cursor-not-allowed" disabled>
+            DỪNG LẠI
+        </button>
+    </div>
+
+    <!-- Khu vực hiển thị kết quả AI chấm (sẽ dùng ở bước sau) -->
+    <div id="ai-feedback" class="mt-6 hidden p-4 bg-emerald-50 border border-emerald-200 rounded-lg">
+        <p class="text-emerald-700 font-bold">Đang chờ AI chấm điểm...</p>
+    </div>
+</div>
 
                 <!-- Tab Writing -->
                 <div id="ielts-content-writing" class="hidden w-full">
@@ -3156,6 +3172,86 @@ window.renderStreakCalendar();
                 window.history.replaceState({ pageId: 'home', tabId: null }, "", "#home");
             }
         });
+
+        // Khởi tạo các biến toàn cục để lưu trữ dữ liệu ghi âm
+let mediaRecorder;
+let audioChunks = [];
+
+// Lấy các phần tử từ HTML
+const btnStartRecord = document.getElementById('btn-start-record');
+const btnStopRecord = document.getElementById('btn-stop-record');
+const audioPlayback = document.getElementById('audio-playback');
+
+// Sự kiện khi bấm nút "THU ÂM"
+btnStartRecord.addEventListener('click', async () => {
+    try {
+        // 1. Xin quyền truy cập Micro của người dùng
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        
+        // 2. Khởi tạo bộ ghi âm
+        mediaRecorder = new MediaRecorder(stream);
+        audioChunks = []; // Làm sạch mảng dữ liệu cũ (nếu có)
+
+        // 3. Thu thập dữ liệu âm thanh liên tục khi đang nói
+        mediaRecorder.ondataavailable = (event) => {
+            if (event.data.size > 0) {
+                audioChunks.push(event.data);
+            }
+        };
+
+        // 4. Xử lý khi bấm dừng
+        mediaRecorder.onstop = () => {
+            // Gộp các mảnh âm thanh lại thành 1 file âm thanh (Blob) định dạng audio/webm
+            const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+            
+            // Tạo đường dẫn tạm thời để gán vào thẻ <audio> phát lại
+            const audioUrl = URL.createObjectURL(audioBlob);
+            audioPlayback.src = audioUrl;
+
+            // TODO: Ở bước tiếp theo, chúng ta sẽ gửi `audioBlob` này lên Backend để AI chấm điểm
+            // sendAudioToAI(audioBlob); 
+            
+            // Tắt Micro để tiết kiệm tài nguyên
+            stream.getTracks().forEach(track => track.stop());
+        };
+
+        // 5. Bắt đầu ghi âm
+        mediaRecorder.start();
+        
+        // Thay đổi trạng thái Giao diện
+        btnStartRecord.disabled = true;
+        btnStartRecord.classList.replace('text-blue-600', 'text-rose-500');
+        btnStartRecord.classList.replace('border-blue-500', 'border-rose-500');
+        btnStartRecord.innerText = "ĐANG THU ÂM...";
+        
+        btnStopRecord.disabled = false;
+        btnStopRecord.classList.replace('text-gray-400', 'text-rose-600');
+        btnStopRecord.classList.replace('border-gray-300', 'border-rose-500');
+        btnStopRecord.classList.remove('cursor-not-allowed');
+
+    } catch (err) {
+        alert("Không thể truy cập Micro. Vui lòng kiểm tra lại quyền cấp phép của trình duyệt!");
+        console.error("Lỗi Micro: ", err);
+    }
+});
+
+// Sự kiện khi bấm nút "DỪNG LẠI"
+btnStopRecord.addEventListener('click', () => {
+    if (mediaRecorder && mediaRecorder.state === "recording") {
+        mediaRecorder.stop();
+        
+        // Trả lại trạng thái Giao diện ban đầu
+        btnStartRecord.disabled = false;
+        btnStartRecord.classList.replace('text-rose-500', 'text-blue-600');
+        btnStartRecord.classList.replace('border-rose-500', 'border-blue-500');
+        btnStartRecord.innerText = "THU ÂM LẠI";
+        
+        btnStopRecord.disabled = true;
+        btnStopRecord.classList.replace('text-rose-600', 'text-gray-400');
+        btnStopRecord.classList.replace('border-rose-500', 'border-gray-300');
+        btnStopRecord.classList.add('cursor-not-allowed');
+    }
+});
     </script>
     
 <script type="module">
