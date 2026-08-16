@@ -3209,7 +3209,7 @@ btnStartRecord.addEventListener('click', async () => {
             audioPlayback.src = audioUrl;
 
             // TODO: Ở bước tiếp theo, chúng ta sẽ gửi `audioBlob` này lên Backend để AI chấm điểm
-            // sendAudioToAI(audioBlob); 
+             sendAudioToAI(audioBlob); 
             
             // Tắt Micro để tiết kiệm tài nguyên
             stream.getTracks().forEach(track => track.stop());
@@ -3250,8 +3250,45 @@ btnStopRecord.addEventListener('click', () => {
         btnStopRecord.classList.replace('text-rose-600', 'text-gray-400');
         btnStopRecord.classList.replace('border-rose-500', 'border-gray-300');
         btnStopRecord.classList.add('cursor-not-allowed');
+
+        // ==========================================
+            // DÁN HÀM GỬI FILE CHO AI VÀO NGAY ĐÂY
+            // ==========================================
+            async function sendAudioToAI(audioBlob) {
+                // Hiện khu vực thông báo trạng thái "Đang chờ AI..."
+                const feedbackBox = document.getElementById('ai-feedback');
+                feedbackBox.classList.remove('hidden');
+                feedbackBox.innerHTML = '<p class="text-emerald-700 dark:text-emerald-400 font-bold flex items-center gap-2"><span class="animate-spin">⏳</span> Đang gửi dữ liệu và chờ AI chấm điểm...</p>';
+
+                // Đóng gói file âm thanh vào form data
+                const formData = new FormData();
+                formData.append('audio', audioBlob, 'speaking-record.webm');
+
+                try {
+                    // Gửi dữ liệu lên API Backend của bạn
+                    const response = await fetch('/api/grade-speaking', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (!response.ok) throw new Error("Lỗi khi kết nối với máy chủ!");
+
+                    // Nhận kết quả từ máy chủ trả về
+                    const result = await response.json();
+
+                    // Hiển thị nhận xét của AI lên giao diện
+                    feedbackBox.innerHTML = `
+                        <h4 class="font-bold text-lg text-emerald-800 dark:text-emerald-300 border-b pb-2 mb-2">Đánh giá từ AI:</h4>
+                        <div class="text-gray-700 dark:text-gray-300 leading-relaxed text-sm">
+                            ${result.feedback}
+                        </div>
+                    `;
+                } catch (error) {
+                    console.error("Lỗi:", error);
+                    feedbackBox.innerHTML = '<p class="text-rose-500 font-bold">❌ Có lỗi xảy ra trong quá trình chấm điểm. Vui lòng kiểm tra lại kết nối!</p>';
+            }
+        } // Dấu ngoặc nhọn đóng của khối if (btnStartRecord && ...)
     }
-});
     </script>
     
 <script type="module">
