@@ -3176,7 +3176,7 @@ window.renderStreakCalendar();
             }
         });
 
-        // Khởi tạo các biến toàn cục để lưu trữ dữ liệu ghi âm
+// Khởi tạo các biến toàn cục để lưu trữ dữ liệu ghi âm
 let mediaRecorder;
 let audioChunks = [];
 
@@ -3185,40 +3185,70 @@ const btnStartRecord = document.getElementById('btn-start-record');
 const btnStopRecord = document.getElementById('btn-stop-record');
 const audioPlayback = document.getElementById('audio-playback');
 
-// Sự kiện khi bấm nút "THU ÂM"
+// ==========================================
+// 1. HÀM GỬI FILE CHO AI (Đã được đưa ra ngoài để gọi tự do)
+// ==========================================
+async function sendAudioToAI(audioBlob) {
+    // Hiện khu vực thông báo trạng thái "Đang chờ AI..."
+    const feedbackBox = document.getElementById('ai-feedback');
+    feedbackBox.classList.remove('hidden');
+    feedbackBox.innerHTML = '<p class="text-emerald-700 dark:text-emerald-400 font-bold flex items-center gap-2"><span class="animate-spin">⏳</span> Đang gửi dữ liệu và chờ AI chấm điểm...</p>';
+
+    // Đóng gói file âm thanh vào form data
+    const formData = new FormData();
+    formData.append('audio', audioBlob, 'speaking-record.webm');
+
+    try {
+        // Đã sửa lại đường link Replit chuẩn xác (bỏ 1 dấu / bị dư)
+        const response = await fetch('https://cc1b895a-06bf-431f-9964-533ebf611964-00-2lwhxtv0pkmux.pike.replit.dev/api/grade-speaking', {
+            method: 'POST',
+            body: formData
+        });
+
+        if (!response.ok) throw new Error("Lỗi khi kết nối với máy chủ!");
+
+        // Nhận kết quả từ máy chủ trả về
+        const result = await response.json();
+
+        // Hiển thị nhận xét của AI lên giao diện
+        feedbackBox.innerHTML = `
+            <h4 class="font-bold text-lg text-emerald-800 dark:text-emerald-300 border-b pb-2 mb-2">Đánh giá từ AI:</h4>
+            <div class="text-gray-700 dark:text-gray-300 leading-relaxed text-sm">
+                ${result.feedback}
+            </div>
+        `;
+    } catch (error) {
+        console.error("Lỗi:", error);
+        feedbackBox.innerHTML = '<p class="text-rose-500 font-bold">❌ Có lỗi xảy ra trong quá trình chấm điểm. Vui lòng kiểm tra lại kết nối và đường link Replit!</p>';
+    }
+}
+
+// ==========================================
+// 2. SỰ KIỆN NÚT BẮT ĐẦU THU ÂM
+// ==========================================
 btnStartRecord.addEventListener('click', async () => {
     try {
-        // 1. Xin quyền truy cập Micro của người dùng
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        
-        // 2. Khởi tạo bộ ghi âm
         mediaRecorder = new MediaRecorder(stream);
-        audioChunks = []; // Làm sạch mảng dữ liệu cũ (nếu có)
+        audioChunks = []; 
 
-        // 3. Thu thập dữ liệu âm thanh liên tục khi đang nói
         mediaRecorder.ondataavailable = (event) => {
             if (event.data.size > 0) {
                 audioChunks.push(event.data);
             }
         };
 
-        // 4. Xử lý khi bấm dừng
         mediaRecorder.onstop = () => {
-            // Gộp các mảnh âm thanh lại thành 1 file âm thanh (Blob) định dạng audio/webm
             const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-            
-            // Tạo đường dẫn tạm thời để gán vào thẻ <audio> phát lại
             const audioUrl = URL.createObjectURL(audioBlob);
             audioPlayback.src = audioUrl;
 
-            // TODO: Ở bước tiếp theo, chúng ta sẽ gửi `audioBlob` này lên Backend để AI chấm điểm
-             sendAudioToAI(audioBlob); 
+            // Gọi hàm gửi AI ngay khi vừa tạo xong file âm thanh
+            sendAudioToAI(audioBlob); 
             
-            // Tắt Micro để tiết kiệm tài nguyên
             stream.getTracks().forEach(track => track.stop());
         };
 
-        // 5. Bắt đầu ghi âm
         mediaRecorder.start();
         
         // Thay đổi trạng thái Giao diện
@@ -3238,7 +3268,9 @@ btnStartRecord.addEventListener('click', async () => {
     }
 });
 
-// Sự kiện khi bấm nút "DỪNG LẠI"
+// ==========================================
+// 3. SỰ KIỆN NÚT DỪNG THU ÂM
+// ==========================================
 btnStopRecord.addEventListener('click', () => {
     if (mediaRecorder && mediaRecorder.state === "recording") {
         mediaRecorder.stop();
@@ -3253,44 +3285,6 @@ btnStopRecord.addEventListener('click', () => {
         btnStopRecord.classList.replace('text-rose-600', 'text-gray-400');
         btnStopRecord.classList.replace('border-rose-500', 'border-gray-300');
         btnStopRecord.classList.add('cursor-not-allowed');
-
-        // ==========================================
-            // DÁN HÀM GỬI FILE CHO AI VÀO NGAY ĐÂY
-            // ==========================================
-            async function sendAudioToAI(audioBlob) {
-                // Hiện khu vực thông báo trạng thái "Đang chờ AI..."
-                const feedbackBox = document.getElementById('ai-feedback');
-                feedbackBox.classList.remove('hidden');
-                feedbackBox.innerHTML = '<p class="text-emerald-700 dark:text-emerald-400 font-bold flex items-center gap-2"><span class="animate-spin">⏳</span> Đang gửi dữ liệu và chờ AI chấm điểm...</p>';
-
-                // Đóng gói file âm thanh vào form data
-                const formData = new FormData();
-                formData.append('audio', audioBlob, 'speaking-record.webm');
-
-               try {
-            // Gửi dữ liệu lên API Backend trên máy chủ đám mây Replit
-            const response = await fetch('https://cc1b895a-06bf-431f-9964-533ebf611964-00-2lwhxtv0pkmux.pike.replit.dev//api/grade-speaking', {
-                method: 'POST',
-                body: formData
-            });
-
-                    if (!response.ok) throw new Error("Lỗi khi kết nối với máy chủ!");
-
-                    // Nhận kết quả từ máy chủ trả về
-                    const result = await response.json();
-
-                    // Hiển thị nhận xét của AI lên giao diện
-                    feedbackBox.innerHTML = `
-                        <h4 class="font-bold text-lg text-emerald-800 dark:text-emerald-300 border-b pb-2 mb-2">Đánh giá từ AI:</h4>
-                        <div class="text-gray-700 dark:text-gray-300 leading-relaxed text-sm">
-                            ${result.feedback}
-                        </div>
-                    `;
-                } catch (error) {
-                    console.error("Lỗi:", error);
-                    feedbackBox.innerHTML = '<p class="text-rose-500 font-bold">❌ Có lỗi xảy ra trong quá trình chấm điểm. Vui lòng kiểm tra lại kết nối!</p>';
-            }
-        } // Dấu ngoặc nhọn đóng của khối if (btnStartRecord && ...)
     }
 });
     </script>
