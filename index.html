@@ -3200,7 +3200,7 @@ async function sendAudioToAI(audioBlob) {
 
     try {
         // Đã sửa lại đường link Replit chuẩn xác (bỏ 1 dấu / bị dư)
-        const response = await fetch('https://cc1b895a-06bf-431f-9964-533ebf611964-00-2lwhxtv0pkmux.pike.replit.dev:3000/api/grade-speaking', {
+        const response = await fetch('https://cc1b895a-06bf-431f-9964-533ebf611964-00-2lwhxtv0pkmux.pike.replit.dev/api/grade-speaking', {
             method: 'POST',
             body: formData
         });
