@@ -3203,7 +3203,7 @@ async function sendAudioToAI(audioBlob) {
             const base64Audio = reader.result.split(',')[1];
             
             // Gọi nội bộ đến thư mục api của chính Vercel
-            const response = await fetch('/api/grade-speaking', {
+           const response = await fetch('/api/grade-speaking.js', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
