@@ -11,19 +11,26 @@ async function handler(req, res) {
 
   try {
     const { audio, mimeType } = req.body;
+    
+    // Khởi tạo Gemini AI
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
+    // ĐIỂM THAY ĐỔI: Thêm hậu tố -latest để đảm bảo Google tìm thấy đúng phiên bản mô hình
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
+
+    // Đóng gói âm thanh để gửi cho Gemini
     const audioPart = {
       inlineData: { data: audio, mimeType: mimeType }
     };
 
     const prompt = "Bạn là một chuyên gia giám khảo IELTS Speaking. Hãy nghe đoạn ghi âm sau của học viên. Đánh giá chi tiết về: Phát âm (Pronunciation), Ngữ điệu (Fluency), Từ vựng (Lexical Resource) và Ngữ pháp (Grammar). Sau đó đưa ra Band điểm dự kiến (0-9) và lời khuyên cải thiện bằng tiếng Việt. Trình bày rõ ràng bằng các gạch đầu dòng.";
 
+    // Gửi cho AI phân tích
     const result = await model.generateContent([prompt, audioPart]);
     const response = await result.response;
     const text = response.text();
 
+    // Trả kết quả về cho màn hình web
     return res.status(200).json({ feedback: text });
 
   } catch (error) {
