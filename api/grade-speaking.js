@@ -1,11 +1,11 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 // Nâng hạn mức dữ liệu gửi lên cho file ghi âm (tối đa 4MB)
-export const config = {
+const config = {
   api: { bodyParser: { sizeLimit: '4mb' } },
 };
 
-export default async function handler(req, res) {
+async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Chỉ hỗ trợ phương thức POST' });
   }
@@ -13,7 +13,7 @@ export default async function handler(req, res) {
   try {
     const { audio, mimeType } = req.body;
     
-    // Gọi AI bằng khóa API (sẽ cài đặt ở Bước 4)
+    // Khởi tạo Gemini AI
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
@@ -38,3 +38,7 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: "Lỗi trong quá trình chấm điểm: " + error.message });
   }
 }
+
+// Xuất hàm và cấu hình theo chuẩn CommonJS
+module.exports = handler;
+module.exports.config = config;
