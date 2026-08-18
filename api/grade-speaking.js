@@ -16,7 +16,7 @@ async function handler(req, res) {
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
     // SỬA Ở ĐÂY: Đổi tên mô hình thành gemini-1.5-flash-latest để tránh lỗi 404
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-3.6-flash" });
 
     // Đóng gói âm thanh để gửi cho Gemini
     const audioPart = {
