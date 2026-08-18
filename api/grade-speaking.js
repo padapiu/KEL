@@ -15,8 +15,8 @@ async function handler(req, res) {
     // Khởi tạo Gemini AI
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-    // Sử dụng tên mô hình chuẩn và ổn định nhất
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    // SỬA Ở ĐÂY: Đổi tên mô hình thành gemini-1.5-flash-latest để tránh lỗi 404
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
 
     // Đóng gói âm thanh để gửi cho Gemini
     const audioPart = {
