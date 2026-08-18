@@ -3186,42 +3186,45 @@ const btnStopRecord = document.getElementById('btn-stop-record');
 const audioPlayback = document.getElementById('audio-playback');
 
 // ==========================================
-// 1. HÀM GỬI FILE CHO AI (Đã được đưa ra ngoài để gọi tự do)
+// 1. HÀM GỬI FILE CHO AI (Đã tối ưu cho Vercel)
 // ==========================================
 async function sendAudioToAI(audioBlob) {
-    // Hiện khu vực thông báo trạng thái "Đang chờ AI..."
     const feedbackBox = document.getElementById('ai-feedback');
     feedbackBox.classList.remove('hidden');
     feedbackBox.innerHTML = '<p class="text-emerald-700 dark:text-emerald-400 font-bold flex items-center gap-2"><span class="animate-spin">⏳</span> Đang gửi dữ liệu và chờ AI chấm điểm...</p>';
 
-    // Đóng gói file âm thanh vào form data
-    const formData = new FormData();
-    formData.append('audio', audioBlob, 'speaking-record.webm');
+    // Tuyệt chiêu: Dùng FileReader biến âm thanh thành chuỗi chữ (Base64)
+    const reader = new FileReader();
+    reader.readAsDataURL(audioBlob);
+    
+    reader.onloadend = async () => {
+        try {
+            // Cắt lấy phần dữ liệu thực sự (bỏ phần đầu mô tả định dạng)
+            const base64Audio = reader.result.split(',')[1];
+            
+            // Gọi nội bộ đến thư mục api của chính Vercel
+            const response = await fetch('/api/grade-speaking', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    audio: base64Audio, 
+                    mimeType: 'audio/webm' 
+                })
+            });
 
-    try {
-        // Đã sửa lại đường link Replit chuẩn xác (bỏ 1 dấu / bị dư)
-       const serverURL = 'https://cc1b895a-06bf-431f-9964-533ebf611964-00-2lwhxtv0pkmux.pike.replit.dev/api/grade-speaking';
-const response = await fetch(serverURL, {
-    method: 'POST',
-    body: formData
-});
+            if (!response.ok) throw new Error("Lỗi khi kết nối với máy chủ AI!");
 
-        if (!response.ok) throw new Error("Lỗi khi kết nối với máy chủ!");
+            const result = await response.json();
 
-        // Nhận kết quả từ máy chủ trả về
-        const result = await response.json();
-
-        // Hiển thị nhận xét của AI lên giao diện
-        feedbackBox.innerHTML = `
-            <h4 class="font-bold text-lg text-emerald-800 dark:text-emerald-300 border-b pb-2 mb-2">Đánh giá từ AI:</h4>
-            <div class="text-gray-700 dark:text-gray-300 leading-relaxed text-sm">
-                ${result.feedback}
-            </div>
-        `;
-    } catch (error) {
-        console.error("Lỗi:", error);
-        feedbackBox.innerHTML = '<p class="text-rose-500 font-bold">❌ Có lỗi xảy ra trong quá trình chấm điểm. Vui lòng kiểm tra lại kết nối và đường link Replit!</p>';
-    }
+            feedbackBox.innerHTML = `
+                <h4 class="font-bold text-lg text-emerald-800 dark:text-emerald-300 border-b pb-2 mb-2">Đánh giá từ AI:</h4>
+                <div class="text-gray-700 dark:text-gray-300 leading-relaxed text-sm whitespace-pre-wrap">${result.feedback}</div>
+            `;
+        } catch (error) {
+            console.error("Lỗi:", error);
+            feedbackBox.innerHTML = '<p class="text-rose-500 font-bold">❌ Có lỗi xảy ra trong quá trình chấm điểm. Vui lòng thử lại!</p>';
+        }
+    };
 }
 
 // ==========================================
