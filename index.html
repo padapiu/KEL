@@ -3904,26 +3904,6 @@ window.submitSpeakingAnswer = function() {
         window.mediaRecorder.stop(); 
     }
 };
-
-        window.mediaRecorder.onstop = () => {
-            const audioBlob = new Blob(window.audioChunks, { type: 'audio/webm' });
-            
-            // Gọi hàm gửi AI của bạn
-            if (typeof sendAudioToAI === 'function') {
-                sendAudioToAI(audioBlob); 
-            }
-            
-            stream.getTracks().forEach(track => track.stop());
-        };
-
-        window.mediaRecorder.start();
-
-    } catch (err) {
-        alert("Không thể truy cập Micro. Vui lòng kiểm tra lại quyền cấp phép của trình duyệt!");
-        console.error("Lỗi Micro: ", err);
-    }
-};
-
 // --- TÍNH NĂNG MỚI: NÚT LOA PHÁT TIẾNG GIÁM KHẢO ---
 document.getElementById('btn-play-ai-audio').addEventListener('click', function() {
     if ('speechSynthesis' in window) {
