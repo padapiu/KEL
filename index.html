@@ -2593,6 +2593,13 @@
 
        // 1. Hàm bắt đầu làm bài thi (Đã trang bị tính năng chống crash)
         window.startThptExam = function(examId) {
+            // --- KIỂM TRA ĐĂNG NHẬP ---
+            if (!window.globalUser) {
+                window.showToast("Vui lòng đăng nhập để bắt đầu thi THPT Quốc Gia!", "warning");
+                window.openLoginModal();
+                return;
+            }
+            
             try {
                 // Kiểm tra dữ liệu đề thi có tồn tại không
                 const data = examId === 2 ? thptExamData2 : thptExamData3;
@@ -3821,8 +3828,15 @@ window.speakingDatabase = {
     ]
 };
     
-// Mở màn hình Giới thiệu
+// Mở màn hình Giới thiệu Speaking
 window.showSpeakingStart = function(partName) {
+    // --- KIỂM TRA ĐĂNG NHẬP ---
+    if (!window.globalUser) {
+        window.showToast("Vui lòng đăng nhập để bắt đầu luyện Nói!", "warning");
+        window.openLoginModal();
+        return; 
+    }
+
     window.currentSpeakingPart = partName;
     document.getElementById('speaking-part-title').innerText = `Test ${partName} - Thi thử, nhận điểm và sửa lỗi`;
     document.getElementById('room-part-label').innerText = partName.toUpperCase();
@@ -3830,7 +3844,7 @@ window.showSpeakingStart = function(partName) {
     speakingDashboard.classList.add('hidden');
     speakingStartView.classList.remove('hidden');
 };
-
+    
 // 1. Vào phòng thi (Chỉ hiển thị câu hỏi, CHƯA BẬT MICRO)
 window.startSpeakingTest = async function() {
     speakingStartView.classList.add('hidden');
