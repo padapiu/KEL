@@ -145,41 +145,49 @@
                 
                 <button id="btn-login-header" onclick="openLoginModal()" class="bg-cyan-500 hover:bg-cyan-400 text-white font-bold py-2 px-6 rounded-full transition-transform hover:scale-105 shadow-md">Đăng Nhập</button>
                 
-                <div id="user-profile" class="hidden relative group cursor-pointer flex items-center gap-2">
-                    <div class="flex items-center gap-2">
-                        <span class="text-xl">🔔</span>
-                        <img id="profile-avatar" src="" alt="Avatar" class="w-10 h-10 rounded-full border-2 border-cyan-400 shadow-md object-cover bg-white">
-                        <span id="user-name-display" class="font-bold text-cyan-600 dark:text-cyan-300 hidden md:block">User</span>
-                        <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                    </div>
-                    
-                    <div class="absolute right-0 top-full mt-2 w-72 bg-white dark:bg-slate-800 rounded-xl shadow-2xl hidden group-hover:block border border-gray-100 dark:border-slate-700 overflow-hidden z-50">
-                        <div class="p-4 border-b border-gray-100 dark:border-slate-700 flex items-center gap-3 bg-gray-50 dark:bg-slate-750">
-                            <img id="dropdown-avatar" src="" alt="Avatar" class="w-12 h-12 rounded-full border border-gray-300 bg-white">
-                            <div class="overflow-hidden">
-                                <div class="font-extrabold text-[#2b3674] dark:text-white truncate" id="user-email-display">user@email.com</div>
-                                <div class="text-xs text-gray-500 dark:text-gray-400" id="current-time-display">00:00 (GMT+07:00)</div>
-                            </div>
-                        </div>
-                        
-                        <div class="p-4 border-b border-gray-100 dark:border-slate-700 flex justify-between items-center bg-white dark:bg-slate-800">
-                            <div class="flex items-center gap-2 w-full">
-                                <span class="text-xl">🎯</span>
-                                <input type="text" id="user-goal" placeholder="Mục tiêu điểm..." class="w-full text-sm px-2 py-1 border border-gray-300 rounded focus:outline-none dark:bg-slate-700 dark:text-white dark:border-slate-600">
-                            </div>
-                            <button onclick="saveUserGoal()" class="ml-2 bg-cyan-500 hover:bg-cyan-400 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition whitespace-nowrap shadow-sm">Lưu</button>
-                        </div>
-                        
-                        <div class="py-2 bg-white dark:bg-slate-800">
-                            <button onclick="showProgressModal()" class="w-full text-left px-6 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 transition font-medium">🏆 Hồ sơ & Tiến trình</button>
-                        </div>
-                        
-                        <div class="border-t border-gray-100 dark:border-slate-700 py-2 bg-white dark:bg-slate-800">
-                            <button onclick="logoutUser()" class="w-full text-left px-6 py-2.5 text-sm text-rose-500 dark:text-rose-400 hover:bg-gray-100 dark:hover:bg-slate-700 transition font-bold">Đăng xuất</button>
-                        </div>
-                    </div>
+               HTML
+<div id="user-profile" class="hidden relative group cursor-pointer flex items-center gap-2">
+    <!-- Nút hiển thị (Trigger) -->
+    <div class="flex items-center gap-2">
+        <span class="text-xl">🔔</span>
+        <img id="profile-avatar" src="" alt="Avatar" class="w-10 h-10 rounded-full border-2 border-cyan-400 shadow-md object-cover bg-white">
+        <span id="user-name-display" class="font-bold text-cyan-600 dark:text-cyan-300 hidden md:block">User</span>
+        <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+    </div>
+    
+    <!-- LỚP CẦU NỐI: Sử dụng pt-2 (padding-top) để lấp đầy khoảng trống vô hình -->
+    <div class="absolute right-0 top-full pt-2 w-72 hidden group-hover:block z-50">
+        
+        <!-- Bảng điều khiển chính (Chuyển màu nền và viền vào thẻ con này) -->
+        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-2xl border border-gray-100 dark:border-slate-700 overflow-hidden">
+            
+            <div class="p-4 border-b border-gray-100 dark:border-slate-700 flex items-center gap-3 bg-gray-50 dark:bg-slate-750">
+                <img id="dropdown-avatar" src="" alt="Avatar" class="w-12 h-12 rounded-full border border-gray-300 bg-white">
+                <div class="overflow-hidden">
+                    <div class="font-extrabold text-[#2b3674] dark:text-white truncate" id="user-email-display">user@email.com</div>
+                    <div class="text-xs text-gray-500 dark:text-gray-400" id="current-time-display">00:00 (GMT+07:00)</div>
                 </div>
             </div>
+            
+            <div class="p-4 border-b border-gray-100 dark:border-slate-700 flex justify-between items-center bg-white dark:bg-slate-800">
+                <div class="flex items-center gap-2 w-full">
+                    <span class="text-xl">🎯</span>
+                    <input type="text" id="user-goal" placeholder="Mục tiêu điểm..." class="w-full text-sm px-2 py-1 border border-gray-300 rounded focus:outline-none dark:bg-slate-700 dark:text-white dark:border-slate-600">
+                </div>
+                <button onclick="saveUserGoal()" class="ml-2 bg-cyan-500 hover:bg-cyan-400 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition whitespace-nowrap shadow-sm">Lưu</button>
+            </div>
+            
+            <div class="py-2 bg-white dark:bg-slate-800">
+                <button onclick="showProgressModal()" class="w-full text-left px-6 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 transition font-medium">🏆 Hồ sơ & Tiến trình</button>
+            </div>
+            
+            <div class="border-t border-gray-100 dark:border-slate-700 py-2 bg-white dark:bg-slate-800">
+                <button onclick="logoutUser()" class="w-full text-left px-6 py-2.5 text-sm text-rose-500 dark:text-rose-400 hover:bg-gray-100 dark:hover:bg-slate-700 transition font-bold">Đăng xuất</button>
+            </div>
+            
+        </div>
+    </div>
+</div>
         </nav>
     </header>
 
