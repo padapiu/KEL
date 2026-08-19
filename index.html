@@ -408,34 +408,45 @@
             <p id="speaking-countdown-text" class="text-cyan-600 font-bold text-sm hidden">Ghi âm trong 2 giây...</p>
         </div>
 
-        <!-- Footer Control (Thanh dưới cùng khi đang thu âm) -->
-        <div class="p-6 border-t border-gray-100 dark:border-slate-700 flex justify-between items-center bg-gray-50 rounded-b-3xl dark:bg-slate-800">
-            
-            <!-- Cụm bên trái: Trạng thái ghi âm -->
-            <div class="flex items-center gap-4">
-                <div id="recording-indicator" class="flex items-center gap-2">
-                    <span class="w-3 h-3 rounded-full bg-cyan-500 animate-pulse"></span>
-                    <span class="text-sm font-bold text-gray-500">Đang ghi âm...</span>
-                </div>
-                <!-- Sóng âm thanh (Equalizer) -->
-                <div id="recording-waves" class="flex items-end gap-1 h-8">
-                    <div class="equalizer-bar"></div>
-                    <div class="equalizer-bar"></div>
-                    <div class="equalizer-bar"></div>
-                    <div class="equalizer-bar"></div>
-                    <div class="equalizer-bar"></div>
-                </div>
-                
-                <!-- Cụm nút phụ (Hiện ra khi cần nghe lại) -->
-                <div id="extra-controls" class="hidden flex gap-2">
-                    <button class="px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm font-bold text-gray-600 hover:bg-gray-100">Nghe lại</button>
-                    <button class="px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm font-bold text-gray-600 hover:bg-gray-100">Hiện câu hỏi</button>
-                </div>
-            </div>
-
-            <!-- Nút Action chính -->
-            <button id="btn-submit-answer" class="bg-[#4c00ff] hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-md transition">Ghi nhận câu trả lời</button>
+<!-- Footer Control (Thanh dưới cùng) -->
+<div class="p-6 border-t border-gray-100 dark:border-slate-700 flex justify-between items-center bg-gray-50 rounded-b-3xl dark:bg-slate-800">
+    
+    <!-- Cụm bên trái: Trạng thái ghi âm -->
+    <div class="flex items-center gap-4">
+        <!-- Ẩn mặc định, chỉ hiện khi đã bấm Bắt đầu ghi âm -->
+        <div id="recording-indicator" class="hidden flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-rose-500 animate-pulse"></span>
+            <span class="text-sm font-bold text-rose-500">Đang ghi âm...</span>
         </div>
+        
+        <!-- Sóng âm thanh (Equalizer) - Ẩn mặc định -->
+        <div id="recording-waves" class="hidden flex items-end gap-1 h-8">
+            <div class="equalizer-bar" style="background-color: #f43f5e;"></div>
+            <div class="equalizer-bar" style="background-color: #f43f5e;"></div>
+            <div class="equalizer-bar" style="background-color: #f43f5e;"></div>
+            <div class="equalizer-bar" style="background-color: #f43f5e;"></div>
+            <div class="equalizer-bar" style="background-color: #f43f5e;"></div>
+        </div>
+        
+        <div id="extra-controls" class="hidden flex gap-2">
+            <button class="px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm font-bold text-gray-600 hover:bg-gray-100">Nghe lại</button>
+            <button class="px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm font-bold text-gray-600 hover:bg-gray-100">Hiện câu hỏi</button>
+        </div>
+    </div>
+
+    <!-- Cụm nút Action chính -->
+    <div class="flex gap-3">
+        <!-- Nút 1: Bắt đầu ghi âm (Hiện mặc định) -->
+        <button id="btn-start-record-speaking" onclick="startSpeakingRecord()" class="bg-[#4c00ff] hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-md transition flex items-center gap-2">
+            🎙️ Bắt đầu ghi âm
+        </button>
+        
+        <!-- Nút 2: Nộp bài (Ẩn mặc định) -->
+        <button id="btn-submit-answer" onclick="submitSpeakingAnswer()" class="hidden bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-8 rounded-full shadow-md transition">
+            Ghi nhận câu trả lời
+        </button>
+    </div>
+</div>
         
         <!-- Lớp phủ Modal Thoát -->
         <div id="speaking-exit-modal" class="absolute inset-0 bg-white/90 dark:bg-slate-800/95 backdrop-blur-sm z-10 flex items-center justify-center hidden rounded-3xl">
@@ -3792,55 +3803,107 @@ window.showSpeakingStart = function(partName) {
     speakingStartView.classList.remove('hidden');
 };
 
-// Bắt đầu vào phòng thi (Và TỰ ĐỘNG BẬT MICRO)
+// 1. Vào phòng thi (Chỉ hiển thị câu hỏi, CHƯA BẬT MICRO)
 window.startSpeakingTest = async function() {
     speakingStartView.classList.add('hidden');
     speakingRoomView.classList.remove('hidden');
     
-// --- TÍNH NĂNG MỚI: TỰ ĐỘNG LẤY CÂU HỎI NGẪU NHIÊN THEO PART ---
-    // 1. Xác định danh sách câu hỏi cần lấy
+    // Lấy câu hỏi ngẫu nhiên
     let questionList = window.speakingDatabase[window.currentSpeakingPart];
-    
-    // Nếu là chế độ "Full Test", tạm thời bốc câu hỏi từ Part 1 để bắt đầu
     if (!questionList || window.currentSpeakingPart === "Full Test") {
         questionList = window.speakingDatabase["Part 1"];
     }
-
-    // 2. Thuật toán chọn ngẫu nhiên 1 câu hỏi từ mảng
     const randomIndex = Math.floor(Math.random() * questionList.length);
     window.currentQuestionText = questionList[randomIndex];
-    // ---------------------------------------------------------------
 
+    // Hiện câu hỏi
     const aiTextContainer = document.getElementById('speaking-ai-text');
     aiTextContainer.classList.remove('hidden'); 
-    
-    // In câu hỏi ra màn hình
     aiTextContainer.innerHTML = `
-        <p class="text-sm text-rose-500 italic mb-2">*Nhấn nút loa bên dưới để nghe giám khảo hỏi:</p>
+        <p class="text-sm text-rose-500 italic mb-2">*Nhấn nút loa bên dưới để nghe giám khảo hỏi, sau đó bấm Bắt đầu ghi âm:</p>
         <p class="text-xl md:text-2xl font-bold text-gray-800 dark:text-white leading-relaxed">"${window.currentQuestionText}"</p>
     `;
-    
-    // Khởi tạo trạng thái giao diện ban đầu
-    document.getElementById('speaking-instruction').classList.remove('hidden');
-    document.getElementById('speaking-ai-text').classList.add('hidden');
-    document.getElementById('recording-indicator').innerHTML = `<span class="w-3 h-3 rounded-full bg-cyan-500 animate-pulse"></span><span class="text-sm font-bold text-gray-500">Đang ghi âm...</span>`;
-    document.getElementById('recording-waves').classList.remove('hidden');
-    document.getElementById('extra-controls').classList.add('hidden');
-    document.getElementById('btn-submit-answer').disabled = false;
-    document.getElementById('btn-submit-answer').innerText = "Ghi nhận câu trả lời";
-    document.getElementById('btn-submit-answer').classList.replace('bg-gray-400', 'bg-[#4c00ff]');
 
-    // LOGIC: BẬT MICRO
+    document.getElementById('speaking-instruction').classList.remove('hidden');
+    
+    // Đặt lại UI về trạng thái CHƯA GHI ÂM
+    document.getElementById('recording-indicator').classList.add('hidden');
+    document.getElementById('recording-waves').classList.add('hidden');
+    document.getElementById('extra-controls').classList.add('hidden');
+    
+    // Hiện nút Bắt đầu, Ẩn nút Nộp bài
+    document.getElementById('btn-start-record-speaking').classList.remove('hidden');
+    document.getElementById('btn-start-record-speaking').disabled = false;
+    document.getElementById('btn-start-record-speaking').innerHTML = "🎙️ Bắt đầu ghi âm";
+
+    const btnSubmit = document.getElementById('btn-submit-answer');
+    btnSubmit.classList.add('hidden');
+    btnSubmit.disabled = false;
+    btnSubmit.innerText = "Ghi nhận câu trả lời";
+    btnSubmit.classList.replace('bg-gray-400', 'bg-emerald-500'); 
+};
+
+// 2. Nút Bắt đầu ghi âm (Xin quyền Micro và bắt đầu thu)
+window.startSpeakingRecord = async function() {
+    const btnStart = document.getElementById('btn-start-record-speaking');
+    const btnSubmit = document.getElementById('btn-submit-answer');
+    
+    // Đổi UI: Ẩn nút Bắt đầu, Hiện nút Nộp, Hiện sóng âm màu đỏ
+    btnStart.classList.add('hidden');
+    btnSubmit.classList.remove('hidden');
+    
+    document.getElementById('recording-indicator').classList.remove('hidden');
+    document.getElementById('recording-indicator').innerHTML = `<span class="w-3 h-3 rounded-full bg-rose-500 animate-pulse"></span><span class="text-sm font-bold text-rose-500">Đang ghi âm...</span>`;
+    document.getElementById('recording-waves').classList.remove('hidden');
+
+    // BẬT MICRO
     try {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
         window.mediaRecorder = new MediaRecorder(stream);
         window.audioChunks = []; 
 
         window.mediaRecorder.ondataavailable = (event) => {
-            if (event.data.size > 0) {
-                window.audioChunks.push(event.data);
-            }
+            if (event.data.size > 0) window.audioChunks.push(event.data);
         };
+
+        window.mediaRecorder.onstop = () => {
+            const audioBlob = new Blob(window.audioChunks, { type: 'audio/webm' });
+            if (typeof window.sendAudioToAI === 'function') {
+                window.sendAudioToAI(audioBlob); 
+            }
+            stream.getTracks().forEach(track => track.stop());
+        };
+
+        window.mediaRecorder.start();
+
+    } catch (err) {
+        alert("Không thể truy cập Micro. Vui lòng kiểm tra lại quyền cấp phép của trình duyệt!");
+        console.error("Lỗi Micro: ", err);
+        // Khôi phục UI nếu người dùng từ chối cấp quyền Micro
+        btnStart.classList.remove('hidden');
+        btnSubmit.classList.add('hidden');
+        document.getElementById('recording-indicator').classList.add('hidden');
+        document.getElementById('recording-waves').classList.add('hidden');
+    }
+};
+
+// 3. Nút Nộp câu trả lời (Dừng ghi âm và gửi AI)
+window.submitSpeakingAnswer = function() {
+    const btnSubmit = document.getElementById('btn-submit-answer');
+    const waves = document.getElementById('recording-waves');
+    
+    if (waves) waves.classList.add('hidden');
+    
+    document.getElementById('recording-indicator').innerHTML = `<span class="text-sm font-bold text-amber-500 flex items-center gap-2"><span class="animate-spin">⏳</span> Đang gửi dữ liệu...</span>`;
+    btnSubmit.disabled = true;
+    btnSubmit.innerText = "Đang xử lý...";
+    btnSubmit.classList.replace('bg-emerald-500', 'bg-gray-400');
+
+    // Dừng micro
+    if (window.mediaRecorder && window.mediaRecorder.state === "recording") {
+        window.mediaRecorder.stop(); 
+    }
+};
 
         window.mediaRecorder.onstop = () => {
             const audioBlob = new Blob(window.audioChunks, { type: 'audio/webm' });
