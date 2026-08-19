@@ -3723,13 +3723,17 @@ btnStopRecord.addEventListener('click', () => {
             }
         }
 
-    // Quản lý các view của Speaking
+   // Quản lý các view của Speaking
 const speakingDashboard = document.getElementById('speaking-dashboard-view');
 const speakingStartView = document.getElementById('speaking-start-view');
 const speakingRoomView = document.getElementById('speaking-room-view');
 const speakingExitModal = document.getElementById('speaking-exit-modal');
 
 let currentSpeakingPart = "";
+
+// 1. CÁC BIẾN QUẢN LÝ GHI ÂM CHÍNH
+let mediaRecorder;
+let audioChunks = [];
 
 // Mở màn hình Giới thiệu
 function showSpeakingStart(partName) {
@@ -3741,20 +3745,52 @@ function showSpeakingStart(partName) {
     speakingStartView.classList.remove('hidden');
 }
 
-// Bắt đầu vào phòng thi
-function startSpeakingTest() {
+// Bắt đầu vào phòng thi (Và TỰ ĐỘNG BẬT MICRO)
+async function startSpeakingTest() {
     speakingStartView.classList.add('hidden');
     speakingRoomView.classList.remove('hidden');
     
-    // Khởi tạo trạng thái phòng thi
+    // Khởi tạo trạng thái giao diện ban đầu
     document.getElementById('speaking-instruction').classList.remove('hidden');
     document.getElementById('speaking-ai-text').classList.add('hidden');
-    document.getElementById('recording-indicator').classList.remove('hidden');
+    document.getElementById('recording-indicator').innerHTML = `<span class="w-3 h-3 rounded-full bg-cyan-500 animate-pulse"></span><span class="text-sm font-bold text-gray-500">Đang ghi âm...</span>`;
     document.getElementById('recording-waves').classList.remove('hidden');
     document.getElementById('extra-controls').classList.add('hidden');
-    
-    // Tích hợp AI của bạn ở đây:
-    // Ví dụ: Phát đoạn audio AI hỏi câu đầu tiên.
+    document.getElementById('btn-submit-answer').disabled = false;
+    document.getElementById('btn-submit-answer').innerText = "Ghi nhận câu trả lời";
+    document.getElementById('btn-submit-answer').classList.replace('bg-gray-400', 'bg-[#4c00ff]');
+
+    // LOGIC: BẬT MICRO
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorder = new MediaRecorder(stream);
+        audioChunks = []; 
+
+        // Thu thập từng đoạn âm thanh nhỏ
+        mediaRecorder.ondataavailable = (event) => {
+            if (event.data.size > 0) {
+                audioChunks.push(event.data);
+            }
+        };
+
+        // Khi micro bị dừng (bởi lệnh stop), tự động gửi file cho AI
+        mediaRecorder.onstop = () => {
+            const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+            
+            // Gọi hàm gửi AI của bạn
+            sendAudioToAI(audioBlob); 
+            
+            // Tắt hoàn toàn micro để giải phóng tài nguyên
+            stream.getTracks().forEach(track => track.stop());
+        };
+
+        // Lệnh bắt đầu thu âm
+        mediaRecorder.start();
+
+    } catch (err) {
+        alert("Không thể truy cập Micro. Vui lòng kiểm tra lại quyền cấp phép của trình duyệt!");
+        console.error("Lỗi Micro: ", err);
+    }
 }
 
 // Bật popup hỏi xác nhận thoát
@@ -3773,10 +3809,10 @@ function confirmExitSpeaking() {
     speakingRoomView.classList.add('hidden');
     speakingDashboard.classList.remove('hidden');
     
-    // Thêm logic Dừng Record Micro ở đây (nếu đang thu âm)
-    
-    // Tùy chọn: Gọi hàm lưu Lịch sử học tập (như trong video báo lỗi thoát giữa chừng)
-    // showToast("Bài thi bị thoát giữa chừng nên không có kết quả.", "warning");
+    // Nếu đang thu âm mà thoát ngang, tắt micro luôn
+    if (mediaRecorder && mediaRecorder.state === "recording") {
+        mediaRecorder.stop();
+    }
 }
 
 // Nút Thoát ở màn hình Giới thiệu
@@ -3785,38 +3821,29 @@ function exitSpeakingRoom() {
     speakingDashboard.classList.remove('hidden');
 }
 
-// Nút Ghi nhận câu trả lời (Bạn sẽ móc hàm sendAudioToAI vào đây)
+// NÚT "GHI NHẬN CÂU TRẢ LỜI" (Dừng thu âm)
 document.getElementById('btn-submit-answer').addEventListener('click', function() {
     const btn = this;
     const waves = document.getElementById('recording-waves');
     
-    // Dừng hiệu ứng sóng âm (Giả lập dừng Record)
+    // 1. Dừng hiệu ứng sóng âm trên giao diện
     waves.classList.add('hidden');
     
-    // Đổi trạng thái UI báo đang xử lý
-    document.getElementById('recording-indicator').innerHTML = `<span class="text-sm font-bold text-amber-500">Đang chờ AI chấm...</span>`;
+    // 2. Đổi trạng thái nút thành "Đang xử lý..."
+    document.getElementById('recording-indicator').innerHTML = `<span class="text-sm font-bold text-amber-500 flex items-center gap-2"><span class="animate-spin">⏳</span> Đang chờ AI chấm...</span>`;
     btn.disabled = true;
     btn.innerText = "Đang xử lý...";
     btn.classList.replace('bg-[#4c00ff]', 'bg-gray-400');
 
-    // TÍCH HỢP HÀM CỦA BẠN: Gọi hàm stop recording và sendAudioToAI() tại đây.
-    /*
-        mediaRecorder.stop();
-        // Bên trong onstop của mediaRecorder, bạn gọi sendAudioToAI()
-    */
-   
-    // Giả lập sau khi AI trả kết quả (Xóa Timeout này khi dùng thật)
-    setTimeout(() => {
-        document.getElementById('speaking-instruction').classList.add('hidden');
-        document.getElementById('speaking-ai-text').classList.remove('hidden');
-        
-        document.getElementById('recording-indicator').innerHTML = `<span class="w-3 h-3 rounded-full bg-cyan-500 animate-pulse"></span><span class="text-sm font-bold text-gray-500">Đang ghi âm...</span>`;
-        waves.classList.remove('hidden');
-        
-        btn.disabled = false;
-        btn.innerText = "Ghi nhận câu trả lời";
-        btn.classList.replace('bg-gray-400', 'bg-[#4c00ff]');
-    }, 2000);
+    // 3. LOGIC: DỪNG MICRO (Chính là mediaRecorder.stop)
+    if (mediaRecorder && mediaRecorder.state === "recording") {
+        mediaRecorder.stop(); // Lệnh này sẽ tự động kích hoạt mediaRecorder.onstop ở trên
+    }
+
+    // 4. Hiển thị UI kết quả (Sau khi AI trả lời, bạn có thể điều chỉnh lại hàm sendAudioToAI để hiện kết quả vào div 'speaking-ai-text')
+    document.getElementById('speaking-instruction').classList.add('hidden');
+    document.getElementById('speaking-ai-text').classList.remove('hidden');
+    document.getElementById('extra-controls').classList.remove('hidden');
 });
     </script>
 </body>
