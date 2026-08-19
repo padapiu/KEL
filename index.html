@@ -3637,11 +3637,21 @@ btnStopRecord.addEventListener('click', () => {
                 btnLogin.classList.add('hidden');
                 profileMenu.classList.remove('hidden');
                 
-                const displayName = user.email.split('@')[0];
+               // Lấy tên hiển thị: Ưu tiên tên Google, nếu không có thì cắt từ Email
+                const displayName = user.displayName ? user.displayName : user.email.split('@')[0];
                 document.getElementById('user-email-display').innerText = user.email;
                 document.getElementById('user-name-display').innerText = displayName;
                 
-                const avatarUrl = `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.uid}`;
+                // KIỂM TRA ẢNH ĐẠI DIỆN
+                let avatarUrl = "";
+                if (user.photoURL) {
+                    // Nếu có ảnh từ Google thì lấy ảnh thật
+                    avatarUrl = user.photoURL;
+                } else {
+                    // Nếu không có thì tạo ảnh ngẫu nhiên dựa trên UID
+                    avatarUrl = `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.uid}`;
+                }
+
                 document.getElementById('profile-avatar').src = avatarUrl;
                 document.getElementById('dropdown-avatar').src = avatarUrl;
                 
