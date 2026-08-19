@@ -3571,12 +3571,33 @@ btnStopRecord.addEventListener('click', () => {
                 if(typeof window.updateIeltsUI === 'function') window.updateIeltsUI();
                 if(typeof window.closeModals === 'function') window.closeModals();
             } else if (btnLogin && profileMenu) {
+                // Hiển thị lại nút Đăng Nhập, ẩn Profile
                 btnLogin.classList.remove('hidden');
                 profileMenu.classList.add('hidden');
                 document.getElementById('user-goal').value = '';
+                
                 if(typeof window.renderStreakCalendar === 'function') window.renderStreakCalendar(); 
+                
+                // --- MỚI: Tự động reset điểm các bài thi IELTS về 0.0 khi đăng xuất ---
+                const testTitles = document.querySelectorAll('#ielts-dashboard h4');
+                testTitles.forEach(title => {
+                    const card = title.closest('.group');
+                    if (card) {
+                        const circle = card.querySelector('.rounded-full');
+                        
+                        // Chỉ reset các vòng tròn dùng để chứa số điểm (bỏ qua vòng tròn chứa biểu tượng icon cuốn sách 📖)
+                        if (circle && !circle.innerText.includes('📖')) {
+                            circle.innerHTML = '0.0'; // Đưa điểm về 0.0
+                            // Trả lại class màu xám trung tính mặc định
+                            circle.className = "w-12 h-12 rounded-full border-2 border-gray-200 dark:border-gray-500 flex items-center justify-center font-bold text-gray-400 dark:text-gray-400 text-lg flex-shrink-0 transition-colors";
+                        }
+                        
+                        // Xóa luôn dòng trạng thái "Vừa hoàn thành" nếu có
+                        const statusText = card.querySelector('p');
+                        if (statusText) statusText.innerText = "";
+                    }
+                });
             }
-        });
 
         // --- 3. LOGIC ĐĂNG NHẬP / ĐĂNG KÝ ---
         let isLoginMode = true;
