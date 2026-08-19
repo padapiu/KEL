@@ -3970,27 +3970,6 @@ window.exitSpeakingRoom = function() {
     speakingStartView.classList.add('hidden');
     speakingDashboard.classList.remove('hidden');
 };
-
-// Gán sự kiện cho nút nộp bài (Không dùng window vì đã gán bằng addEventListener)
-document.getElementById('btn-submit-answer').addEventListener('click', function() {
-    const btn = this;
-    const waves = document.getElementById('recording-waves');
-    
-    waves.classList.add('hidden');
-    
-    document.getElementById('recording-indicator').innerHTML = `<span class="text-sm font-bold text-amber-500 flex items-center gap-2"><span class="animate-spin">⏳</span> Đang chờ AI chấm...</span>`;
-    btn.disabled = true;
-    btn.innerText = "Đang xử lý...";
-    btn.classList.replace('bg-[#4c00ff]', 'bg-gray-400');
-
-    if (window.mediaRecorder && window.mediaRecorder.state === "recording") {
-        window.mediaRecorder.stop(); 
-    }
-
-    document.getElementById('speaking-instruction').classList.add('hidden');
-    document.getElementById('speaking-ai-text').classList.remove('hidden');
-    document.getElementById('extra-controls').classList.remove('hidden');
-});
     </script>
 </body>
 </html>
