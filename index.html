@@ -1672,10 +1672,15 @@
             <p><strong>LECTURER:</strong> <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 39, 40">taken from nature (39) ... most appropriate volume (40).</span></p>
         `;
 
-
-
-        // 1. HÀM MỞ MODAL THÔNG MINH: Tự động nhận diện Đọc/Nghe
+// 1. HÀM MỞ MODAL THÔNG MINH: Tự động nhận diện Đọc/Nghe
         window.openModeModal = function(testName) {
+            // --- KIỂM TRA ĐĂNG NHẬP ---
+            if (!window.globalUser) {
+                window.showToast("Vui lòng đăng nhập để bắt đầu làm bài thi IELTS!", "warning");
+                window.openLoginModal();
+                return; // Chặn không cho chạy tiếp xuống dưới
+            }
+            
             selectedTestForModal = testName;
             const modal = document.getElementById('mode-selection-modal');
             const content = document.getElementById('mode-modal-content');
@@ -3598,6 +3603,7 @@ btnStopRecord.addEventListener('click', () => {
                     }
                 });
             }
+            });
 
         // --- 3. LOGIC ĐĂNG NHẬP / ĐĂNG KÝ ---
         let isLoginMode = true;
