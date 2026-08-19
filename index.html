@@ -251,6 +251,54 @@
                 </div>
             </section>
 
+<!-- BẮT ĐẦU: PHẦN LỊCH SỬ LÀM BÀI MỚI -->
+            <section class="px-6 mx-4 md:mx-12 my-8 reveal active">
+                <div class="bg-white dark:bg-darkCard p-6 rounded-[30px] shadow-sm border border-gray-100 dark:border-slate-700">
+                    <h3 class="text-2xl font-bold text-[#2b3674] dark:text-cyan-300 mb-6 flex items-center gap-2">
+                        <span>🕒</span> Lịch sử làm bài
+                    </h3>
+
+                    <!-- Cụm Tabs Lọc Kỹ Năng -->
+                    <div class="flex flex-wrap gap-3 mb-6 border-b border-gray-100 dark:border-slate-700 pb-4" id="history-tabs">
+                        <button onclick="switchHistoryTab('Listening')" id="tab-hist-Listening" class="px-5 py-2 rounded-full font-bold transition shadow-sm bg-orange-50 text-[#ff5e00] dark:bg-orange-900/30 dark:text-orange-400 border border-orange-200 flex items-center gap-2">🎧 Listening</button>
+                        <button onclick="switchHistoryTab('Reading')" id="tab-hist-Reading" class="px-5 py-2 rounded-full font-bold transition text-gray-500 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-slate-800 flex items-center gap-2">📖 Reading</button>
+                        <button onclick="switchHistoryTab('Speaking')" id="tab-hist-Speaking" class="px-5 py-2 rounded-full font-bold transition text-gray-500 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-slate-800 flex items-center gap-2">🗣️ Speaking</button>
+                        <button onclick="switchHistoryTab('Writing')" id="tab-hist-Writing" class="px-5 py-2 rounded-full font-bold transition text-gray-500 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-slate-800 flex items-center gap-2">✍️ Writing</button>
+                        <button onclick="switchHistoryTab('THPT')" id="tab-hist-THPT" class="px-5 py-2 rounded-full font-bold transition text-gray-500 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-slate-800 flex items-center gap-2">🎓 THPT</button>
+                    </div>
+
+                    <!-- Bảng Dữ Liệu -->
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse min-w-[800px]">
+                            <thead>
+                                <tr class="bg-gray-50 dark:bg-slate-800 text-gray-600 dark:text-gray-300 text-sm border-b border-gray-200 dark:border-slate-700">
+                                    <th class="py-4 px-4 font-bold">Tên bài</th>
+                                    <th class="py-4 px-4 font-bold">Task</th>
+                                    <th class="py-4 px-4 font-bold">Dạng đề</th>
+                                    <th class="py-4 px-4 font-bold text-center">Thời gian nộp bài</th>
+                                    <th class="py-4 px-4 font-bold text-center">Thời gian làm bài</th>
+                                    <th class="py-4 px-4 font-bold text-center">Kết quả</th>
+                                    <th class="py-4 px-4 font-bold text-center">Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody id="history-table-body" class="text-sm text-gray-700 dark:text-gray-300">
+                                <tr>
+                                    <td colspan="7" class="py-8 text-center text-gray-500 italic">Đang tải dữ liệu...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Phân trang ảo -->
+                    <div class="flex justify-center items-center gap-6 mt-6 text-gray-500 font-bold">
+                        <button class="hover:text-cyan-500 transition">&lt;</button>
+                        <span class="text-cyan-600 dark:text-cyan-400">1</span>
+                        <button class="hover:text-cyan-500 transition">&gt;</button>
+                    </div>
+                </div>
+            </section>
+            <!-- KẾT THÚC: PHẦN LỊCH SỬ LÀM BÀI MỚI -->
+            
             <section class="py-12 px-6 text-center reveal">
                 <h2 class="text-3xl font-bold text-[#2b3674] dark:text-cyan-300 mb-10 transition-colors">Chọn cuộc đời của bạn</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 px-4 md:px-12 max-w-7xl mx-auto">
@@ -3693,7 +3741,7 @@ btnStopRecord.addEventListener('click', () => {
             }
         }
 
-// HÀM ĐÃ NÂNG CẤP: Kéo điểm từ Firebase và cập nhật giao diện (Cả IELTS và THPT)
+// HÀM ĐÃ NÂNG CẤP: Kéo điểm từ Firebase và cập nhật giao diện (Cả IELTS, THPT và Bảng Lịch Sử)
         window.updateIeltsUI = async function() {
             if (!window.globalUser || typeof window.db === 'undefined') return;
             
@@ -3702,37 +3750,38 @@ btnStopRecord.addEventListener('click', () => {
                 const q = query(progressRef, orderBy("timestamp", "asc"));
                 const querySnapshot = await getDocs(q);
                 
+                // MỚI: Khởi tạo mảng toàn cục chứa toàn bộ lịch sử
+                window.userTestHistory = [];
+                
                 querySnapshot.forEach((docSnap) => {
                     const data = docSnap.data();
                     
                     if (data.testName && data.score !== undefined) {
-                        // 1. NẾU LÀ ĐỀ THPT QUỐC GIA
+                        // Thêm vào đầu mảng (để bài mới làm hiển thị lên đầu)
+                        window.userTestHistory.unshift(data);
+                        
+                        // Cập nhật vòng tròn điểm số THPT
                         if (data.testName.includes('THPTQG - Đề Số')) {
-                            // Trích xuất số ID của đề (2 hoặc 3)
                             let examId = data.testName.includes('2') ? 2 : (data.testName.includes('3') ? 3 : null);
-                            
                             if (examId !== null) {
                                 const scoreCircle = document.getElementById(`thpt-score-${examId}`);
                                 const statusText = document.getElementById(`thpt-status-${examId}`);
                                 const btnStart = document.getElementById(`btn-start-thpt-${examId}`);
                                 const btnRetake = document.getElementById(`btn-retake-thpt-${examId}`);
 
-                                // Đổ điểm và tô màu
                                 if(scoreCircle && statusText) {
                                     scoreCircle.innerHTML = data.score.toFixed(2);
                                     scoreCircle.className = "w-12 h-12 rounded-full border-2 border-emerald-400 text-emerald-600 bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center font-bold text-lg shadow-sm transition-colors";
                                     statusText.innerText = "Đã hoàn thành";
                                     statusText.className = "text-xs text-emerald-600 dark:text-emerald-400 font-bold";
                                 }
-                                
-                                // Ẩn "Làm bài", Hiện "Làm lại"
                                 if(btnStart && btnRetake) {
                                     btnStart.classList.add('hidden');
                                     btnRetake.classList.remove('hidden');
                                 }
                             }
                         } 
-                        // 2. NẾU LÀ ĐỀ IELTS (Như cũ)
+                        // Cập nhật vòng tròn điểm số IELTS
                         else {
                             if (typeof window.updateDashboardScore === 'function') {
                                 window.updateDashboardScore(data.testName, data.score);
@@ -3740,9 +3789,102 @@ btnStopRecord.addEventListener('click', () => {
                         }
                     }
                 });
+                
+                // MỚI: Gọi hàm vẽ bảng Lịch sử (Mặc định mở tab Listening)
+                if(typeof window.renderHistoryTable === 'function') {
+                    window.renderHistoryTable();
+                }
+                
             } catch (error) {
                 console.error("Lỗi khi tải dữ liệu điểm lên Dashboard:", error);
             }
+        };
+
+    // --- LOGIC: ĐIỀU KHIỂN BẢNG LỊCH SỬ LÀM BÀI ---
+        window.currentHistoryTab = 'Listening';
+
+        window.switchHistoryTab = function(tabName) {
+            window.currentHistoryTab = tabName;
+            const tabs = ['Listening', 'Reading', 'Speaking', 'Writing', 'THPT'];
+            
+            // Đổi màu các Tab
+            tabs.forEach(t => {
+                const btn = document.getElementById(`tab-hist-${t}`);
+                if (btn) {
+                    if (t === tabName) {
+                        btn.className = "px-5 py-2 rounded-full font-bold transition shadow-sm bg-orange-50 text-[#ff5e00] dark:bg-orange-900/30 dark:text-orange-400 border border-orange-200 flex items-center gap-2";
+                    } else {
+                        btn.className = "px-5 py-2 rounded-full font-bold transition text-gray-500 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-slate-800 flex items-center gap-2";
+                    }
+                }
+            });
+            
+            window.renderHistoryTable();
+        };
+
+        window.renderHistoryTable = function() {
+            const tbody = document.getElementById('history-table-body');
+            if (!tbody) return;
+            
+            if (!window.globalUser) {
+                tbody.innerHTML = '<tr><td colspan="7" class="py-8 text-center text-gray-500 font-medium">Vui lòng đăng nhập để xem lịch sử làm bài.</td></tr>';
+                return;
+            }
+
+            if (!window.userTestHistory || window.userTestHistory.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="py-8 text-center text-gray-500 font-medium">Bạn chưa hoàn thành bài thi nào.</td></tr>';
+                return;
+            }
+
+            // Lọc dữ liệu theo Tab đang chọn
+            const filteredData = window.userTestHistory.filter(item => {
+                const name = (item.testName || "").toLowerCase();
+                if (window.currentHistoryTab === 'THPT') return name.includes('thpt');
+                return name.includes(window.currentHistoryTab.toLowerCase());
+            });
+
+            if (filteredData.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="py-8 text-center text-gray-500 font-medium">Bạn chưa làm bài nào thuộc kỹ năng ${window.currentHistoryTab}.</td></tr>`;
+                return;
+            }
+
+            let html = '';
+            filteredData.forEach(item => {
+                // Định dạng hiển thị ngày giờ tinh tế
+                let timeStr = item.dateStr;
+                if (item.timestamp && typeof item.timestamp.toDate === 'function') {
+                    const date = item.timestamp.toDate();
+                    const hh = String(date.getHours()).padStart(2, '0');
+                    const mm = String(date.getMinutes()).padStart(2, '0');
+                    const ss = String(date.getSeconds()).padStart(2, '0');
+                    timeStr = `${item.dateStr}<br><span class="text-xs text-gray-400">${hh}:${mm}:${ss}</span>`;
+                }
+
+                // Chỉnh màu cho điểm số (>=8 màu xanh, >=6 màu cam, còn lại màu đỏ)
+                let scoreColor = "text-rose-500";
+                if (item.score >= 8.0) scoreColor = "text-emerald-500";
+                else if (item.score >= 6.0) scoreColor = "text-orange-500";
+
+                // Vẽ từng dòng HTML
+                html += `
+                    <tr class="border-b border-gray-100 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-800 transition">
+                        <td class="py-4 px-4 font-semibold text-[#2b3674] dark:text-white max-w-xs truncate" title="${item.testName}">${item.testName}</td>
+                        <td class="py-4 px-4 text-gray-500">Full Test</td>
+                        <td class="py-4 px-4 text-gray-500">-</td>
+                        <td class="py-4 px-4 text-center leading-tight">${timeStr}</td>
+                        <td class="py-4 px-4 text-center text-gray-500">40:00</td>
+                        <td class="py-4 px-4 text-center font-bold text-lg ${scoreColor}">${parseFloat(item.score).toFixed(1)}</td>
+                        <td class="py-4 px-4 text-center">
+                            <div class="flex items-center justify-center gap-3 text-cyan-600 dark:text-cyan-400 font-semibold text-sm">
+                                <button class="hover:underline hover:text-cyan-800 transition">Làm lại</button>
+                                <button class="hover:underline hover:text-cyan-800 transition">Xem lại</button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            tbody.innerHTML = html;
         };
     
         window.showProgressModal = async function() {
