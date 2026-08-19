@@ -3695,9 +3695,7 @@ btnStopRecord.addEventListener('click', () => {
             document.getElementById('auth-switch-btn').innerText = isLoginMode ? 'Đăng ký ngay' : 'Đăng nhập';
         }
 
-        window.handleAuth = async function(e) {
-            
-// --- HÀM MỚI: ĐĂNG NHẬP BẰNG GOOGLE ---
+    // --- HÀM MỚI: ĐĂNG NHẬP BẰNG GOOGLE (Đã mang ra ngoài) ---
         window.loginWithGoogle = async function() {
             const provider = new GoogleAuthProvider();
             try {
@@ -3714,7 +3712,8 @@ btnStopRecord.addEventListener('click', () => {
                 }
             }
         };
-            
+
+        window.handleAuth = async function(e) {
             e.preventDefault();
             const email = document.getElementById('auth-email').value;
             const pass = document.getElementById('auth-password').value;
