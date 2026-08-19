@@ -3761,6 +3761,27 @@ window.currentSpeakingPart = "";
 window.mediaRecorder = null;
 window.audioChunks = [];
 
+// --- KHO DỮ LIỆU CÂU HỎI SPEAKING ---
+window.speakingDatabase = {
+    "Part 1": [
+        "Let's talk about your hometown. Where are you from?",
+        "Do you work or are you a student?",
+        "What do you usually do in your free time?",
+        "Do you like listening to music? What kind of music do you enjoy?"
+    ],
+    "Part 2": [
+        "Describe a book that you enjoyed reading. You should say: what it is, what it is about, and why you enjoyed it.",
+        "Describe a place you have visited that you really liked. You should say: where it is, who you went with, and what you did there.",
+        "Describe a person who has influenced you. You should say: who they are, how you know them, and how they influenced you."
+    ],
+    "Part 3": [
+        "Do you think reading books is more beneficial than watching movies?",
+        "How has tourism changed your country in recent years?",
+        "What qualities make a good role model for young people?",
+        "How do you think technology will change education in the future?"
+    ]
+};
+    
 // Mở màn hình Giới thiệu
 window.showSpeakingStart = function(partName) {
     window.currentSpeakingPart = partName;
@@ -3776,16 +3797,27 @@ window.startSpeakingTest = async function() {
     speakingStartView.classList.add('hidden');
     speakingRoomView.classList.remove('hidden');
     
-// --- TÍNH NĂNG MỚI: NẠP VÀ HIỂN THỊ CÂU HỎI ---
-    // Bạn có thể thay đổi câu hỏi này tùy ý cho từng Part
-    window.currentQuestionText = "Let's talk about your hometown. Where are you from?"; 
+// --- TÍNH NĂNG MỚI: TỰ ĐỘNG LẤY CÂU HỎI NGẪU NHIÊN THEO PART ---
+    // 1. Xác định danh sách câu hỏi cần lấy
+    let questionList = window.speakingDatabase[window.currentSpeakingPart];
     
+    // Nếu là chế độ "Full Test", tạm thời bốc câu hỏi từ Part 1 để bắt đầu
+    if (!questionList || window.currentSpeakingPart === "Full Test") {
+        questionList = window.speakingDatabase["Part 1"];
+    }
+
+    // 2. Thuật toán chọn ngẫu nhiên 1 câu hỏi từ mảng
+    const randomIndex = Math.floor(Math.random() * questionList.length);
+    window.currentQuestionText = questionList[randomIndex];
+    // ---------------------------------------------------------------
+
     const aiTextContainer = document.getElementById('speaking-ai-text');
-    aiTextContainer.classList.remove('hidden'); // Hiện khung chứa câu hỏi
-    // In câu hỏi ra màn hình với thiết kế đẹp mắt
+    aiTextContainer.classList.remove('hidden'); 
+    
+    // In câu hỏi ra màn hình
     aiTextContainer.innerHTML = `
         <p class="text-sm text-rose-500 italic mb-2">*Nhấn nút loa bên dưới để nghe giám khảo hỏi:</p>
-        <p class="text-2xl font-bold text-gray-800 dark:text-white">"${window.currentQuestionText}"</p>
+        <p class="text-xl md:text-2xl font-bold text-gray-800 dark:text-white leading-relaxed">"${window.currentQuestionText}"</p>
     `;
     
     // Khởi tạo trạng thái giao diện ban đầu
