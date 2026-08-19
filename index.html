@@ -341,21 +341,20 @@
 <!-- Tab Speaking -->
 <div id="ielts-content-speaking" class="hidden w-full max-w-4xl mx-auto mt-8">
     
-    <!-- TRẠNG THÁI 1: BẢNG CHỌN BÀI THI -->
+   <!-- TRẠNG THÁI 1: BẢNG CHỌN BÀI THI -->
     <div id="speaking-dashboard-view" class="bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-sm border border-gray-100 dark:border-slate-700">
-        <div class="flex flex-col sm:flex-row gap-4 items-center">
-            <button onclick="showSpeakingStart('Part 1')" class="w-full sm:w-auto bg-[#4c00ff] hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-xl shadow-lg transition-transform transform hover:-translate-y-1 flex items-center justify-center gap-2">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
-                2 phút kiểm tra nhanh Part 1
-            </button>
+        <div class="flex flex-wrap gap-4 items-center justify-center">
             
+            <!-- Cụm các Part nhỏ -->
             <div class="flex gap-4 w-full sm:w-auto">
+                <button onclick="showSpeakingStart('Part 1')" class="flex-1 sm:flex-none border-2 border-[#4c00ff] text-[#4c00ff] dark:text-blue-400 font-bold py-3 px-6 rounded-xl hover:bg-blue-50 dark:hover:bg-slate-700 transition">Part 1</button>
                 <button onclick="showSpeakingStart('Part 2')" class="flex-1 sm:flex-none border-2 border-[#4c00ff] text-[#4c00ff] dark:text-blue-400 font-bold py-3 px-6 rounded-xl hover:bg-blue-50 dark:hover:bg-slate-700 transition">Part 2</button>
                 <button onclick="showSpeakingStart('Part 3')" class="flex-1 sm:flex-none border-2 border-[#4c00ff] text-[#4c00ff] dark:text-blue-400 font-bold py-3 px-6 rounded-xl hover:bg-blue-50 dark:hover:bg-slate-700 transition">Part 3</button>
             </div>
             
             <div class="hidden sm:block w-px h-12 bg-gray-300 dark:bg-gray-600 mx-2"></div>
             
+            <!-- Nút Full Test -->
             <button onclick="showSpeakingStart('Full Test')" class="w-full sm:w-auto border-2 border-[#4c00ff] text-[#4c00ff] dark:text-blue-400 font-bold py-3 px-8 rounded-xl hover:bg-blue-50 dark:hover:bg-slate-700 transition">Full Test</button>
         </div>
     </div>
@@ -3723,30 +3722,29 @@ btnStopRecord.addEventListener('click', () => {
             }
         }
 
-   // Quản lý các view của Speaking
+ // Quản lý các view của Speaking
 const speakingDashboard = document.getElementById('speaking-dashboard-view');
 const speakingStartView = document.getElementById('speaking-start-view');
 const speakingRoomView = document.getElementById('speaking-room-view');
 const speakingExitModal = document.getElementById('speaking-exit-modal');
 
-let currentSpeakingPart = "";
-
 // 1. CÁC BIẾN QUẢN LÝ GHI ÂM CHÍNH
-let mediaRecorder;
-let audioChunks = [];
+window.currentSpeakingPart = "";
+window.mediaRecorder = null;
+window.audioChunks = [];
 
 // Mở màn hình Giới thiệu
-function showSpeakingStart(partName) {
-    currentSpeakingPart = partName;
+window.showSpeakingStart = function(partName) {
+    window.currentSpeakingPart = partName;
     document.getElementById('speaking-part-title').innerText = `Test ${partName} - Thi thử, nhận điểm và sửa lỗi`;
     document.getElementById('room-part-label').innerText = partName.toUpperCase();
     
     speakingDashboard.classList.add('hidden');
     speakingStartView.classList.remove('hidden');
-}
+};
 
 // Bắt đầu vào phòng thi (Và TỰ ĐỘNG BẬT MICRO)
-async function startSpeakingTest() {
+window.startSpeakingTest = async function() {
     speakingStartView.classList.add('hidden');
     speakingRoomView.classList.remove('hidden');
     
@@ -3763,84 +3761,77 @@ async function startSpeakingTest() {
     // LOGIC: BẬT MICRO
     try {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        mediaRecorder = new MediaRecorder(stream);
-        audioChunks = []; 
+        window.mediaRecorder = new MediaRecorder(stream);
+        window.audioChunks = []; 
 
-        // Thu thập từng đoạn âm thanh nhỏ
-        mediaRecorder.ondataavailable = (event) => {
+        window.mediaRecorder.ondataavailable = (event) => {
             if (event.data.size > 0) {
-                audioChunks.push(event.data);
+                window.audioChunks.push(event.data);
             }
         };
 
-        // Khi micro bị dừng (bởi lệnh stop), tự động gửi file cho AI
-        mediaRecorder.onstop = () => {
-            const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+        window.mediaRecorder.onstop = () => {
+            const audioBlob = new Blob(window.audioChunks, { type: 'audio/webm' });
             
             // Gọi hàm gửi AI của bạn
-            sendAudioToAI(audioBlob); 
+            if (typeof sendAudioToAI === 'function') {
+                sendAudioToAI(audioBlob); 
+            }
             
-            // Tắt hoàn toàn micro để giải phóng tài nguyên
             stream.getTracks().forEach(track => track.stop());
         };
 
-        // Lệnh bắt đầu thu âm
-        mediaRecorder.start();
+        window.mediaRecorder.start();
 
     } catch (err) {
         alert("Không thể truy cập Micro. Vui lòng kiểm tra lại quyền cấp phép của trình duyệt!");
         console.error("Lỗi Micro: ", err);
     }
-}
+};
 
 // Bật popup hỏi xác nhận thoát
-function openSpeakingExitModal() {
+window.openSpeakingExitModal = function() {
     speakingExitModal.classList.remove('hidden');
-}
+};
 
 // Tắt popup xác nhận thoát
-function closeSpeakingExitModal() {
+window.closeSpeakingExitModal = function() {
     speakingExitModal.classList.add('hidden');
-}
+};
 
 // Xác nhận thoát hẳn về màn hình chọn Part
-function confirmExitSpeaking() {
-    closeSpeakingExitModal();
+window.confirmExitSpeaking = function() {
+    window.closeSpeakingExitModal();
     speakingRoomView.classList.add('hidden');
     speakingDashboard.classList.remove('hidden');
     
-    // Nếu đang thu âm mà thoát ngang, tắt micro luôn
-    if (mediaRecorder && mediaRecorder.state === "recording") {
-        mediaRecorder.stop();
+    if (window.mediaRecorder && window.mediaRecorder.state === "recording") {
+        window.mediaRecorder.stop();
     }
-}
+};
 
 // Nút Thoát ở màn hình Giới thiệu
-function exitSpeakingRoom() {
+window.exitSpeakingRoom = function() {
     speakingStartView.classList.add('hidden');
     speakingDashboard.classList.remove('hidden');
-}
+};
 
-// NÚT "GHI NHẬN CÂU TRẢ LỜI" (Dừng thu âm)
+// Gán sự kiện cho nút nộp bài (Không dùng window vì đã gán bằng addEventListener)
 document.getElementById('btn-submit-answer').addEventListener('click', function() {
     const btn = this;
     const waves = document.getElementById('recording-waves');
     
-    // 1. Dừng hiệu ứng sóng âm trên giao diện
     waves.classList.add('hidden');
     
-    // 2. Đổi trạng thái nút thành "Đang xử lý..."
     document.getElementById('recording-indicator').innerHTML = `<span class="text-sm font-bold text-amber-500 flex items-center gap-2"><span class="animate-spin">⏳</span> Đang chờ AI chấm...</span>`;
     btn.disabled = true;
     btn.innerText = "Đang xử lý...";
     btn.classList.replace('bg-[#4c00ff]', 'bg-gray-400');
 
-    // 3. LOGIC: DỪNG MICRO (Chính là mediaRecorder.stop)
-    if (mediaRecorder && mediaRecorder.state === "recording") {
-        mediaRecorder.stop(); // Lệnh này sẽ tự động kích hoạt mediaRecorder.onstop ở trên
+    if (window.mediaRecorder && window.mediaRecorder.state === "recording") {
+        window.mediaRecorder.stop(); 
     }
 
-    // 4. Hiển thị UI kết quả (Sau khi AI trả lời, bạn có thể điều chỉnh lại hàm sendAudioToAI để hiện kết quả vào div 'speaking-ai-text')
     document.getElementById('speaking-instruction').classList.add('hidden');
     document.getElementById('speaking-ai-text').classList.remove('hidden');
     document.getElementById('extra-controls').classList.remove('hidden');
