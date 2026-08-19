@@ -3722,6 +3722,102 @@ btnStopRecord.addEventListener('click', () => {
                 container.innerHTML = '<p class="text-center text-rose-500 font-bold my-4">Không thể tải dữ liệu.</p>';
             }
         }
+
+    // Quản lý các view của Speaking
+const speakingDashboard = document.getElementById('speaking-dashboard-view');
+const speakingStartView = document.getElementById('speaking-start-view');
+const speakingRoomView = document.getElementById('speaking-room-view');
+const speakingExitModal = document.getElementById('speaking-exit-modal');
+
+let currentSpeakingPart = "";
+
+// Mở màn hình Giới thiệu
+function showSpeakingStart(partName) {
+    currentSpeakingPart = partName;
+    document.getElementById('speaking-part-title').innerText = `Test ${partName} - Thi thử, nhận điểm và sửa lỗi`;
+    document.getElementById('room-part-label').innerText = partName.toUpperCase();
+    
+    speakingDashboard.classList.add('hidden');
+    speakingStartView.classList.remove('hidden');
+}
+
+// Bắt đầu vào phòng thi
+function startSpeakingTest() {
+    speakingStartView.classList.add('hidden');
+    speakingRoomView.classList.remove('hidden');
+    
+    // Khởi tạo trạng thái phòng thi
+    document.getElementById('speaking-instruction').classList.remove('hidden');
+    document.getElementById('speaking-ai-text').classList.add('hidden');
+    document.getElementById('recording-indicator').classList.remove('hidden');
+    document.getElementById('recording-waves').classList.remove('hidden');
+    document.getElementById('extra-controls').classList.add('hidden');
+    
+    // Tích hợp AI của bạn ở đây:
+    // Ví dụ: Phát đoạn audio AI hỏi câu đầu tiên.
+}
+
+// Bật popup hỏi xác nhận thoát
+function openSpeakingExitModal() {
+    speakingExitModal.classList.remove('hidden');
+}
+
+// Tắt popup xác nhận thoát
+function closeSpeakingExitModal() {
+    speakingExitModal.classList.add('hidden');
+}
+
+// Xác nhận thoát hẳn về màn hình chọn Part
+function confirmExitSpeaking() {
+    closeSpeakingExitModal();
+    speakingRoomView.classList.add('hidden');
+    speakingDashboard.classList.remove('hidden');
+    
+    // Thêm logic Dừng Record Micro ở đây (nếu đang thu âm)
+    
+    // Tùy chọn: Gọi hàm lưu Lịch sử học tập (như trong video báo lỗi thoát giữa chừng)
+    // showToast("Bài thi bị thoát giữa chừng nên không có kết quả.", "warning");
+}
+
+// Nút Thoát ở màn hình Giới thiệu
+function exitSpeakingRoom() {
+    speakingStartView.classList.add('hidden');
+    speakingDashboard.classList.remove('hidden');
+}
+
+// Nút Ghi nhận câu trả lời (Bạn sẽ móc hàm sendAudioToAI vào đây)
+document.getElementById('btn-submit-answer').addEventListener('click', function() {
+    const btn = this;
+    const waves = document.getElementById('recording-waves');
+    
+    // Dừng hiệu ứng sóng âm (Giả lập dừng Record)
+    waves.classList.add('hidden');
+    
+    // Đổi trạng thái UI báo đang xử lý
+    document.getElementById('recording-indicator').innerHTML = `<span class="text-sm font-bold text-amber-500">Đang chờ AI chấm...</span>`;
+    btn.disabled = true;
+    btn.innerText = "Đang xử lý...";
+    btn.classList.replace('bg-[#4c00ff]', 'bg-gray-400');
+
+    // TÍCH HỢP HÀM CỦA BẠN: Gọi hàm stop recording và sendAudioToAI() tại đây.
+    /*
+        mediaRecorder.stop();
+        // Bên trong onstop của mediaRecorder, bạn gọi sendAudioToAI()
+    */
+   
+    // Giả lập sau khi AI trả kết quả (Xóa Timeout này khi dùng thật)
+    setTimeout(() => {
+        document.getElementById('speaking-instruction').classList.add('hidden');
+        document.getElementById('speaking-ai-text').classList.remove('hidden');
+        
+        document.getElementById('recording-indicator').innerHTML = `<span class="w-3 h-3 rounded-full bg-cyan-500 animate-pulse"></span><span class="text-sm font-bold text-gray-500">Đang ghi âm...</span>`;
+        waves.classList.remove('hidden');
+        
+        btn.disabled = false;
+        btn.innerText = "Ghi nhận câu trả lời";
+        btn.classList.replace('bg-gray-400', 'bg-[#4c00ff]');
+    }, 2000);
+});
     </script>
 </body>
 </html>
