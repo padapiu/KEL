@@ -3776,6 +3776,18 @@ window.startSpeakingTest = async function() {
     speakingStartView.classList.add('hidden');
     speakingRoomView.classList.remove('hidden');
     
+// --- TÍNH NĂNG MỚI: NẠP VÀ HIỂN THỊ CÂU HỎI ---
+    // Bạn có thể thay đổi câu hỏi này tùy ý cho từng Part
+    window.currentQuestionText = "Let's talk about your hometown. Where are you from?"; 
+    
+    const aiTextContainer = document.getElementById('speaking-ai-text');
+    aiTextContainer.classList.remove('hidden'); // Hiện khung chứa câu hỏi
+    // In câu hỏi ra màn hình với thiết kế đẹp mắt
+    aiTextContainer.innerHTML = `
+        <p class="text-sm text-rose-500 italic mb-2">*Nhấn nút loa bên dưới để nghe giám khảo hỏi:</p>
+        <p class="text-2xl font-bold text-gray-800 dark:text-white">"${window.currentQuestionText}"</p>
+    `;
+    
     // Khởi tạo trạng thái giao diện ban đầu
     document.getElementById('speaking-instruction').classList.remove('hidden');
     document.getElementById('speaking-ai-text').classList.add('hidden');
@@ -3816,6 +3828,26 @@ window.startSpeakingTest = async function() {
         console.error("Lỗi Micro: ", err);
     }
 };
+
+// --- TÍNH NĂNG MỚI: NÚT LOA PHÁT TIẾNG GIÁM KHẢO ---
+document.getElementById('btn-play-ai-audio').addEventListener('click', function() {
+    if ('speechSynthesis' in window) {
+        // Hủy âm thanh cũ nếu lỡ bấm liên tục
+        window.speechSynthesis.cancel();
+        
+        // Khởi tạo giọng đọc dựa trên câu hỏi hiện tại
+        const utterance = new SpeechSynthesisUtterance(window.currentQuestionText);
+        
+        // Thiết lập giọng Anh-Anh (British) và tốc độ đọc vừa phải
+        utterance.lang = 'en-GB'; 
+        utterance.rate = 0.9;     
+        
+        // Bắt đầu đọc
+        window.speechSynthesis.speak(utterance);
+    } else {
+        alert("Trình duyệt của bạn không hỗ trợ tính năng đọc âm thanh.");
+    }
+});    
 
 // Bật popup hỏi xác nhận thoát
 window.openSpeakingExitModal = function() {
