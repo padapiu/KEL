@@ -4366,6 +4366,134 @@ window.exitSpeakingRoom = function() {
     speakingStartView.classList.add('hidden');
     speakingDashboard.classList.remove('hidden');
 };
+
+// ==========================================
+// LOGIC MODULE WRITING (Tích hợp AI)
+// ==========================================
+
+let writingTimerInterval;
+
+// Mở phòng thi Writing
+window.openWritingRoom = function(title) {
+    document.getElementById('writing-dashboard').classList.add('hidden');
+    document.getElementById('writing-exam-room').classList.remove('hidden');
+    document.getElementById('writing-task-title').innerText = title;
+    
+    // Reset bài làm cũ và feedback
+    document.querySelectorAll('.writing-part-input').forEach(textarea => textarea.value = '');
+    document.getElementById('writing-word-count').innerText = "0";
+    document.getElementById('writing-ai-feedback-overlay').classList.add('hidden');
+    
+    // Thiết lập đồng hồ (Mặc định Task 1 là 20 phút)
+    let timeInSecs = 20 * 60;
+    const timerDisplay = document.getElementById('writing-timer-display');
+    clearInterval(writingTimerInterval);
+    
+    timerDisplay.innerText = "20:00";
+    
+    writingTimerInterval = setInterval(() => {
+        timeInSecs--;
+        let m = Math.floor(timeInSecs / 60).toString().padStart(2, '0');
+        let s = (timeInSecs % 60).toString().padStart(2, '0');
+        timerDisplay.innerText = `${m}:${s}`;
+        
+        if (timeInSecs <= 0) {
+            clearInterval(writingTimerInterval);
+            showToast("Đã hết thời gian làm bài Writing!", "warning");
+        }
+    }, 1000);
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+// Đóng phòng thi
+window.closeWritingRoom = function() {
+    clearInterval(writingTimerInterval);
+    document.getElementById('writing-exam-room').classList.add('hidden');
+    document.getElementById('writing-dashboard').classList.remove('hidden');
+};
+
+// Đóng bảng Feedback AI
+window.closeWritingFeedback = function() {
+    document.getElementById('writing-ai-feedback-overlay').classList.add('hidden');
+}
+
+// Logic Đếm số từ tự động
+document.querySelectorAll('.writing-part-input').forEach(textarea => {
+    textarea.addEventListener('input', function() {
+        let totalWords = 0;
+        document.querySelectorAll('.writing-part-input').forEach(box => {
+            const text = box.value.trim();
+            if (text.length > 0) {
+                // Tách chữ bằng khoảng trắng và xuống dòng
+                const words = text.split(/\s+/).filter(word => word.length > 0);
+                totalWords += words.length;
+            }
+        });
+        document.getElementById('writing-word-count').innerText = totalWords;
+        
+        // Cảnh báo nếu viết quá ít hoặc đủ từ (Task 1 thường yêu cầu > 150 từ)
+        const wordCountEl = document.getElementById('writing-word-count');
+        if (totalWords < 150) {
+            wordCountEl.className = "text-rose-500 font-black";
+        } else {
+            wordCountEl.className = "text-emerald-500 font-black";
+        }
+    });
+});
+
+// Giả lập Logic Gửi bài cho AI chấm
+window.submitWritingToAI = async function() {
+    // Thu thập nội dung từ các ô
+    let fullText = "";
+    document.querySelectorAll('.writing-part-input').forEach(box => {
+        if(box.value.trim() !== "") fullText += box.value.trim() + "\n\n";
+    });
+
+    if (fullText.trim() === "") {
+        showToast("Bạn chưa viết gì cả! Hãy nhập bài làm trước khi nhờ AI chấm nhé.", "error");
+        return;
+    }
+
+    const btnSubmit = document.getElementById('btn-ai-grade-writing');
+    const originalBtnText = btnSubmit.innerHTML;
+    
+    // Hiển thị trạng thái đang chấm
+    btnSubmit.innerHTML = `<span class="animate-spin mr-1">⏳</span> Đang chấm...`;
+    btnSubmit.disabled = true;
+    btnSubmit.classList.replace('from-purple-500', 'from-gray-400');
+    btnSubmit.classList.replace('to-indigo-500', 'to-gray-500');
+
+    try {
+        // === NƠI GẮN API VERCEL CỦA BẠN SAU NÀY ===
+        // Ví dụ: const response = await fetch('/api/grade-writing', { ... });
+        // ==========================================
+
+        // Giả lập thời gian AI xử lý (2 giây)
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        
+        // Mở màn hình Feedback
+        document.getElementById('writing-ai-feedback-overlay').classList.remove('hidden');
+        document.getElementById('writing-ai-feedback-overlay').classList.add('flex');
+        
+        // Khôi phục nút
+        btnSubmit.innerHTML = originalBtnText;
+        btnSubmit.disabled = false;
+        btnSubmit.classList.replace('from-gray-400', 'from-purple-500');
+        btnSubmit.classList.replace('to-gray-500', 'to-indigo-500');
+        
+        // Tùy chọn: Lưu lịch sử (Giống Speaking)
+        if(typeof window.submitTestResult === 'function') {
+            const taskName = document.getElementById('writing-task-title').innerText;
+            window.submitTestResult("Writing - " + taskName, 6.5);
+        }
+
+    } catch (error) {
+        showToast("Có lỗi xảy ra khi kết nối AI.", "error");
+        btnSubmit.innerHTML = originalBtnText;
+        btnSubmit.disabled = false;
+    }
+};
     </script>
 </body>
 </html>
