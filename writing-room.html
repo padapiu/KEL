@@ -282,7 +282,14 @@
 
             } catch (error) {
                 console.error("Lỗi:", error);
-                alert("Đã xảy ra lỗi kết nối. Vui lòng kiểm tra API hoặc thử lại sau.");
+                // Hiển thị trực tiếp lỗi lên màn hình để dễ sửa
+                const overlay = document.getElementById('writing-ai-feedback-overlay');
+                document.getElementById('ai-score-display').innerText = "Lỗi";
+                const feedbackContainer = document.getElementById('writing-ai-detailed-feedback');
+                feedbackContainer.innerHTML = `<div class="text-rose-600 font-bold p-4 bg-rose-50 rounded-xl">❌ Lỗi: ${error.message}</div>`;
+                
+                overlay.classList.remove('hidden');
+                overlay.classList.add('flex');
             } finally {
                 // Khôi phục lại trạng thái ban đầu của nút
                 btnSubmit.innerHTML = originalBtnText;
