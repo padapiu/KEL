@@ -4308,7 +4308,7 @@ window.startWritingInNewTab = function() {
     closeWritingModeModal();
     
     // Mở một tab mới tới file 'writing-room.html' và truyền tên đề bài qua URL
-    const url = `writing-room.html?test=${encodeURIComponent(currentWritingTestTitle)}`;
+    const url = `/writing-room.html?test=${encodeURIComponent(currentWritingTestTitle)}`;
     window.open(url, '_blank');
 };
 
