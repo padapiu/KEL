@@ -1,22 +1,25 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
     // Chỉ cho phép nhận dữ liệu gửi lên qua phương thức POST
     if (req.method !== 'POST') {
         return res.status(405).json({ message: "Chỉ chấp nhận phương thức POST" });
     }
 
     try {
+        // Kiểm tra xem API Key đã có trong Vercel chưa
+        if (!process.env.GEMINI_API_KEY) {
+            throw new Error("Lỗi máy chủ: Chưa cấu hình GEMINI_API_KEY trong Vercel.");
+        }
+
         // Lấy các thông số được gửi từ giao diện web
         const { taskType, prompt, essay } = req.body;
 
-        // Báo lỗi nếu không có bài làm
         if (!essay) {
             return res.status(400).json({ message: "Không tìm thấy nội dung bài viết." });
         }
 
-        // Khởi tạo bộ máy Gemini AI bằng API Key bí mật
-        // Tham số process.env.GEMINI_API_KEY sẽ được lấy từ cài đặt của Vercel
+        // Khởi tạo bộ máy Gemini
         const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
@@ -31,36 +34,35 @@ export default async function handler(req, res) {
         """
         
         Hãy đánh giá chi tiết dựa trên 4 tiêu chí: Task Achievement (hoặc Task Response), Coherence and Cohesion, Lexical Resource, Grammatical Range and Accuracy.
-        Bạn BẮT BUỘC PHẢI trả về kết quả DƯỚI DẠNG JSON với cấu trúc chính xác như sau (không in thêm bất kỳ văn bản nào khác, không dùng dấu markdown \`\`\`json):
+        Bạn BẮT BUỘC PHẢI trả về kết quả DƯỚI DẠNG JSON với cấu trúc chính xác như sau (không in thêm bất kỳ văn bản nào khác, không dùng dấu markdown):
         {
             "score": 6.5,
             "feedback": "Nhận xét chi tiết bằng tiếng Việt ở đây. Trình bày rõ điểm mạnh, điểm yếu và cách khắc phục."
         }
         `;
 
-        // Ra lệnh cho AI xử lý và chờ kết quả
+        // Ra lệnh cho AI xử lý
         const result = await model.generateContent(systemPrompt);
         const responseText = result.response.text();
         
-        // Trích xuất và định dạng lại kết quả AI trả về thành dữ liệu chuẩn
+        // Xử lý chuỗi JSON
         let aiData;
         try {
-            // Cắt bỏ các ký tự thừa do AI đôi khi tự động thêm vào
             const cleanJson = responseText.replace(/```json/g, '').replace(/```/g, '').trim();
             aiData = JSON.parse(cleanJson);
         } catch (parseError) {
-            // Nếu AI không trả về đúng chuẩn JSON, lưu tạm kết quả ở dạng văn bản thô
             aiData = {
                 score: 0.0,
-                feedback: responseText
+                feedback: "AI không trả về đúng định dạng. Dưới đây là nhận xét thô:\n\n" + responseText
             };
         }
 
-        // Trả kết quả thành công về cho trang web
+        // Trả kết quả thành công
         res.status(200).json(aiData);
 
     } catch (error) {
-        console.error("Lỗi hệ thống API Writing:", error);
-        res.status(500).json({ message: "Đã xảy ra lỗi khi chấm bài", error: error.message });
+        console.error("Lỗi API Writing:", error);
+        // Trả về lỗi 500 kèm thông báo chi tiết để hiển thị lên trình duyệt
+        res.status(500).json({ message: "Lỗi máy chủ", error: error.message });
     }
 }
