@@ -514,15 +514,180 @@
     </div>
 </div>
 
-                <!-- Tab Writing -->
-                <div id="ielts-content-writing" class="hidden w-full">
-                    <div class="bg-white dark:bg-slate-800 rounded-3xl p-12 shadow-md border border-gray-100 dark:border-slate-700 text-center flex flex-col items-center justify-center mb-8">
-                        <div class="text-6xl mb-4 animate-pulse">✍️</div>
-                        <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Writing Mock Tests</h3>
-                        <p class="text-gray-500 dark:text-gray-400 max-w-md mx-auto">Hệ thống chấm điểm Writing tự động đang được hoàn thiện. Vui lòng quay lại sau nhé!</p>
+               <!-- TAB WRITING CHÍNH -->
+<div id="ielts-content-writing" class="hidden w-full">
+    
+    <!-- ========================================== -->
+    <!-- BƯỚC 2: MÀN HÌNH DASHBOARD (DANH SÁCH ĐỀ) -->
+    <!-- ========================================== -->
+    <div id="writing-dashboard" class="max-w-6xl mx-auto mb-8">
+        <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">Kho đề thi Writing Task 1</h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            
+            <!-- Thẻ Đề thi 1 (Process) -->
+            <div onclick="openWritingRoom('[C21T3] - Rain-shadow Desert Formation')" class="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl flex p-4 relative overflow-hidden cursor-pointer hover:shadow-lg transition-shadow group">
+                <span class="absolute top-0 left-0 bg-[#2b3674] text-white text-xs font-bold px-4 py-1.5 rounded-br-xl shadow-sm z-10">Process</span>
+                
+                <div class="w-1/3 flex-shrink-0 mt-6 relative bg-gray-50 dark:bg-slate-700 rounded-lg p-2 border border-gray-100 dark:border-slate-600">
+                    <img src="https://via.placeholder.com/150" alt="Chart" class="w-full h-full object-contain mix-blend-multiply dark:mix-blend-normal">
+                </div>
+                
+                <div class="w-2/3 pl-5 mt-2 flex flex-col justify-center">
+                    <h4 class="text-cyan-700 dark:text-cyan-400 font-extrabold text-lg truncate group-hover:text-amber-500 transition-colors">[C21T3] - Rain-shadow Desert</h4>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-2 line-clamp-3">The diagram below shows how one type of desert, known as a rain-shadow desert, is formed. Summarise the information by selecting and reporting the main features...</p>
+                </div>
+            </div>
+
+            <!-- Thẻ Đề thi 2 (Line Graph) -->
+            <div onclick="openWritingRoom('[C21T1] - Number of jobs in four sectors')" class="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl flex p-4 relative overflow-hidden cursor-pointer hover:shadow-lg transition-shadow group">
+                <span class="absolute top-0 left-0 bg-[#2b3674] text-white text-xs font-bold px-4 py-1.5 rounded-br-xl shadow-sm z-10">Line Graph</span>
+                <div class="w-1/3 flex-shrink-0 mt-6 relative bg-gray-50 dark:bg-slate-700 rounded-lg p-2 border border-gray-100 dark:border-slate-600">
+                    <img src="https://via.placeholder.com/150" alt="Chart" class="w-full h-full object-contain mix-blend-multiply dark:mix-blend-normal">
+                </div>
+                <div class="w-2/3 pl-5 mt-2 flex flex-col justify-center">
+                    <h4 class="text-cyan-700 dark:text-cyan-400 font-extrabold text-lg truncate group-hover:text-amber-500 transition-colors">[C21T1] - Jobs in four sectors</h4>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-2 line-clamp-3">The graph below gives information about the number of jobs in four sectors of the economy in the US between 1960 and 2020. Summarise the information...</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- BƯỚC 1: MÀN HÌNH PHÒNG THI WRITING (3 CỘT) -->
+    <!-- ========================================== -->
+    <div id="writing-exam-room" class="hidden w-full max-w-[1400px] mx-auto">
+        <!-- Header điều hướng -->
+        <div class="flex justify-between items-center mb-4">
+            <button onclick="closeWritingRoom()" class="text-gray-500 hover:text-cyan-500 font-bold flex items-center gap-1 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> Trở về Danh sách
+            </button>
+            <h2 id="writing-task-title" class="text-xl font-bold text-gray-800 dark:text-white">Writing Task 1</h2>
+            <div class="w-24"></div> <!-- Spacer -->
+        </div>
+
+        <!-- Layout 3 cột -->
+        <div class="flex flex-col lg:flex-row gap-4 h-auto lg:h-[80vh]">
+            
+            <!-- Cột 1: Đề bài (Left) -->
+            <div class="lg:w-1/3 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 flex flex-col overflow-hidden">
+                <div class="p-4 border-b border-gray-100 dark:border-slate-700 bg-gray-50 dark:bg-slate-750 font-bold text-gray-700 dark:text-gray-200">
+                    Đề bài & Hướng dẫn
+                </div>
+                <div class="p-6 overflow-y-auto custom-scroll flex-grow text-gray-800 dark:text-gray-300">
+                    <div class="bg-blue-50 dark:bg-slate-700 p-4 rounded-xl mb-4 italic font-medium text-sm border-l-4 border-blue-500">
+                        The diagram below shows how one type of desert, known as a rain-shadow desert, is formed. Summarise the information by selecting and reporting the main features, and make comparisons where relevant.
+                    </div>
+                    <!-- Chỗ chứa ảnh đề bài -->
+                    <img src="https://via.placeholder.com/400x300?text=Sơ+đồ+Rain-shadow+Desert" class="w-full rounded-lg border border-gray-200 dark:border-slate-600 shadow-sm" alt="Đề bài">
+                </div>
+            </div>
+
+            <!-- Cột 2: Khu vực Viết (Middle) -->
+            <div class="lg:w-1/3 bg-white dark:bg-slate-800 rounded-2xl shadow-md border border-gray-200 dark:border-slate-700 flex flex-col overflow-hidden relative">
+                
+                <!-- AI Feedback Overlay (Ẩn mặc định) -->
+                <div id="writing-ai-feedback-overlay" class="absolute inset-0 bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm z-20 hidden flex-col p-6 overflow-y-auto custom-scroll">
+                    <div class="flex justify-between items-center mb-4 border-b pb-2 dark:border-slate-600">
+                        <h3 class="font-extrabold text-xl text-emerald-600">Đánh giá từ AI 🤖</h3>
+                        <button onclick="closeWritingFeedback()" class="text-gray-500 hover:text-rose-500 font-bold px-3 py-1 bg-gray-100 dark:bg-slate-700 rounded-lg">Đóng</button>
+                    </div>
+                    <div class="flex gap-4 mb-4">
+                        <div class="text-center p-4 bg-emerald-50 dark:bg-emerald-900/30 rounded-xl border border-emerald-200">
+                            <p class="text-sm text-gray-500">Band Score</p>
+                            <p class="text-4xl font-black text-emerald-600">6.5</p>
+                        </div>
+                        <div class="flex-grow p-4 bg-gray-50 dark:bg-slate-700 rounded-xl text-sm text-gray-700 dark:text-gray-300 italic">
+                            "Bài viết có cấu trúc rõ ràng. Tuy nhiên cần chú ý đa dạng hóa từ vựng mô tả sự thay đổi và sử dụng câu phức nhiều hơn."
+                        </div>
+                    </div>
+                    <div id="writing-ai-detailed-feedback" class="space-y-4">
+                        <!-- Nội dung chi tiết AI trả về sẽ nằm đây -->
                     </div>
                 </div>
-            </div> <!-- QUAN TRỌNG: Thẻ đóng của toàn bộ ielts-dashboard -->
+
+                <div class="p-4 border-b border-gray-100 dark:border-slate-700 bg-gray-50 dark:bg-slate-750 flex justify-between items-center">
+                    <div class="flex items-center gap-2">
+                        <span class="text-sm font-bold text-gray-600 dark:text-gray-300">Bài Sample:</span>
+                        <!-- Nút Toggle giả lập -->
+                        <div class="w-10 h-5 bg-gray-300 dark:bg-gray-600 rounded-full relative cursor-pointer">
+                            <div class="w-4 h-4 bg-white rounded-full absolute top-0.5 left-1"></div>
+                        </div>
+                    </div>
+                    <div class="font-bold text-cyan-600 dark:text-cyan-400">
+                        Word count: <span id="writing-word-count">0</span>
+                    </div>
+                </div>
+                
+                <!-- Các ô Textarea -->
+                <div class="p-5 overflow-y-auto custom-scroll flex-grow space-y-6">
+                    <div>
+                        <label class="block font-bold text-gray-700 dark:text-gray-300 mb-2">Introduction</label>
+                        <textarea class="writing-part-input w-full p-3 rounded-xl border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-gray-800 dark:text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 resize-none h-24" placeholder="Nhập phần viết của bạn ở đây..."></textarea>
+                    </div>
+                    <div>
+                        <label class="block font-bold text-gray-700 dark:text-gray-300 mb-2">Overview</label>
+                        <textarea class="writing-part-input w-full p-3 rounded-xl border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-gray-800 dark:text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 resize-none h-32" placeholder="Nhập phần viết của bạn ở đây..."></textarea>
+                    </div>
+                    <div>
+                        <label class="block font-bold text-gray-700 dark:text-gray-300 mb-2">Body 1</label>
+                        <textarea class="writing-part-input w-full p-3 rounded-xl border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-gray-800 dark:text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 resize-none h-40" placeholder="Nhập phần viết của bạn ở đây..."></textarea>
+                    </div>
+                    <div>
+                        <label class="block font-bold text-gray-700 dark:text-gray-300 mb-2">Body 2 (Tuỳ chọn)</label>
+                        <textarea class="writing-part-input w-full p-3 rounded-xl border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-gray-800 dark:text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 resize-none h-40" placeholder="Nhập phần viết của bạn ở đây..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Footer Control -->
+                <div class="p-4 border-t border-gray-100 dark:border-slate-700 bg-white dark:bg-slate-800 flex justify-between items-center">
+                    <div>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 font-bold mb-1">Thời gian:</p>
+                        <p class="text-xl font-mono font-black text-rose-500" id="writing-timer-display">20:00</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button class="px-4 py-2 bg-blue-100 text-blue-600 font-bold rounded-lg hover:bg-blue-200 transition text-sm flex items-center gap-1">
+                            Lưu bài viết <span class="bg-blue-500 text-white text-[10px] px-1.5 py-0.5 rounded">FREE</span>
+                        </button>
+                        <button id="btn-ai-grade-writing" onclick="submitWritingToAI()" class="px-5 py-2 bg-gradient-to-r from-purple-500 to-indigo-500 text-white font-bold rounded-lg hover:opacity-90 shadow-md transition text-sm flex items-center gap-1 transform hover:scale-105">
+                            ✨ Sửa bài AI <span class="bg-amber-400 text-amber-900 text-[10px] px-1.5 py-0.5 rounded ml-1">PRO</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cột 3: Từ điển (Right) -->
+            <div class="lg:w-1/3 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 flex flex-col overflow-hidden">
+                <div class="p-4 border-b border-gray-100 dark:border-slate-700 bg-gray-50 dark:bg-slate-750 font-bold text-gray-800 dark:text-white flex items-center gap-2">
+                    <span class="text-xl">📚</span> Tra từ vựng <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse ml-1"></span>
+                </div>
+                
+                <!-- Khu vực hiển thị kết quả tra từ -->
+                <div class="flex-grow p-4 overflow-y-auto custom-scroll flex flex-col justify-center items-center text-gray-400">
+                    <div class="text-4xl mb-3 opacity-50">🔍</div>
+                    <p class="text-sm font-medium text-center">Nhập từ vựng cần tra cứu<br>vào ô bên dưới nhé!</p>
+                </div>
+
+                <!-- Khu vực nhập liệu -->
+                <div class="p-4 border-t border-gray-100 dark:border-slate-700 bg-gray-50 dark:bg-slate-800">
+                    <div class="flex mb-3 bg-gray-200 dark:bg-slate-700 rounded-lg p-1">
+                        <button class="flex-1 bg-white dark:bg-slate-600 text-gray-800 dark:text-white font-bold py-1.5 text-sm rounded shadow-sm">Tra Việt-Anh</button>
+                        <button class="flex-1 text-gray-500 dark:text-gray-400 font-medium py-1.5 text-sm hover:text-gray-700 dark:hover:text-gray-200 transition">Tra Anh-Việt</button>
+                    </div>
+                    <div class="relative">
+                        <input type="text" class="w-full p-3 pr-10 rounded-xl border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-700 focus:outline-none focus:border-cyan-500 text-sm" placeholder="Nhập cụm từ cần tra...">
+                        <span class="absolute right-3 top-3 text-cyan-500">G</span>
+                    </div>
+                    <div class="flex justify-between items-center mt-3">
+                        <span class="text-xs text-gray-500">0/50 ký tự</span>
+                        <button class="px-5 py-2 bg-gray-200 text-gray-500 dark:bg-slate-600 dark:text-gray-400 font-bold rounded-lg text-sm cursor-not-allowed">Tra từ vựng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
             <!-- KẾT THÚC: Khối Danh sách các Tab -->
 
             <!-- STREAMING_CHUNK: Building IELTS Listening exam room structure... -->
