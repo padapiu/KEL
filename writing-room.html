@@ -15,11 +15,11 @@
 </head>
 <body class="h-screen w-screen overflow-hidden flex flex-col">
 
-    <!-- Thanh Header nhỏ bên trên -->
+    <!-- Thanh Header -->
     <header class="bg-white shadow-sm border-b border-gray-200 px-6 py-3 flex justify-between items-center z-10 flex-shrink-0">
         <div class="flex items-center gap-4">
             <h1 class="font-extrabold text-[#2b3674] text-xl" id="display-task-title">Đang tải đề thi...</h1>
-            <span class="bg-cyan-100 text-cyan-700 text-xs font-bold px-3 py-1 rounded-full">Writing Task 1</span>
+            <span class="bg-cyan-100 text-cyan-700 text-xs font-bold px-3 py-1 rounded-full" id="display-task-type">Writing Task 1</span>
         </div>
         <button onclick="window.close()" class="text-gray-500 hover:text-rose-500 font-bold flex items-center gap-2 text-sm transition">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
@@ -36,15 +36,37 @@
                 <span>📝 Đề bài</span>
             </div>
             <div class="p-6 overflow-y-auto custom-scroll flex-grow text-gray-800">
+                <!-- Gắn ID writing-prompt-text để JS đổ dữ liệu vào -->
                 <div id="writing-prompt-text" class="bg-blue-50 p-4 rounded-xl mb-4 italic font-medium text-sm border-l-4 border-blue-500">
                     Đang tải nội dung đề bài...
                 </div>
+                <!-- Gắn ID writing-prompt-image để JS đổ ảnh vào -->
                 <img id="writing-prompt-image" src="" class="w-full rounded-lg border border-gray-200 shadow-sm" alt="Đề bài">
             </div>
         </div>
 
         <!-- Cột 2: Khu vực Viết (Giữa) -->
         <div class="lg:w-[45%] bg-white rounded-2xl shadow-md border border-gray-200 flex flex-col h-full overflow-hidden relative">
+            
+            <!-- AI Feedback Overlay (Ẩn mặc định) -->
+            <div id="writing-ai-feedback-overlay" class="absolute inset-0 bg-white/95 backdrop-blur-sm z-20 hidden flex-col p-6 overflow-y-auto custom-scroll">
+                <div class="flex justify-between items-center mb-4 border-b pb-2">
+                    <h3 class="font-extrabold text-xl text-emerald-600">Đánh giá từ AI 🤖</h3>
+                    <button onclick="closeWritingFeedback()" class="text-gray-500 hover:text-rose-500 font-bold px-3 py-1 bg-gray-100 rounded-lg">Đóng</button>
+                </div>
+                <div class="flex gap-4 mb-4">
+                    <div class="text-center p-4 bg-emerald-50 rounded-xl border border-emerald-200 min-w-[100px]">
+                        <p class="text-sm text-gray-500">Band Score</p>
+                        <p class="text-4xl font-black text-emerald-600" id="ai-score-display">0.0</p>
+                    </div>
+                    <div class="flex-grow p-4 bg-gray-50 rounded-xl text-sm text-gray-700 italic font-medium">
+                        Bạn đã hoàn thành bài viết! Hãy xem chi tiết nhận xét bên dưới để rút kinh nghiệm cho lần sau nhé.
+                    </div>
+                </div>
+                <!-- Vùng chứa chi tiết nhận xét -->
+                <div id="writing-ai-detailed-feedback" class="space-y-4"></div>
+            </div>
+
             <div class="p-4 bg-gray-50 border-b border-gray-100 flex justify-between items-center flex-shrink-0">
                 <div class="flex items-center gap-2 text-sm font-bold text-gray-600">
                     Bài Sample: 
@@ -55,6 +77,7 @@
                 </div>
             </div>
             
+            <!-- Các ô nhập văn bản -->
             <div class="p-5 overflow-y-auto custom-scroll flex-grow space-y-6">
                 <div>
                     <label class="block font-bold text-gray-700 mb-2">Introduction</label>
@@ -69,7 +92,7 @@
                     <textarea class="writing-part-input w-full p-4 rounded-xl border border-gray-300 bg-white text-gray-800 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-200 resize-none h-48" placeholder="Nhập Body 1..."></textarea>
                 </div>
                 <div>
-                    <label class="block font-bold text-gray-700 mb-2">Body 2 </label>
+                    <label class="block font-bold text-gray-700 mb-2">Body 2</label>
                     <textarea class="writing-part-input w-full p-4 rounded-xl border border-gray-300 bg-white text-gray-800 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-200 resize-none h-48" placeholder="Nhập Body 2..."></textarea>
                 </div>
             </div>
@@ -84,7 +107,8 @@
                     <button class="px-5 py-2.5 bg-gray-100 text-gray-600 font-bold rounded-xl hover:bg-gray-200 transition text-sm">
                         Lưu nháp
                     </button>
-                    <button onclick="submitWritingToAI()" class="px-6 py-2.5 bg-[#4c00ff] text-white font-bold rounded-xl shadow-md hover:bg-blue-700 transition text-sm flex items-center gap-2 transform hover:scale-105">
+                    <!-- ĐÃ THÊM ID CHO NÚT BẤM NÀY -->
+                    <button id="btn-ai-grade-writing" onclick="submitWritingToAI()" class="px-6 py-2.5 bg-[#4c00ff] text-white font-bold rounded-xl shadow-md hover:bg-blue-700 transition text-sm flex items-center gap-2 transform hover:scale-105">
                         Chấm điểm bằng AI
                     </button>
                 </div>
@@ -94,11 +118,11 @@
         <!-- Cột 3: Từ điển (Phải) -->
         <div class="lg:w-[25%] bg-white rounded-2xl shadow-sm border border-gray-200 flex flex-col h-full overflow-hidden">
             <div class="p-4 bg-gray-50 border-b border-gray-100 font-bold text-gray-800 flex items-center gap-2 flex-shrink-0">
-                <span class="text-lg">📚</span> Tra từ vựng
+                <span class="text-lg"></span> Tra từ vựng
             </div>
             
             <div class="flex-grow p-4 overflow-y-auto custom-scroll flex flex-col justify-center items-center text-gray-400">
-                <div class="text-5xl mb-4 opacity-30">🔍</div>
+                <div class="text-5xl mb-4 opacity-30"></div>
                 <p class="text-sm font-medium text-center">Tra từ điển ngay tại đây<br>để không bị gián đoạn.</p>
             </div>
 
@@ -113,39 +137,43 @@
         </div>
     </main>
 
-    <!-- JavaScript độc lập cho Tab Mới này -->
     <script>
-        // 1. Lấy tên đề bài từ URL (ví dụ: ?test=Line%20Graph)
-        const urlParams = new URLSearchParams(window.location.search);
-        const testTitle = urlParams.get('test') || "IELTS Writing Task 1";
-
-// --- 1. KHO DỮ LIỆU ĐỀ THI WRITING ---
+        // ==========================================
+        // 1. KHO DỮ LIỆU ĐỀ THI WRITING
+        // ==========================================
         const writingDatabase = {
             "[C21T3] - Rain-shadow Desert Formation": {
                 type: "Task 1",
                 text: "The diagram below shows how one type of desert, known as a rain-shadow desert, is formed. Summarise the information by selecting and reporting the main features, and make comparisons where relevant.",
-                image: "https://via.placeholder.com/400x300?text=So+do+Rain-shadow+Desert" // Bạn có thể thay bằng link ảnh thật sau
+                image: "https://i.postimg.cc/9F7d0sQZ/rain-shadow.png" // Đã thay link ảnh minh họa
             },
             "[C21T1] - Number of jobs in four sectors": {
                 type: "Task 1",
                 text: "The graph below gives information about the number of jobs in four sectors of the economy in the US between 1960 and 2020. Summarise the information by selecting and reporting the main features, and make comparisons where relevant.",
-                image: "https://via.placeholder.com/400x300?text=Bieu+do+Line+Graph"
+                image: "https://i.postimg.cc/1X2fX8qB/line-graph.png"
             }
-            // Bạn có thể thêm các đề Task 2 ở đây sau này...
         };
 
-        // --- 2. TỰ ĐỘNG HIỂN THỊ ĐỀ BÀI LÊN MÀN HÌNH ---
+        // ==========================================
+        // 2. TỰ ĐỘNG HIỂN THỊ ĐỀ BÀI LÊN MÀN HÌNH
+        // ==========================================
+        const urlParams = new URLSearchParams(window.location.search);
+        const testTitle = urlParams.get('test') || "IELTS Writing Task 1";
+        document.getElementById('display-task-title').innerText = testTitle;
+
         const currentTestData = writingDatabase[testTitle];
         if (currentTestData) {
             document.getElementById('writing-prompt-text').innerText = currentTestData.text;
             document.getElementById('writing-prompt-image').src = currentTestData.image;
+            document.getElementById('display-task-type').innerText = "Writing " + currentTestData.type;
         } else {
-            document.getElementById('writing-prompt-text').innerText = "Không tìm thấy nội dung đề bài.";
+            document.getElementById('writing-prompt-text').innerText = "Vui lòng nhập bài viết của bạn. (Chế độ viết tự do)";
+            document.getElementById('writing-prompt-image').style.display = 'none';
         }
-        
-        document.getElementById('display-task-title').innerText = testTitle;
 
-        // 2. Đồng hồ đếm ngược
+        // ==========================================
+        // 3. ĐỒNG HỒ ĐẾM NGƯỢC & ĐẾM TỪ
+        // ==========================================
         let timeInSecs = 120 * 60; // 120 phút
         const timerDisplay = document.getElementById('writing-timer-display');
         
@@ -161,7 +189,6 @@
             }
         }, 1000);
 
-        // 3. Đếm từ (Word count)
         document.querySelectorAll('.writing-part-input').forEach(textarea => {
             textarea.addEventListener('input', function() {
                 let totalWords = 0;
@@ -176,7 +203,6 @@
                 const countEl = document.getElementById('writing-word-count');
                 countEl.innerText = totalWords;
                 
-                // Đổi màu nếu đủ 150 từ
                 if (totalWords < 150) {
                     countEl.classList.remove('text-emerald-500');
                     countEl.classList.add('text-rose-500');
@@ -186,9 +212,18 @@
                 }
             });
         });
-// --- GỬI BÀI CHO AI CHẤM VÀ XỬ LÝ KẾT QUẢ ---
+
+        // Đóng bảng Feedback AI
+        window.closeWritingFeedback = function() {
+            document.getElementById('writing-ai-feedback-overlay').classList.add('hidden');
+            document.getElementById('writing-ai-feedback-overlay').classList.remove('flex');
+        }
+
+        // ==========================================
+        // 4. GỬI BÀI CHO AI CHẤM VÀ XỬ LÝ KẾT QUẢ
+        // ==========================================
         window.submitWritingToAI = async function() {
-            // 1. Thu thập bài viết của học sinh
+            // Thu thập bài viết của học sinh
             let studentEssay = "";
             document.querySelectorAll('.writing-part-input').forEach(box => {
                 if(box.value.trim() !== "") studentEssay += box.value.trim() + "\n\n";
@@ -199,21 +234,21 @@
                 return;
             }
 
-            // 2. Lấy nội dung đề bài hiện tại
+            // Lấy nội dung đề bài hiện tại
             const testData = writingDatabase[testTitle];
             const promptText = testData ? testData.text : "Chấm lỗi ngữ pháp và từ vựng chung.";
             const taskType = testData ? testData.type : "Task 1";
 
-            // 3. Đổi trạng thái nút bấm thành "Đang chấm"
+            // Đổi trạng thái nút bấm thành "Đang chấm"
             const btnSubmit = document.getElementById('btn-ai-grade-writing');
             const originalBtnText = btnSubmit.innerHTML;
             btnSubmit.innerHTML = `<span class="animate-spin mr-1">⏳</span> Đang chấm...`;
             btnSubmit.disabled = true;
-            btnSubmit.classList.replace('from-purple-500', 'from-gray-400');
-            btnSubmit.classList.replace('to-indigo-500', 'to-gray-500');
+            btnSubmit.classList.replace('bg-[#4c00ff]', 'bg-gray-400');
+            btnSubmit.classList.replace('hover:bg-blue-700', 'hover:bg-gray-400');
 
             try {
-                // 4. Gửi yêu cầu lên máy chủ Vercel
+                // Gửi yêu cầu lên máy chủ Vercel
                 const response = await fetch('/api/grade-writing', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -228,34 +263,32 @@
 
                 const result = await response.json();
                 
-                // 5. Hiển thị kết quả ra màn hình Overlay
+                // Hiển thị kết quả ra màn hình Overlay
                 const overlay = document.getElementById('writing-ai-feedback-overlay');
-                
-                // Cập nhật điểm số
-                overlay.querySelector('.text-4xl').innerText = result.score.toFixed(1);
+                document.getElementById('ai-score-display').innerText = result.score.toFixed(1);
                 
                 // Cập nhật lời nhận xét
                 const feedbackContainer = document.getElementById('writing-ai-detailed-feedback');
-                feedbackContainer.innerHTML = `<div class="text-gray-700 dark:text-gray-300 leading-relaxed text-sm whitespace-pre-wrap">${result.feedback}</div>`;
+                feedbackContainer.innerHTML = `<div class="text-gray-700 leading-relaxed text-sm whitespace-pre-wrap">${result.feedback}</div>`;
                 
                 // Hiện bảng kết quả
                 overlay.classList.remove('hidden');
                 overlay.classList.add('flex');
                 
-                // 6. Tự động lưu lịch sử học tập 
-                if(typeof window.opener.submitTestResult === 'function') {
+                // Tự động lưu lịch sử học tập qua tab chính (index.html)
+                if(window.opener && typeof window.opener.submitTestResult === 'function') {
                     window.opener.submitTestResult("Writing - " + testTitle, result.score);
                 }
 
             } catch (error) {
                 console.error("Lỗi:", error);
-                alert("Đã xảy ra lỗi kết nối. Vui lòng kiểm tra lại mạng hoặc thử lại sau.");
+                alert("Đã xảy ra lỗi kết nối. Vui lòng kiểm tra API hoặc thử lại sau.");
             } finally {
-                // 7. Khôi phục lại trạng thái ban đầu của nút
+                // Khôi phục lại trạng thái ban đầu của nút
                 btnSubmit.innerHTML = originalBtnText;
                 btnSubmit.disabled = false;
-                btnSubmit.classList.replace('from-gray-400', 'from-purple-500');
-                btnSubmit.classList.replace('to-gray-500', 'to-indigo-500');
+                btnSubmit.classList.replace('bg-gray-400', 'bg-[#4c00ff]');
+                btnSubmit.classList.replace('hover:bg-gray-400', 'hover:bg-blue-700');
             }
         };
     </script>
