@@ -553,141 +553,6 @@
 
         </div>
     </div>
-
-    <!-- ========================================== -->
-    <!-- BƯỚC 1: MÀN HÌNH PHÒNG THI WRITING (3 CỘT) -->
-    <!-- ========================================== -->
-    <div id="writing-exam-room" class="hidden w-full max-w-[1400px] mx-auto">
-        <!-- Header điều hướng -->
-        <div class="flex justify-between items-center mb-4">
-            <button onclick="closeWritingRoom()" class="text-gray-500 hover:text-cyan-500 font-bold flex items-center gap-1 transition">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> Trở về Danh sách
-            </button>
-            <h2 id="writing-task-title" class="text-xl font-bold text-gray-800 dark:text-white">Writing Task 1</h2>
-            <div class="w-24"></div> <!-- Spacer -->
-        </div>
-
-        <!-- Layout 3 cột -->
-        <div class="flex flex-col lg:flex-row gap-4 h-auto lg:h-[80vh]">
-            
-            <!-- Cột 1: Đề bài (Left) -->
-            <div class="lg:w-1/3 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 flex flex-col overflow-hidden">
-                <div class="p-4 border-b border-gray-100 dark:border-slate-700 bg-gray-50 dark:bg-slate-750 font-bold text-gray-700 dark:text-gray-200">
-                    Đề bài & Hướng dẫn
-                </div>
-                <div class="p-6 overflow-y-auto custom-scroll flex-grow text-gray-800 dark:text-gray-300">
-                    <div class="bg-blue-50 dark:bg-slate-700 p-4 rounded-xl mb-4 italic font-medium text-sm border-l-4 border-blue-500">
-                        The diagram below shows how one type of desert, known as a rain-shadow desert, is formed. Summarise the information by selecting and reporting the main features, and make comparisons where relevant.
-                    </div>
-                    <!-- Chỗ chứa ảnh đề bài -->
-                    <img src="https://via.placeholder.com/400x300?text=Sơ+đồ+Rain-shadow+Desert" class="w-full rounded-lg border border-gray-200 dark:border-slate-600 shadow-sm" alt="Đề bài">
-                </div>
-            </div>
-
-            <!-- Cột 2: Khu vực Viết (Middle) -->
-            <div class="lg:w-1/3 bg-white dark:bg-slate-800 rounded-2xl shadow-md border border-gray-200 dark:border-slate-700 flex flex-col overflow-hidden relative">
-                
-                <!-- AI Feedback Overlay (Ẩn mặc định) -->
-                <div id="writing-ai-feedback-overlay" class="absolute inset-0 bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm z-20 hidden flex-col p-6 overflow-y-auto custom-scroll">
-                    <div class="flex justify-between items-center mb-4 border-b pb-2 dark:border-slate-600">
-                        <h3 class="font-extrabold text-xl text-emerald-600">Đánh giá từ AI 🤖</h3>
-                        <button onclick="closeWritingFeedback()" class="text-gray-500 hover:text-rose-500 font-bold px-3 py-1 bg-gray-100 dark:bg-slate-700 rounded-lg">Đóng</button>
-                    </div>
-                    <div class="flex gap-4 mb-4">
-                        <div class="text-center p-4 bg-emerald-50 dark:bg-emerald-900/30 rounded-xl border border-emerald-200">
-                            <p class="text-sm text-gray-500">Band Score</p>
-                            <p class="text-4xl font-black text-emerald-600">6.5</p>
-                        </div>
-                        <div class="flex-grow p-4 bg-gray-50 dark:bg-slate-700 rounded-xl text-sm text-gray-700 dark:text-gray-300 italic">
-                            "Bài viết có cấu trúc rõ ràng. Tuy nhiên cần chú ý đa dạng hóa từ vựng mô tả sự thay đổi và sử dụng câu phức nhiều hơn."
-                        </div>
-                    </div>
-                    <div id="writing-ai-detailed-feedback" class="space-y-4">
-                        <!-- Nội dung chi tiết AI trả về sẽ nằm đây -->
-                    </div>
-                </div>
-
-                <div class="p-4 border-b border-gray-100 dark:border-slate-700 bg-gray-50 dark:bg-slate-750 flex justify-between items-center">
-                    <div class="flex items-center gap-2">
-                        <span class="text-sm font-bold text-gray-600 dark:text-gray-300">Bài Sample:</span>
-                        <!-- Nút Toggle giả lập -->
-                        <div class="w-10 h-5 bg-gray-300 dark:bg-gray-600 rounded-full relative cursor-pointer">
-                            <div class="w-4 h-4 bg-white rounded-full absolute top-0.5 left-1"></div>
-                        </div>
-                    </div>
-                    <div class="font-bold text-cyan-600 dark:text-cyan-400">
-                        Word count: <span id="writing-word-count">0</span>
-                    </div>
-                </div>
-                
-                <!-- Các ô Textarea -->
-                <div class="p-5 overflow-y-auto custom-scroll flex-grow space-y-6">
-                    <div>
-                        <label class="block font-bold text-gray-700 dark:text-gray-300 mb-2">Introduction</label>
-                        <textarea class="writing-part-input w-full p-3 rounded-xl border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-gray-800 dark:text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 resize-none h-24" placeholder="Nhập phần viết của bạn ở đây..."></textarea>
-                    </div>
-                    <div>
-                        <label class="block font-bold text-gray-700 dark:text-gray-300 mb-2">Overview</label>
-                        <textarea class="writing-part-input w-full p-3 rounded-xl border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-gray-800 dark:text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 resize-none h-32" placeholder="Nhập phần viết của bạn ở đây..."></textarea>
-                    </div>
-                    <div>
-                        <label class="block font-bold text-gray-700 dark:text-gray-300 mb-2">Body 1</label>
-                        <textarea class="writing-part-input w-full p-3 rounded-xl border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-gray-800 dark:text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 resize-none h-40" placeholder="Nhập phần viết của bạn ở đây..."></textarea>
-                    </div>
-                    <div>
-                        <label class="block font-bold text-gray-700 dark:text-gray-300 mb-2">Body 2 (Tuỳ chọn)</label>
-                        <textarea class="writing-part-input w-full p-3 rounded-xl border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-gray-800 dark:text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 resize-none h-40" placeholder="Nhập phần viết của bạn ở đây..."></textarea>
-                    </div>
-                </div>
-
-                <!-- Footer Control -->
-                <div class="p-4 border-t border-gray-100 dark:border-slate-700 bg-white dark:bg-slate-800 flex justify-between items-center">
-                    <div>
-                        <p class="text-xs text-gray-500 dark:text-gray-400 font-bold mb-1">Thời gian:</p>
-                        <p class="text-xl font-mono font-black text-rose-500" id="writing-timer-display">20:00</p>
-                    </div>
-                    <div class="flex gap-2">
-                        <button class="px-4 py-2 bg-blue-100 text-blue-600 font-bold rounded-lg hover:bg-blue-200 transition text-sm flex items-center gap-1">
-                            Lưu bài viết <span class="bg-blue-500 text-white text-[10px] px-1.5 py-0.5 rounded">FREE</span>
-                        </button>
-                        <button id="btn-ai-grade-writing" onclick="submitWritingToAI()" class="px-5 py-2 bg-gradient-to-r from-purple-500 to-indigo-500 text-white font-bold rounded-lg hover:opacity-90 shadow-md transition text-sm flex items-center gap-1 transform hover:scale-105">
-                            ✨ Sửa bài AI <span class="bg-amber-400 text-amber-900 text-[10px] px-1.5 py-0.5 rounded ml-1">PRO</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Cột 3: Từ điển (Right) -->
-            <div class="lg:w-1/3 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 flex flex-col overflow-hidden">
-                <div class="p-4 border-b border-gray-100 dark:border-slate-700 bg-gray-50 dark:bg-slate-750 font-bold text-gray-800 dark:text-white flex items-center gap-2">
-                    <span class="text-xl">📚</span> Tra từ vựng <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse ml-1"></span>
-                </div>
-                
-                <!-- Khu vực hiển thị kết quả tra từ -->
-                <div class="flex-grow p-4 overflow-y-auto custom-scroll flex flex-col justify-center items-center text-gray-400">
-                    <div class="text-4xl mb-3 opacity-50">🔍</div>
-                    <p class="text-sm font-medium text-center">Nhập từ vựng cần tra cứu<br>vào ô bên dưới nhé!</p>
-                </div>
-
-                <!-- Khu vực nhập liệu -->
-                <div class="p-4 border-t border-gray-100 dark:border-slate-700 bg-gray-50 dark:bg-slate-800">
-                    <div class="flex mb-3 bg-gray-200 dark:bg-slate-700 rounded-lg p-1">
-                        <button class="flex-1 bg-white dark:bg-slate-600 text-gray-800 dark:text-white font-bold py-1.5 text-sm rounded shadow-sm">Tra Việt-Anh</button>
-                        <button class="flex-1 text-gray-500 dark:text-gray-400 font-medium py-1.5 text-sm hover:text-gray-700 dark:hover:text-gray-200 transition">Tra Anh-Việt</button>
-                    </div>
-                    <div class="relative">
-                        <input type="text" class="w-full p-3 pr-10 rounded-xl border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-700 focus:outline-none focus:border-cyan-500 text-sm" placeholder="Nhập cụm từ cần tra...">
-                        <span class="absolute right-3 top-3 text-cyan-500">G</span>
-                    </div>
-                    <div class="flex justify-between items-center mt-3">
-                        <span class="text-xs text-gray-500">0/50 ký tự</span>
-                        <button class="px-5 py-2 bg-gray-200 text-gray-500 dark:bg-slate-600 dark:text-gray-400 font-bold rounded-lg text-sm cursor-not-allowed">Tra từ vựng</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
             <!-- KẾT THÚC: Khối Danh sách các Tab -->
 
             <!-- STREAMING_CHUNK: Building IELTS Listening exam room structure... -->
@@ -1468,6 +1333,40 @@
             <div class="mt-4 text-center text-sm text-gray-600 dark:text-gray-400">
                 <span id="auth-switch-text">Chưa có tài khoản?</span>
                 <button onclick="toggleAuthMode()" id="auth-switch-btn" class="text-cyan-600 dark:text-cyan-400 font-bold hover:underline ml-1">Đăng ký ngay</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- BẢNG CHỌN CHẾ ĐỘ WRITING (MODAL) -->
+    <div id="writing-mode-modal" class="fixed inset-0 bg-black/70 backdrop-blur-md z-[9999] hidden flex items-center justify-center opacity-0 transition-opacity duration-300 p-4">
+        <div class="bg-white dark:bg-slate-800 w-full max-w-3xl rounded-3xl shadow-2xl relative flex flex-col overflow-hidden transform scale-95 transition-transform duration-300" id="writing-modal-content">
+            
+            <!-- Nút Đóng -->
+            <button onclick="closeWritingModeModal()" class="absolute top-4 right-4 z-20 text-gray-400 hover:text-rose-500 transition-colors p-2 bg-gray-50 dark:bg-slate-700 hover:bg-rose-50 rounded-full shadow-sm border border-gray-100 dark:border-slate-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+
+            <div class="p-8">
+                <h2 class="text-2xl font-extrabold text-gray-800 dark:text-white mb-2" id="writing-modal-title">[C21T3] - Rain-shadow Desert Formation</h2>
+                <p class="text-gray-500 dark:text-gray-400 font-medium mb-8">Chọn chế độ làm bài</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <!-- Chế độ: Viết tự do -->
+                    <div class="border-2 border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl p-6 cursor-pointer relative overflow-hidden group">
+                        <div class="absolute top-4 right-4 text-emerald-500">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                        </div>
+                        <div class="text-emerald-500 text-4xl mb-4">✍️</div>
+                        <h3 class="text-lg font-bold text-gray-800 dark:text-white mb-2">Viết tự do</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Tự viết cả bài và hướng dẫn dạng văn bản, đếm từ, bấm giờ. Viết xong bấm Chấm điểm.</p>
+                    </div>
+                </div>
+
+                <div class="text-center border-t border-gray-100 dark:border-slate-700 pt-6">
+                    <button onclick="startWritingInNewTab()" class="bg-[#ff5e00] hover:bg-[#e05300] text-white font-bold py-3 px-12 rounded-full shadow-lg transform hover:scale-105 transition-all text-lg">
+                        Bắt đầu làm bài
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -4371,52 +4270,47 @@ window.exitSpeakingRoom = function() {
 // LOGIC MODULE WRITING (Tích hợp AI)
 // ==========================================
 
-let writingTimerInterval;
+let currentWritingTestTitle = "";
 
-// Mở phòng thi Writing
+// 1. Mở Modal chọn chế độ
 window.openWritingRoom = function(title) {
-    document.getElementById('writing-dashboard').classList.add('hidden');
-    document.getElementById('writing-exam-room').classList.remove('hidden');
-    document.getElementById('writing-task-title').innerText = title;
+    currentWritingTestTitle = title;
+    document.getElementById('writing-modal-title').innerText = title;
     
-    // Reset bài làm cũ và feedback
-    document.querySelectorAll('.writing-part-input').forEach(textarea => textarea.value = '');
-    document.getElementById('writing-word-count').innerText = "0";
-    document.getElementById('writing-ai-feedback-overlay').classList.add('hidden');
+    const modal = document.getElementById('writing-mode-modal');
+    const content = document.getElementById('writing-modal-content');
     
-    // Thiết lập đồng hồ (Mặc định Task 1 là 20 phút)
-    let timeInSecs = 20 * 60;
-    const timerDisplay = document.getElementById('writing-timer-display');
-    clearInterval(writingTimerInterval);
-    
-    timerDisplay.innerText = "20:00";
-    
-    writingTimerInterval = setInterval(() => {
-        timeInSecs--;
-        let m = Math.floor(timeInSecs / 60).toString().padStart(2, '0');
-        let s = (timeInSecs % 60).toString().padStart(2, '0');
-        timerDisplay.innerText = `${m}:${s}`;
-        
-        if (timeInSecs <= 0) {
-            clearInterval(writingTimerInterval);
-            showToast("Đã hết thời gian làm bài Writing!", "warning");
-        }
-    }, 1000);
-    
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+        modal.classList.remove('opacity-0');
+        content.classList.remove('scale-95');
+        content.classList.add('scale-100');
+    }, 10);
 };
 
-// Đóng phòng thi
-window.closeWritingRoom = function() {
-    clearInterval(writingTimerInterval);
-    document.getElementById('writing-exam-room').classList.add('hidden');
-    document.getElementById('writing-dashboard').classList.remove('hidden');
+// 2. Đóng Modal
+window.closeWritingModeModal = function() {
+    const modal = document.getElementById('writing-mode-modal');
+    const content = document.getElementById('writing-modal-content');
+    
+    modal.classList.add('opacity-0');
+    content.classList.remove('scale-100');
+    content.classList.add('scale-95');
+    
+    setTimeout(() => {
+        modal.classList.add('hidden');
+    }, 300);
 };
 
-// Đóng bảng Feedback AI
-window.closeWritingFeedback = function() {
-    document.getElementById('writing-ai-feedback-overlay').classList.add('hidden');
-}
+// 3. Nút "Bắt đầu làm bài" -> Mở Tab mới
+window.startWritingInNewTab = function() {
+    // Đóng modal hiện tại
+    closeWritingModeModal();
+    
+    // Mở một tab mới tới file 'writing-room.html' và truyền tên đề bài qua URL
+    const url = `writing-room.html?test=${encodeURIComponent(currentWritingTestTitle)}`;
+    window.open(url, '_blank');
+};
 
 // Logic Đếm số từ tự động
 document.querySelectorAll('.writing-part-input').forEach(textarea => {
