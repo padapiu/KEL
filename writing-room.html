@@ -186,7 +186,7 @@
                 }
             });
         });
-// --- 3. GỬI BÀI CHO AI CHẤM ---
+// --- GỬI BÀI CHO AI CHẤM VÀ XỬ LÝ KẾT QUẢ ---
         window.submitWritingToAI = async function() {
             // 1. Thu thập bài viết của học sinh
             let studentEssay = "";
@@ -204,23 +204,59 @@
             const promptText = testData ? testData.text : "Chấm lỗi ngữ pháp và từ vựng chung.";
             const taskType = testData ? testData.type : "Task 1";
 
-            alert("Hệ thống chuẩn bị gửi dữ liệu cho AI gồm:\n\n1. Loại bài: " + taskType + "\n2. Đề bài: " + promptText.substring(0, 50) + "...\n3. Độ dài bài viết: " + studentEssay.split(/\s+/).length + " từ.\n\n(Chức năng API đang được xây dựng!)");
+            // 3. Đổi trạng thái nút bấm thành "Đang chấm"
+            const btnSubmit = document.getElementById('btn-ai-grade-writing');
+            const originalBtnText = btnSubmit.innerHTML;
+            btnSubmit.innerHTML = `<span class="animate-spin mr-1">⏳</span> Đang chấm...`;
+            btnSubmit.disabled = true;
+            btnSubmit.classList.replace('from-purple-500', 'from-gray-400');
+            btnSubmit.classList.replace('to-indigo-500', 'to-gray-500');
 
-            /* =========================================================
-               KHI BẠN XÂY DỰNG API VERCEL XONG, MÃ SẼ TRÔNG NHƯ SAU:
-               
-               const response = await fetch('/api/grade-writing.js', {
-                   method: 'POST',
-                   headers: { 'Content-Type': 'application/json' },
-                   body: JSON.stringify({ 
-                       taskType: taskType,     // Báo cho AI biết đây là Task 1 hay Task 2
-                       prompt: promptText,     // Gửi đề bài để AI đối chiếu
-                       essay: studentEssay     // Gửi bài làm của học sinh
-                   })
-               });
-               const result = await response.json();
-               // Hiển thị result ra bảng Feedback...
-            ========================================================= */
+            try {
+                // 4. Gửi yêu cầu lên máy chủ Vercel
+                const response = await fetch('/api/grade-writing', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        taskType: taskType,     
+                        prompt: promptText,     
+                        essay: studentEssay     
+                    })
+                });
+
+                if (!response.ok) throw new Error("Lỗi khi kết nối với máy chủ AI!");
+
+                const result = await response.json();
+                
+                // 5. Hiển thị kết quả ra màn hình Overlay
+                const overlay = document.getElementById('writing-ai-feedback-overlay');
+                
+                // Cập nhật điểm số
+                overlay.querySelector('.text-4xl').innerText = result.score.toFixed(1);
+                
+                // Cập nhật lời nhận xét
+                const feedbackContainer = document.getElementById('writing-ai-detailed-feedback');
+                feedbackContainer.innerHTML = `<div class="text-gray-700 dark:text-gray-300 leading-relaxed text-sm whitespace-pre-wrap">${result.feedback}</div>`;
+                
+                // Hiện bảng kết quả
+                overlay.classList.remove('hidden');
+                overlay.classList.add('flex');
+                
+                // 6. Tự động lưu lịch sử học tập 
+                if(typeof window.opener.submitTestResult === 'function') {
+                    window.opener.submitTestResult("Writing - " + testTitle, result.score);
+                }
+
+            } catch (error) {
+                console.error("Lỗi:", error);
+                alert("Đã xảy ra lỗi kết nối. Vui lòng kiểm tra lại mạng hoặc thử lại sau.");
+            } finally {
+                // 7. Khôi phục lại trạng thái ban đầu của nút
+                btnSubmit.innerHTML = originalBtnText;
+                btnSubmit.disabled = false;
+                btnSubmit.classList.replace('from-gray-400', 'from-purple-500');
+                btnSubmit.classList.replace('to-gray-500', 'to-indigo-500');
+            }
         };
     </script>
 </body>
