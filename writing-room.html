@@ -36,10 +36,10 @@
                 <span>📝 Đề bài</span>
             </div>
             <div class="p-6 overflow-y-auto custom-scroll flex-grow text-gray-800">
-                <div class="bg-blue-50 p-4 rounded-xl mb-4 italic font-medium text-sm border-l-4 border-blue-500">
-                    The diagram below shows how one type of desert, known as a rain-shadow desert, is formed. Summarise the information by selecting and reporting the main features, and make comparisons where relevant.
+                <div id="writing-prompt-text" class="bg-blue-50 p-4 rounded-xl mb-4 italic font-medium text-sm border-l-4 border-blue-500">
+                    Đang tải nội dung đề bài...
                 </div>
-                <img src="https://via.placeholder.com/400x300?text=Sơ+đồ+Đề+Bài" class="w-full rounded-lg border border-gray-200 shadow-sm" alt="Đề bài">
+                <img id="writing-prompt-image" src="" class="w-full rounded-lg border border-gray-200 shadow-sm" alt="Đề bài">
             </div>
         </div>
 
@@ -118,6 +118,31 @@
         // 1. Lấy tên đề bài từ URL (ví dụ: ?test=Line%20Graph)
         const urlParams = new URLSearchParams(window.location.search);
         const testTitle = urlParams.get('test') || "IELTS Writing Task 1";
+
+// --- 1. KHO DỮ LIỆU ĐỀ THI WRITING ---
+        const writingDatabase = {
+            "[C21T3] - Rain-shadow Desert Formation": {
+                type: "Task 1",
+                text: "The diagram below shows how one type of desert, known as a rain-shadow desert, is formed. Summarise the information by selecting and reporting the main features, and make comparisons where relevant.",
+                image: "https://via.placeholder.com/400x300?text=So+do+Rain-shadow+Desert" // Bạn có thể thay bằng link ảnh thật sau
+            },
+            "[C21T1] - Number of jobs in four sectors": {
+                type: "Task 1",
+                text: "The graph below gives information about the number of jobs in four sectors of the economy in the US between 1960 and 2020. Summarise the information by selecting and reporting the main features, and make comparisons where relevant.",
+                image: "https://via.placeholder.com/400x300?text=Bieu+do+Line+Graph"
+            }
+            // Bạn có thể thêm các đề Task 2 ở đây sau này...
+        };
+
+        // --- 2. TỰ ĐỘNG HIỂN THỊ ĐỀ BÀI LÊN MÀN HÌNH ---
+        const currentTestData = writingDatabase[testTitle];
+        if (currentTestData) {
+            document.getElementById('writing-prompt-text').innerText = currentTestData.text;
+            document.getElementById('writing-prompt-image').src = currentTestData.image;
+        } else {
+            document.getElementById('writing-prompt-text').innerText = "Không tìm thấy nội dung đề bài.";
+        }
+        
         document.getElementById('display-task-title').innerText = testTitle;
 
         // 2. Đồng hồ đếm ngược
@@ -161,11 +186,42 @@
                 }
             });
         });
+// --- 3. GỬI BÀI CHO AI CHẤM ---
+        window.submitWritingToAI = async function() {
+            // 1. Thu thập bài viết của học sinh
+            let studentEssay = "";
+            document.querySelectorAll('.writing-part-input').forEach(box => {
+                if(box.value.trim() !== "") studentEssay += box.value.trim() + "\n\n";
+            });
 
-        // 4. Giả lập Chấm điểm (Chưa gắn API)
-        window.submitWritingToAI = function() {
-            alert("Tính năng gửi bài cho AI đang được hoàn thiện!");
-        }
+            if (studentEssay.trim() === "") {
+                alert("Bạn chưa viết gì cả! Hãy nhập bài làm trước khi nhờ AI chấm nhé.");
+                return;
+            }
+
+            // 2. Lấy nội dung đề bài hiện tại
+            const testData = writingDatabase[testTitle];
+            const promptText = testData ? testData.text : "Chấm lỗi ngữ pháp và từ vựng chung.";
+            const taskType = testData ? testData.type : "Task 1";
+
+            alert("Hệ thống chuẩn bị gửi dữ liệu cho AI gồm:\n\n1. Loại bài: " + taskType + "\n2. Đề bài: " + promptText.substring(0, 50) + "...\n3. Độ dài bài viết: " + studentEssay.split(/\s+/).length + " từ.\n\n(Chức năng API đang được xây dựng!)");
+
+            /* =========================================================
+               KHI BẠN XÂY DỰNG API VERCEL XONG, MÃ SẼ TRÔNG NHƯ SAU:
+               
+               const response = await fetch('/api/grade-writing.js', {
+                   method: 'POST',
+                   headers: { 'Content-Type': 'application/json' },
+                   body: JSON.stringify({ 
+                       taskType: taskType,     // Báo cho AI biết đây là Task 1 hay Task 2
+                       prompt: promptText,     // Gửi đề bài để AI đối chiếu
+                       essay: studentEssay     // Gửi bài làm của học sinh
+                   })
+               });
+               const result = await response.json();
+               // Hiển thị result ra bảng Feedback...
+            ========================================================= */
+        };
     </script>
 </body>
 </html>
