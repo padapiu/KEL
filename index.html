@@ -3438,13 +3438,27 @@ window.sendAudioToAI = async function(audioBlob) {
             // Hiển thị cụm nút Nghe lại / Hiện câu hỏi
             if (extraControls) extraControls.classList.remove('hidden');
 
+            // --------------------------------------------------------
+            // 5. MỚI: LƯU LỊCH SỬ VÀ TÔ XANH STREAK
+            // --------------------------------------------------------
+            // Tạo tên bài thi để hiển thị trong lịch sử (VD: IELTS Speaking - Part 1)
+            const testName = "IELTS Speaking - " + (window.currentSpeakingPart || "Practice");
+            
+            // Lấy điểm từ API (nếu API có trả về trường result.score), nếu không có thì đặt mặc định là 0
+            const score = result.score ? parseFloat(result.score) : 0; 
+            
+            // Gọi hàm lưu kết quả (Hàm này tự động lưu Firebase, cập nhật Streak và lịch sử)
+            if (typeof window.submitTestResult === 'function') {
+                window.submitTestResult(testName, score);
+            }
+
         } catch (error) {
             console.error("Lỗi:", error);
             if (feedbackBox) {
                 feedbackBox.innerHTML = '<p class="text-rose-500 font-bold">❌ Có lỗi xảy ra trong quá trình chấm điểm. Vui lòng thử lại!</p>';
             }
         } finally {
-            // 5. Khôi phục trạng thái nút bấm sau khi AI chạy xong (dù lỗi hay thành công)
+            // 6. Khôi phục trạng thái nút bấm sau khi AI chạy xong (dù lỗi hay thành công)
             if (indicator) {
                 indicator.innerHTML = `<span class="w-3 h-3 rounded-full bg-cyan-500"></span><span class="text-sm font-bold text-gray-500">Sẵn sàng</span>`;
             }
