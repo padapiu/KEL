@@ -2257,6 +2257,10 @@
             document.getElementById('ielts-listening-result-dashboard').classList.add('hidden');
             document.getElementById('ielts-listening-explanation-area').classList.add('hidden');
             document.getElementById('ielts-dashboard').classList.remove('hidden');
+
+// Trả thanh địa chỉ về đúng khu vực danh sách Listening
+            window.history.pushState({ pageId: 'ielts', tabId: 'listening' }, "", "#ielts/listening");
+            
             window.scrollTo({ top: 0, behavior: 'smooth' });
         };
 
