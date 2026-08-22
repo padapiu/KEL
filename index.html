@@ -3338,16 +3338,19 @@ window.submitIeltsReadingExam = function(isTimeout = false) {
             else if(correctCount >= 10) bandScore = 4.0;
             else bandScore = 3.5;
 
-            // 1. SỬA LỖI TẠI ĐÂY: Dùng ID chính xác để ẩn phần làm bài (tránh bị gộp)
+            // 1. Dùng ID chính xác để ẩn phần làm bài (tránh bị gộp)
             const splitContainer = document.getElementById('reading-split-container');
             if (splitContainer) {
                 splitContainer.classList.add('hidden');
                 splitContainer.style.paddingBottom = "0px";
             }
             
-            // 2. Ẩn Nút nộp bài ở thanh trên (nếu có)
+            // 2. MỚI: Ẩn Nút nộp bài VÀ Đồng hồ thời gian ở thanh trên
             const btnSubmitTop = document.getElementById('btn-submit-reading');
             if (btnSubmitTop) btnSubmitTop.classList.add('hidden');
+            
+            const timerContainer = document.getElementById('reading-timer-container');
+            if (timerContainer) timerContainer.classList.add('hidden');
             
             // 3. Ẩn thanh điều hướng dưới đáy của chế độ Thi thật
             const bottomNav = document.getElementById('strict-reading-bottom-nav');
