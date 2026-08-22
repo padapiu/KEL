@@ -1018,9 +1018,38 @@
                         </button>
                     </div>
                 </div>
-
             </div>
+<!-- ======================================================== -->
+                <!-- BẮT ĐẦU: THANH ĐIỀU HƯỚNG DƯỚI ĐÁY CHO READING (THI THẬT) -->
+                <!-- ======================================================== -->
+                <div id="strict-reading-bottom-nav" class="fixed bottom-0 left-0 right-0 bg-[#f8f9fa] dark:bg-slate-900 border-t border-gray-300 dark:border-slate-700 shadow-[0_-5px_15px_rgba(0,0,0,0.05)] z-50 hidden justify-between items-center px-4 h-14">
+                    <div class="flex h-full overflow-x-auto" id="strict-reading-tabs">
+                        <button onclick="switchIeltsReadingPart(1)" id="strict-read-tab-1" class="px-6 h-full border-b-4 border-emerald-500 font-bold text-emerald-600 bg-white dark:bg-slate-800 flex items-center justify-center transition-colors">Part 1</button>
+                        <button onclick="switchIeltsReadingPart(2)" id="strict-read-tab-2" class="px-6 h-full border-b-4 border-transparent font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-800 flex items-center justify-center transition-colors">Part 2</button>
+                        <button onclick="switchIeltsReadingPart(3)" id="strict-read-tab-3" class="px-6 h-full border-b-4 border-transparent font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-800 flex items-center justify-center transition-colors">Part 3</button>
+                    </div>
+                    
+                    <div class="flex h-full items-center gap-2 py-2">
+                        <!-- Nút lùi -->
+                        <button onclick="strictPrevReadingPart()" class="w-12 h-full flex items-center justify-center rounded bg-white border border-gray-300 dark:border-slate-600 hover:bg-gray-100 dark:bg-slate-800 dark:hover:bg-slate-700 transition">
+                           <svg class="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                        </button>
+                        
+                        <!-- Nút tiến -->
+                        <button onclick="strictNextReadingPart()" class="w-12 h-full flex items-center justify-center rounded bg-gray-800 text-white hover:bg-gray-700 transition">
+                           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        </button>
 
+                        <!-- Đường kẻ dọc phân cách -->
+                        <div class="w-px h-8 bg-gray-300 dark:bg-gray-600 mx-2"></div>
+
+                        <!-- Nút Tick Nộp Bài -->
+                        <button onclick="submitIeltsReadingExam(false)" class="w-12 h-full flex items-center justify-center rounded bg-transparent hover:bg-gray-200 dark:hover:bg-slate-700 transition" title="Nộp bài">
+                            <svg class="w-7 h-7 text-black dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                        </button>
+                    </div>
+                </div>
+        
             <!-- Highlight Tooltip for Both (Thêm nút Xóa Highlight) -->
             <div id="highlight-tooltip" class="absolute hidden z-50 bg-white dark:bg-slate-800 shadow-xl rounded-full border border-gray-200 dark:border-slate-700 flex gap-2 p-2 transform -translate-x-1/2 -translate-y-full transition-opacity">
                 <button onclick="applyHighlight('bg-yellow-300 dark:bg-yellow-500/60 text-black dark:text-white')" class="w-7 h-7 rounded-full bg-yellow-300 border-2 border-white dark:border-slate-800 shadow-sm hover:scale-110 transition" title="Highlight Vàng"></button>
