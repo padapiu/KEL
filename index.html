@@ -2759,6 +2759,10 @@
                 userThptAnswers = {}; 
                 isTakingExam = true;
 
+                const testName = 'Đề Minh Họa Số ' + examId;
+                const safeUrlName = encodeURIComponent(testName.replace(/\s+/g, '-').toLowerCase());
+                window.history.pushState({ pageId: 'exam', tabId: 'thpt' }, "", `#exam/thpt/${safeUrlName}`);
+
                 // Chuyển đổi giao diện
                 document.getElementById('thpt-dashboard').classList.add('hidden');
                 document.getElementById('thpt-exam-room').classList.remove('hidden');
@@ -2928,6 +2932,9 @@
             let duration = customDuration; 
             window.activeReadingParts = selectedParts; // Lưu lại các phần người dùng chọn
             isTakingExam = true;
+
+const safeUrlName = encodeURIComponent(testName.replace(/\s+/g, '-').toLowerCase());
+            window.history.pushState({ pageId: 'exam', tabId: 'reading' }, "", `#exam/reading/${safeUrlName}`);
             
             document.getElementById('ielts-dashboard').classList.add('hidden');
             document.getElementById('ielts-reading-exam-room').classList.remove('hidden');
@@ -3183,6 +3190,8 @@
        // Hàm thoát khỏi phòng thi Reading và quay lại màn hình danh sách
         window.exitToIeltsDashboard = function() {
             isTakingExam = false;
+
+            window.history.pushState({ pageId: 'ielts', tabId: 'reading' }, "", "#ielts/reading");
             
             // 1. Ẩn các khu vực liên quan đến làm bài và kết quả Reading
             document.getElementById('ielts-reading-exam-room').classList.add('hidden');
