@@ -3338,32 +3338,32 @@ window.submitIeltsReadingExam = function(isTimeout = false) {
             else if(correctCount >= 10) bandScore = 4.0;
             else bandScore = 3.5;
 
-            // 1. Ẩn giao diện làm bài
-            document.querySelector('.reading-split-layout').classList.add('hidden');
+            // 1. SỬA LỖI TẠI ĐÂY: Dùng ID chính xác để ẩn phần làm bài (tránh bị gộp)
+            const splitContainer = document.getElementById('reading-split-container');
+            if (splitContainer) {
+                splitContainer.classList.add('hidden');
+                splitContainer.style.paddingBottom = "0px";
+            }
             
             // 2. Ẩn Nút nộp bài ở thanh trên (nếu có)
             const btnSubmitTop = document.getElementById('btn-submit-reading');
             if (btnSubmitTop) btnSubmitTop.classList.add('hidden');
             
-            // 3. MỚI: Ẩn thanh điều hướng dưới đáy của chế độ Thi thật
+            // 3. Ẩn thanh điều hướng dưới đáy của chế độ Thi thật
             const bottomNav = document.getElementById('strict-reading-bottom-nav');
             if (bottomNav) {
                 bottomNav.classList.add('hidden');
                 bottomNav.classList.remove('flex');
             }
             
-            // 4. MỚI: Reset lại padding để màn hình kết quả không bị hổng ở dưới đáy
-            const splitContainer = document.getElementById('reading-split-container');
-            if (splitContainer) splitContainer.style.paddingBottom = "0px";
-            
-            // 5. Cập nhật tiêu đề sang Dashboard Kết Quả
+            // 4. Cập nhật tiêu đề sang Dashboard Kết Quả
             document.getElementById('ielts-reading-exam-title').innerText = "Dashboard Kết Quả";
             document.getElementById('reading-exam-subtitle').innerText = currentIeltsReadingTestName;
             
-            // 6. Hiện màn hình kết quả
+            // 5. Hiện màn hình kết quả
             document.getElementById('ielts-reading-result-dashboard').classList.remove('hidden');
             
-            // 7. Đổ dữ liệu điểm số
+            // 6. Đổ dữ liệu điểm số
             document.getElementById('reading-correct-count-display').innerText = correctCount;
             document.getElementById('reading-stat-correct').innerText = correctCount;
             document.getElementById('reading-stat-incorrect').innerText = incorrectCount;
