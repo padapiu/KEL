@@ -2918,6 +2918,9 @@
 
         // 5. Hàm quay lại danh sách
         window.exitToThptDashboard = function() {
+
+window.history.pushState({ pageId: 'thpt', tabId: null }, "", "#thpt");
+            
             document.getElementById('thpt-result-room').classList.add('hidden');
             document.getElementById('thpt-dashboard').classList.remove('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
