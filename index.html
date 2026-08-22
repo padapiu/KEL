@@ -1963,7 +1963,7 @@
             
             window.activeListeningParts = selectedParts; 
             isTakingExam = true;
-
+window.hasShownStrictPopup = false;
             const safeUrlName = encodeURIComponent(testName.replace(/\s+/g, '-').toLowerCase());
             window.history.pushState({ pageId: 'exam', tabId: 'listening' }, "", `#exam/listening/${safeUrlName}`);
             
@@ -2110,11 +2110,18 @@
             audioElement.playbackRate = parseFloat(document.getElementById('audio-speed').value);
             document.getElementById('btn-audio-play').innerHTML = `<svg class="w-5 h-5 ml-1" fill="currentColor" viewBox="0 0 20 20"><path d="M4 4l12 6-12 6z"></path></svg>`;
 
-            // Nếu đang trong phòng "Thi thật" thì hiện lại Popup bắt buộc bấm Play mỗi khi sang Part mới
+           // MỚI: Chỉ hiện Popup 1 lần duy nhất lúc bắt đầu
             const examRoom = document.getElementById('ielts-exam-room');
             if (examRoom.classList.contains('strict-mode')) {
-                document.getElementById('strict-audio-popup').classList.remove('hidden');
-                document.getElementById('strict-audio-popup').classList.add('flex');
+                if (!window.hasShownStrictPopup) {
+                    // Nếu chưa hiện bao giờ -> Hiện popup lên
+                    document.getElementById('strict-audio-popup').classList.remove('hidden');
+                    document.getElementById('strict-audio-popup').classList.add('flex');
+                    window.hasShownStrictPopup = true; // Đánh dấu là đã hiện
+                } else {
+                    // Nếu đã hiện rồi (đang chuyển sang part khác) -> Tự động chạy audio luôn
+                    audioElement.play().catch(e => console.log("Trình duyệt chặn autoplay", e));
+                }
             }
         };
 
