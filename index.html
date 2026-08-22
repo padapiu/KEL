@@ -768,6 +768,39 @@
                         </div>
                     </div>
                 </div>
+                <!-- ======================================================== -->
+                <!-- BẮT ĐẦU: GIAO DIỆN THI THẬT (STRICT MODE) -->
+                <!-- ======================================================== -->
+                <!-- Overlay Audio Popup -->
+                <div id="strict-audio-popup" class="fixed inset-0 bg-black/60 z-[100] hidden flex-col items-center justify-center backdrop-blur-sm">
+                    <div class="bg-[#2a2a2a] text-white p-10 rounded-xl max-w-2xl text-center shadow-2xl border border-gray-600">
+                        <div class="text-5xl mb-6">🎧</div>
+                        <p class="text-xl font-bold mb-3">You will be listening to an audio clip during this test.</p>
+                        <p class="text-gray-300 mb-8 text-sm">You will not be permitted to pause or rewind the audio while answering the questions.</p>
+                        <p class="text-sm mb-4 text-gray-400">To continue, click Play</p>
+                        <button onclick="playStrictAudio()" class="bg-[#3a3a3a] hover:bg-[#555] text-white px-8 py-3 rounded-lg flex items-center justify-center gap-2 mx-auto border border-gray-500 transition shadow-lg">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M4 4l12 6-12 6z"></path></svg> Play
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Thanh điều hướng dưới đáy -->
+                <div id="strict-bottom-nav" class="fixed bottom-0 left-0 right-0 bg-[#f8f9fa] dark:bg-slate-900 border-t border-gray-300 dark:border-slate-700 shadow-[0_-5px_15px_rgba(0,0,0,0.05)] z-50 hidden justify-between items-center px-4 h-14">
+                    <div class="flex h-full overflow-x-auto" id="strict-part-tabs">
+                        <button onclick="switchIeltsPart(1)" id="strict-tab-1" class="px-6 h-full border-b-4 border-blue-600 font-bold text-blue-600 bg-white dark:bg-slate-800 flex items-center justify-center">Part 1</button>
+                        <button onclick="switchIeltsPart(2)" id="strict-tab-2" class="px-6 h-full border-b-4 border-transparent font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-800 flex items-center justify-center">Part 2</button>
+                        <button onclick="switchIeltsPart(3)" id="strict-tab-3" class="px-6 h-full border-b-4 border-transparent font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-800 flex items-center justify-center">Part 3</button>
+                        <button onclick="switchIeltsPart(4)" id="strict-tab-4" class="px-6 h-full border-b-4 border-transparent font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-800 flex items-center justify-center">Part 4</button>
+                    </div>
+                    <div class="flex h-full gap-2 py-2">
+                        <button onclick="strictPrevPart()" class="w-12 h-full flex items-center justify-center rounded bg-white border border-gray-300 dark:border-slate-600 hover:bg-gray-100 dark:bg-slate-800 dark:hover:bg-slate-700 transition">
+                           <svg class="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                        </button>
+                        <button onclick="strictNextPart()" class="w-12 h-full flex items-center justify-center rounded bg-gray-800 text-white hover:bg-gray-700 transition">
+                           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        </button>
+                    </div>
+                </div>
             </div>
 <!-- BẮT ĐẦU: Màn hình Kết Quả Listening (MỚI) -->
             <div id="ielts-listening-result-dashboard" class="hidden max-w-5xl mx-auto py-8 px-4">
@@ -1921,30 +1954,66 @@
         // Biến toàn cục lưu trữ các part đang được phép hiển thị
         window.activeListeningParts = [1, 2, 3, 4];
 
-        // HÀM ĐÃ SỬA: Ẩn đi các thanh Tab của những part không được chọn
+// ========================================================
+        // LOGIC PHÒNG THI IELTS LISTENING (CẬP NHẬT GIAO DIỆN THI THẬT)
+        // ========================================================
         window.startIeltsExam = function(testName, isStrict, customDuration = 40, selectedParts = [1, 2, 3, 4]) {
             currentIeltsTestName = testName;
             let duration = customDuration; 
             
-            // Cập nhật các part đang thi
             window.activeListeningParts = selectedParts; 
-            
             isTakingExam = true;
 
-            // Đổi tên đề bài thành định dạng URL đẹp mắt (vd: cambridge-21-test-4)
             const safeUrlName = encodeURIComponent(testName.replace(/\s+/g, '-').toLowerCase());
-            // Ra lệnh đổi thanh địa chỉ URL
             window.history.pushState({ pageId: 'exam', tabId: 'listening' }, "", `#exam/listening/${safeUrlName}`);
             
             document.getElementById('ielts-dashboard').classList.add('hidden');
             document.getElementById('ielts-exam-room').classList.remove('hidden');
             document.getElementById('ielts-exam-title').innerText = testName;
             
-            if(document.getElementById('btn-exit-listening')) {
-                document.getElementById('btn-exit-listening').remove();
+            // --- XỬ LÝ GIAO DIỆN "THI THẬT" (STRICT MODE) ---
+            const examRoom = document.getElementById('ielts-exam-room');
+            const audioControlBox = document.querySelector('#ielts-exam-room .bg-cyan-50.rounded-xl.p-3');
+            const oldNavigator = document.getElementById('ielts-part-navigator');
+            const timerContainer = document.getElementById('ielts-timer-display').parentElement;
+            
+            if (isStrict) {
+                // CHẾ ĐỘ THI THẬT: Ẩn giao diện cũ, dùng giao diện mới
+                examRoom.classList.add('strict-mode');
+                if(audioControlBox) audioControlBox.classList.add('hidden');
+                if(oldNavigator) oldNavigator.classList.add('hidden');
+                
+                // Đổi giao diện đồng hồ sang dạng "34 minutes remaining"
+                timerContainer.className = "text-gray-600 dark:text-gray-300 font-bold flex items-center gap-2";
+                document.getElementById('ielts-timer-display').className = "text-sm";
+                document.getElementById('ielts-timer-display').innerHTML = `${duration} minutes remaining`;
+                
+                // Ẩn nút Nộp bài trên Top Bar
+                document.getElementById('btn-submit-ielts').classList.add('hidden');
+                
+                // Hiện Thanh điều hướng dưới đáy
+                document.getElementById('strict-bottom-nav').classList.remove('hidden');
+                document.getElementById('strict-bottom-nav').classList.add('flex');
+                
+                // Chừa khoảng trống phía dưới để thanh nav không đè lên câu hỏi
+                document.getElementById('ielts-exam-content').style.paddingBottom = "80px";
+            } else {
+                // CHẾ ĐỘ LUYỆN TẬP: Giữ nguyên giao diện cũ
+                examRoom.classList.remove('strict-mode');
+                if(audioControlBox) audioControlBox.classList.remove('hidden');
+                if(oldNavigator) oldNavigator.classList.remove('hidden');
+                
+                // Trả lại giao diện đồng hồ đếm ngược bình thường
+                timerContainer.className = "bg-rose-50 dark:bg-rose-900/30 text-rose-500 dark:text-rose-400 font-mono font-bold text-2xl px-4 py-2 rounded-xl border border-rose-200 dark:border-rose-800 flex items-center gap-2";
+                document.getElementById('ielts-timer-display').className = "";
+                
+                document.getElementById('btn-submit-ielts').classList.remove('hidden');
+                document.getElementById('strict-bottom-nav').classList.add('hidden');
+                document.getElementById('strict-bottom-nav').classList.remove('flex');
+                document.getElementById('ielts-exam-content').style.paddingBottom = "0px";
             }
-
-            document.getElementById('btn-submit-ielts').classList.remove('hidden');
+            // ------------------------------------------------
+            
             document.getElementById('btn-retake-ielts').classList.add('hidden');
             const transcriptArea = document.getElementById('ielts-transcript-area');
             if(transcriptArea) transcriptArea.classList.add('hidden');
@@ -1960,25 +2029,13 @@
             });
             document.querySelectorAll('#ielts-exam-content span.text-emerald-500.ml-2').forEach(span => span.remove());
             
-            // ĐIỂM QUAN TRỌNG: Ẩn / Hiện thanh Tab điều hướng dựa trên danh sách part
-            for(let i=1; i<=4; i++) {
-                const tab = document.getElementById(`tab-part-${i}`);
-                if (tab) {
-                    if (selectedParts.includes(i)) {
-                        tab.style.display = 'inline-block'; // Hiện
-                    } else {
-                        tab.style.display = 'none'; // Ẩn
-                    }
-                }
-            }
-
             audioElement.pause();
             audioElement.currentTime = 0;
             audioElement.playbackRate = 1.0;
             document.getElementById('audio-speed').value = "1";
             document.getElementById('btn-audio-play').innerHTML = `<svg class="w-5 h-5 ml-1" fill="currentColor" viewBox="0 0 20 20"><path d="M4 4l12 6-12 6z"></path></svg>`;
             
-            // Thay vì luôn mở Part 1, ta mở Part đầu tiên trong danh sách người dùng chọn
+            // Khởi chạy tab đầu tiên
             if(typeof window.switchIeltsPart === 'function') window.switchIeltsPart(selectedParts[0]);
             
             let timeInSecs = duration * 60;
@@ -1990,9 +2047,14 @@
                 timeInSecs--;
                 let m = Math.floor(timeInSecs / 60).toString().padStart(2, '0');
                 let s = (timeInSecs % 60).toString().padStart(2, '0');
-                timerDisplay.innerText = `${m}:${s}`;
                 
-                if (timeInSecs === 300) {
+                if (isStrict) {
+                    timerDisplay.innerText = `${m} minutes remaining`; // Giao diện Thi thật
+                } else {
+                    timerDisplay.innerText = `${m}:${s}`; // Giao diện Luyện tập
+                }
+                
+                if (timeInSecs === 300 && !isStrict) {
                     showToast("Chỉ còn 5 phút nữa!", "warning");
                     timerDisplay.parentElement.classList.add('animate-pulse');
                 }
@@ -2004,27 +2066,33 @@
             }, 1000);
             
             window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+        };
 
-        // HÀM ĐÃ SỬA: Chặn việc tải nội dung của Part bị ẩn
         window.switchIeltsPart = function(partNum) {
             for(let i=1; i<=4; i++) {
                 const tab = document.getElementById(`tab-part-${i}`);
+                const strictTab = document.getElementById(`strict-tab-${i}`);
                 const content = document.getElementById(`ielts-part-${i}-content`);
                 
-                if(tab && content) {
-                    // Chỉ xử lý màu sắc và nội dung nếu part này đang được chọn thi
+                if(content) {
                     if (window.activeListeningParts.includes(i)) {
                         if(i === partNum) {
-                            tab.className = "px-6 py-2 border-b-4 border-cyan-500 font-bold text-cyan-600 dark:text-cyan-400 focus:outline-none whitespace-nowrap";
+                            // Chỉnh Style Tab Luyện tập
+                            if(tab) tab.className = "px-6 py-2 border-b-4 border-cyan-500 font-bold text-cyan-600 dark:text-cyan-400 focus:outline-none whitespace-nowrap";
+                            // Chỉnh Style Tab Thi Thật
+                            if(strictTab) strictTab.className = "px-6 h-full border-b-4 border-blue-600 font-bold text-blue-600 bg-white dark:bg-slate-800 flex items-center justify-center";
                             content.classList.remove('hidden');
                         } else {
-                            tab.className = "px-6 py-2 border-b-4 border-transparent font-medium text-gray-500 hover:text-cyan-600 focus:outline-none whitespace-nowrap";
+                            if(tab) tab.className = "px-6 py-2 border-b-4 border-transparent font-medium text-gray-500 hover:text-cyan-600 focus:outline-none whitespace-nowrap";
+                            if(strictTab) strictTab.className = "px-6 h-full border-b-4 border-transparent font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-800 flex items-center justify-center";
                             content.classList.add('hidden');
                         }
+                        if(tab) tab.style.display = 'inline-block';
+                        if(strictTab) strictTab.style.display = 'flex';
                     } else {
-                        // Nếu không chọn, ép đóng nội dung
                         content.classList.add('hidden');
+                        if(tab) tab.style.display = 'none';
+                        if(strictTab) strictTab.style.display = 'none';
                     }
                 }
             }
@@ -2041,7 +2109,58 @@
             
             audioElement.playbackRate = parseFloat(document.getElementById('audio-speed').value);
             document.getElementById('btn-audio-play').innerHTML = `<svg class="w-5 h-5 ml-1" fill="currentColor" viewBox="0 0 20 20"><path d="M4 4l12 6-12 6z"></path></svg>`;
-        }
+
+            // Nếu đang trong phòng "Thi thật" thì hiện lại Popup bắt buộc bấm Play mỗi khi sang Part mới
+            const examRoom = document.getElementById('ielts-exam-room');
+            if (examRoom.classList.contains('strict-mode')) {
+                document.getElementById('strict-audio-popup').classList.remove('hidden');
+                document.getElementById('strict-audio-popup').classList.add('flex');
+            }
+        };
+
+        // --- CÁC HÀM XỬ LÝ MỚI CHO STRICT MODE ---
+        window.playStrictAudio = function() {
+            document.getElementById('strict-audio-popup').classList.add('hidden');
+            document.getElementById('strict-audio-popup').classList.remove('flex');
+            audioElement.play();
+        };
+
+        window.strictNextPart = function() {
+            let currentPart = 1;
+            for(let i=1; i<=4; i++) {
+                const content = document.getElementById(`ielts-part-${i}-content`);
+                if (content && !content.classList.contains('hidden')) {
+                    currentPart = i;
+                    break;
+                }
+            }
+            
+            // Nếu vẫn còn part tiếp theo trong danh sách học sinh chọn -> Chuyển part
+            if (currentPart < window.activeListeningParts[window.activeListeningParts.length - 1]) {
+                const nextIdx = window.activeListeningParts.indexOf(currentPart) + 1;
+                switchIeltsPart(window.activeListeningParts[nextIdx]);
+            } else {
+                // Nếu đã là Part cuối, hỏi có muốn nộp bài không
+                if(confirm("Đây là phần thi cuối cùng. Bạn có chắc chắn muốn nộp bài?")) {
+                    submitIeltsExam(false);
+                }
+            }
+        };
+
+        window.strictPrevPart = function() {
+            let currentPart = 1;
+            for(let i=1; i<=4; i++) {
+                const content = document.getElementById(`ielts-part-${i}-content`);
+                if (content && !content.classList.contains('hidden')) {
+                    currentPart = i;
+                    break;
+                }
+            }
+            if (currentPart > window.activeListeningParts[0]) {
+                const prevIdx = window.activeListeningParts.indexOf(currentPart) - 1;
+                switchIeltsPart(window.activeListeningParts[prevIdx]);
+            }
+        };
 
        // Biến toàn cục lưu trạng thái bài làm Listening để phân tích
         window.tempListeningResultsMap = {};
