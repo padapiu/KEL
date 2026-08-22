@@ -3240,7 +3240,88 @@ window.startIeltsReadingExam = function(testName, isStrict, customDuration = 60,
             
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+window.switchIeltsReadingPart = function(partNum) {
+            for(let i=1; i<=3; i++) {
+                const tab = document.getElementById(`tab-read-${i}`);
+                const strictTab = document.getElementById(`strict-read-tab-${i}`);
+                
+                if(window.activeReadingParts.includes(i)) {
+                    if(i === partNum) {
+                        if(tab) tab.className = "px-4 py-2 font-bold bg-emerald-500 text-white transition focus:outline-none";
+                        if(strictTab) strictTab.className = "px-6 h-full border-b-4 border-emerald-500 font-bold text-emerald-600 bg-white dark:bg-slate-800 flex items-center justify-center transition-colors";
+                    } else {
+                        if(tab) tab.className = "px-4 py-2 font-bold bg-gray-100 text-gray-600 dark:bg-slate-700 dark:text-gray-300 hover:bg-gray-200 transition focus:outline-none";
+                        if(strictTab) strictTab.className = "px-6 h-full border-b-4 border-transparent font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-800 flex items-center justify-center transition-colors";
+                    }
+                }
+            }
+            
+            if (window.activeReadingParts.includes(partNum)) {
+                document.getElementById('reading-passage-container').innerHTML = ieltsReadingData[partNum].content;
+                document.getElementById('reading-questions-container').innerHTML = ieltsReadingData[partNum].questions;
+                
+                for(let i=1; i<=40; i++) {
+                    if(window[`userAnsRead${i}`]) {
+                        let el = document.getElementById(`read-ans-${i}`);
+                        if(el) {
+                            el.value = window[`userAnsRead${i}`];
+                        } else {
+                            let radio = document.querySelector(`input[name="rq${i}"][value="${window[`userAnsRead${i}`]}"]`);
+                            if(radio) radio.checked = true;
+                        }
+                    }
+                    
+                    let elInput = document.getElementById(`read-ans-${i}`);
+                    if(elInput) {
+                        elInput.addEventListener('change', (e) => { window[`userAnsRead${i}`] = e.target.value; });
+                    } else {
+                        let radios = document.querySelectorAll(`input[name="rq${i}"]`);
+                        radios.forEach(r => r.addEventListener('change', (e) => { window[`userAnsRead${i}`] = e.target.value; }));
+                    }
+                }
+            } else {
+                document.getElementById('reading-passage-container').innerHTML = "";
+                document.getElementById('reading-questions-container').innerHTML = "";
+            }
+            
+            document.querySelector('.reading-passage-pane').scrollTop = 0;
+            document.querySelector('.reading-questions-pane').scrollTop = 0;
+        };
 
+        window.strictNextReadingPart = function() {
+            let currentPart = 1;
+            for(let i=1; i<=3; i++) {
+                const tab = document.getElementById(`strict-read-tab-${i}`);
+                if (tab && tab.classList.contains('border-emerald-500')) {
+                    currentPart = i;
+                    break;
+                }
+            }
+            
+            if (currentPart < window.activeReadingParts[window.activeReadingParts.length - 1]) {
+                const nextIdx = window.activeReadingParts.indexOf(currentPart) + 1;
+                switchIeltsReadingPart(window.activeReadingParts[nextIdx]);
+            } else {
+                if(confirm("Đây là đoạn văn cuối cùng. Bạn có chắc chắn muốn nộp bài?")) {
+                    submitIeltsReadingExam(false);
+                }
+            }
+        };
+        window.strictPrevReadingPart = function() {
+            let currentPart = 1;
+            for(let i=1; i<=3; i++) {
+                const tab = document.getElementById(`strict-read-tab-${i}`);
+                if (tab && tab.classList.contains('border-emerald-500')) {
+                    currentPart = i;
+                    break;
+                }
+            }
+            
+            if (currentPart > window.activeReadingParts[0]) {
+                const prevIdx = window.activeReadingParts.indexOf(currentPart) - 1;
+                switchIeltsReadingPart(window.activeReadingParts[prevIdx]);
+            }
+        };
         window.submitIeltsReadingExam = function(isTimeout = false) {
             if (!isTimeout) {
                 if (!confirm("Bạn có chắc chắn muốn nộp bài? Các câu chưa điền sẽ tính là sai.")) return;
