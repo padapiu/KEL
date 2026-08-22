@@ -1929,6 +1929,12 @@
             window.activeListeningParts = selectedParts; 
             
             isTakingExam = true;
+
+            // Đổi tên đề bài thành định dạng URL đẹp mắt (vd: cambridge-21-test-4)
+            const safeUrlName = encodeURIComponent(testName.replace(/\s+/g, '-').toLowerCase());
+            // Ra lệnh đổi thanh địa chỉ URL
+            window.history.pushState({ pageId: 'exam', tabId: 'listening' }, "", `#exam/listening/${safeUrlName}`);
+            
             document.getElementById('ielts-dashboard').classList.add('hidden');
             document.getElementById('ielts-exam-room').classList.remove('hidden');
             document.getElementById('ielts-exam-title').innerText = testName;
