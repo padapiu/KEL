@@ -23,7 +23,7 @@ module.exports = async function handler(req, res) {
         const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
         
         // MẸO: Bạn nên dùng mô hình ổn định như gemini-1.5-flash-latest để hạn chế lỗi 503
-        const model = genAI.getGenerativeModel({ model: "gemini-3.6-flash" });
+        const model = genAI.getGenerativeModel({ model: "gemini-3.5-flash" });
 
         // Xây dựng câu lệnh Prompt cho AI
         const systemPrompt = `
