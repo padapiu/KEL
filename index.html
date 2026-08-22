@@ -3097,14 +3097,18 @@ window.history.pushState({ pageId: 'thpt', tabId: null }, "", "#thpt");
 // Biến toàn cục lưu danh sách Passage đang được chọn
         window.activeReadingParts = [1, 2, 3];
 
-        // HÀM MỞ PHÒNG THI READING MỚI
+// ========================================================
+        // LOGIC PHÒNG THI IELTS READING (CÓ GIAO DIỆN THI THẬT)
+        // ========================================================
+        window.activeReadingParts = [1, 2, 3];
+
         window.startIeltsReadingExam = function(testName, isStrict, customDuration = 60, selectedParts = [1, 2, 3]) {
             currentIeltsReadingTestName = testName;
             let duration = customDuration; 
-            window.activeReadingParts = selectedParts; // Lưu lại các phần người dùng chọn
+            window.activeReadingParts = selectedParts; 
             isTakingExam = true;
 
-const safeUrlName = encodeURIComponent(testName.replace(/\s+/g, '-').toLowerCase());
+            const safeUrlName = encodeURIComponent(testName.replace(/\s+/g, '-').toLowerCase());
             window.history.pushState({ pageId: 'exam', tabId: 'reading' }, "", `#exam/reading/${safeUrlName}`);
             
             document.getElementById('ielts-dashboard').classList.add('hidden');
@@ -3114,18 +3118,59 @@ const safeUrlName = encodeURIComponent(testName.replace(/\s+/g, '-').toLowerCase
             document.querySelector('.reading-split-layout').classList.remove('hidden');
             
             document.getElementById('ielts-reading-exam-title').innerText = testName;
-            document.getElementById('btn-submit-reading').classList.remove('hidden');
+            
+            // --- XỬ LÝ GIAO DIỆN "THI THẬT" (STRICT MODE) CHO READING ---
+            const topControlsContainer = document.getElementById('reading-controls-container');
+            const topTabsContainer = document.getElementById('reading-tabs-container');
+            const timerContainer = document.getElementById('reading-timer-container');
+            const btnSubmitTop = document.getElementById('btn-submit-reading');
+            const bottomNav = document.getElementById('strict-reading-bottom-nav');
+            const splitContainer = document.getElementById('reading-split-container');
+            
+            if (isStrict) {
+                // Ẩn thanh Tab trên và Nút nộp bài trên
+                if(topTabsContainer) topTabsContainer.classList.add('hidden');
+                if(btnSubmitTop) btnSubmitTop.classList.add('hidden');
+                
+                // Đổi đồng hồ sang dạng Text
+                if(timerContainer) timerContainer.className = "text-gray-600 dark:text-gray-300 font-bold flex items-center gap-2";
+                document.getElementById('ielts-reading-timer-display').className = "text-sm";
+                document.getElementById('ielts-reading-timer-display').innerHTML = `${duration} minutes remaining`;
+                
+                // Hiện thanh điều hướng dưới đáy
+                if(bottomNav) {
+                    bottomNav.classList.remove('hidden');
+                    bottomNav.classList.add('flex');
+                }
+                
+                // Tạo khoảng trống dưới cùng để không bị che chữ
+                if(splitContainer) splitContainer.style.paddingBottom = "80px";
+            } else {
+                // Trả lại giao diện luyện tập
+                if(topTabsContainer) topTabsContainer.classList.remove('hidden');
+                if(btnSubmitTop) btnSubmitTop.classList.remove('hidden');
+                
+                if(timerContainer) timerContainer.className = "bg-rose-50 dark:bg-rose-900/30 text-rose-500 dark:text-rose-400 font-mono font-bold text-2xl px-4 py-2 rounded-xl border border-rose-200 dark:border-rose-800 flex items-center gap-2";
+                document.getElementById('ielts-reading-timer-display').className = "";
+                
+                if(bottomNav) {
+                    bottomNav.classList.add('hidden');
+                    bottomNav.classList.remove('flex');
+                }
+                if(splitContainer) splitContainer.style.paddingBottom = "0px";
+            }
             
             for (let i = 1; i <= 40; i++) {
                 window[`userAnsRead${i}`] = null;
             }
             
-            // Ẩn/Hiện Tab Passage dựa trên lựa chọn
+            // Ẩn/Hiện Tab Passage dựa trên lựa chọn của người dùng
             for(let i=1; i<=3; i++) {
                 const tab = document.getElementById(`tab-read-${i}`);
-                if (tab) {
-                    tab.style.display = selectedParts.includes(i) ? 'inline-block' : 'none';
-                }
+                const strictTab = document.getElementById(`strict-read-tab-${i}`);
+                
+                if (tab) tab.style.display = selectedParts.includes(i) ? 'inline-block' : 'none';
+                if (strictTab) strictTab.style.display = selectedParts.includes(i) ? 'flex' : 'none';
             }
             
             // Mở Passage đầu tiên có trong danh sách chọn
@@ -3133,7 +3178,7 @@ const safeUrlName = encodeURIComponent(testName.replace(/\s+/g, '-').toLowerCase
             
             let timeInSecs = duration * 60;
             const timerDisplay = document.getElementById('ielts-reading-timer-display');
-            timerDisplay.parentElement.classList.remove('animate-pulse');
+            if(!isStrict && timerDisplay.parentElement) timerDisplay.parentElement.classList.remove('animate-pulse');
             
             if(typeof ieltsReadingTimerInterval !== 'undefined') clearInterval(ieltsReadingTimerInterval);
             
@@ -3141,7 +3186,17 @@ const safeUrlName = encodeURIComponent(testName.replace(/\s+/g, '-').toLowerCase
                 timeInSecs--;
                 let m = Math.floor(timeInSecs / 60).toString().padStart(2, '0');
                 let s = (timeInSecs % 60).toString().padStart(2, '0');
-                timerDisplay.innerText = `${m}:${s}`;
+                
+                if (isStrict) {
+                    timerDisplay.innerText = `${m} minutes remaining`;
+                } else {
+                    timerDisplay.innerText = `${m}:${s}`;
+                    if (timeInSecs === 300) {
+                        showToast("Chỉ còn 5 phút nữa!", "warning");
+                        timerDisplay.parentElement.classList.add('animate-pulse');
+                    }
+                }
+                
                 if (timeInSecs <= 0) {
                     clearInterval(ieltsReadingTimerInterval);
                     submitIeltsReadingExam(true); 
@@ -3151,15 +3206,20 @@ const safeUrlName = encodeURIComponent(testName.replace(/\s+/g, '-').toLowerCase
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
         
-        // HÀM CHUYỂN TAB READING MỚI
         window.switchIeltsReadingPart = function(partNum) {
             for(let i=1; i<=3; i++) {
                 const tab = document.getElementById(`tab-read-${i}`);
-                if(tab && window.activeReadingParts.includes(i)) {
+                const strictTab = document.getElementById(`strict-read-tab-${i}`);
+                
+                if(window.activeReadingParts.includes(i)) {
                     if(i === partNum) {
-                        tab.className = "px-4 py-2 font-bold bg-emerald-500 text-white transition focus:outline-none";
+                        // Style Tab trên (Luyện tập)
+                        if(tab) tab.className = "px-4 py-2 font-bold bg-emerald-500 text-white transition focus:outline-none";
+                        // Style Tab dưới (Thi thật - Màu ngọc bích giống nút nộp bài)
+                        if(strictTab) strictTab.className = "px-6 h-full border-b-4 border-emerald-500 font-bold text-emerald-600 bg-white dark:bg-slate-800 flex items-center justify-center transition-colors";
                     } else {
-                        tab.className = "px-4 py-2 font-bold bg-gray-100 text-gray-600 dark:bg-slate-700 dark:text-gray-300 hover:bg-gray-200 transition focus:outline-none";
+                        if(tab) tab.className = "px-4 py-2 font-bold bg-gray-100 text-gray-600 dark:bg-slate-700 dark:text-gray-300 hover:bg-gray-200 transition focus:outline-none";
+                        if(strictTab) strictTab.className = "px-6 h-full border-b-4 border-transparent font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-800 flex items-center justify-center transition-colors";
                     }
                 }
             }
@@ -3198,6 +3258,43 @@ const safeUrlName = encodeURIComponent(testName.replace(/\s+/g, '-').toLowerCase
             document.querySelector('.reading-passage-pane').scrollTop = 0;
             document.querySelector('.reading-questions-pane').scrollTop = 0;
         }
+
+        // --- HÀM ĐIỀU HƯỚNG TỚI LUI CHO READING (THI THẬT) ---
+        window.strictNextReadingPart = function() {
+            let currentPart = 1;
+            for(let i=1; i<=3; i++) {
+                const tab = document.getElementById(`strict-read-tab-${i}`);
+                if (tab && tab.classList.contains('border-emerald-500')) {
+                    currentPart = i;
+                    break;
+                }
+            }
+            
+            if (currentPart < window.activeReadingParts[window.activeReadingParts.length - 1]) {
+                const nextIdx = window.activeReadingParts.indexOf(currentPart) + 1;
+                switchIeltsReadingPart(window.activeReadingParts[nextIdx]);
+            } else {
+                if(confirm("Đây là đoạn văn cuối cùng. Bạn có chắc chắn muốn nộp bài?")) {
+                    submitIeltsReadingExam(false);
+                }
+            }
+        };
+
+        window.strictPrevReadingPart = function() {
+            let currentPart = 1;
+            for(let i=1; i<=3; i++) {
+                const tab = document.getElementById(`strict-read-tab-${i}`);
+                if (tab && tab.classList.contains('border-emerald-500')) {
+                    currentPart = i;
+                    break;
+                }
+            }
+            
+            if (currentPart > window.activeReadingParts[0]) {
+                const prevIdx = window.activeReadingParts.indexOf(currentPart) - 1;
+                switchIeltsReadingPart(window.activeReadingParts[prevIdx]);
+            }
+        };
 
         // STREAMING_CHUNK: Processing Result Dashboard UI and Explanations...
         window.submitIeltsReadingExam = function(isTimeout = false) {
