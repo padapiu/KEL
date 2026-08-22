@@ -1685,7 +1685,7 @@
 
 // ------------------ LOGIC UI VÀ ĐIỀU HƯỚNG BẢO VỆ ------------------
         
-        // [MỚI] Thêm tham số pushToHistory để kiểm soát lịch sử duyệt web
+// [MỚI] Thêm tham số pushToHistory để kiểm soát lịch sử duyệt web
         function showPage(pageId, tabId = 'listening', pushToHistory = true) {
             if (isTakingExam) {
                 const confirmExit = confirm("⚠️ CẢNH BÁO: Bạn đang trong phòng thi! Nếu thoát ra, toàn bộ tiến trình làm bài sẽ bị mất. Bạn có chắc chắn muốn thoát?");
@@ -1703,14 +1703,31 @@
                     audioEl.currentTime = 0;
                 }
 
+                // SỬA LỖI TẠI ĐÂY: Bổ sung các thanh Bottom Nav vào danh sách cần ẩn
                 const elementsToHide = [
                     'thpt-exam-room', 'ielts-exam-room', 'ielts-reading-exam-room',
-                    'ielts-reading-result-dashboard', 'ielts-reading-explanation-area'
+                    'ielts-reading-result-dashboard', 'ielts-reading-explanation-area',
+                    'strict-bottom-nav', 'strict-reading-bottom-nav' 
                 ];
+                
                 elementsToHide.forEach(id => {
                     const el = document.getElementById(id);
-                    if (el) el.classList.add('hidden');
+                    if (el) {
+                        el.classList.add('hidden');
+                        el.classList.remove('flex'); // Đảm bảo gỡ class flex của thanh nav
+                    }
                 });
+
+                // Khôi phục lại padding cho các vùng nội dung làm bài
+                const ieltsContent = document.getElementById('ielts-exam-content');
+                if (ieltsContent) ieltsContent.style.paddingBottom = "0px";
+                
+                const readingContainer = document.getElementById('reading-split-container');
+                if (readingContainer) readingContainer.style.paddingBottom = "0px";
+
+                // Bật lại thanh header cho reading nếu nó bị ẩn
+                const topHeader = document.querySelector('#ielts-reading-exam-room > div.fixed');
+                if (topHeader) topHeader.classList.remove('hidden');
 
                 const elementsToShow = ['thpt-dashboard', 'ielts-dashboard'];
                 elementsToShow.forEach(id => {
