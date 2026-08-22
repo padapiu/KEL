@@ -3296,8 +3296,7 @@ window.history.pushState({ pageId: 'thpt', tabId: null }, "", "#thpt");
             }
         };
 
-        // STREAMING_CHUNK: Processing Result Dashboard UI and Explanations...
-        window.submitIeltsReadingExam = function(isTimeout = false) {
+window.submitIeltsReadingExam = function(isTimeout = false) {
             if (!isTimeout) {
                 if (!confirm("Bạn có chắc chắn muốn nộp bài? Các câu chưa điền sẽ tính là sai.")) return;
             }
@@ -3339,14 +3338,32 @@ window.history.pushState({ pageId: 'thpt', tabId: null }, "", "#thpt");
             else if(correctCount >= 10) bandScore = 4.0;
             else bandScore = 3.5;
 
+            // 1. Ẩn giao diện làm bài
             document.querySelector('.reading-split-layout').classList.add('hidden');
-            document.getElementById('btn-submit-reading').classList.add('hidden');
             
+            // 2. Ẩn Nút nộp bài ở thanh trên (nếu có)
+            const btnSubmitTop = document.getElementById('btn-submit-reading');
+            if (btnSubmitTop) btnSubmitTop.classList.add('hidden');
+            
+            // 3. MỚI: Ẩn thanh điều hướng dưới đáy của chế độ Thi thật
+            const bottomNav = document.getElementById('strict-reading-bottom-nav');
+            if (bottomNav) {
+                bottomNav.classList.add('hidden');
+                bottomNav.classList.remove('flex');
+            }
+            
+            // 4. MỚI: Reset lại padding để màn hình kết quả không bị hổng ở dưới đáy
+            const splitContainer = document.getElementById('reading-split-container');
+            if (splitContainer) splitContainer.style.paddingBottom = "0px";
+            
+            // 5. Cập nhật tiêu đề sang Dashboard Kết Quả
             document.getElementById('ielts-reading-exam-title').innerText = "Dashboard Kết Quả";
             document.getElementById('reading-exam-subtitle').innerText = currentIeltsReadingTestName;
             
+            // 6. Hiện màn hình kết quả
             document.getElementById('ielts-reading-result-dashboard').classList.remove('hidden');
             
+            // 7. Đổ dữ liệu điểm số
             document.getElementById('reading-correct-count-display').innerText = correctCount;
             document.getElementById('reading-stat-correct').innerText = correctCount;
             document.getElementById('reading-stat-incorrect').innerText = incorrectCount;
@@ -3355,7 +3372,7 @@ window.history.pushState({ pageId: 'thpt', tabId: null }, "", "#thpt");
             const circle = document.getElementById('reading-score-circle');
             const circumference = 552;
             const offset = circumference - (correctCount / 40) * circumference;
-            circle.style.strokeDashoffset = offset;
+            if (circle) circle.style.strokeDashoffset = offset;
             
             document.getElementById('reading-band-score-display').innerText = bandScore.toFixed(1);
             
@@ -3392,7 +3409,7 @@ window.history.pushState({ pageId: 'thpt', tabId: null }, "", "#thpt");
                     </tr>
                 `;
             }
-            analyticsBody.innerHTML = tableHtml;
+            if (analyticsBody) analyticsBody.innerHTML = tableHtml;
 
             window.tempReadingResultsMap = resultsMap;
 
