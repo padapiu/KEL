@@ -1200,13 +1200,13 @@
                 <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-6 border-b pb-2 dark:border-slate-700">📚 Các bộ từ vựng phổ biến</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-12">
                     
-                    <!-- Card Đề Mẫu 1 -->
-                    <div onclick="startFlashcard()" class="bg-white dark:bg-slate-800 rounded-2xl p-5 shadow-sm hover:shadow-lg border border-gray-100 dark:border-slate-700 transition cursor-pointer group flex flex-col h-full">
-                        <h4 class="font-bold text-lg text-gray-800 dark:text-white group-hover:text-cyan-500 transition-colors mb-2 line-clamp-2">Từ vựng tiếng Anh văn phòng</h4>
-                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-6 flex items-center gap-2"><span>📑 536 từ</span> <span class="w-1 h-1 rounded-full bg-gray-300"></span> <span>👤 49,773</span></p>
+                    <!-- Card Đề Mẫu 1: Work and Career -->
+                    <div onclick="startFlashcard('work_career')" class="bg-white dark:bg-slate-800 rounded-2xl p-5 shadow-sm hover:shadow-lg border border-gray-100 dark:border-slate-700 transition cursor-pointer group flex flex-col h-full">
+                        <h4 class="font-bold text-lg text-gray-800 dark:text-white group-hover:text-cyan-500 transition-colors mb-2 line-clamp-2">Topic: Work and Career ( B1-B2)</h4>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-6 flex items-center gap-2"><span> 50 từ</span> <span class="w-1 h-1 rounded-full bg-gray-300"></span> <span></span></p>
                         <div class="flex items-center gap-2 mt-auto">
                             <img src="https://i.postimg.cc/MG12Bzyq/logo.png" class="w-6 h-6 rounded-full bg-cyan-100 object-cover border border-cyan-200">
-                            <span class="text-xs font-bold text-gray-600 dark:text-gray-400">KEL Education</span>
+                            <span class="text-xs font-bold text-gray-600 dark:text-gray-400">KELVIN LE</span>
                         </div>
                     </div>
 
@@ -1275,7 +1275,7 @@
                         </div>
                         
                         <div class="relative z-10 w-full sm:w-1/2">
-                            <button onclick="startFlashcard()" class="w-full bg-white text-blue-700 font-extrabold py-3.5 rounded-xl shadow-lg hover:bg-gray-50 transition transform hover:-translate-y-1">Bắt Đầu Học Ngay</button>
+                            <button onclick="startFlashcard('personal')" class="w-full bg-white text-blue-700 font-extrabold py-3.5 rounded-xl shadow-lg hover:bg-gray-50 transition transform hover:-translate-y-1">Bắt Đầu Học Ngay</button>
                         </div>
                     </div>
 
@@ -3809,11 +3809,58 @@ window.renderStreakCalendar();
         
         // 1. Cơ sở dữ liệu từ vựng mẫu
         const vocabDatabase = [
-            { word: "late", type: "adverb", phonetic: "/leɪt/", meaning: "trễ, muộn", example: "Don't stay up too late." },
-            { word: "lazy", type: "adjective", phonetic: "/ˈleɪ.zi/", meaning: "lười biếng", example: "He is too lazy to clean his room." },
-            { word: "kiss", type: "verb", phonetic: "/kɪs/", meaning: "hôn", example: "She kissed him on the cheek." },
-            { word: "count", type: "verb", phonetic: "/kaʊnt/", meaning: "đếm", example: "Can your daughter count yet?" },
-            { word: "accept", type: "verb", phonetic: "/əkˈsept/", meaning: "nhận, chấp nhận", example: "We accept payment by Visa or cash." }
+        // BỘ DỮ LIỆU TỪ VỰNG: WORK AND CAREER (B1-B2)
+        const workCareerVocab = [
+            { word: "apply for a job", type: "phrase", phonetic: "/.../", meaning: "Nộp đơn xin việc", example: "I decided to apply for a job at the new tech company.<br><br><i>Đồng nghĩa: seek a job, put in an application</i>" },
+            { word: "attend an interview", type: "phrase", phonetic: "/.../", meaning: "Tham dự phỏng vấn", example: "She is preparing to attend an interview tomorrow.<br><br><i>Đồng nghĩa: go for an interview</i>" },
+            { word: "career path", type: "noun", phonetic: "/.../", meaning: "Con đường sự nghiệp", example: "Teaching is a very rewarding career path.<br><br><i>Đồng nghĩa: career trajectory, professional progression</i>" },
+            { word: "climb the career ladder", type: "phrase", phonetic: "/.../", meaning: "Thăng tiến nghề nghiệp", example: "He works hard to climb the career ladder.<br><br><i>Đồng nghĩa: advance professionally, move up</i>" },
+            { word: "colleague", type: "noun", phonetic: "/ˈkɒliːɡ/", meaning: "Đồng nghiệp", example: "My colleagues are very supportive and friendly.<br><br><i>Đồng nghĩa: co-worker, associate</i>" },
+            { word: "competitive salary", type: "noun", phonetic: "/.../", meaning: "Mức lương cạnh tranh", example: "The company offers a competitive salary for this role.<br><br><i>Đồng nghĩa: attractive pay, good remuneration</i>" },
+            { word: "dead-end job", type: "noun", phonetic: "/.../", meaning: "Công việc không có tương lai", example: "I quit because it was a dead-end job.<br><br><i>Đồng nghĩa: unpromising job, job with no prospects</i>" },
+            { word: "earn a living", type: "phrase", phonetic: "/.../", meaning: "Kiếm sống", example: "He earns a living by writing freelance articles.<br><br><i>Đồng nghĩa: make money, make a living</i>" },
+            { word: "flexible working hours", type: "noun", phonetic: "/.../", meaning: "Giờ làm việc linh hoạt", example: "Parents often prefer flexible working hours.<br><br><i>Đồng nghĩa: flextime, adaptable schedule</i>" },
+            { word: "freelance work", type: "noun", phonetic: "/.../", meaning: "Công việc tự do", example: "Freelance work gives me more freedom to travel.<br><br><i>Đồng nghĩa: independent work, contract work</i>" },
+            { word: "full-time job", type: "noun", phonetic: "/.../", meaning: "Công việc toàn thời gian", example: "Finding a full-time job can be challenging.<br><br><i>Đồng nghĩa: permanent job, regular employment</i>" },
+            { word: "gain experience", type: "phrase", phonetic: "/.../", meaning: "Lấy kinh nghiệm", example: "Volunteering is a great way to gain experience.<br><br><i>Đồng nghĩa: acquire experience, get experience</i>" },
+            { word: "heavy workload", type: "noun", phonetic: "/.../", meaning: "Khối lượng công việc lớn", example: "I am stressed because of a heavy workload.<br><br><i>Đồng nghĩa: lot of work, demanding schedule</i>" },
+            { word: "hire new staff", type: "phrase", phonetic: "/.../", meaning: "Thuê nhân viên mới", example: "We need to hire new staff for the upcoming project.<br><br><i>Đồng nghĩa: recruit, employ</i>" },
+            { word: "job satisfaction", type: "noun", phonetic: "/.../", meaning: "Sự hài lòng với công việc", example: "Job satisfaction is more important than money for me.<br><br><i>Đồng nghĩa: work fulfillment, content at work</i>" },
+            { word: "job security", type: "noun", phonetic: "/.../", meaning: "Sự đảm bảo việc làm", example: "Government jobs usually offer great job security.<br><br><i>Đồng nghĩa: employment stability</i>" },
+            { word: "minimum wage", type: "noun", phonetic: "/.../", meaning: "Mức lương tối thiểu", example: "The government plans to increase the minimum wage.<br><br><i>Đồng nghĩa: lowest pay, base rate</i>" },
+            { word: "part-time job", type: "noun", phonetic: "/.../", meaning: "Việc làm bán thời gian", example: "Students often take a part-time job to pay for tuition.<br><br><i>Đồng nghĩa: half-time job, casual work</i>" },
+            { word: "pay rise", type: "noun", phonetic: "/.../", meaning: "Tăng lương", example: "She asked her boss for a pay rise after a successful year.<br><br><i>Đồng nghĩa: salary increase, wage hike</i>" },
+            { word: "pension scheme", type: "noun", phonetic: "/.../", meaning: "Chế độ lương hưu", example: "The company offers a good pension scheme for its employees.<br><br><i>Đồng nghĩa: retirement plan, pension fund</i>" },
+            { word: "probation period", type: "noun", phonetic: "/.../", meaning: "Thời gian thử việc", example: "You will have a two-month probation period.<br><br><i>Đồng nghĩa: trial period</i>" },
+            { word: "promoted (get promoted)", type: "phrase", phonetic: "/.../", meaning: "Được thăng chức", example: "If you work hard, you might get promoted.<br><br><i>Đồng nghĩa: advance, move up</i>" },
+            { word: "quit a job", type: "phrase", phonetic: "/.../", meaning: "Nghỉ việc", example: "He decided to quit a job that made him unhappy.<br><br><i>Đồng nghĩa: resign, leave a job</i>" },
+            { word: "recruitment agency", type: "noun", phonetic: "/.../", meaning: "Công ty tuyển dụng", example: "We hired a recruitment agency to find good candidates.<br><br><i>Đồng nghĩa: employment agency, staffing firm</i>" },
+            { word: "resign from a job", type: "phrase", phonetic: "/.../", meaning: "Từ chức", example: "The manager resigned from his job due to health issues.<br><br><i>Đồng nghĩa: step down, quit</i>" },
+            { word: "retire early", type: "phrase", phonetic: "/.../", meaning: "Nghỉ hưu sớm", example: "They saved enough money to retire early.<br><br><i>Đồng nghĩa: stop working early</i>" },
+            { word: "run a business", type: "phrase", phonetic: "/.../", meaning: "Điều hành doanh nghiệp", example: "It takes a lot of effort to run a business.<br><br><i>Đồng nghĩa: manage a company, operate a business</i>" },
+            { word: "shift work", type: "noun", phonetic: "/.../", meaning: "Làm việc theo ca", example: "Nurses often have to do shift work.<br><br><i>Đồng nghĩa: working in shifts</i>" },
+            { word: "sick leave", type: "noun", phonetic: "/.../", meaning: "Nghỉ ốm", example: "He is on sick leave because of a bad cold.<br><br><i>Đồng nghĩa: medical leave, time off sick</i>" },
+            { word: "take time off", type: "phrase", phonetic: "/.../", meaning: "Xin nghỉ phép", example: "I need to take time off to deal with personal matters.<br><br><i>Đồng nghĩa: go on leave, take a break</i>" },
+            { word: "teamwork skills", type: "noun", phonetic: "/.../", meaning: "Kỹ năng làm việc nhóm", example: "Good teamwork skills are essential in this office.<br><br><i>Đồng nghĩa: collaborative skills</i>" },
+            { word: "temporary job", type: "noun", phonetic: "/.../", meaning: "Công việc tạm thời", example: "I found a temporary job for the summer.<br><br><i>Đồng nghĩa: short-term job, interim job</i>" },
+            { word: "unemployed", type: "adjective", phonetic: "/.../", meaning: "Thất nghiệp", example: "He has been unemployed for six months.<br><br><i>Đồng nghĩa: jobless, out of work</i>" },
+            { word: "work environment", type: "noun", phonetic: "/.../", meaning: "Môi trường làm việc", example: "A positive work environment increases productivity.<br><br><i>Đồng nghĩa: workplace atmosphere</i>" },
+            { word: "work under pressure", type: "phrase", phonetic: "/.../", meaning: "Làm việc dưới áp lực", example: "You need the ability to work under pressure.<br><br><i>Đồng nghĩa: handle stress</i>" },
+            { word: "workaholic", type: "noun", phonetic: "/.../", meaning: "Người nghiện công việc", example: "My boss is a workaholic who never takes a break.<br><br><i>Đồng nghĩa: work-obsessed, overworker</i>" },
+            { word: "working conditions", type: "noun", phonetic: "/.../", meaning: "Điều kiện làm việc", example: "The factory improved its working conditions recently.<br><br><i>Đồng nghĩa: workplace setup</i>" },
+            { word: "work-life balance", type: "noun", phonetic: "/.../", meaning: "Cân bằng công việc - cuộc sống", example: "It's important to maintain a healthy work-life balance.<br><br><i>Đồng nghĩa: lifestyle balance</i>" },
+            { word: "accept an offer", type: "phrase", phonetic: "/.../", meaning: "Chấp nhận lời đề nghị", example: "I was thrilled to accept their job offer.<br><br><i>Đồng nghĩa: agree to an offer, take a job</i>" },
+            { word: "background check", type: "noun", phonetic: "/.../", meaning: "Kiểm tra lý lịch", example: "The HR department will run a background check.<br><br><i>Đồng nghĩa: vetting, screening</i>" },
+            { word: "bonus", type: "noun", phonetic: "/ˈbəʊnəs/", meaning: "Tiền thưởng", example: "We received a generous Christmas bonus this year.<br><br><i>Đồng nghĩa: extra pay, reward</i>" },
+            { word: "dismiss an employee", type: "phrase", phonetic: "/.../", meaning: "Sa thải nhân viên", example: "The company had to dismiss an employee for stealing.<br><br><i>Đồng nghĩa: fire, terminate</i>" },
+            { word: "employability", type: "noun", phonetic: "/.../", meaning: "Khả năng được tuyển dụng", example: "Learning a new language boosts your employability.<br><br><i>Đồng nghĩa: job prospects</i>" },
+            { word: "hands-on experience", type: "noun", phonetic: "/.../", meaning: "Kinh nghiệm thực tế", example: "The course provides hands-on experience in coding.<br><br><i>Đồng nghĩa: practical experience</i>" },
+            { word: "job hunting", type: "noun", phonetic: "/.../", meaning: "Việc tìm kiếm việc làm", example: "Job hunting can be a frustrating process.<br><br><i>Đồng nghĩa: job seeking, looking for work</i>" },
+            { word: "lay off staff", type: "phrase", phonetic: "/.../", meaning: "Sa thải nhân viên (do dư thừa)", example: "The factory had to lay off staff due to low sales.<br><br><i>Đồng nghĩa: make redundant</i>" },
+            { word: "maternity leave", type: "noun", phonetic: "/.../", meaning: "Nghỉ thai sản", example: "She is currently on maternity leave.<br><br><i>Đồng nghĩa: parental leave</i>" },
+            { word: "meet a deadline", type: "phrase", phonetic: "/.../", meaning: "Hoàn thành đúng hạn", example: "We had to work late to meet a deadline.<br><br><i>Đồng nghĩa: finish on time</i>" },
+            { word: "professional development", type: "noun", phonetic: "/.../", meaning: "Phát triển chuyên môn", example: "The school invests in teachers' professional development.<br><br><i>Đồng nghĩa: career growth</i>" },
+            { word: "take over a role", type: "phrase", phonetic: "/.../", meaning: "Đảm nhận vị trí", example: "She will take over the role of manager next month.<br><br><i>Đồng nghĩa: assume a position</i>" }
         ];
 
         let currentCardIndex = 0;
@@ -3885,10 +3932,24 @@ window.renderStreakCalendar();
             closeAddVocabModal(); // Tự động đóng Popup
         };
 
-        // 2. Hàm bắt đầu học
-        window.startFlashcard = function() {
+       // 2. Hàm bắt đầu học (Nhận tham số để biết học bộ nào)
+        window.startFlashcard = function(deckType = 'personal') {
             document.getElementById('vocab-dashboard').classList.add('hidden');
             document.getElementById('vocab-study-room').classList.remove('hidden');
+            
+            // Chuyển đổi cơ sở dữ liệu dựa trên nút người dùng bấm
+            if (deckType === 'work_career') {
+                currentLearningDB = workCareerVocab;
+            } else {
+                currentLearningDB = vocabDatabase; // Mặc định là bộ từ cá nhân
+            }
+
+            if(currentLearningDB.length === 0) {
+                showToast("Bộ từ vựng này hiện chưa có từ nào!", "warning");
+                exitFlashcard();
+                return;
+            }
+
             currentCardIndex = 0;
             learnedCount = 0;
             loadCardData(currentCardIndex);
@@ -3903,19 +3964,18 @@ window.renderStreakCalendar();
             document.getElementById('vocab-review').innerText = vocabDatabase.length - learnedCount;
         };
 
-        // 4. Hàm nạp dữ liệu từ vựng lên thẻ
+// 4. Hàm nạp dữ liệu từ vựng lên thẻ
         function loadCardData(index) {
-            const data = vocabDatabase[index];
+            const data = currentLearningDB[index]; // Sử dụng mảng đang được trỏ tới
             document.getElementById('fc-word').innerText = data.word;
             document.getElementById('fc-type').innerText = data.type;
             document.getElementById('fc-phonetic').innerText = data.phonetic;
             document.getElementById('fc-meaning').innerText = data.meaning;
-            document.getElementById('fc-example').innerText = data.example;
+            document.getElementById('fc-example').innerHTML = data.example; // Dùng innerHTML để in đậm/in nghiêng từ đồng nghĩa
             
-            // Cập nhật tiến trình (VD: 1 / 5)
-            document.getElementById('flashcard-progress').innerText = `${index + 1} / ${vocabDatabase.length}`;
+            // Cập nhật tiến trình (VD: 1 / 50)
+            document.getElementById('flashcard-progress').innerText = `${index + 1} / ${currentLearningDB.length}`;
             
-            // Đảm bảo thẻ luôn ngửa mặt trước khi tải từ mới
             const container = document.querySelector('.flashcard-container');
             container.classList.remove('flipped');
         }
@@ -3926,24 +3986,23 @@ window.renderStreakCalendar();
             container.classList.toggle('flipped');
         };
 
-        // 6. Hàm chuyển sang thẻ tiếp theo khi bấm nút Đánh giá
+       // 6. Hàm chuyển sang thẻ tiếp theo khi bấm nút Đánh giá
         window.nextCard = function(rating) {
-            // Ngăn thẻ lật lại nếu nó đang úp (tạo cảm giác mượt hơn)
             const container = document.querySelector('.flashcard-container');
             container.classList.remove('flipped');
 
-            // Tính điểm đã học
             if(rating !== 'hard') learnedCount++;
 
             setTimeout(() => {
                 currentCardIndex++;
-                if (currentCardIndex < vocabDatabase.length) {
+                // So sánh với độ dài của mảng đang học
+                if (currentCardIndex < currentLearningDB.length) {
                     loadCardData(currentCardIndex);
                 } else {
-                    showToast("🎉 Chúc mừng! Bạn đã hoàn thành danh sách ôn tập hôm nay.");
-                    exitFlashcard(); // Quay lại màn hình chính
+                    showToast("🎉 Chúc mừng! Bạn đã hoàn thành danh sách ôn tập này.");
+                    exitFlashcard(); 
                 }
-            }, 300); // Đợi 300ms cho thẻ lật về trước khi đổi chữ
+            }, 300);
         };
 
         // 7. Hàm Đọc phát âm (Web Speech API)
