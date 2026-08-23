@@ -1189,31 +1189,132 @@
 
         <!-- KHU VỰC TỪ VỰNG FLASHCARD (ĐÃ SỬA LỖI CẤU TRÚC) -->
         <div id="page-vocab" class="page-content">
-            <!-- 1. Màn hình Thống kê (Dashboard) -->
-            <div id="vocab-dashboard" class="max-w-5xl mx-auto py-12 px-6 reveal active">
-                <h2 class="text-3xl font-extrabold text-center text-[#2b3674] dark:text-cyan-300 mb-8">Flashcards: Từ vựng Tiếng Anh giao tiếp</h2>
-                
-                <div class="text-center mb-8">
-                    <button onclick="startFlashcard()" class="bg-cyan-500 hover:bg-cyan-400 text-white font-bold py-3 px-10 rounded-xl shadow-lg transition transform hover:-translate-y-1">
-                        Luyện tập Flashcards
-                    </button>
+<!-- 1. Màn hình Thống kê (Dashboard) - Giao diện dạng Lưới -->
+            <div id="vocab-dashboard" class="max-w-7xl mx-auto py-12 px-4 md:px-8 reveal active">
+                <div class="mb-10 text-center md:text-left">
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-[#2b3674] dark:text-cyan-300 mb-2">Kho Flashcards Từ Vựng</h2>
+                    <p class="text-gray-500 dark:text-gray-400">Khám phá các bộ từ vựng được biên soạn sẵn hoặc tự tạo danh sách ôn tập cho riêng bạn.</p>
                 </div>
 
-                <!-- Bảng Thống kê -->
-                <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 p-6 flex justify-around items-center text-center">
-                    <div>
-                        <p class="text-3xl font-black text-gray-800 dark:text-white" id="vocab-total">5</p>
-                        <p class="text-sm font-bold text-gray-500 mt-1">Tổng số từ</p>
+                <!-- Khu vực 1: Bộ từ vựng hệ thống (Giống hình ảnh yêu cầu) -->
+                <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-6 border-b pb-2 dark:border-slate-700">📚 Các bộ từ vựng phổ biến</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-12">
+                    
+                    <!-- Card Đề Mẫu 1 -->
+                    <div onclick="startFlashcard()" class="bg-white dark:bg-slate-800 rounded-2xl p-5 shadow-sm hover:shadow-lg border border-gray-100 dark:border-slate-700 transition cursor-pointer group flex flex-col h-full">
+                        <h4 class="font-bold text-lg text-gray-800 dark:text-white group-hover:text-cyan-500 transition-colors mb-2 line-clamp-2">Từ vựng tiếng Anh văn phòng</h4>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-6 flex items-center gap-2"><span>📑 536 từ</span> <span class="w-1 h-1 rounded-full bg-gray-300"></span> <span>👤 49,773</span></p>
+                        <div class="flex items-center gap-2 mt-auto">
+                            <img src="https://i.postimg.cc/MG12Bzyq/logo.png" class="w-6 h-6 rounded-full bg-cyan-100 object-cover border border-cyan-200">
+                            <span class="text-xs font-bold text-gray-600 dark:text-gray-400">KEL Education</span>
+                        </div>
                     </div>
-                    <div class="w-px h-12 bg-gray-200 dark:bg-slate-700"></div>
-                    <div>
-                        <p class="text-3xl font-black text-emerald-500" id="vocab-learned">0</p>
-                        <p class="text-sm font-bold text-gray-500 mt-1">Đã học</p>
+
+                    <!-- Card Đề Mẫu 2 -->
+                    <div onclick="startFlashcard()" class="bg-white dark:bg-slate-800 rounded-2xl p-5 shadow-sm hover:shadow-lg border border-gray-100 dark:border-slate-700 transition cursor-pointer group flex flex-col h-full">
+                        <h4 class="font-bold text-lg text-gray-800 dark:text-white group-hover:text-cyan-500 transition-colors mb-2 line-clamp-2">Từ vựng Tiếng Anh giao tiếp trung cấp</h4>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-6 flex items-center gap-2"><span>📑 797 từ</span> <span class="w-1 h-1 rounded-full bg-gray-300"></span> <span>👤 28,728</span></p>
+                        <div class="flex items-center gap-2 mt-auto">
+                            <img src="https://i.postimg.cc/MG12Bzyq/logo.png" class="w-6 h-6 rounded-full bg-cyan-100 object-cover border border-cyan-200">
+                            <span class="text-xs font-bold text-gray-600 dark:text-gray-400">KEL Education</span>
+                        </div>
                     </div>
-                    <div class="w-px h-12 bg-gray-200 dark:bg-slate-700"></div>
-                    <div>
-                        <p class="text-3xl font-black text-rose-500" id="vocab-review">5</p>
-                        <p class="text-sm font-bold text-gray-500 mt-1">Cần ôn tập</p>
+
+                    <!-- Card Đề Mẫu 3 -->
+                    <div onclick="startFlashcard()" class="bg-white dark:bg-slate-800 rounded-2xl p-5 shadow-sm hover:shadow-lg border border-gray-100 dark:border-slate-700 transition cursor-pointer group flex flex-col h-full">
+                        <h4 class="font-bold text-lg text-gray-800 dark:text-white group-hover:text-cyan-500 transition-colors mb-2 line-clamp-2">900 từ vựng IELTS (có ảnh minh họa)</h4>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-6 flex items-center gap-2"><span>📑 893 từ</span> <span class="w-1 h-1 rounded-full bg-gray-300"></span> <span>👤 59,145</span></p>
+                        <div class="flex items-center gap-2 mt-auto">
+                            <img src="https://i.postimg.cc/MG12Bzyq/logo.png" class="w-6 h-6 rounded-full bg-cyan-100 object-cover border border-cyan-200">
+                            <span class="text-xs font-bold text-gray-600 dark:text-gray-400">KEL Education</span>
+                        </div>
+                    </div>
+
+                    <!-- Card Đề Mẫu 4 -->
+                    <div onclick="startFlashcard()" class="bg-white dark:bg-slate-800 rounded-2xl p-5 shadow-sm hover:shadow-lg border border-gray-100 dark:border-slate-700 transition cursor-pointer group flex flex-col h-full">
+                        <h4 class="font-bold text-lg text-gray-800 dark:text-white group-hover:text-cyan-500 transition-colors mb-2 line-clamp-2">TOEIC Word List (Cập nhật mới)</h4>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-6 flex items-center gap-2"><span>📑 1,194 từ</span> <span class="w-1 h-1 rounded-full bg-gray-300"></span> <span>👤 63,066</span></p>
+                        <div class="flex items-center gap-2 mt-auto">
+                            <img src="https://i.postimg.cc/MG12Bzyq/logo.png" class="w-6 h-6 rounded-full bg-cyan-100 object-cover border border-cyan-200">
+                            <span class="text-xs font-bold text-gray-600 dark:text-gray-400">KEL Education</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Khu vực 2: Từ vựng cá nhân (Có nút Thêm) -->
+                <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-6 border-b pb-2 dark:border-slate-700">⭐ Bộ từ vựng cá nhân của bạn</h3>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    
+                    <!-- Hộp Flashcard cá nhân (Kết nối với tính năng bôi đen) -->
+                    <div class="lg:col-span-2 bg-gradient-to-br from-cyan-600 to-blue-700 rounded-3xl p-8 shadow-lg text-white flex flex-col justify-between relative overflow-hidden">
+                        <!-- Background Pattern cho đẹp -->
+                        <div class="absolute top-0 right-0 opacity-10 pointer-events-none">
+                            <svg class="w-64 h-64 transform translate-x-16 -translate-y-16" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                        </div>
+                        
+                        <div class="relative z-10">
+                            <h4 class="font-black text-3xl mb-2">Từ vựng đã lưu</h4>
+                            <p class="text-cyan-100 text-sm mb-8 max-w-md">Các từ vựng bạn tra cứu khi làm đề Reading hoặc thêm thủ công sẽ được lưu trữ tự động vào đây.</p>
+                            
+                            <div class="flex flex-wrap gap-4 md:gap-8 items-center bg-white/10 rounded-2xl p-5 mb-8 backdrop-blur-sm border border-white/20 w-max">
+                                <div class="text-center px-4">
+                                    <p class="text-3xl font-black drop-shadow-sm" id="vocab-total">0</p>
+                                    <p class="text-xs font-bold opacity-80 mt-1 uppercase tracking-wider">Tổng số</p>
+                                </div>
+                                <div class="w-px h-10 bg-white/30 hidden md:block"></div>
+                                <div class="text-center px-4">
+                                    <p class="text-3xl font-black drop-shadow-sm text-emerald-300" id="vocab-learned">0</p>
+                                    <p class="text-xs font-bold opacity-80 mt-1 uppercase tracking-wider">Đã học</p>
+                                </div>
+                                <div class="w-px h-10 bg-white/30 hidden md:block"></div>
+                                <div class="text-center px-4">
+                                    <p class="text-3xl font-black drop-shadow-sm text-rose-300" id="vocab-review">0</p>
+                                    <p class="text-xs font-bold opacity-80 mt-1 uppercase tracking-wider">Cần ôn</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="relative z-10 w-full sm:w-1/2">
+                            <button onclick="startFlashcard()" class="w-full bg-white text-blue-700 font-extrabold py-3.5 rounded-xl shadow-lg hover:bg-gray-50 transition transform hover:-translate-y-1">Bắt Đầu Học Ngay</button>
+                        </div>
+                    </div>
+
+                    <!-- Hộp Thêm từ thủ công (Dấu +) -->
+                    <div onclick="openAddVocabModal()" class="border-2 border-dashed border-gray-300 dark:border-slate-600 rounded-3xl p-8 flex flex-col items-center justify-center text-gray-400 hover:text-cyan-500 hover:border-cyan-500 hover:bg-cyan-50 dark:hover:bg-slate-800 transition cursor-pointer group min-h-[300px]">
+                        <div class="w-20 h-20 rounded-full bg-gray-100 dark:bg-slate-700 group-hover:bg-cyan-100 dark:group-hover:bg-cyan-900/50 flex items-center justify-center text-4xl mb-6 transition shadow-inner">
+                            +
+                        </div>
+                        <h4 class="font-bold text-xl text-gray-700 dark:text-gray-300 group-hover:text-cyan-500 mb-2">Thêm từ vựng mới</h4>
+                        <p class="text-sm text-center px-4">Tự nhập tay từ vựng và định nghĩa của riêng bạn vào danh sách.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cửa sổ nổi (Modal) Thêm từ vựng thủ công -->
+            <div id="add-vocab-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+                <div class="bg-white dark:bg-slate-800 w-full max-w-md rounded-2xl shadow-2xl relative transform scale-95 transition-transform duration-300" id="add-vocab-content">
+                    <div class="flex justify-between items-center p-6 border-b border-gray-100 dark:border-slate-700">
+                        <h3 class="font-extrabold text-xl text-cyan-800 dark:text-cyan-300">Thêm Từ Mới</h3>
+                        <button onclick="closeAddVocabModal()" class="text-gray-400 hover:text-rose-500 bg-gray-50 hover:bg-rose-50 dark:bg-slate-700 p-2 rounded-full transition">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
+                    </div>
+                    <div class="p-6 space-y-5">
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Từ vựng tiếng Anh <span class="text-rose-500">*</span></label>
+                            <input type="text" id="manual-word" class="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-cyan-500 bg-gray-50 dark:bg-slate-700 text-gray-900 dark:text-white placeholder-gray-400 font-bold" placeholder="Ví dụ: persistent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Loại từ (Không bắt buộc)</label>
+                            <input type="text" id="manual-type" class="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-cyan-500 bg-gray-50 dark:bg-slate-700 text-gray-900 dark:text-white placeholder-gray-400" placeholder="Ví dụ: adjective, verb, noun...">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Định nghĩa tiếng Việt <span class="text-rose-500">*</span></label>
+                            <textarea id="manual-meaning" rows="3" class="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-cyan-500 bg-gray-50 dark:bg-slate-700 text-gray-900 dark:text-white placeholder-gray-400" placeholder="Ví dụ: kiên trì, bền bỉ..."></textarea>
+                        </div>
+                        <button onclick="saveManualVocab()" class="w-full bg-cyan-500 hover:bg-cyan-400 text-white font-bold py-3.5 rounded-xl shadow-md transition transform hover:-translate-y-0.5 mt-2 flex justify-center items-center gap-2">
+                            <span>💾</span> Lưu vào danh sách
+                        </button>
                     </div>
                 </div>
             </div>
@@ -3717,6 +3818,72 @@ window.renderStreakCalendar();
 
         let currentCardIndex = 0;
         let learnedCount = 0;
+
+        // LOGIC MỚI: ĐÓNG / MỞ VÀ LƯU TỪ VỰNG THỦ CÔNG
+        window.openAddVocabModal = function() {
+            const modal = document.getElementById('add-vocab-modal');
+            const content = document.getElementById('add-vocab-content');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                content.classList.remove('scale-95');
+                content.classList.add('scale-100');
+            }, 10);
+            document.getElementById('manual-word').focus(); // Tự động đưa con trỏ vào ô nhập
+        };
+
+        window.closeAddVocabModal = function() {
+            const modal = document.getElementById('add-vocab-modal');
+            const content = document.getElementById('add-vocab-content');
+            modal.classList.add('opacity-0');
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        };
+
+        window.saveManualVocab = function() {
+            const wordInput = document.getElementById('manual-word').value.trim();
+            const typeInput = document.getElementById('manual-type').value.trim();
+            const meaningInput = document.getElementById('manual-meaning').value.trim();
+
+            if (!wordInput || !meaningInput) {
+                showToast("Vui lòng nhập đầy đủ Từ vựng và Định nghĩa!", "warning");
+                return;
+            }
+
+            // Kiểm tra xem từ đã tồn tại chưa
+            const isExist = vocabDatabase.find(item => item.word.toLowerCase() === wordInput.toLowerCase());
+            if (isExist) {
+                showToast(`Từ "${wordInput}" đã có trong danh sách!`, "warning");
+                return;
+            }
+
+            // Đẩy từ mới vào mảng
+            vocabDatabase.push({
+                word: wordInput.toLowerCase(),
+                type: typeInput || "vocabulary",
+                phonetic: "/.../",
+                meaning: meaningInput,
+                example: "Nguồn: Tự thêm thủ công"
+            });
+
+            // Cập nhật lại 3 con số thống kê ở mặt ngoài
+            const totalEl = document.getElementById('vocab-total');
+            const reviewEl = document.getElementById('vocab-review');
+            if (totalEl) totalEl.innerText = vocabDatabase.length;
+            if (reviewEl) reviewEl.innerText = vocabDatabase.length - learnedCount;
+
+            showToast("Đã lưu từ mới thành công!", "success");
+            
+            // Xóa rỗng các ô nhập liệu sau khi lưu
+            document.getElementById('manual-word').value = '';
+            document.getElementById('manual-type').value = '';
+            document.getElementById('manual-meaning').value = '';
+
+            closeAddVocabModal(); // Tự động đóng Popup
+        };
 
         // 2. Hàm bắt đầu học
         window.startFlashcard = function() {
