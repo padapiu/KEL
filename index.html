@@ -2576,7 +2576,7 @@ window.hasShownStrictPopup = false;
             setTimeout(() => tooltip.classList.add('hidden'), 200);
         }
 
-// TÍNH NĂNG MỚI: Tra cứu trực tiếp từ Free Dictionary API (Không cần Backend)
+// TÍNH NĂNG MỚI: Tra cứu Free Dictionary API và Dịch sang tiếng Việt
         window.addWordToFlashcard = async function() {
             const selection = window.getSelection();
             const selectedText = selection.toString().trim();
@@ -2596,23 +2596,21 @@ window.hasShownStrictPopup = false;
                 return;
             }
 
-            // 3. Bắt đầu quá trình gọi API
+            // 3. Bắt đầu quá trình gọi API Từ điển
             showToast(`Đang tra cứu từ "${word}"...`, "warning");
 
             try {
-                // Gọi thẳng API miễn phí không cần Key xác thực
-                const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`);
+                // Gọi API từ điển tiếng Anh
+                const dictResponse = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`);
                 
-                if (!response.ok) {
+                if (!dictResponse.ok) {
                     throw new Error("Từ vựng không tồn tại trong từ điển.");
                 }
 
-                const data = await response.json();
-                
-                // 4. Bóc tách dữ liệu JSON
+                const data = await dictResponse.json();
                 const wordData = data[0];
                 
-                // Thuật toán tìm phiên âm (ưu tiên lấy text chứa dấu /.../)
+                // Thuật toán tìm phiên âm
                 let phonetic = "/.../";
                 if (wordData.phonetic) {
                     phonetic = wordData.phonetic;
@@ -2621,17 +2619,32 @@ window.hasShownStrictPopup = false;
                     if (validPhonetic) phonetic = validPhonetic.text;
                 }
                 
-                // Lấy từ loại (Noun, Verb...) và định nghĩa đầu tiên
+                // Lấy từ loại và định nghĩa tiếng Anh
                 const type = wordData.meanings[0].partOfSpeech;
-                const meaning = wordData.meanings[0].definitions[0].definition;
+                const englishMeaning = wordData.meanings[0].definitions[0].definition;
+
+                // 4. Gọi API Dịch thuật (MyMemory) để dịch nghĩa sang tiếng Việt
+                showToast(`Đang dịch nghĩa sang tiếng Việt...`, "warning");
+                let vietnameseMeaning = englishMeaning; // Mặc định giữ tiếng Anh nếu API dịch bị lỗi
+                
+                try {
+                    const transResponse = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(englishMeaning)}&langpair=en|vi`);
+                    const transData = await transResponse.json();
+                    
+                    if (transData.responseData && transData.responseData.translatedText) {
+                        vietnameseMeaning = transData.responseData.translatedText;
+                    }
+                } catch (transError) {
+                    console.error("Lỗi khi dịch thuật:", transError);
+                }
 
                 // 5. Thêm dữ liệu vào mảng Flashcard của hệ thống
                 vocabDatabase.push({
                     word: word,
                     type: type,
                     phonetic: phonetic,
-                    meaning: meaning,
-                    example: `Nguồn: Free Dictionary API`
+                    meaning: vietnameseMeaning, // Hiển thị nghĩa tiếng Việt
+                    example: `EN: ${englishMeaning}` // Lưu lại nghĩa tiếng Anh gốc để tham khảo
                 });
 
                 // 6. Cập nhật giao diện thống kê thẻ
@@ -2644,7 +2657,7 @@ window.hasShownStrictPopup = false;
 
             } catch (error) {
                 console.error("Lỗi tra từ:", error);
-                showToast(`Không tìm thấy định nghĩa tiếng Anh cho từ "${word}".`, "error");
+                showToast(`Không tìm thấy định nghĩa cho từ "${word}".`, "error");
             }
 
             // 7. Xóa bôi đen và ẩn Tooltip
