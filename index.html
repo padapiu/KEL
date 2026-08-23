@@ -4081,9 +4081,20 @@ window.renderStreakCalendar();
                 const initialPage = hashParts[0];
                 const initialTab = hashParts[1] || 'listening';
                 
-                showPage(initialPage, initialTab, false);
+                // KIỂM TRA NẾU ĐANG Ở PHÒNG THI MÀ TẢI LẠI TRANG
+                if (initialPage === 'exam') {
+                    // Dữ liệu bài làm đã mất khi F5, nên đưa người dùng về lại màn hình chọn đề
+                    if (initialTab === 'thpt') {
+                        showPage('thpt', null, false);
+                    } else {
+                        showPage('ielts', initialTab, false);
+                    }
+                } else {
+                    showPage(initialPage, initialTab, false);
+                }
             } else {
-                // Nếu chưa có hash, mặc định ở trang chủ và lưu trạng thái ban đầu
+                // Nếu chưa có hash, mặc định hiển thị trang chủ và lưu trạng thái
+                showPage('home', null, false); 
                 window.history.replaceState({ pageId: 'home', tabId: null }, "", "#home");
             }
         });
