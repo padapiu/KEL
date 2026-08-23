@@ -6,7 +6,6 @@ export default async function handler(req, res) {
         return res.status(400).json({ error: "Vui lòng cung cấp từ vựng cần tra." });
     }
 
-    // Lấy khóa bảo mật từ biến môi trường của Vercel
     const appId = process.env.OXFORD_APP_ID;
     const appKey = process.env.OXFORD_APP_KEY;
     const url = `https://od-api-sandbox.oxforddictionaries.com/api/v2/entries/en-gb/${encodeURIComponent(word)}?strictMatch=false`;
