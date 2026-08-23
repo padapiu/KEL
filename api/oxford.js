@@ -1,5 +1,5 @@
 // api/oxford.js
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
     const { word } = req.query;
 
     if (!word) {
@@ -8,7 +8,11 @@ export default async function handler(req, res) {
 
     const appId = process.env.OXFORD_APP_ID;
     const appKey = process.env.OXFORD_APP_KEY;
-    const url = `https://od-api-sandbox.oxforddictionaries.com/api/v2/entries/en-gb/${encodeURIComponent(word)}?strictMatch=false`;
+    
+    // Đảm bảo từ vựng được làm sạch khoảng trắng và viết thường
+    const cleanWord = word.toLowerCase().trim();
+    
+    const url = `https://od-api-sandbox.oxforddictionaries.com/api/v2/entries/en-gb/${encodeURIComponent(cleanWord)}?strictMatch=false`;
 
     try {
         const response = await fetch(url, {
@@ -19,8 +23,9 @@ export default async function handler(req, res) {
             }
         });
 
+        // Nếu Oxford không tìm thấy từ (VD: do từ số nhiều), nó sẽ trả về 404 ở đây
         if (!response.ok) {
-            return res.status(response.status).json({ error: "Không tìm thấy từ vựng." });
+            return res.status(response.status).json({ error: "Không tìm thấy từ vựng trên Oxford." });
         }
 
         const data = await response.json();
@@ -28,4 +33,4 @@ export default async function handler(req, res) {
     } catch (error) {
         res.status(500).json({ error: "Lỗi kết nối máy chủ." });
     }
-}
+};
