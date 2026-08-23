@@ -2576,16 +2576,18 @@ window.hasShownStrictPopup = false;
             setTimeout(() => tooltip.classList.add('hidden'), 200);
         }
 
-       // TÍNH NĂNG MỚI: Tra cứu qua Serverless Function tới Oxford API
+// TÍNH NĂNG MỚI: Tra cứu trực tiếp từ Free Dictionary API (Không cần Backend)
         window.addWordToFlashcard = async function() {
             const selection = window.getSelection();
             const selectedText = selection.toString().trim();
 
+            // 1. Ràng buộc: Chỉ tra cứu tối đa 3 từ
             if (!selectedText || selectedText.split(/\s+/).length > 3) {
-                showToast("Vui lòng chỉ bôi đen 1-3 từ vựng!", "warning");
+                showToast("Vui lòng chỉ bôi đen 1-3 từ vựng để tra cứu!", "warning");
                 return;
             }
 
+            // 2. Làm sạch từ vựng và kiểm tra trùng lặp
             const word = selectedText.toLowerCase();
             const isExist = vocabDatabase.find(item => item.word.toLowerCase() === word);
 
@@ -2594,38 +2596,45 @@ window.hasShownStrictPopup = false;
                 return;
             }
 
-            showToast(`Đang tra cứu từ "${word}" từ Oxford...`, "warning");
+            // 3. Bắt đầu quá trình gọi API
+            showToast(`Đang tra cứu từ "${word}"...`, "warning");
 
             try {
-                // Gọi tới endpoint nội bộ trên Vercel
-                const response = await fetch(`/api/oxford?word=${encodeURIComponent(word)}`);
+                // Gọi thẳng API miễn phí không cần Key xác thực
+                const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`);
                 
-                if (!response.ok) throw new Error("Không tìm thấy từ vựng");
+                if (!response.ok) {
+                    throw new Error("Từ vựng không tồn tại trong từ điển.");
+                }
 
                 const data = await response.json();
                 
-                // Bóc tách dữ liệu từ cấu trúc JSON của Oxford API
-                const lexicalEntry = data.results[0].lexicalEntries[0];
-                const type = lexicalEntry.lexicalCategory.text.toLowerCase();
+                // 4. Bóc tách dữ liệu JSON
+                const wordData = data[0];
                 
-                // Oxford có thể để phiên âm ở nhiều nơi, ta tìm mảng pronunciations
+                // Thuật toán tìm phiên âm (ưu tiên lấy text chứa dấu /.../)
                 let phonetic = "/.../";
-                if (lexicalEntry.pronunciations && lexicalEntry.pronunciations.length > 0) {
-                    phonetic = `/${lexicalEntry.pronunciations[0].phoneticSpelling}/`;
-                } else if (lexicalEntry.entries[0].pronunciations) {
-                    phonetic = `/${lexicalEntry.entries[0].pronunciations[0].phoneticSpelling}/`;
+                if (wordData.phonetic) {
+                    phonetic = wordData.phonetic;
+                } else if (wordData.phonetics && wordData.phonetics.length > 0) {
+                    const validPhonetic = wordData.phonetics.find(p => p.text);
+                    if (validPhonetic) phonetic = validPhonetic.text;
                 }
+                
+                // Lấy từ loại (Noun, Verb...) và định nghĩa đầu tiên
+                const type = wordData.meanings[0].partOfSpeech;
+                const meaning = wordData.meanings[0].definitions[0].definition;
 
-                const meaning = lexicalEntry.entries[0].senses[0].definitions[0];
-
+                // 5. Thêm dữ liệu vào mảng Flashcard của hệ thống
                 vocabDatabase.push({
                     word: word,
                     type: type,
                     phonetic: phonetic,
                     meaning: meaning,
-                    example: `Nguồn: Oxford Dictionary`
+                    example: `Nguồn: Free Dictionary API`
                 });
 
+                // 6. Cập nhật giao diện thống kê thẻ
                 const totalEl = document.getElementById('vocab-total');
                 const reviewEl = document.getElementById('vocab-review');
                 if (totalEl) totalEl.innerText = vocabDatabase.length;
@@ -2635,9 +2644,10 @@ window.hasShownStrictPopup = false;
 
             } catch (error) {
                 console.error("Lỗi tra từ:", error);
-                showToast(`Không tìm thấy định nghĩa cho từ "${word}".`, "error");
+                showToast(`Không tìm thấy định nghĩa tiếng Anh cho từ "${word}".`, "error");
             }
 
+            // 7. Xóa bôi đen và ẩn Tooltip
             const tooltip = document.getElementById('highlight-tooltip');
             tooltip.classList.add('opacity-0');
             setTimeout(() => tooltip.classList.add('hidden'), 200);
