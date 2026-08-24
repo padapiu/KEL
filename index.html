@@ -4078,10 +4078,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // 1. Bắt sự kiện khi người dùng bấm nút Quay lại (Back) hoặc Tiến (Forward) trên trình duyệt
         window.addEventListener('popstate', function(event) {
             if (event.state && event.state.pageId) {
-                // Gọi lại hàm showPage nhưng truyền 'false' để KHÔNG tạo thêm vòng lặp lịch sử
-                showPage(event.state.pageId, event.state.tabId || 'listening', false);
+                // Nếu người dùng bấm Back/Forward quay lại đúng một phòng thi, tải lại trang để làm mới bộ đếm giờ
+                if (event.state.pageId === 'exam') {
+                    window.location.reload();
+                } else {
+                    showPage(event.state.pageId, event.state.tabId || 'listening', false);
+                }
             } else {
-                // Trở về trang chủ nếu không có dữ liệu lịch sử
                 showPage('home', null, false);
             }
         });
@@ -4090,31 +4093,44 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('DOMContentLoaded', (event) => {
             showNotificationPopup(); // Hiện popup thông báo
 
-            // Đọc địa chỉ URL hiện tại (ví dụ: #ielts/reading)
             if (window.location.hash) {
-                // Tách chuỗi ra để lấy phần mục và phần tab
                 const hashParts = window.location.hash.replace('#', '').split('/');
                 const initialPage = hashParts[0];
                 const initialTab = hashParts[1] || 'listening';
                 
-                // KIỂM TRA NẾU ĐANG Ở PHÒNG THI MÀ TẢI LẠI TRANG
+                // KHI ĐANG Ở PHÒNG THI MÀ TẢI LẠI TRANG HOẶC VÀO TỪ LINK CHIA SẺ
                 if (initialPage === 'exam') {
-                    // Dữ liệu bài làm đã mất khi F5, nên đưa người dùng về lại màn hình chọn đề
+                    const testSlug = hashParts[2] || '';
+                    
+                    // 1. Chuyển trang nền bên dưới về đúng chuyên mục trước
                     if (initialTab === 'thpt') {
                         showPage('thpt', null, false);
                     } else {
                         showPage('ielts', initialTab, false);
                     }
+
+                    // 2. Đợi 1 giây để Firebase kịp xác thực đăng nhập, sau đó mở bài thi
+                    setTimeout(() => {
+                        if (initialTab === 'thpt') {
+                            if (testSlug.includes('2')) startThptExam(2);
+                            else if (testSlug.includes('3')) startThptExam(3);
+                        } else if (initialTab === 'reading') {
+                            if (testSlug.includes('cambridge-21')) openModeModal('Cambridge 21 - Reading Test 4');
+                        } else if (initialTab === 'listening') {
+                            if (testSlug.includes('cambridge-21')) openModeModal('Cambridge 21 - Listening Test 4');
+                        }
+                    }, 1000);
+
                 } else {
+                    // Nếu là các trang bình thường (home, vocab,...)
                     showPage(initialPage, initialTab, false);
                 }
             } else {
-                // Nếu chưa có hash, mặc định hiển thị trang chủ và lưu trạng thái
                 showPage('home', null, false); 
                 window.history.replaceState({ pageId: 'home', tabId: null }, "", "#home");
             }
         });
-
+        
 // Khởi tạo các biến toàn cục để lưu trữ dữ liệu ghi âm
 let mediaRecorder;
 let audioChunks = [];
