@@ -2759,11 +2759,8 @@ window.hasShownStrictPopup = false;
                 example: `EN: ${englishMeaning}` 
             });
 
-            // Cập nhật giao diện thống kê
-            const totalEl = document.getElementById('vocab-total');
-            const reviewEl = document.getElementById('vocab-review');
-            if (totalEl) totalEl.innerText = vocabDatabase.length;
-            if (reviewEl) reviewEl.innerText = vocabDatabase.length - learnedCount;
+            saveVocabToStorage();
+            updateVocabUI();
 
             showToast(`Đã thêm từ "${word}" vào Flashcards!`, "success");
 
@@ -3809,8 +3806,27 @@ window.renderStreakCalendar();
         // LOGIC FLASHCARD TỪ VỰNG
         // ==========================================
         
-        // 1. Cơ sở dữ liệu từ vựng mẫu
-        const vocabDatabase = [];
+        // 1. Cơ sở dữ liệu từ vựng 
+// Lấy dữ liệu từ localStorage, nếu chưa có thì dùng mảng rỗng []
+let vocabDatabase = JSON.parse(localStorage.getItem('myVocabDatabase')) || [];
+
+// Hàm này giúp lưu mảng hiện tại vào localStorage
+function saveVocabToStorage() {
+    localStorage.setItem('myVocabDatabase', JSON.stringify(vocabDatabase));
+}
+
+// Hàm này giúp cập nhật lại các con số thống kê trên giao diện
+function updateVocabUI() {
+    const totalEl = document.getElementById('vocab-total');
+    const reviewEl = document.getElementById('vocab-review');
+    if (totalEl) totalEl.innerText = vocabDatabase.length;
+    if (reviewEl) reviewEl.innerText = vocabDatabase.length - learnedCount;
+}
+
+// Gọi hàm cập nhật giao diện ngay khi trang vừa tải xong
+document.addEventListener('DOMContentLoaded', () => {
+    updateVocabUI();
+});
         // BỘ DỮ LIỆU TỪ VỰNG: WORK AND CAREER (B1-B2)
         const workCareerVocab = [
             { word: "apply for a job", type: "phrase", phonetic: "/.../", meaning: "Nộp đơn xin việc", example: "I decided to apply for a job at the new tech company.<br><br><i>Đồng nghĩa: seek a job, put in an application</i>" },
@@ -3917,12 +3933,9 @@ window.renderStreakCalendar();
                 meaning: meaningInput,
                 example: "Nguồn: Tự thêm thủ công"
             });
-
-            // Cập nhật lại 3 con số thống kê ở mặt ngoài
-            const totalEl = document.getElementById('vocab-total');
-            const reviewEl = document.getElementById('vocab-review');
-            if (totalEl) totalEl.innerText = vocabDatabase.length;
-            if (reviewEl) reviewEl.innerText = vocabDatabase.length - learnedCount;
+            // THÊM 2 DÒNG NÀY VÀO ĐÂY
+            saveVocabToStorage();
+            updateVocabUI();
 
             showToast("Đã lưu từ mới thành công!", "success");
             
