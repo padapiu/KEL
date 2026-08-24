@@ -164,7 +164,7 @@
                 <img id="dropdown-avatar" src="" alt="Avatar" class="w-12 h-12 rounded-full border border-gray-300 bg-white">
                 <div class="overflow-hidden">
                     <div class="font-extrabold text-[#2b3674] dark:text-white truncate" id="user-email-display">user@email.com</div>
-                    <div class="text-xs text-gray-500 dark:text-gray-400" id="current-time-display">00:00 (GMT+07:00)</div>
+                    <div class="text-xs text-gray-500 dark:text-gray-400" id="current-time-display">00:00</div>
                 </div>
             </div>
             
@@ -191,7 +191,6 @@
     </header>
 
     <main class="flex-grow">
-        <!-- STREAMING_CHUNK: Loading Home Page content including IELTS Calculator and Streak... -->
        <!-- STREAMING_CHUNK: Loading Home Page content including IELTS Calculator and Streak... -->
         <div id="page-home" class="page-content active">
 
@@ -1051,22 +1050,6 @@
                         </button>
                     </div>
                 </div>
-        
-            <!-- Highlight Tooltip for Both (Thêm nút Xóa Highlight) -->
-            <div id="highlight-tooltip" class="absolute hidden z-50 bg-white dark:bg-slate-800 shadow-xl rounded-full border border-gray-200 dark:border-slate-700 flex gap-2 p-2 transform -translate-x-1/2 -translate-y-full transition-opacity">
-                <button onclick="applyHighlight('bg-yellow-300 dark:bg-yellow-500/60 text-black dark:text-white')" class="w-7 h-7 rounded-full bg-yellow-300 border-2 border-white dark:border-slate-800 shadow-sm hover:scale-110 transition" title="Highlight Vàng"></button>
-                <button onclick="applyHighlight('bg-blue-300 dark:bg-blue-500/60 text-black dark:text-white')" class="w-7 h-7 rounded-full bg-blue-300 border-2 border-white dark:border-slate-800 shadow-sm hover:scale-110 transition" title="Highlight Xanh Dương"></button>
-                <button onclick="applyHighlight('bg-emerald-300 dark:bg-emerald-500/60 text-black dark:text-white')" class="w-7 h-7 rounded-full bg-emerald-300 border-2 border-white dark:border-slate-800 shadow-sm hover:scale-110 transition" title="Highlight Xanh Lá"></button>
-                <div class="w-px h-6 bg-gray-300 dark:bg-gray-600 mx-1 self-center"></div>
-                <button onclick="removeHighlight()" class="w-7 h-7 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 flex items-center justify-center transition border border-gray-300 dark:border-gray-500" title="Xóa Highlight">
-                    <svg class="w-4 h-4 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                </button>
-                <!-- NÚT MỚI: Thêm vào Flashcard -->
-                <button onclick="addWordToFlashcard()" class="w-7 h-7 rounded-full bg-cyan-100 dark:bg-cyan-900/50 hover:bg-cyan-200 dark:hover:bg-cyan-800 flex items-center justify-center transition border border-cyan-300 dark:border-cyan-700" title="Thêm vào Flashcard">
-                    <svg class="w-4 h-4 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                </button>
-            </div>
-        </div>
 
 <!-- KHU VỰC THPT QUỐC GIA (ĐÃ SỬA LỖI CẤU TRÚC) -->
         <div id="page-thpt" class="page-content">
@@ -1406,6 +1389,22 @@
                  <h2 class="text-4xl font-extrabold text-[#2b3674] dark:text-cyan-300 mb-4">Hệ Thống Khóa Học Đang Cập Nhật</h2>
                  <button onclick="showPage('home')" class="mt-8 px-6 py-2 bg-cyan-100 text-cyan-700 font-bold rounded-lg hover:bg-cyan-200 transition">Quay lại Trang Chủ</button>
              </div>
+        </div>
+
+         <!-- Highlight Tooltip for Both (Thêm nút Xóa Highlight) -->
+            <div id="highlight-tooltip" class="absolute hidden z-50 bg-white dark:bg-slate-800 shadow-xl rounded-full border border-gray-200 dark:border-slate-700 flex gap-2 p-2 transform -translate-x-1/2 -translate-y-full transition-opacity">
+                <button onclick="applyHighlight('bg-yellow-300 dark:bg-yellow-500/60 text-black dark:text-white')" class="w-7 h-7 rounded-full bg-yellow-300 border-2 border-white dark:border-slate-800 shadow-sm hover:scale-110 transition" title="Highlight Vàng"></button>
+                <button onclick="applyHighlight('bg-blue-300 dark:bg-blue-500/60 text-black dark:text-white')" class="w-7 h-7 rounded-full bg-blue-300 border-2 border-white dark:border-slate-800 shadow-sm hover:scale-110 transition" title="Highlight Xanh Dương"></button>
+                <button onclick="applyHighlight('bg-emerald-300 dark:bg-emerald-500/60 text-black dark:text-white')" class="w-7 h-7 rounded-full bg-emerald-300 border-2 border-white dark:border-slate-800 shadow-sm hover:scale-110 transition" title="Highlight Xanh Lá"></button>
+                <div class="w-px h-6 bg-gray-300 dark:bg-gray-600 mx-1 self-center"></div>
+                <button onclick="removeHighlight()" class="w-7 h-7 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 flex items-center justify-center transition border border-gray-300 dark:border-gray-500" title="Xóa Highlight">
+                    <svg class="w-4 h-4 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                </button>
+                <!-- NÚT MỚI: Thêm vào Flashcard -->
+                <button onclick="addWordToFlashcard()" class="w-7 h-7 rounded-full bg-cyan-100 dark:bg-cyan-900/50 hover:bg-cyan-200 dark:hover:bg-cyan-800 flex items-center justify-center transition border border-cyan-300 dark:border-cyan-700" title="Thêm vào Flashcard">
+                    <svg class="w-4 h-4 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                </button>
+            </div>
         </div>
     </main>
 
@@ -2591,7 +2590,8 @@ window.hasShownStrictPopup = false;
             const examTextReadPassage = document.getElementById('reading-passage-container');
             const examTextReadQuestions = document.getElementById('reading-questions-container'); // Cho phép highlight câu hỏi
             const examTextExp = document.getElementById('exp-passage-container');
-            
+            const thptQuestions = document.getElementById('thpt-questions-container');
+            const thptExplanations = document.getElementById('thpt-explanations-container');
             const tooltip = document.getElementById('highlight-tooltip');
             
             let targetNode = null;
@@ -2599,7 +2599,8 @@ window.hasShownStrictPopup = false;
             else if (examTextReadPassage && examTextReadPassage.contains(e.target)) targetNode = examTextReadPassage;
             else if (examTextReadQuestions && examTextReadQuestions.contains(e.target)) targetNode = examTextReadQuestions;
             else if (examTextExp && examTextExp.contains(e.target)) targetNode = examTextExp;
-            
+            else if (thptQuestions && thptQuestions.contains(e.target)) targetNode = thptQuestions;
+            else if (thptExplanations && thptExplanations.contains(e.target)) targetNode = thptExplanations;
             if (!targetNode && !tooltip.contains(e.target)) {
                 tooltip.classList.add('hidden');
                 tooltip.classList.add('opacity-0');
