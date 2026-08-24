@@ -237,7 +237,7 @@
                     <div class="flex justify-between items-center mb-4">
                         <div>
                             <h3 class="text-2xl font-bold text-[#2b3674] dark:text-cyan-300 flex items-center gap-2">
-                                <span>🔥</span> Lịch Học Tập (Streak)
+                                <span>🔥</span> Lịch Học Tập
                             </h3>
                             <p class="text-sm text-gray-500 dark:text-gray-400">Các ô có ngọn lửa thể hiện bạn đã hoàn thành bài thi.</p>
                         </div>
@@ -323,7 +323,7 @@
 
             <section class="py-12 px-6 bg-amber-50 dark:bg-slate-800 rounded-[30px] mx-4 md:mx-12 my-8 shadow-sm reveal">
                 <h2 class="text-3xl font-bold text-center text-amber-500 dark:text-amber-400 mb-6">Luyện Bộ Đề THPT Quốc Gia</h2>
-                <p class="text-center text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto text-lg">Trải nghiệm bộ đề bám sát cấu trúc mới nhất của Bộ GD&ĐT.</p>
+                <p class="text-center text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto text-lg">Trải nghiệm bộ đề bám sát cấu trúc của Bộ GD&ĐT.</p>
                 <div class="text-center">
                     <button onclick="showPage('thpt')" class="bg-amber-500 hover:bg-amber-400 text-white font-bold py-3 px-10 rounded-full transition shadow-lg transform hover:-translate-y-1">Vào Thi Ngay</button>
                 </div>
@@ -583,10 +583,12 @@
                         <div class="flex items-center gap-2 ml-auto">
                             <span class="text-xs font-bold text-gray-500 dark:text-gray-400">Speed:</span>
                             <select id="audio-speed" onchange="changeAudioSpeed()" class="bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded text-sm px-2 py-1 font-bold text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                                <option value="0.25">0.25x</option>
                                 <option value="0.5">0.5x</option>
                                 <option value="1" selected>1.0x</option>
                                 <option value="1.25">1.25x</option>
                                 <option value="1.5">1.5x</option>
+                                <option value="1.75">1.75x</option>
                                 <option value="2">2.0x</option>
                             </select>
                         </div>
@@ -1648,7 +1650,7 @@
                             <p class="font-bold text-gray-700 dark:text-gray-200 mb-3 text-sm">Test information</p>
                             <div class="bg-gray-50 dark:bg-slate-700/50 p-4 rounded-xl border border-gray-200 dark:border-slate-600 text-sm text-gray-600 dark:text-gray-300 flex items-start gap-3">
                                 <span class="text-xl mt-0.5">📄</span> 
-                                <span>Full parts<br><span class="text-xs opacity-70">(32 minutes - 4 parts - 40 questions)</span></span>
+                                <span>Full parts<br><span class="text-xs opacity-70"></span></span>
                             </div>
                         </div>
                         
