@@ -4347,7 +4347,7 @@ if (btnStartRecord) {
             if (event.data.size > 0) {
                 audioChunks.push(event.data);
             }
-     });
+     };
 
         mediaRecorder.onstop = () => {
             const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
@@ -4376,8 +4376,9 @@ if (btnStartRecord) {
     } catch (err) {
         alert("Không thể truy cập Micro. Vui lòng kiểm tra lại quyền cấp phép của trình duyệt!");
         console.error("Lỗi Micro: ", err);
-    }
-});
+      }
+  });
+}
 
 // ==========================================
 // 3. SỰ KIỆN NÚT DỪNG THU ÂM
@@ -4397,8 +4398,9 @@ if (btnStopRecord) {
         btnStopRecord.classList.replace('text-rose-600', 'text-gray-400');
         btnStopRecord.classList.replace('border-rose-500', 'border-gray-300');
         btnStopRecord.classList.add('cursor-not-allowed');
-    }
-});
+       }
+    });
+}
     </script>
     
 <script type="module">
