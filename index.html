@@ -438,6 +438,9 @@
 
         <!-- Khu vực hiển thị nội dung & AI -->
         <div class="flex-grow flex flex-col items-center justify-center p-8 text-center">
+            <h4 id="current-speaking-question" class="text-2xl md:text-3xl font-bold text-gray-800 dark:text-white mb-6 transition-all">
+        Đang tải câu hỏi...
+    </h4>
             <div id="speaking-instruction" class="text-gray-500 dark:text-gray-400 italic text-sm mb-8">
                 *Trả lời câu hỏi, sau đó nhấn <strong>Ghi nhận câu trả lời</strong> để sang câu tiếp theo.
             </div>
@@ -4150,6 +4153,8 @@ window.sendAudioToAI = async function(audioBlob) {
     const indicator = document.getElementById('recording-indicator');
     const btnSubmit = document.getElementById('btn-submit-answer');
     const extraControls = document.getElementById('extra-controls');
+    const questionElement = document.getElementById('current-speaking-question');
+    const questionText = questionElement ? questionElement.innerText : "Introduce yourself";
 
     // 2. Hiển thị trạng thái đang tải trên giao diện mới
     if (instructionText) instructionText.classList.add('hidden');
@@ -4172,7 +4177,8 @@ window.sendAudioToAI = async function(audioBlob) {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
                     audio: base64Audio, 
-                    mimeType: 'audio/webm' 
+                    mimeType: 'audio/webm'
+                    question: questionText
                 })
             });
 
