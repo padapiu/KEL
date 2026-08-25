@@ -356,7 +356,28 @@
                     <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 md:p-8 shadow-md border border-gray-100 dark:border-slate-700 mb-8 transition-all hover:shadow-lg w-full">
                         <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">Cambridge IELTS 21 Academic</h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                            <!-- Bài Test Duy Nhất -->
+                            <!-- Bài Test 1 -->
+                            <div onclick="openModeModal('Cambridge 21 - Listening Test 1')" class="group bg-white dark:bg-slate-700 p-4 rounded-2xl border-2 border-gray-100 dark:border-slate-600 hover:border-cyan-500 dark:hover:border-cyan-400 cursor-pointer transition-all flex items-center gap-4">
+                               <div class="w-12 h-12 rounded-full border-2 border-gray-200 dark:border-gray-500 flex items-center justify-center font-bold text-gray-400 dark:text-gray-400 text-lg flex-shrink-0 group-hover:border-cyan-400 group-hover:text-cyan-500 transition-colors">0.0</div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 dark:text-gray-100 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">Cambridge 21 - Listening Test 1</h4>
+                                </div>
+                            </div>
+                            <!-- Bài Test 2 -->
+                            <div onclick="openModeModal('Cambridge 21 - Listening Test 2')" class="group bg-white dark:bg-slate-700 p-4 rounded-2xl border-2 border-gray-100 dark:border-slate-600 hover:border-cyan-500 dark:hover:border-cyan-400 cursor-pointer transition-all flex items-center gap-4">
+                               <div class="w-12 h-12 rounded-full border-2 border-gray-200 dark:border-gray-500 flex items-center justify-center font-bold text-gray-400 dark:text-gray-400 text-lg flex-shrink-0 group-hover:border-cyan-400 group-hover:text-cyan-500 transition-colors">0.0</div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 dark:text-gray-100 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">Cambridge 21 - Listening Test 2</h4>
+                                </div>
+                            </div>
+                            <!-- Bài Test 3 -->
+                            <div onclick="openModeModal('Cambridge 21 - Listening Test 3')" class="group bg-white dark:bg-slate-700 p-4 rounded-2xl border-2 border-gray-100 dark:border-slate-600 hover:border-cyan-500 dark:hover:border-cyan-400 cursor-pointer transition-all flex items-center gap-4">
+                               <div class="w-12 h-12 rounded-full border-2 border-gray-200 dark:border-gray-500 flex items-center justify-center font-bold text-gray-400 dark:text-gray-400 text-lg flex-shrink-0 group-hover:border-cyan-400 group-hover:text-cyan-500 transition-colors">0.0</div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 dark:text-gray-100 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">Cambridge 21 - Listening Test 3</h4>
+                                </div>
+                            </div>
+                            <!-- Bài Test 4 -->
                             <div onclick="openModeModal('Cambridge 21 - Listening Test 4')" class="group bg-white dark:bg-slate-700 p-4 rounded-2xl border-2 border-gray-100 dark:border-slate-600 hover:border-cyan-500 dark:hover:border-cyan-400 cursor-pointer transition-all flex items-center gap-4">
                                <div class="w-12 h-12 rounded-full border-2 border-gray-200 dark:border-gray-500 flex items-center justify-center font-bold text-gray-400 dark:text-gray-400 text-lg flex-shrink-0 group-hover:border-cyan-400 group-hover:text-cyan-500 transition-colors">0.0</div>
                                 <div>
@@ -1927,6 +1948,59 @@
         const audioElement = document.getElementById('ielts-audio');
 // 1. TẠO KHO DỮ LIỆU ĐỘNG CHO TỪNG BÀI THI
         const ieltsListeningDatabase = {
+            "Cambridge 21 - Listening Test 1": {
+                answers: {
+                    1: "10", 2: "weather", 3: "safety", 4: "discount", 5: "dictionary",
+                    6: "certificate", 7: "towel", 8: "cafe", 9: "videos", 10: "lockers",
+                    11: "A", 12: "B", 13: "A", 14: "A", 15: "A", 16: "C", 17: "C", 18: "A", 19: "B", 20: "C",
+                    21: ["B", "D"], 22: ["B", "D"], 23: ["C", "E"], 24: ["C", "E"],
+                    25: "G", 26: "B", 27: "F", 28: "H", 29: "A", 30: "E",
+                    31: "metal", 32: "slow", 33: "demand", 34: "equator", 35: "recycle", 
+                    36: "fungus", 37: "weather", 38: "strong", 39: "roots", 40: "soil"
+                },
+                audio: {
+                    1: "https://engnovate.com/wp-content/uploads/2026/06/cambridge-ielts-21-academic-listening-test-1-1.mp3",
+                    2: "https://engnovate.com/wp-content/uploads/2026/06/cambridge-ielts-21-academic-listening-test-1-2.mp3",
+                    3: "https://engnovate.com/wp-content/uploads/2026/06/cambridge-ielts-21-academic-listening-test-1-3.mp3",
+                    4: "https://engnovate.com/wp-content/uploads/2026/06/cambridge-ielts-21-academic-listening-test-1-4.mp3"
+                }
+            },
+            "Cambridge 21 - Listening Test 2": {
+                answers: {
+                    1: "13", 2: "48", 3: "pizza", 4: "India", 5: "mirror",
+                    6: "6", 7: "natural", 8: "67.50", 9: "shirt", 10: "hammer",
+                    11: ["B", "E"], 12: ["B", "E"], 13: ["C", "D"], 14: ["C", "D"],
+                    15: "F", 16: "B", 17: "D", 18: "A", 19: "H", 20: "E",
+                    21: ["B", "E"], 22: ["B", "E"], 23: ["C", "D"], 24: ["C", "D"],
+                    25: ["A", "C"], 26: ["A", "C"], 27: "C", 28: "D", 29: "F", 30: "A",
+                    31: "pollution", 32: "tax", 33: "chocolate", 34: "timing", 35: "cost", 
+                    36: "rules", 37: "diving", 38: "vegan", 39: "wifi", 40: "videos"
+                },
+                audio: {
+                    1: "https://engnovate.com/wp-content/uploads/2026/06/cambridge-ielts-21-academic-listening-test-2-1.mp3",
+                    2: "https://engnovate.com/wp-content/uploads/2026/06/cambridge-ielts-21-academic-listening-test-2-2.mp3",
+                    3: "https://engnovate.com/wp-content/uploads/2026/06/cambridge-ielts-21-academic-listening-test-2-3.mp3",
+                    4: "https://engnovate.com/wp-content/uploads/2026/06/cambridge-ielts-21-academic-listening-test-2-4.mp3"
+                }
+            },
+            "Cambridge 21 - Listening Test 3": {
+                answers: {
+                    1: "Northern", 2: "week", 3: "250", 4: "voucher", 5: "window",
+                    6: "books", 7: "blanket", 8: "dolphins", 9: "Drum", 10: "Italian",
+                    11: ["C", "E"], 12: ["C", "E"], 13: ["B", "E"], 14: ["B", "E"],
+                    15: "B", 16: "C", 17: "F", 18: "A", 19: "B", 20: "D",
+                    21: ["B", "D"], 22: ["B", "D"], 23: ["D", "E"], 24: ["D", "E"],
+                    25: "G", 26: "B", 27: "F", 28: "A", 29: "H", 30: "D",
+                    31: "disease", 32: "ecosystem", 33: "holidays", 34: "pets", 35: "sugar", 
+                    36: "light", 37: "virus", 38: "behaviour", 39: "database", 40: "photograph"
+                },
+                audio: {
+                    1: "https://engnovate.com/wp-content/uploads/2026/06/cambridge-ielts-21-academic-listening-test-3-1.mp3",
+                    2: "https://engnovate.com/wp-content/uploads/2026/06/cambridge-ielts-21-academic-listening-test-3-2.mp3",
+                    3: "https://engnovate.com/wp-content/uploads/2026/06/cambridge-ielts-21-academic-listening-test-3-3.mp3",
+                    4: "https://engnovate.com/wp-content/uploads/2026/06/cambridge-ielts-21-academic-listening-test-3-4.mp3"
+                }
+            },
             "Cambridge 21 - Listening Test 4": {
                 answers: {
                     1: "leigh", 2: "motorbike", 3: "hairdresser", 4: "suit", 5: "laptop",
