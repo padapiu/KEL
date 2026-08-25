@@ -4177,7 +4177,7 @@ window.sendAudioToAI = async function(audioBlob) {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
                     audio: base64Audio, 
-                    mimeType: 'audio/webm'
+                    mimeType: 'audio/webm',
                     question: questionText
                 })
             });
