@@ -4180,10 +4180,31 @@ window.sendAudioToAI = async function(audioBlob) {
 
             const result = await response.json();
 
-            // 4. Hiển thị kết quả vào giao diện mới
+            // Lấy điểm từ AI (Mặc định 0 nếu không có)
+            const numericScore = result.score ? parseFloat(result.score) : 0;
+            const displayScore = numericScore.toFixed(1);
+
+            // 4. Hiển thị kết quả vào giao diện mới (Giao diện chuẩn giống Writing)
             if (feedbackBox) {
+                // Nới rộng khung hiển thị để vừa với thiết kế mới
+                feedbackBox.classList.remove('max-w-lg');
+                feedbackBox.classList.add('w-full', 'max-w-3xl'); 
+                
                 feedbackBox.innerHTML = `
-                    <h4 class="font-bold text-lg text-emerald-600 dark:text-emerald-400 border-b pb-2 mb-4 text-left">Đánh giá từ AI:</h4>
+                    <div class="flex justify-between items-center mb-4 border-b border-gray-200 dark:border-slate-700 pb-2">
+                        <h3 class="font-extrabold text-xl text-emerald-600 dark:text-emerald-400">Đánh giá từ AI 🤖</h3>
+                    </div>
+                    
+                    <div class="flex flex-col md:flex-row gap-4 mb-6">
+                        <div class="text-center p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-xl border border-emerald-200 dark:border-emerald-800 min-w-[120px] flex flex-col justify-center shadow-sm">
+                            <p class="text-sm text-gray-500 dark:text-gray-400 font-bold mb-1">Band Score</p>
+                            <p class="text-5xl font-black text-emerald-600 dark:text-emerald-400">${displayScore}</p>
+                        </div>
+                        <div class="flex-grow p-4 bg-gray-50 dark:bg-slate-700/50 rounded-xl text-sm text-gray-700 dark:text-gray-300 italic font-medium flex items-center border border-gray-100 dark:border-slate-600 text-left">
+                            Bạn đã hoàn thành bài nói! Hãy xem chi tiết nhận xét bên dưới để rút kinh nghiệm cho lần sau nhé.
+                        </div>
+                    </div>
+                    
                     <div class="text-gray-700 dark:text-gray-300 leading-relaxed text-sm whitespace-pre-wrap text-left">${result.feedback}</div>
                 `;
             }
@@ -4191,18 +4212,10 @@ window.sendAudioToAI = async function(audioBlob) {
             // Hiển thị cụm nút Nghe lại / Hiện câu hỏi
             if (extraControls) extraControls.classList.remove('hidden');
 
-            // --------------------------------------------------------
-            // 5. MỚI: LƯU LỊCH SỬ VÀ TÔ XANH STREAK
-            // --------------------------------------------------------
-            // Tạo tên bài thi để hiển thị trong lịch sử (VD: IELTS Speaking - Part 1)
+            // 5. LƯU LỊCH SỬ VÀ TÔ XANH STREAK
             const testName = "IELTS Speaking - " + (window.currentSpeakingPart || "Practice");
-            
-            // Lấy điểm từ API (nếu API có trả về trường result.score), nếu không có thì đặt mặc định là 0
-            const score = result.score ? parseFloat(result.score) : 0; 
-            
-            // Gọi hàm lưu kết quả (Hàm này tự động lưu Firebase, cập nhật Streak và lịch sử)
             if (typeof window.submitTestResult === 'function') {
-                window.submitTestResult(testName, score);
+                window.submitTestResult(testName, numericScore);
             }
 
         } catch (error) {
