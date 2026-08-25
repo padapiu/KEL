@@ -1790,7 +1790,7 @@
 // ------------------ LOGIC UI VÀ ĐIỀU HƯỚNG BẢO VỆ ------------------
         
 // [MỚI] Thêm tham số pushToHistory để kiểm soát lịch sử duyệt web
-        function showPage(pageId, tabId = 'listening', pushToHistory = true) {
+        window.showPage = function(pageId, tabId = 'listening', pushToHistory = true) {
             if (isTakingExam) {
                 const confirmExit = confirm("⚠️ CẢNH BÁO: Bạn đang trong phòng thi! Nếu thoát ra, toàn bộ tiến trình làm bài sẽ bị mất. Bạn có chắc chắn muốn thoát?");
                 if (!confirmExit) return; 
@@ -1880,7 +1880,7 @@
             if (pageId === 'ielts') showIeltsTab(tabId, pushToHistory);
         }
 
-        function showIeltsTab(tabId, pushToHistory = true) {
+        window.showIeltsTab = function(tabId, pushToHistory = true) {
             const tabs = ['listening', 'reading', 'speaking', 'writing'];
             tabs.forEach(tab => {
                 const contentEl = document.getElementById(`ielts-content-${tab}`);
