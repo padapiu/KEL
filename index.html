@@ -1863,10 +1863,8 @@
                     2: "https://engnovate.com/wp-content/uploads/2026/06/cambridge-ielts-21-academic-listening-test-4-2.mp3",
                     3: "https://engnovate.com/wp-content/uploads/2026/06/cambridge-ielts-21-academic-listening-test-4-3.mp3",
                     4: "https://engnovate.com/wp-content/uploads/2026/06/cambridge-ielts-21-academic-listening-test-4-4.mp3"
-                }
-            }
-        };
-        // [THÊM MỚI] Dữ liệu câu hỏi dạng HTML
+                }, 
+                // [THÊM MỚI] Dữ liệu câu hỏi dạng HTML
                 content: {
                     1: `
                         <h4 class="font-bold text-xl mb-4 text-cyan-800 dark:text-cyan-300">PART 1: Questions 1-10</h4>
@@ -1895,8 +1893,9 @@
                                         <li>Believes the <input type="text" id="ielts-ans-10" class="border-b-2 border-gray-400 bg-transparent w-32 px-2 focus:outline-none focus:border-cyan-500 text-center font-bold text-cyan-700 dark:text-cyan-300" placeholder="(10)"> is unnecessary</li>
                                     </ul>
                                 </div>
+                            </div>
                     `,
-                        2: `
+                    2: `
                             <h4 class="font-bold text-xl mb-4 text-cyan-800 dark:text-cyan-300">PART 2: Questions 11-20</h4>
                             <p class="text-gray-700 dark:text-gray-300 mb-2 font-bold italic">Questions 11-12: Choose TWO letters, A-E.</p>
                             <p class="mb-2 dark:text-white">In which TWO areas of the business exhibition did James Craig promote his company last year?</p>
@@ -1936,9 +1935,8 @@
                                 <p>19. Salman Khan <input type="text" id="ielts-ans-19" class="border-b-2 border-gray-400 bg-transparent w-16 px-2 text-center uppercase focus:outline-none focus:border-cyan-500 font-bold text-cyan-700 dark:text-cyan-300" maxlength="1"></p>
                                 <p>20. Annie Craven <input type="text" id="ielts-ans-20" class="border-b-2 border-gray-400 bg-transparent w-16 px-2 text-center uppercase focus:outline-none focus:border-cyan-500 font-bold text-cyan-700 dark:text-cyan-300" maxlength="1"></p>
                             </div>
-                        </div>
-                        `,
-                        3: `
+                    `,
+                    3: `
                             <h4 class="font-bold text-xl mb-4 text-cyan-800 dark:text-cyan-300">PART 3: Questions 21-30</h4>
                             <p class="text-gray-700 dark:text-gray-300 mb-4 font-bold italic">Questions 21-23: Choose the correct letter, A, B or C.</p>
                             <div class="space-y-6 mb-8 dark:text-white">
@@ -1987,9 +1985,8 @@
                                 <p>29. restriction of cars to certain areas <input type="text" id="ielts-ans-29" class="border-b-2 border-gray-400 bg-transparent w-16 px-2 text-center uppercase focus:outline-none focus:border-cyan-500 font-bold text-cyan-700 dark:text-cyan-300" maxlength="1"></p>
                                 <p>30. communal vegetable plots <input type="text" id="ielts-ans-30" class="border-b-2 border-gray-400 bg-transparent w-16 px-2 text-center uppercase focus:outline-none focus:border-cyan-500 font-bold text-cyan-700 dark:text-cyan-300" maxlength="1"></p>
                             </div>
-                        </div>
-                        `,
-                        4: `
+                    `,
+                    4: `
                             <h4 class="font-bold text-xl mb-4 text-cyan-800 dark:text-cyan-300">PART 4: Questions 31-40</h4>
                             <p class="text-gray-700 dark:text-gray-300 mb-4 font-bold italic">Complete the notes below. Write ONE WORD ONLY for each answer.</p>
                             <div class="bg-gray-50 dark:bg-slate-700/50 p-6 rounded-xl border border-gray-200 dark:border-slate-600">
@@ -2016,35 +2013,32 @@
                                     </ul>
                                 </div>
                             </div>
-                        </div>
-                `
-                    },
+                    `
+                },
                 // [THÊM MỚI] Dữ liệu Transcript
                 transcript: `
-             const ieltsTranscriptHTML = `
-            <h5 class="font-bold text-xl mb-4 text-cyan-700">Part 1 & 2</h5>
-            <p><strong>MAN:</strong> <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 1">Martyn Leigh. Martyn's with a Y. It's L-E-I-G-H.</span></p>
-            <p><strong>MAN:</strong> <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 2">...I'm on my motorbike today.</span></p>
-            <p><strong>MAN:</strong> <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 3, 4, 5">I've just been to the hairdresser... on my way to buy a suit... pick up my laptop...</span></p>
-            <p><strong>SPEAKER 2:</strong> <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 11, 12">We used the Breakout area (C)... sponsored the Business Connections Zone (E).</span></p>
-            <p class="text-sm italic text-rose-500 mt-2 mb-6">=> Giải thích Part 1&2: Đáp án bám rất sát các từ khóa được nhấn mạnh trong audio.</p>
-            
-            <h5 class="font-bold text-xl mb-4 text-cyan-700">Part 3</h5>
-            <p><strong>LEO:</strong> But we mustn't be too general, <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 21">we've got to support our points by referring to specific cases (B).</span></p>
-            <p><strong>MIA:</strong> <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 22">How about housing for different generations living together (A)?</span></p>
-            <p><strong>LEO:</strong> <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 23">I think the solution is to design multi-storey apartment blocks (B).</span></p>
-            <p class="text-sm italic text-rose-500 mt-2 mb-6">=> Giải thích Part 3: Phân tích kỹ thái độ đồng ý/phản đối của 2 người nói.</p>
+                    <h5 class="font-bold text-xl mb-4 text-cyan-700">Part 1 & 2</h5>
+                    <p><strong>MAN:</strong> <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 1">Martyn Leigh. Martyn's with a Y. It's L-E-I-G-H.</span></p>
+                    <p><strong>MAN:</strong> <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 2">...I'm on my motorbike today.</span></p>
+                    <p><strong>MAN:</strong> <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 3, 4, 5">I've just been to the hairdresser... on my way to buy a suit... pick up my laptop...</span></p>
+                    <p><strong>SPEAKER 2:</strong> <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 11, 12">We used the Breakout area (C)... sponsored the Business Connections Zone (E).</span></p>
+                    <p class="text-sm italic text-rose-500 mt-2 mb-6">=> Giải thích Part 1&2: Đáp án bám rất sát các từ khóa được nhấn mạnh trong audio.</p>
+                    
+                    <h5 class="font-bold text-xl mb-4 text-cyan-700">Part 3</h5>
+                    <p><strong>LEO:</strong> But we mustn't be too general, <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 21">we've got to support our points by referring to specific cases (B).</span></p>
+                    <p><strong>MIA:</strong> <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 22">How about housing for different generations living together (A)?</span></p>
+                    <p><strong>LEO:</strong> <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 23">I think the solution is to design multi-storey apartment blocks (B).</span></p>
+                    <p class="text-sm italic text-rose-500 mt-2 mb-6">=> Giải thích Part 3: Phân tích kỹ thái độ đồng ý/phản đối của 2 người nói.</p>
 
-            <h5 class="font-bold text-xl mb-4 text-cyan-700">Part 4</h5>
-            <p><strong>LECTURER:</strong> <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 31, 32">unwelcome changes to their routine (31) ... nearly a hundred trials (32).</span></p>
-            <p><strong>LECTURER:</strong> <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 33, 34">had a calming quality (33) ... known as music pillows (34).</span></p>
-            <p><strong>LECTURER:</strong> <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 35, 36">no feelings of anxiety (35) ... didn't need as much medication (36).</span></p>
-            <p><strong>LECTURER:</strong> <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 37, 38">greater when patients were awake (37) ... worked on patients by distraction (38).</span></p>
-            <p><strong>LECTURER:</strong> <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 39, 40">taken from nature (39) ... most appropriate volume (40).</span></p>
-        }
-     };
-                        
-
+                    <h5 class="font-bold text-xl mb-4 text-cyan-700">Part 4</h5>
+                    <p><strong>LECTURER:</strong> <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 31, 32">unwelcome changes to their routine (31) ... nearly a hundred trials (32).</span></p>
+                    <p><strong>LECTURER:</strong> <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 33, 34">had a calming quality (33) ... known as music pillows (34).</span></p>
+                    <p><strong>LECTURER:</strong> <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 35, 36">no feelings of anxiety (35) ... didn't need as much medication (36).</span></p>
+                    <p><strong>LECTURER:</strong> <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 37, 38">greater when patients were awake (37) ... worked on patients by distraction (38).</span></p>
+                    <p><strong>LECTURER:</strong> <span class="bg-yellow-200 dark:bg-yellow-700/50 px-1 rounded font-bold" title="Đáp án 39, 40">taken from nature (39) ... most appropriate volume (40).</span></p>
+                `
+            }
+        };
      // HÀM ĐÃ SỬA: Tự động cập nhật điểm lên vòng tròn cho TẤT CẢ các kỹ năng (Listening, Reading,...)
         window.updateDashboardScore = function(testName, score) {
             // Thay vì chỉ tìm trong #ielts-content-listening, ta tìm trong toàn bộ #ielts-dashboard
