@@ -510,7 +510,7 @@
     <div class="flex gap-3">
         <!-- Nút 1: Bắt đầu ghi âm (Hiện mặc định) -->
         <button id="btn-start-record-speaking" onclick="startSpeakingRecord()" class="bg-[#4c00ff] hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-md transition flex items-center gap-2">
-            🎙️ Bắt đầu ghi âm
+            Bắt đầu ghi âm
         </button>
         
         <!-- Nút 2: Nộp bài (Ẩn mặc định) -->
@@ -1714,11 +1714,14 @@
             // [MỚI] Ghi lại lịch sử vào thanh URL của trình duyệt bằng dấu #
             if (pushToHistory) {
                 let newHash = '#' + pageId;
-                if (pageId === 'ielts') newHash += '/' + tabId; // Tạo URL kiểu: #ielts/reading
+                if (pageId === 'ielts') newHash += '/' + tabId; 
                 
-                // Chỉ lưu lịch sử nếu URL thực sự thay đổi
                 if (window.location.hash !== newHash) {
-                    window.history.pushState({ pageId: pageId, tabId: tabId }, "", newHash);
+                    try {
+                        window.history.pushState({ pageId: pageId, tabId: tabId }, "", newHash);
+                    } catch (e) {
+                        window.location.hash = newHash; // Fix lỗi khi chạy file local
+                    }
                 }
             }
 
@@ -4225,8 +4228,9 @@ let mediaRecorder;
 let audioChunks = [];
 
 // Lấy các phần tử từ HTML
-const btnStartRecord = document.getElementById('btn-start-record');
-const btnStopRecord = document.getElementById('btn-stop-record');
+// Lấy các phần tử từ HTML
+const btnStartRecord = document.getElementById('btn-start-record-speaking'); // Đã thêm -speaking
+const btnStopRecord = document.getElementById('btn-stop-record-speaking');
 const audioPlayback = document.getElementById('audio-playback');
 
 // ==========================================
@@ -4396,10 +4400,10 @@ btnStopRecord.addEventListener('click', () => {
     </script>
     
 <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-analytics.js";
-        import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, serverTimestamp, getDocs, doc, setDoc, getDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+        import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { getFirestore, collection, addDoc, serverTimestamp, getDocs, doc, setDoc, getDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyALmotmcPgFYE6A1Zxi312X95Lh7OqMRBc",
