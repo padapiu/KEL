@@ -4747,8 +4747,9 @@ window.switchIeltsReadingPart = function(partNum) {
             const mainHeader = document.getElementById('main-header');
             if (mainHeader) mainHeader.classList.remove('hidden');
 
-            const topHeader = document.querySelector('#ielts-reading-exam-room > div.fixed');
-            if (topHeader) topHeader.classList.add('hidden');
+           // Đã đổi tên biến thành readingTopHeader để tránh xung đột
+const readingTopHeader = document.querySelector('#ielts-reading-exam-room > div.fixed');
+if (readingTopHeader) readingTopHeader.classList.add('hidden');
             
             // 4. Hiện màn hình kết quả
             document.getElementById('ielts-reading-result-dashboard').classList.remove('hidden');
