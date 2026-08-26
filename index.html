@@ -2179,6 +2179,9 @@
 
                         <p class="text-gray-700 dark:text-gray-300 mb-2 font-bold italic">Questions 15-20: Label the map below.</p>
                         <p class="text-gray-500 italic mb-4">Write the correct letter, A-I, next to Questions 15-20.</p>
+<div class="mb-6 flex justify-center bg-white p-4 rounded-xl border border-gray-200 dark:border-slate-600 shadow-sm">
+    <img src="https://plain-apac-prod-public.komododecks.com/202608/26/OetQnhkYnWqiWGU5Uh0F/image.png" alt="Map for questions 15-20" class="max-w-full h-auto rounded">
+</div>
                         <div class="space-y-3 dark:text-white">
                             <p class="flex items-center gap-3">15. Exhibition <input type="text" id="ielts-ans-15" class="border-b-2 border-gray-400 bg-transparent w-16 px-2 text-center uppercase focus:outline-none focus:border-cyan-500 font-bold text-cyan-700 dark:text-cyan-300" maxlength="1"></p>
                             <p class="flex items-center gap-3">16. Baths <input type="text" id="ielts-ans-16" class="border-b-2 border-gray-400 bg-transparent w-16 px-2 text-center uppercase focus:outline-none focus:border-cyan-500 font-bold text-cyan-700 dark:text-cyan-300" maxlength="1"></p>
@@ -3378,206 +3381,216 @@ window.hasShownStrictPopup = false;
        // Biến toàn cục lưu trạng thái bài làm Listening để phân tích
         window.tempListeningResultsMap = {};
 
-        window.submitIeltsExam = function(isTimeout = false) {
-            if (!isTimeout) {
-                if (!confirm("Bạn có chắc chắn muốn nộp bài? Các câu chưa điền sẽ tính là sai.")) return;
+window.submitIeltsExam = function(isTimeout = false) {
+    if (!isTimeout) {
+        if (!confirm("Bạn có chắc chắn muốn nộp bài? Các câu chưa điền sẽ tính là sai.")) return;
+    }
+    clearInterval(ieltsTimerInterval);
+    isTakingExam = false;
+    audioElement.pause();
+    
+    let correctCount = 0;
+    let incorrectCount = 0;
+    let skippedCount = 0;
+    let resultsMap = {};
+
+    const currentTestData = ieltsListeningDatabase[currentIeltsTestName];
+    const activeAnswers = currentTestData ? currentTestData.answers : {};
+
+    // 1. VÒNG LẶP CHẤM ĐIỂM THÔNG MINH CHO 40 CÂU
+    let i = 1;
+    while (i <= 40) {
+        const correctAns = activeAnswers[i];
+        if (!correctAns) { 
+            i++; 
+            continue; 
+        }
+
+        // Trường hợp 1: Dạng Checkbox (Chọn nhiều đáp án)
+        if (Array.isArray(correctAns)) {
+            let startQ = i;
+            let endQ = i;
+            // Xác định nhóm câu hỏi dùng chung một cụm Checkbox
+            while (endQ + 1 <= 40 && JSON.stringify(activeAnswers[endQ + 1]) === JSON.stringify(correctAns)) {
+                endQ++;
             }
-            clearInterval(ieltsTimerInterval);
-            isTakingExam = false;
-            audioElement.pause();
+
+            const containerId = `ielts-mcq-${startQ}-${endQ}`;
+            const container = document.getElementById(containerId);
             
-            let correctCount = 0;
-            let incorrectCount = 0;
-            let skippedCount = 0;
-            let resultsMap = {};
+            if (container) {
+                const checkedNodes = container.querySelectorAll('input[type="checkbox"]:checked');
+                const checkedVals = Array.from(checkedNodes).map(cb => cb.value);
 
-            // Lấy bộ đáp án của bài thi hiện tại
-            const currentTestData = ieltsListeningDatabase[currentIeltsTestName];
-            const activeAnswers = currentTestData ? currentTestData.answers : {};
-
-            // 1. Chấm điểm Text Input (Câu 1-10, 15-20, 24-40)
-            const checkText = (start, end) => {
-                for(let i=start; i<=end; i++) {
-                    const el = document.getElementById(`ielts-ans-${i}`);
-                    if(el) {
-                        const userVal = el.value.trim().toLowerCase();
-                        const correctVal = activeAnswers[i] ? String(activeAnswers[i]).toLowerCase() : "";
-                        
-                        el.classList.remove('text-cyan-700', 'dark:text-cyan-300');
-                        
-                        if(userVal === "") {
-                            skippedCount++;
-                            resultsMap[i] = "S";
-                        } else if(userVal === correctVal) {
-                            correctCount++;
-                            resultsMap[i] = "C";
-                            el.classList.add('text-emerald-500', 'font-black');
-                        } else {
-                            incorrectCount++;
-                            resultsMap[i] = "I";
-                            el.classList.add('text-rose-500', 'line-through');
-                        }
-
-                        // Thêm đáp án đúng vào bên cạnh nếu sai hoặc trống
-                        if (userVal !== correctVal && correctVal !== "") {
-                            if (!el.nextElementSibling || el.nextElementSibling.tagName !== 'SPAN') {
-                                const span = document.createElement('span');
-                                span.className = "text-emerald-500 font-bold ml-2 text-sm";
-                                span.innerText = `(${activeAnswers[i]})`;
-                                el.parentNode.insertBefore(span, el.nextSibling);
-                            }
-                        }
-                    }
-                }
-            };
-
-            checkText(1, 10);
-            checkText(15, 20);
-            checkText(24, 30);
-            checkText(31, 40);
-
-            // 2. Chấm điểm Checkbox Multiple Choice (Câu 11-14)
-            const checkMCQ = (id, correctArr, startQ, endQ) => {
-                const checkedNodes = document.querySelectorAll(`#${id} input[type="checkbox"]:checked`);
-                const checked = Array.from(checkedNodes).map(cb => cb.value);
-                
-                // Giả lập logic: coi mỗi lựa chọn đúng là 1 câu
                 let localScore = 0;
-                checked.forEach(val => { if(correctArr.includes(val)) localScore++; });
-                
-                for(let i=startQ; i<=endQ; i++) {
+                checkedVals.forEach(val => { if (correctAns.includes(val)) localScore++; });
+
+                for (let q = startQ; q <= endQ; q++) {
                     if (localScore > 0) {
                         correctCount++;
-                        resultsMap[i] = "C";
+                        resultsMap[q] = "C";
                         localScore--;
-                    } else if (checked.length === 0) {
+                    } else if (checkedVals.length === 0) {
                         skippedCount++;
-                        resultsMap[i] = "S";
+                        resultsMap[q] = "S";
                     } else {
                         incorrectCount++;
-                        resultsMap[i] = "I";
+                        resultsMap[q] = "I";
                     }
                 }
-                
-                document.querySelectorAll(`#${id} input[type="checkbox"]`).forEach(cb => {
-                    if (correctArr.includes(cb.value)) cb.parentElement.classList.add('text-emerald-500', 'font-bold');
+
+                container.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                    if (correctAns.includes(cb.value)) cb.parentElement.classList.add('text-emerald-500', 'font-bold');
                     else if (cb.checked) cb.parentElement.classList.add('text-rose-500', 'line-through');
                 });
-            };
-            checkMCQ('ielts-mcq-11-12', activeAnswers[11], 11, 12);
-            checkMCQ('ielts-mcq-13-14', activeAnswers[13], 13, 14);
- 
-            // 3. Chấm điểm Radio Multiple Choice (Câu 21-23)
-            for (let i = 21; i <= 23; i++) {
+            } else {
+                for(let q = startQ; q <= endQ; q++) { resultsMap[q] = "S"; skippedCount++; }
+            }
+            i = endQ + 1; // Nhảy cóc qua nhóm câu hỏi vừa chấm
+        } 
+        // Trường hợp 2: Dạng Điền từ hoặc Trắc nghiệm Radio
+        else {
+            const textInput = document.getElementById(`ielts-ans-${i}`);
+            const radios = document.querySelectorAll(`input[name="q${i}"]`);
+
+            // Nếu là ô điền từ (Text Input)
+            if (textInput) {
+                const userVal = textInput.value.trim().toLowerCase();
+                const correctStr = String(correctAns).toLowerCase();
+                textInput.classList.remove('text-cyan-700', 'dark:text-cyan-300');
+
+                // Xử lý trường hợp có nhiều cách viết đúng (phân cách bằng dấu '/')
+                const possibleAnswers = correctStr.split('/').map(s => s.trim());
+
+                if (userVal === "") {
+                    skippedCount++;
+                    resultsMap[i] = "S";
+                } else if (possibleAnswers.includes(userVal)) {
+                    correctCount++;
+                    resultsMap[i] = "C";
+                    textInput.classList.add('text-emerald-500', 'font-black');
+                } else {
+                    incorrectCount++;
+                    resultsMap[i] = "I";
+                    textInput.classList.add('text-rose-500', 'line-through');
+                }
+
+                if (!possibleAnswers.includes(userVal) && correctStr !== "") {
+                    if (!textInput.nextElementSibling || textInput.nextElementSibling.tagName !== 'SPAN') {
+                        const span = document.createElement('span');
+                        span.className = "text-emerald-500 font-bold ml-2 text-sm";
+                        span.innerText = `(${possibleAnswers[0].toUpperCase()})`;
+                        textInput.parentNode.insertBefore(span, textInput.nextSibling);
+                    }
+                }
+            } 
+            // Nếu là Trắc nghiệm 1 đáp án (Radio)
+            else if (radios.length > 0) {
                 const selected = document.querySelector(`input[name="q${i}"]:checked`);
-                const correctAns = activeAnswers[i];
-                
                 if (!selected) {
                     skippedCount++;
                     resultsMap[i] = "S";
-                } else if (selected.value === correctAns) {
+                } else if (selected.value === String(correctAns)) {
                     correctCount++;
                     resultsMap[i] = "C";
                 } else {
                     incorrectCount++;
                     resultsMap[i] = "I";
                 }
-                
-                document.querySelectorAll(`input[name="q${i}"]`).forEach(radio => {
-                    if (radio.value === correctAns) radio.parentElement.classList.add('text-emerald-500', 'font-bold');
+
+                radios.forEach(radio => {
+                    if (radio.value === String(correctAns)) radio.parentElement.classList.add('text-emerald-500', 'font-bold');
                     else if (radio.checked) radio.parentElement.classList.add('text-rose-500', 'line-through');
                 });
+            } else {
+                skippedCount++;
+                resultsMap[i] = "S";
             }
+            i++;
+        }
+    }
 
-            // Tính Band Score
-            let bandScore = 1.0;
-            if(correctCount >= 39) bandScore = 9.0;
-            else if(correctCount >= 37) bandScore = 8.5;
-            else if(correctCount >= 35) bandScore = 8.0;
-            else if(correctCount >= 32) bandScore = 7.5;
-            else if(correctCount >= 30) bandScore = 7.0;
-            else if(correctCount >= 26) bandScore = 6.5;
-            else if(correctCount >= 23) bandScore = 6.0;
-            else if(correctCount >= 18) bandScore = 5.5;
-            else if(correctCount >= 16) bandScore = 5.0;
-            else if(correctCount >= 13) bandScore = 4.5;
-            else if(correctCount >= 10) bandScore = 4.0;
-            else bandScore = 3.5;
+    // 2. TÍNH ĐIỂM (BAND SCORE)
+    let bandScore = 1.0;
+    if(correctCount >= 39) bandScore = 9.0;
+    else if(correctCount >= 37) bandScore = 8.5;
+    else if(correctCount >= 35) bandScore = 8.0;
+    else if(correctCount >= 32) bandScore = 7.5;
+    else if(correctCount >= 30) bandScore = 7.0;
+    else if(correctCount >= 26) bandScore = 6.5;
+    else if(correctCount >= 23) bandScore = 6.0;
+    else if(correctCount >= 18) bandScore = 5.5;
+    else if(correctCount >= 16) bandScore = 5.0;
+    else if(correctCount >= 13) bandScore = 4.5;
+    else if(correctCount >= 10) bandScore = 4.0;
+    else bandScore = 3.5;
 
-            // Lưu trạng thái
-            window.tempListeningResultsMap = resultsMap;
+    window.tempListeningResultsMap = resultsMap;
 
-           // Cập nhật giao diện Dashboard Kết Quả (SỬA LỖI MÀN HÌNH TRỐNG LỒNG THẺ)
-            // 1. Ẩn thanh header cố định ở trên cùng
-            const topHeaderListen = document.querySelector('#ielts-exam-room > div.fixed');
-            if (topHeaderListen) topHeaderListen.classList.add('hidden');
+    // 3. ĐIỀU HƯỚNG GIAO DIỆN (Sửa lỗi lồng thẻ màn hình)
+    const topHeaderListen = document.querySelector('#ielts-exam-room > div.fixed');
+    if (topHeaderListen) topHeaderListen.classList.add('hidden');
 
-            // 2. Ẩn khu vực chứa câu hỏi
-            const mainContentWrapper = document.getElementById('ielts-exam-content').parentElement;
-            if (mainContentWrapper) mainContentWrapper.classList.add('hidden');
+    const mainContentWrapper = document.getElementById('ielts-exam-content').parentElement;
+    if (mainContentWrapper) mainContentWrapper.classList.add('hidden');
 
-            // 3. Ẩn thanh điều hướng dưới đáy (nếu đang ở chế độ Thi thật)
-            const bottomNavListen = document.getElementById('strict-bottom-nav');
-            if (bottomNavListen) {
-                bottomNavListen.classList.add('hidden');
-                bottomNavListen.classList.remove('flex');
-            }
-            
-            // 4. Bây giờ mới bật hiển thị bảng kết quả
-            document.getElementById('ielts-listening-result-dashboard').classList.remove('hidden');
-            
-            document.getElementById('listen-band-score-display').innerText = bandScore.toFixed(1);
-            document.getElementById('listen-correct-count-display').innerText = `${correctCount}/40`;
-            document.getElementById('listen-stat-correct').innerText = correctCount;
-            document.getElementById('listen-stat-incorrect').innerText = incorrectCount;
-            document.getElementById('listen-stat-skipped').innerText = skippedCount;
+    const bottomNavListen = document.getElementById('strict-bottom-nav');
+    if (bottomNavListen) {
+        bottomNavListen.classList.add('hidden');
+        bottomNavListen.classList.remove('flex');
+    }
+    
+    document.getElementById('ielts-listening-result-dashboard').classList.remove('hidden');
+    
+    // 4. HIỂN THỊ KẾT QUẢ
+    document.getElementById('listen-band-score-display').innerText = bandScore.toFixed(1);
+    document.getElementById('listen-correct-count-display').innerText = `${correctCount}/40`;
+    document.getElementById('listen-stat-correct').innerText = correctCount;
+    document.getElementById('listen-stat-incorrect').innerText = incorrectCount;
+    document.getElementById('listen-stat-skipped').innerText = skippedCount;
 
-            let advice = "Giai đoạn đầu luôn khó khăn, hãy kiên trì mỗi ngày nhé!";
-            if(bandScore >= 8.0) advice = "Xuất sắc! Kỹ năng nghe của bạn đã ở mức thượng thừa.";
-            else if(bandScore >= 6.5) advice = "Rất tốt! Giữ vững phong độ này khi thi thật nhé.";
-            document.getElementById('listen-advice-text').innerText = advice;
+    let advice = "Giai đoạn đầu luôn khó khăn, hãy kiên trì mỗi ngày nhé!";
+    if(bandScore >= 8.0) advice = "Xuất sắc! Kỹ năng nghe của bạn đã ở mức thượng thừa.";
+    else if(bandScore >= 6.5) advice = "Rất tốt! Giữ vững phong độ này khi thi thật nhé.";
+    document.getElementById('listen-advice-text').innerText = advice;
 
-            // Vẽ Bảng Phân Tích Dựa Theo Đề Cambridge 21 Test 4
-            const listenGroups = {
-                "Form Completion": [1,2,3,4,5,6,7,8,9,10],
-                "Multiple Choice (Many Answers)": [11,12,13,14],
-                "Matching": [15,16,17,18,19,20,24,25,26,27,28,29,30],
-                "Multiple Choice (One Answer)": [21,22,23],
-                "Notes Completion": [31,32,33,34,35,36,37,38,39,40]
-            };
-            
-            let tableHtml = '';
-            for (const [type, qList] of Object.entries(listenGroups)) {
-                let gC = 0, gI = 0, gS = 0;
-                qList.forEach(q => {
-                    if(resultsMap[q] === "C") gC++;
-                    else if(resultsMap[q] === "I") gI++;
-                    else gS++;
-                });
-                tableHtml += `
-                    <tr class="border-b border-gray-100 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-800 transition">
-                        <td class="py-4 px-6 font-bold text-gray-800 dark:text-gray-200">${type}</td>
-                        <td class="py-4 px-6 text-center font-bold">${qList.length}</td>
-                        <td class="py-4 px-6 text-center text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-50 dark:bg-emerald-900/10 rounded-lg">${gC}</td>
-                        <td class="py-4 px-6 text-center text-rose-500 font-bold">${gI}</td>
-                        <td class="py-4 px-6 text-center text-gray-400 font-bold">${gS}</td>
-                    </tr>
-                `;
-            }
-            document.getElementById('listen-analytics-body').innerHTML = tableHtml;
+    // 5. BẢNG PHÂN TÍCH THEO PART (Sử dụng cách chia Part tổng quát để an toàn cho mọi loại đề)
+    const listenGroups = {
+        "Part 1 (Questions 1-10)": [1,2,3,4,5,6,7,8,9,10],
+        "Part 2 (Questions 11-20)": [11,12,13,14,15,16,17,18,19,20],
+        "Part 3 (Questions 21-30)": [21,22,23,24,25,26,27,28,29,30],
+        "Part 4 (Questions 31-40)": [31,32,33,34,35,36,37,38,39,40]
+    };
+    
+    let tableHtml = '';
+    for (const [type, qList] of Object.entries(listenGroups)) {
+        let gC = 0, gI = 0, gS = 0;
+        qList.forEach(q => {
+            if(resultsMap[q] === "C") gC++;
+            else if(resultsMap[q] === "I") gI++;
+            else gS++;
+        });
+        tableHtml += `
+            <tr class="border-b border-gray-100 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-800 transition">
+                <td class="py-4 px-6 font-bold text-gray-800 dark:text-gray-200">${type}</td>
+                <td class="py-4 px-6 text-center font-bold">${qList.length}</td>
+                <td class="py-4 px-6 text-center text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-50 dark:bg-emerald-900/10 rounded-lg">${gC}</td>
+                <td class="py-4 px-6 text-center text-rose-500 font-bold">${gI}</td>
+                <td class="py-4 px-6 text-center text-gray-400 font-bold">${gS}</td>
+            </tr>
+        `;
+    }
+    document.getElementById('listen-analytics-body').innerHTML = tableHtml;
 
-            if (typeof window.submitTestResult === 'function') {
-                window.submitTestResult(currentIeltsTestName, parseFloat(bandScore));
-            }
-// Cập nhật lại hình tròn điểm số ngoài màn hình chính
-            updateDashboardScore(currentIeltsTestName, parseFloat(bandScore));
-
-            if (typeof window.submitTestResult === 'function') {
-                window.submitTestResult(currentIeltsTestName, parseFloat(bandScore));
-            }
-            
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        };
+    if (typeof window.submitTestResult === 'function') {
+        window.submitTestResult(currentIeltsTestName, parseFloat(bandScore));
+    }
+    if (typeof window.updateDashboardScore === 'function') {
+        updateDashboardScore(currentIeltsTestName, parseFloat(bandScore));
+    }
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+};
 
         // Kích hoạt giao diện Sửa Từng Bước (Split-screen)
         window.showListeningExplanations = function() {
