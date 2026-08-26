@@ -1702,12 +1702,12 @@
                 if (readingContainer) readingContainer.style.paddingBottom = "0px";
 
                 // Bật lại thanh header cho reading nếu nó bị ẩn
-                const topHeader = document.querySelector('#ielts-reading-exam-room > div.fixed');
-                if (topHeader) topHeader.classList.remove('hidden');
+                const readingTopHeader = document.querySelector('#ielts-reading-exam-room > div.fixed');
+                if (readingTopHeader) readingTopHeader.classList.remove('hidden');
 
-// Bật lại thanh header và nội dung cho Listening
-                const topHeaderListen = document.querySelector('#ielts-exam-room > div.fixed');
-                if (topHeaderListen) topHeaderListen.classList.remove('hidden');
+                // Bật lại thanh header và nội dung cho Listening
+                const listeningTopHeader = document.querySelector('#ielts-exam-room > div.fixed');
+                if (listeningTopHeader) listeningTopHeader.classList.remove('hidden');
                 
                 const mainContentListen = document.getElementById('ielts-exam-content');
                 if (mainContentListen && mainContentListen.parentElement) mainContentListen.parentElement.classList.remove('hidden');
