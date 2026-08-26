@@ -1706,6 +1706,13 @@
                 const topHeader = document.querySelector('#ielts-reading-exam-room > div.fixed');
                 if (topHeader) topHeader.classList.remove('hidden');
 
+// Bật lại thanh header và nội dung cho Listening
+                const topHeaderListen = document.querySelector('#ielts-exam-room > div.fixed');
+                if (topHeaderListen) topHeaderListen.classList.remove('hidden');
+                
+                const mainContentListen = document.getElementById('ielts-exam-content');
+                if (mainContentListen && mainContentListen.parentElement) mainContentListen.parentElement.classList.remove('hidden');
+                
                 const elementsToShow = ['thpt-dashboard', 'ielts-dashboard'];
                 elementsToShow.forEach(id => {
                     const el = document.getElementById(id);
@@ -2557,8 +2564,23 @@ window.hasShownStrictPopup = false;
             // Lưu trạng thái
             window.tempListeningResultsMap = resultsMap;
 
-            // Cập nhật giao diện Dashboard Kết Quả
-            document.getElementById('ielts-exam-room').classList.add('hidden');
+           // Cập nhật giao diện Dashboard Kết Quả (SỬA LỖI MÀN HÌNH TRỐNG LỒNG THẺ)
+            // 1. Ẩn thanh header cố định ở trên cùng
+            const topHeaderListen = document.querySelector('#ielts-exam-room > div.fixed');
+            if (topHeaderListen) topHeaderListen.classList.add('hidden');
+
+            // 2. Ẩn khu vực chứa câu hỏi
+            const mainContentWrapper = document.getElementById('ielts-exam-content').parentElement;
+            if (mainContentWrapper) mainContentWrapper.classList.add('hidden');
+
+            // 3. Ẩn thanh điều hướng dưới đáy (nếu đang ở chế độ Thi thật)
+            const bottomNavListen = document.getElementById('strict-bottom-nav');
+            if (bottomNavListen) {
+                bottomNavListen.classList.add('hidden');
+                bottomNavListen.classList.remove('flex');
+            }
+            
+            // 4. Bây giờ mới bật hiển thị bảng kết quả
             document.getElementById('ielts-listening-result-dashboard').classList.remove('hidden');
             
             document.getElementById('listen-band-score-display').innerText = bandScore.toFixed(1);
@@ -2634,14 +2656,20 @@ window.hasShownStrictPopup = false;
             document.getElementById('listen-exp-transcript-container').innerHTML = ieltsTranscriptHTML;
         };
 
-        // Thoát hoàn toàn về Danh sách
         window.exitToIeltsDashboardFromListen = function() {
             document.getElementById('ielts-exam-room').classList.add('hidden');
             document.getElementById('ielts-listening-result-dashboard').classList.add('hidden');
             document.getElementById('ielts-listening-explanation-area').classList.add('hidden');
             document.getElementById('ielts-dashboard').classList.remove('hidden');
 
-// Trả thanh địa chỉ về đúng khu vực danh sách Listening
+            // KHÔI PHỤC LẠI GIAO DIỆN ĐỂ LẦN THI SAU KHÔNG BỊ MẤT CÂU HỎI
+            const topHeaderListen = document.querySelector('#ielts-exam-room > div.fixed');
+            if (topHeaderListen) topHeaderListen.classList.remove('hidden');
+
+            const mainContentWrapper = document.getElementById('ielts-exam-content').parentElement;
+            if (mainContentWrapper) mainContentWrapper.classList.remove('hidden');
+
+            // Trả thanh địa chỉ về đúng khu vực danh sách Listening
             window.history.pushState({ pageId: 'ielts', tabId: 'listening' }, "", "#ielts/listening");
             
             window.scrollTo({ top: 0, behavior: 'smooth' });
