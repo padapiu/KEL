@@ -2182,13 +2182,98 @@
 <div class="mb-6 flex justify-center bg-white p-4 rounded-xl border border-gray-200 dark:border-slate-600 shadow-sm">
     <img src="https://plain-apac-prod-public.komododecks.com/202608/26/OetQnhkYnWqiWGU5Uh0F/image.png" alt="Map for questions 15-20" class="max-w-full h-auto rounded">
 </div>
-                        <div class="space-y-3 dark:text-white">
-                            <p class="flex items-center gap-3">15. Exhibition <input type="text" id="ielts-ans-15" class="border-b-2 border-gray-400 bg-transparent w-16 px-2 text-center uppercase focus:outline-none focus:border-cyan-500 font-bold text-cyan-700 dark:text-cyan-300" maxlength="1"></p>
-                            <p class="flex items-center gap-3">16. Baths <input type="text" id="ielts-ans-16" class="border-b-2 border-gray-400 bg-transparent w-16 px-2 text-center uppercase focus:outline-none focus:border-cyan-500 font-bold text-cyan-700 dark:text-cyan-300" maxlength="1"></p>
-                            <p class="flex items-center gap-3">17. Tools <input type="text" id="ielts-ans-17" class="border-b-2 border-gray-400 bg-transparent w-16 px-2 text-center uppercase focus:outline-none focus:border-cyan-500 font-bold text-cyan-700 dark:text-cyan-300" maxlength="1"></p>
-                            <p class="flex items-center gap-3">18. Vehicles <input type="text" id="ielts-ans-18" class="border-b-2 border-gray-400 bg-transparent w-16 px-2 text-center uppercase focus:outline-none focus:border-cyan-500 font-bold text-cyan-700 dark:text-cyan-300" maxlength="1"></p>
-                            <p class="flex items-center gap-3">19. Ponies <input type="text" id="ielts-ans-19" class="border-b-2 border-gray-400 bg-transparent w-16 px-2 text-center uppercase focus:outline-none focus:border-cyan-500 font-bold text-cyan-700 dark:text-cyan-300" maxlength="1"></p>
-                            <p class="flex items-center gap-3">20. Education centre <input type="text" id="ielts-ans-20" class="border-b-2 border-gray-400 bg-transparent w-16 px-2 text-center uppercase focus:outline-none focus:border-cyan-500 font-bold text-cyan-700 dark:text-cyan-300" maxlength="1"></p>
+                        <!-- BẢNG TICKBOX CÂU 15-20 -->
+                        <div class="overflow-x-auto bg-white dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-600 shadow-sm mt-4">
+                            <table class="w-full text-center border-collapse min-w-[500px]">
+                                <thead>
+                                    <tr class="border-b-2 border-gray-300 dark:border-slate-500 text-gray-800 dark:text-gray-200">
+                                        <th class="py-3 text-left pl-4 font-bold border-r border-gray-200 dark:border-slate-600 w-1/4"></th>
+                                        <th class="py-3 font-bold">A</th><th class="py-3 font-bold">B</th><th class="py-3 font-bold">C</th>
+                                        <th class="py-3 font-bold">D</th><th class="py-3 font-bold">E</th><th class="py-3 font-bold">F</th>
+                                        <th class="py-3 font-bold">G</th><th class="py-3 font-bold">H</th><th class="py-3 font-bold">I</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200 dark:divide-slate-600 text-gray-700 dark:text-gray-300 font-medium">
+                                    <!-- Câu 15 -->
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-slate-700 transition">
+                                        <td class="py-3 text-left pl-4 border-r border-gray-200 dark:border-slate-600"><span class="bg-gray-100 dark:bg-slate-600 border border-gray-300 dark:border-slate-500 px-2 py-1 rounded font-bold mr-2 text-sm">15</span> Exhibition</td>
+                                        <td><input type="radio" name="q15" value="A" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q15" value="B" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q15" value="C" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q15" value="D" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q15" value="E" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q15" value="F" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q15" value="G" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q15" value="H" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q15" value="I" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                    </tr>
+                                    <!-- Câu 16 -->
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-slate-700 transition">
+                                        <td class="py-3 text-left pl-4 border-r border-gray-200 dark:border-slate-600"><span class="bg-gray-100 dark:bg-slate-600 border border-gray-300 dark:border-slate-500 px-2 py-1 rounded font-bold mr-2 text-sm">16</span> Baths</td>
+                                        <td><input type="radio" name="q16" value="A" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q16" value="B" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q16" value="C" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q16" value="D" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q16" value="E" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q16" value="F" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q16" value="G" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q16" value="H" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q16" value="I" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                    </tr>
+                                    <!-- Câu 17 -->
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-slate-700 transition">
+                                        <td class="py-3 text-left pl-4 border-r border-gray-200 dark:border-slate-600"><span class="bg-gray-100 dark:bg-slate-600 border border-gray-300 dark:border-slate-500 px-2 py-1 rounded font-bold mr-2 text-sm">17</span> Tools</td>
+                                        <td><input type="radio" name="q17" value="A" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q17" value="B" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q17" value="C" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q17" value="D" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q17" value="E" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q17" value="F" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q17" value="G" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q17" value="H" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q17" value="I" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                    </tr>
+                                    <!-- Câu 18 -->
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-slate-700 transition">
+                                        <td class="py-3 text-left pl-4 border-r border-gray-200 dark:border-slate-600"><span class="bg-gray-100 dark:bg-slate-600 border border-gray-300 dark:border-slate-500 px-2 py-1 rounded font-bold mr-2 text-sm">18</span> Vehicles</td>
+                                        <td><input type="radio" name="q18" value="A" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q18" value="B" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q18" value="C" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q18" value="D" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q18" value="E" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q18" value="F" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q18" value="G" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q18" value="H" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q18" value="I" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                    </tr>
+                                    <!-- Câu 19 -->
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-slate-700 transition">
+                                        <td class="py-3 text-left pl-4 border-r border-gray-200 dark:border-slate-600"><span class="bg-gray-100 dark:bg-slate-600 border border-gray-300 dark:border-slate-500 px-2 py-1 rounded font-bold mr-2 text-sm">19</span> Ponies</td>
+                                        <td><input type="radio" name="q19" value="A" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q19" value="B" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q19" value="C" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q19" value="D" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q19" value="E" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q19" value="F" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q19" value="G" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q19" value="H" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q19" value="I" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                    </tr>
+                                    <!-- Câu 20 -->
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-slate-700 transition">
+                                        <td class="py-3 text-left pl-4 border-r border-gray-200 dark:border-slate-600"><span class="bg-gray-100 dark:bg-slate-600 border border-gray-300 dark:border-slate-500 px-2 py-1 rounded font-bold mr-2 text-sm">20</span> Education centre</td>
+                                        <td><input type="radio" name="q20" value="A" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q20" value="B" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q20" value="C" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q20" value="D" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q20" value="E" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q20" value="F" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q20" value="G" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q20" value="H" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                        <td><input type="radio" name="q20" value="I" class="w-4 h-4 text-cyan-500 focus:ring-cyan-500 cursor-pointer"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     `,
                     3: `
