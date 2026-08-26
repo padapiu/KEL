@@ -2652,8 +2652,15 @@ window.hasShownStrictPopup = false;
                 if(partDiv) partDiv.classList.remove('hidden');
             }
 
-            // Đổ dữ liệu Transcript vào cột bên phải
-            document.getElementById('listen-exp-transcript-container').innerHTML = ieltsTranscriptHTML;
+            // [MÃ MỚI] Lấy dữ liệu Transcript từ database dựa trên tên bài test hiện tại
+            const currentTestData = ieltsListeningDatabase[currentIeltsTestName];
+            
+            // Kiểm tra xem bài thi có dữ liệu transcript không, nếu có thì hiển thị, không thì báo lỗi
+            if (currentTestData && currentTestData.transcript) {
+                document.getElementById('listen-exp-transcript-container').innerHTML = currentTestData.transcript;
+            } else {
+                document.getElementById('listen-exp-transcript-container').innerHTML = "<p class='text-gray-500 italic mt-4'>Đang cập nhật dữ liệu Transcript & Giải thích cho bài thi này...</p>";
+            }
         };
 
         window.exitToIeltsDashboardFromListen = function() {
