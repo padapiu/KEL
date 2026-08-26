@@ -2121,21 +2121,333 @@
             },
             "Cambridge 21 - Listening Test 1": {
                 answers: {
-                    1: "leigh", 2: "motorbike", 3: "hairdresser", 4: "suit", 5: "laptop",
-                    6: "monday", 7: "coffee", 8: "books", 9: "plants", 10: "cinema",
-                    11: ["C", "E"], 12: ["C", "E"], 13: ["A", "B"], 14: ["A", "B"],
-                    15: "C", 16: "G", 17: "D", 18: "A", 19: "F", 20: "B",
-                    21: "B", 22: "A", 23: "B", 24: "B", 25: "E", 26: "I", 27: "A", 28: "D", 29: "H", 30: "G",
-                    31: "routine", 32: "trials", 33: "calming", 34: "pillows", 35: "anxiety", 
-                    36: "medication", 37: "awake", 38: "distraction", 39: "nature", 40: "volume"
+                    1: "10", 2: "weather", 3: "safety", 4: "discount", 5: "dictionary",
+                    6: "certificate", 7: "towel", 8: "cafe", 9: "videos", 10: "lockers",
+                    11: "A", 12: "B", 13: "A", 14: "A", 15: "A", 16: "C",
+                    17: "C", 18: "A", 19: "B", 20: "C",
+                    21: ["B", "D"], 22: ["B", "D"], 23: ["C", "E"], 24: ["C", "E"],
+                    25: "G", 26: "B", 27: "F", 28: "H", 29: "A", 30: "E",
+                    31: "metal", 32: "slow", 33: "demand", 34: "equator", 35: "recycle", 
+                    36: "fungus", 37: "weather", 38: "strong", 39: "roots", 40: "soil"
                 },
                 audio: {
-                    1: "https://engnovate.com/wp-content/uploads/2026/06/cambridge-ielts-21-academic-listening-test-4-1.mp3",
-                    2: "https://engnovate.com/wp-content/uploads/2026/06/cambridge-ielts-21-academic-listening-test-4-2.mp3",
-                    3: "https://engnovate.com/wp-content/uploads/2026/06/cambridge-ielts-21-academic-listening-test-4-3.mp3",
-                    4: "https://engnovate.com/wp-content/uploads/2026/06/cambridge-ielts-21-academic-listening-test-4-4.mp3"
-                }
-            }   
+                    1: "https://engnovate.com/wp-content/uploads/2026/06/cambridge-ielts-21-academic-listening-test-1-1.mp3",
+                    2: "https://engnovate.com/wp-content/uploads/2026/06/cambridge-ielts-21-academic-listening-test-1-2.mp3",
+                    3: "https://engnovate.com/wp-content/uploads/2026/06/cambridge-ielts-21-academic-listening-test-1-3.mp3",
+                    4: "https://engnovate.com/wp-content/uploads/2026/06/cambridge-ielts-21-academic-listening-test-1-4.mp3"
+                },
+                content: {
+                    1: `
+                        <h4 class="font-bold text-xl mb-4 text-cyan-800 dark:text-cyan-300">PART 1: Questions 1-10</h4>
+                        <p class="text-gray-700 dark:text-gray-300 mb-4 font-bold italic">Questions 1-6: Complete the table below. Write ONE WORD AND/OR A NUMBER for each answer.</p>
+                        <div class="bg-gray-50 dark:bg-slate-700/50 p-6 rounded-xl border border-gray-200 dark:border-slate-600 mb-6 overflow-x-auto">
+                            <table class="w-full text-left text-gray-800 dark:text-gray-200 min-w-[600px]">
+                                <thead>
+                                    <tr class="border-b-2 border-gray-300 dark:border-slate-500">
+                                        <th class="py-2 pr-4 font-bold">Name of course</th>
+                                        <th class="py-2 pr-4 font-bold">What you learn</th>
+                                        <th class="py-2 pr-4 font-bold">Cost</th>
+                                        <th class="py-2 font-bold">Other information</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200 dark:divide-slate-600">
+                                    <tr>
+                                        <td class="py-3 pr-4 font-bold">Taster day</td>
+                                        <td class="py-3 pr-4">introduction to sailing</td>
+                                        <td class="py-3 pr-4">£120 if booking one place</td>
+                                        <td class="py-3">small groups (max <input type="text" id="ielts-ans-1" class="border-b-2 border-gray-400 bg-transparent w-16 px-1 focus:outline-none focus:border-cyan-500 text-center font-bold text-cyan-700 dark:text-cyan-300" placeholder="(1)"> people)</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3 pr-4 font-bold" rowspan="2">Level 1</td>
+                                        <td class="py-3 pr-4">basic theory e.g. understanding the <input type="text" id="ielts-ans-2" class="border-b-2 border-gray-400 bg-transparent w-24 px-1 focus:outline-none focus:border-cyan-500 text-center font-bold text-cyan-700 dark:text-cyan-300" placeholder="(2)"> and tides</td>
+                                        <td class="py-3 pr-4">£200</td>
+                                        <td class="py-3"><input type="text" id="ielts-ans-4" class="border-b-2 border-gray-400 bg-transparent w-24 px-1 focus:outline-none focus:border-cyan-500 text-center font-bold text-cyan-700 dark:text-cyan-300" placeholder="(4)"> available for club members</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3 pr-4">basic sailing skills including <input type="text" id="ielts-ans-3" class="border-b-2 border-gray-400 bg-transparent w-24 px-1 focus:outline-none focus:border-cyan-500 text-center font-bold text-cyan-700 dark:text-cyan-300" placeholder="(3)"></td>
+                                        <td class="py-3 pr-4">all inclusive (plus a useful <input type="text" id="ielts-ans-5" class="border-b-2 border-gray-400 bg-transparent w-24 px-1 focus:outline-none focus:border-cyan-500 text-center font-bold text-cyan-700 dark:text-cyan-300" placeholder="(5)">)</td>
+                                        <td class="py-3"><input type="text" id="ielts-ans-6" class="border-b-2 border-gray-400 bg-transparent w-24 px-1 focus:outline-none focus:border-cyan-500 text-center font-bold text-cyan-700 dark:text-cyan-300" placeholder="(6)"> at the end of the course for all participants</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p class="text-gray-700 dark:text-gray-300 mb-4 font-bold italic">Questions 7-10: Complete the notes below. Write ONE WORD ONLY for each answer.</p>
+                        <div class="bg-gray-50 dark:bg-slate-700/50 p-6 rounded-xl border border-gray-200 dark:border-slate-600">
+                            <h5 class="font-bold text-lg mb-4 dark:text-white">General information</h5>
+                            <ul class="list-disc pl-5 space-y-4 text-gray-800 dark:text-gray-200">
+                                <li>Participants must be able to swim.</li>
+                                <li class="flex items-center gap-2 flex-wrap">Bring suitable clothing, a <input type="text" id="ielts-ans-7" class="border-b-2 border-gray-400 bg-transparent w-28 px-2 focus:outline-none focus:border-cyan-500 text-center font-bold text-cyan-700 dark:text-cyan-300" placeholder="(7)"> and toiletries (e.g. shampoo).</li>
+                                <li class="flex items-center gap-2 flex-wrap">There is a <input type="text" id="ielts-ans-8" class="border-b-2 border-gray-400 bg-transparent w-28 px-2 focus:outline-none focus:border-cyan-500 text-center font-bold text-cyan-700 dark:text-cyan-300" placeholder="(8)"> at the club.</li>
+                                <li class="flex items-center gap-2 flex-wrap">Online training <input type="text" id="ielts-ans-9" class="border-b-2 border-gray-400 bg-transparent w-28 px-2 focus:outline-none focus:border-cyan-500 text-center font-bold text-cyan-700 dark:text-cyan-300" placeholder="(9)"> are recommended.</li>
+                                <li class="flex items-center gap-2 flex-wrap"><input type="text" id="ielts-ans-10" class="border-b-2 border-gray-400 bg-transparent w-28 px-2 focus:outline-none focus:border-cyan-500 text-center font-bold text-cyan-700 dark:text-cyan-300" placeholder="(10)"> are available for course participants.</li>
+                            </ul>
+                        </div>
+                    `,
+                    2: `
+                        <h4 class="font-bold text-xl mb-4 text-cyan-800 dark:text-cyan-300">PART 2: Questions 11-20</h4>
+                        <p class="text-gray-700 dark:text-gray-300 mb-2 font-bold italic">Questions 11-16: Choose the correct letter, A, B or C.</p>
+                        <div class="space-y-6 mb-8 dark:text-white">
+                            <div id="q11-container">
+                                <p class="font-semibold mb-2">11. What should trainees always expect to get when working on low budget short films?</p>
+                                <div class="ml-4 space-y-1" id="ielts-rad-11">
+                                    <label class="block cursor-pointer hover:text-cyan-500"><input type="radio" name="q11" value="A"> A. travel expenses</label>
+                                    <label class="block cursor-pointer hover:text-cyan-500"><input type="radio" name="q11" value="B"> B. a minimum wage</label>
+                                    <label class="block cursor-pointer hover:text-cyan-500"><input type="radio" name="q11" value="C"> C. meals</label>
+                                </div>
+                            </div>
+                            <div id="q12-container">
+                                <p class="font-semibold mb-2">12. According to the speaker, on big budget films trainees may get experience of</p>
+                                <div class="ml-4 space-y-1" id="ielts-rad-12">
+                                    <label class="block cursor-pointer hover:text-cyan-500"><input type="radio" name="q12" value="A"> A. makeup for special effects.</label>
+                                    <label class="block cursor-pointer hover:text-cyan-500"><input type="radio" name="q12" value="B"> B. working with different ethnicities.</label>
+                                    <label class="block cursor-pointer hover:text-cyan-500"><input type="radio" name="q12" value="C"> C. creating a variety of hair styles.</label>
+                                </div>
+                            </div>
+                            <div id="q13-container">
+                                <p class="font-semibold mb-2">13. The speaker says a problem for makeup artists is</p>
+                                <div class="ml-4 space-y-1" id="ielts-rad-13">
+                                    <label class="block cursor-pointer hover:text-cyan-500"><input type="radio" name="q13" value="A"> A. dealing with difficult directors.</label>
+                                    <label class="block cursor-pointer hover:text-cyan-500"><input type="radio" name="q13" value="B"> B. being shouted at by their supervisor.</label>
+                                    <label class="block cursor-pointer hover:text-cyan-500"><input type="radio" name="q13" value="C"> C. waiting around for hours doing nothing.</label>
+                                </div>
+                            </div>
+                            <div id="q14-container">
+                                <p class="font-semibold mb-2">14. How did the speaker feel when she met famous actors for the first time?</p>
+                                <div class="ml-4 space-y-1" id="ielts-rad-14">
+                                    <label class="block cursor-pointer hover:text-cyan-500"><input type="radio" name="q14" value="A"> A. very shy</label>
+                                    <label class="block cursor-pointer hover:text-cyan-500"><input type="radio" name="q14" value="B"> B. very proud</label>
+                                    <label class="block cursor-pointer hover:text-cyan-500"><input type="radio" name="q14" value="C"> C. very disappointed</label>
+                                </div>
+                            </div>
+                            <div id="q15-container">
+                                <p class="font-semibold mb-2">15. What advice does the speaker give about makeup kits?</p>
+                                <div class="ml-4 space-y-1" id="ielts-rad-15">
+                                    <label class="block cursor-pointer hover:text-cyan-500"><input type="radio" name="q15" value="A"> A. Always carry a basic kit with you.</label>
+                                    <label class="block cursor-pointer hover:text-cyan-500"><input type="radio" name="q15" value="B"> B. Only buy the best products for a makeup kit.</label>
+                                    <label class="block cursor-pointer hover:text-cyan-500"><input type="radio" name="q15" value="C"> C. Ask other makeup artists to check your kit.</label>
+                                </div>
+                            </div>
+                            <div id="q16-container">
+                                <p class="font-semibold mb-2">16. What advice does the speaker give about creating a portfolio?</p>
+                                <div class="ml-4 space-y-1" id="ielts-rad-16">
+                                    <label class="block cursor-pointer hover:text-cyan-500"><input type="radio" name="q16" value="A"> A. Keep print and digital photos.</label>
+                                    <label class="block cursor-pointer hover:text-cyan-500"><input type="radio" name="q16" value="B"> B. Only include a small selection of photos.</label>
+                                    <label class="block cursor-pointer hover:text-cyan-500"><input type="radio" name="q16" value="C"> C. Get permission to use photos.</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="text-gray-700 dark:text-gray-300 mb-2 font-bold italic">Questions 17-20: What ability is required for each of the following duties?</p>
+                        <p class="text-gray-500 italic mb-4">Write the correct letter, A, B, or C, next to Questions 17-20.</p>
+                        <div class="bg-gray-100 dark:bg-slate-700 p-4 rounded-xl mb-6 shadow-inner text-sm dark:text-gray-200">
+                            <ul class="flex flex-col md:flex-row gap-4 md:gap-8 justify-center font-bold">
+                                <li>A. being well-organised</li>
+                                <li>B. being flexible</li>
+                                <li>C. working quickly</li>
+                            </ul>
+                        </div>
+                        <div class="space-y-3 dark:text-white">
+                            <p class="flex items-center gap-3">17. Prepping an actor <input type="text" id="ielts-ans-17" class="border-b-2 border-gray-400 bg-transparent w-16 px-2 text-center uppercase focus:outline-none focus:border-cyan-500 font-bold text-cyan-700 dark:text-cyan-300" maxlength="1"></p>
+                            <p class="flex items-center gap-3">18. Continuity <input type="text" id="ielts-ans-18" class="border-b-2 border-gray-400 bg-transparent w-16 px-2 text-center uppercase focus:outline-none focus:border-cyan-500 font-bold text-cyan-700 dark:text-cyan-300" maxlength="1"></p>
+                            <p class="flex items-center gap-3">19. General <input type="text" id="ielts-ans-19" class="border-b-2 border-gray-400 bg-transparent w-16 px-2 text-center uppercase focus:outline-none focus:border-cyan-500 font-bold text-cyan-700 dark:text-cyan-300" maxlength="1"></p>
+                            <p class="flex items-center gap-3">20. Applying makeup <input type="text" id="ielts-ans-20" class="border-b-2 border-gray-400 bg-transparent w-16 px-2 text-center uppercase focus:outline-none focus:border-cyan-500 font-bold text-cyan-700 dark:text-cyan-300" maxlength="1"></p>
+                        </div>
+                    `,
+                    3: `
+                        <h4 class="font-bold text-xl mb-4 text-cyan-800 dark:text-cyan-300">PART 3: Questions 21-30</h4>
+                        <p class="text-gray-700 dark:text-gray-300 mb-2 font-bold italic">Questions 21-22: Choose TWO letters, A-E.</p>
+                        <p class="mb-2 dark:text-white">Which TWO features of the lecture on ocean biodiversity had the greatest impact on the students?</p>
+                        <div class="space-y-2 mb-6 ml-4" id="ielts-mcq-21-22">
+                            <label class="flex items-center gap-2 dark:text-gray-300"><input type="checkbox" value="A" class="form-checkbox text-cyan-500 w-5 h-5"> A. the references to local problems</label>
+                            <label class="flex items-center gap-2 dark:text-gray-300"><input type="checkbox" value="B" class="form-checkbox text-cyan-500 w-5 h-5"> B. the broad focus of the examples</label>
+                            <label class="flex items-center gap-2 dark:text-gray-300"><input type="checkbox" value="C" class="form-checkbox text-cyan-500 w-5 h-5"> C. the practical suggestions for solutions</label>
+                            <label class="flex items-center gap-2 dark:text-gray-300"><input type="checkbox" value="D" class="form-checkbox text-cyan-500 w-5 h-5"> D. the type of issues discussed</label>
+                            <label class="flex items-center gap-2 dark:text-gray-300"><input type="checkbox" value="E" class="form-checkbox text-cyan-500 w-5 h-5"> E. the implications for government policy</label>
+                        </div>
+                        
+                        <p class="text-gray-700 dark:text-gray-300 mb-2 font-bold italic">Questions 23-24: Choose TWO letters, A-E.</p>
+                        <p class="mb-2 dark:text-white">Which TWO details about the research project particularly impressed the students?</p>
+                        <div class="space-y-2 mb-8 ml-4" id="ielts-mcq-23-24">
+                            <label class="flex items-center gap-2 dark:text-gray-300"><input type="checkbox" value="A" class="form-checkbox text-cyan-500 w-5 h-5"> A. the team's previous successes</label>
+                            <label class="flex items-center gap-2 dark:text-gray-300"><input type="checkbox" value="B" class="form-checkbox text-cyan-500 w-5 h-5"> B. its wide geographical scale</label>
+                            <label class="flex items-center gap-2 dark:text-gray-300"><input type="checkbox" value="C" class="form-checkbox text-cyan-500 w-5 h-5"> C. the use of new technology</label>
+                            <label class="flex items-center gap-2 dark:text-gray-300"><input type="checkbox" value="D" class="form-checkbox text-cyan-500 w-5 h-5"> D. the extensive statistical evidence</label>
+                            <label class="flex items-center gap-2 dark:text-gray-300"><input type="checkbox" value="E" class="form-checkbox text-cyan-500 w-5 h-5"> E. the large range of specialists involved</label>
+                        </div>
+
+                        <p class="text-gray-700 dark:text-gray-300 mb-2 font-bold italic">Questions 25-30: What is the students' opinion of each of the following resources related to ocean biodiversity?</p>
+                        <p class="text-gray-500 italic mb-4">Choose SIX answers from the box and write the correct letter, A-H, next to Questions 25-30.</p>
+                        <div class="bg-gray-100 dark:bg-slate-700 p-4 rounded-xl mb-6 shadow-inner text-sm dark:text-gray-200">
+                            <ul class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                                <li><strong>A.</strong> This is aimed at a very specialist audience.</li><li><strong>B.</strong> This is now rather outdated.</li>
+                                <li><strong>C.</strong> This was an effective description of a new danger.</li><li><strong>D.</strong> This suggests possible ways to improve the situation.</li>
+                                <li><strong>E.</strong> This does not give a balanced account.</li><li><strong>F.</strong> This is too predictable to be useful.</li>
+                                <li><strong>G.</strong> This gives insufficient evidence for its claims.</li><li><strong>H.</strong> This gives a clear explanation of the problems.</li>
+                            </ul>
+                        </div>
+                        <div class="space-y-3 dark:text-white">
+                            <p class="flex items-center gap-3">25. Article on invasive lionfish <input type="text" id="ielts-ans-25" class="border-b-2 border-gray-400 bg-transparent w-16 px-2 text-center uppercase focus:outline-none focus:border-cyan-500 font-bold text-cyan-700 dark:text-cyan-300" maxlength="1"></p>
+                            <p class="flex items-center gap-3">26. Documentary on microplastics <input type="text" id="ielts-ans-26" class="border-b-2 border-gray-400 bg-transparent w-16 px-2 text-center uppercase focus:outline-none focus:border-cyan-500 font-bold text-cyan-700 dark:text-cyan-300" maxlength="1"></p>
+                            <p class="flex items-center gap-3">27. Podcast on ocean pollution <input type="text" id="ielts-ans-27" class="border-b-2 border-gray-400 bg-transparent w-16 px-2 text-center uppercase focus:outline-none focus:border-cyan-500 font-bold text-cyan-700 dark:text-cyan-300" maxlength="1"></p>
+                            <p class="flex items-center gap-3">28. Book on coastal ecosystems <input type="text" id="ielts-ans-28" class="border-b-2 border-gray-400 bg-transparent w-16 px-2 text-center uppercase focus:outline-none focus:border-cyan-500 font-bold text-cyan-700 dark:text-cyan-300" maxlength="1"></p>
+                            <p class="flex items-center gap-3">29. Article on metal toxicity <input type="text" id="ielts-ans-29" class="border-b-2 border-gray-400 bg-transparent w-16 px-2 text-center uppercase focus:outline-none focus:border-cyan-500 font-bold text-cyan-700 dark:text-cyan-300" maxlength="1"></p>
+                            <p class="flex items-center gap-3">30. Podcast on floating marine cities <input type="text" id="ielts-ans-30" class="border-b-2 border-gray-400 bg-transparent w-16 px-2 text-center uppercase focus:outline-none focus:border-cyan-500 font-bold text-cyan-700 dark:text-cyan-300" maxlength="1"></p>
+                        </div>
+                    `,
+                    4: `
+                        <h4 class="font-bold text-xl mb-4 text-cyan-800 dark:text-cyan-300">PART 4: Questions 31-40</h4>
+                        <p class="text-gray-700 dark:text-gray-300 mb-4 font-bold italic">Complete the notes below. Write ONE WORD ONLY for each answer.</p>
+                        <div class="bg-gray-50 dark:bg-slate-700/50 p-6 rounded-xl border border-gray-200 dark:border-slate-600">
+                            <h5 class="font-bold text-lg mb-4 dark:text-white">Sources of rubber</h5>
+                            <div class="space-y-4 text-gray-800 dark:text-gray-200">
+                                <p class="mb-2">Three resources which are essential for industrial civilisation</p>
+                                <ul class="list-disc pl-5 space-y-2">
+                                    <li><input type="text" id="ielts-ans-31" class="border-b-2 border-gray-400 bg-transparent w-32 px-2 focus:outline-none focus:border-cyan-500 text-center font-bold text-cyan-700 dark:text-cyan-300" placeholder="(31)"></li>
+                                    <li>fossil fuels</li>
+                                    <li>rubber</li>
+                                </ul>
+                                
+                                <h6 class="font-bold mt-6 underline">Natural rubber</h6>
+                                <p class="mb-2">This mainly comes from the Pará rubber tree, now cultivated in South-East Asia. The supply is limited because</p>
+                                <ul class="list-disc pl-5 space-y-3">
+                                    <li class="flex items-center gap-2 flex-wrap">the growth of the tree is <input type="text" id="ielts-ans-32" class="border-b-2 border-gray-400 bg-transparent w-32 px-2 focus:outline-none focus:border-cyan-500 text-center font-bold text-cyan-700 dark:text-cyan-300" placeholder="(32)">.</li>
+                                    <li class="flex items-center gap-2 flex-wrap">production cannot easily be adjusted because of increasing or decreasing <input type="text" id="ielts-ans-33" class="border-b-2 border-gray-400 bg-transparent w-32 px-2 focus:outline-none focus:border-cyan-500 text-center font-bold text-cyan-700 dark:text-cyan-300" placeholder="(33)">.</li>
+                                    <li class="flex items-center gap-2 flex-wrap">the tree only grows near the <input type="text" id="ielts-ans-34" class="border-b-2 border-gray-400 bg-transparent w-32 px-2 focus:outline-none focus:border-cyan-500 text-center font-bold text-cyan-700 dark:text-cyan-300" placeholder="(34)">.</li>
+                                    <li>extracting the latex (rubber) is labour-intensive</li>
+                                    <li class="flex items-center gap-2 flex-wrap">it is very difficult to <input type="text" id="ielts-ans-35" class="border-b-2 border-gray-400 bg-transparent w-32 px-2 focus:outline-none focus:border-cyan-500 text-center font-bold text-cyan-700 dark:text-cyan-300" placeholder="(35)"> rubber after production.</li>
+                                </ul>
+
+                                <h6 class="font-bold mt-6 underline">New threats include</h6>
+                                <ul class="list-disc pl-5 space-y-3">
+                                    <li class="flex items-center gap-2 flex-wrap">lack of genetic diversity, leading to danger of disease caused by a <input type="text" id="ielts-ans-36" class="border-b-2 border-gray-400 bg-transparent w-32 px-2 focus:outline-none focus:border-cyan-500 text-center font-bold text-cyan-700 dark:text-cyan-300" placeholder="(36)">.</li>
+                                    <li>a shift to the cultivation of palm oil</li>
+                                    <li class="flex items-center gap-2 flex-wrap">extreme <input type="text" id="ielts-ans-37" class="border-b-2 border-gray-400 bg-transparent w-32 px-2 focus:outline-none focus:border-cyan-500 text-center font-bold text-cyan-700 dark:text-cyan-300" placeholder="(37)"> events.</li>
+                                </ul>
+
+                                <h6 class="font-bold mt-6 underline">Synthetic rubber</h6>
+                                <ul class="list-disc pl-5 space-y-3">
+                                    <li>may be used for engine parts and cooking utensils</li>
+                                    <li class="flex items-center gap-2 flex-wrap">is less <input type="text" id="ielts-ans-38" class="border-b-2 border-gray-400 bg-transparent w-32 px-2 focus:outline-none focus:border-cyan-500 text-center font-bold text-cyan-700 dark:text-cyan-300" placeholder="(38)"> than natural rubber</li>
+                                    <li>is unsuitable for many purposes e.g. the tyres of aircraft.</li>
+                                </ul>
+
+                                <h6 class="font-bold mt-6 underline">An alternative source of natural rubber</h6>
+                                <ul class="list-disc pl-5 space-y-3">
+                                    <li class="flex items-center gap-2 flex-wrap">A wild flower (a type of dandelion) has rubber in its <input type="text" id="ielts-ans-39" class="border-b-2 border-gray-400 bg-transparent w-32 px-2 focus:outline-none focus:border-cyan-500 text-center font-bold text-cyan-700 dark:text-cyan-300" placeholder="(39)">.</li>
+                                    <li class="flex items-center gap-2 flex-wrap">It can be grown in many locations and does not require good <input type="text" id="ielts-ans-40" class="border-b-2 border-gray-400 bg-transparent w-32 px-2 focus:outline-none focus:border-cyan-500 text-center font-bold text-cyan-700 dark:text-cyan-300" placeholder="(40)">.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `
+                },
+                transcript: `
+                    <h5 class="font-bold text-2xl mb-4 text-cyan-700 dark:text-cyan-400 border-b pb-2">Part 1</h5>
+                    <div class="space-y-4 text-gray-800 dark:text-gray-200 leading-relaxed mb-8">
+                        <p><strong>WOMAN:</strong> Hello, Oyster Bay Sailing Club. How can I help you?</p>
+                        <p><strong>MAN:</strong> Oh hi. I'd like to find out about sailing courses for beginners.</p>
+                        <p><strong>WOMAN:</strong> No problem. Is it for yourself?</p>
+                        <p><strong>MAN:</strong> Yes. I had a look online but I'm not sure which course would be best.</p>
+                        <p><strong>WOMAN:</strong> OK. Well you might be interested in our Taster Days?</p>
+                        <p><strong>MAN:</strong> Possibly.</p>
+                        <p><strong>WOMAN:</strong> So these are for people who've never sailed before - it's basically an introduction to sailing to find out whether you enjoy it and want to carry on with it.</p>
+                        <p><strong>MAN:</strong> And how much is that?</p>
+                        <p><strong>WOMAN:</strong> It's £120 for the day - but it's reduced to £110 each if there are two of you.</p>
+                        <p><strong>MAN:</strong> No, it would just be me.</p>
+                        <p><strong>WOMAN:</strong> Oh that's fine. <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q1</span>You'd be in a small group, usually about eight people but no more than ten</span> - and everyone's always very friendly.</p>
+                        <p><strong>MAN:</strong> Uh huh. And are there any other suitable courses?</p>
+                        <p><strong>WOMAN:</strong> The other option is the Level 1 course. These are two-day weekend courses and we run those all year round.</p>
+                        <p><strong>MAN:</strong> OK. And what do you learn on that course?</p>
+                        <p><strong>WOMAN:</strong> This is a mix of theory and practical skills. <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q2</span>So you learn about things like the weather</span>, which is obviously really important and also the tides, as well as learning basic sailing skills. You go out into the harbour in special training dinghies for beginners, two people in each dinghy and an instructor. <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q3</span>He or she will make sure you understand everything you need to know about safety.</span></p>
+                        <p><strong>MAN:</strong> It sounds like hard work!</p>
+                        <p><strong>WOMAN:</strong> Yes, but you'll have a lot of fun too.</p>
+                        <p><strong>MAN:</strong> And the cost of that one is ... ?</p>
+                        <p><strong>WOMAN:</strong> £200. <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q4</span>But it's a bit cheaper if you decide to join the club. There's a discount for members.</span></p>
+                        <p><strong>MAN:</strong> Well, I'm not sure about that yet.</p>
+                        <p><strong>WOMAN:</strong> You've got plenty of time to decide.</p>
+                        <p><strong>MAN:</strong> And does the cost include everything?</p>
+                        <p><strong>WOMAN:</strong> Yes, everything's included and <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q5</span>you also get a really good dictionary</span> explaining all the sailing terminology. A lot of people struggle with this at first. It's got lots of pictures, so I'm sure you'd find it really helpful. <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q6</span>And on completion of the course you get a certificate.</span> Then you're ready to move on to the Level 2 course.</p>
+                        <p><strong>MAN:</strong> Sounds good.</p>
+                        <p><strong>WOMAN:</strong> I think that's all the info you need for now. Just a couple of general things. For example, it's really important that you know how to swim.</p>
+                        <p><strong>MAN:</strong> Yes, I'm pretty confident in the water.</p>
+                        <p><strong>WOMAN:</strong> Great. The other thing I should tell you is that we provide wetsuits and life jackets but you need to bring swimming trunks and some old trainers.</p>
+                        <p><strong>MAN:</strong> <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q7</span>And a towel?</span></p>
+                        <p><strong>WOMAN:</strong> <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q7</span>Yes definitely.</span> And you might want to bring your own toiletries, things like shampoo.</p>
+                        <p><strong>MAN:</strong> <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q8</span>OK. What about food and drink? Do I need to bring that or is there a café at the club?</span></p>
+                        <p><strong>WOMAN:</strong> <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q8</span>Yes, you can get sandwiches, cakes and snacks there.</span> The food's pretty reasonable.</p>
+                        <p><strong>MAN:</strong> OK good. Well I think I'm interested in the Level 1 course. But I know absolutely nothing about sailing so is there anything I can do to prepare myself a bit?</p>
+                        <p><strong>WOMAN:</strong> <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q9</span>I recommend you watch some videos we use for training.</span> They're available online. I can send you the link. They'll give you an idea of what to expect.</p>
+                        <p><strong>MAN:</strong> Perfect, thanks. That would be very helpful. Oh and just one other thing - I'll be cycling to the club and will need somewhere to put valuables. <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q10</span>I'm just wondering if there are lockers for people to use?</span></p>
+                        <p><strong>WOMAN:</strong> <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q10</span>Yes, there are plenty in the changing rooms.</span></p>
+                        <p><strong>MAN:</strong> Great. OK well could you book me onto...</p>
+                    </div>
+
+                    <h5 class="font-bold text-2xl mb-4 text-cyan-700 dark:text-cyan-400 border-b pb-2">Part 2</h5>
+                    <div class="space-y-4 text-gray-800 dark:text-gray-200 leading-relaxed mb-8">
+                        <p><strong>MAN:</strong> Hello and welcome to the film making podcast. In this week's episode, Claire Lemarre talks to us about how to become a makeup artist. Claire's been working as a makeup artist in the film industry for over 20 years and has lots of useful advice about how to get started.</p>
+                        <p><strong>WOMAN:</strong> Thanks lan. Well, before you can become a makeup artist on films you have to spend about 2 years working as a makeup trainee.</p>
+                        <p>A good place to get your first job would be on a low budget short film. Of course, this means that you'll be working for free. But it's often worth it for the experience. <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q11</span>Make sure your transport costs are covered</span> - and remember, there's very unlikely to be any catering provided, so bring plenty of food.</p>
+                        <p>If you're lucky, you might start out on a big budget film where you'll get the most useful experience. On productions like this, makeup and hair styling are separate departments - so you won't need to bring your curling tongs! <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q12</span>But you're likely to get the opportunity to work with a range of age groups, as well as different ethnicities.</span> Doing makeup for special effects is highly specialised, so don't expect to be offered any practical experience in that.</p>
+                        <p>One problem with working in the makeup department is that it's a high-pressure environment. There are very few times when you'll be bored or have nothing to do. <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q13</span>It can be stressful but you'll see that the top makeup artists are very professional - even when they're having to work with directors who are impatient, or unhappy with the makeup artist's work.</span> Follow your supervisor's lead and try to remain calm at all times.</p>
+                        <p>I've worked with many very famous actors over the years. <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q14</span>At first, I found it overwhelming and could hardly speak. I was so in awe.</span> That's preferable, by the way, to becoming too excited and asking for selfies. Now meeting the talent is just a normal part of the job and to be honest most actors don't look that special without all the makeup!</p>
+                        <p><span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q15</span>Every makeup trainee will need a makeup kit, which they'll be expected to have with them at all times. Just the essentials will do for the kinds of tasks you'll be given - it won't be anything complicated.</span> It's worth looking at what the other makeup artists have in their kits - but whatever you do, don't borrow anything without asking first.</p>
+                        <p>It's very important to build your portfolio. You should take photos of all the work you do and ideally show the different stages of makeup application if you can. <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q16</span>But remember you'll need to get approval from the makeup designer in charge of the department.</span> As you'll be sending your portfolio digitally, you won't need to get photos printed.</p>
+                        <p>So what does a makeup trainee actually do? You need to think about whether you're the right kind of person to do the job and whether you'd enjoy it. So, to give you some idea, here are some of the things you might be required to do.</p>
+                        <p>You may be asked to help prep an actor ready for makeup. Some actors will arrive having already cleansed and moisturized their skin. <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q17</span>But sometimes you'll need to step in and get this done without wasting any time</span>, otherwise the makeup artist will get behind schedule.</p>
+                        <p><span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q18</span>Trainees play a useful role in continuity. It will be your responsibility to take photos, log them digitally and print out a hard copy to put in each actor's file. This information needs to be kept in good order</span> as a reshoot can mean replicating makeup months later.</p>
+                        <p><span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q19</span>General duties mean doing anything from getting the teas and coffees to putting on a wash. Having a positive attitude and being willing to do whatever is asked of you will help you get your next film job.</span></p>
+                        <p>You won't be asked to apply makeup to any of the principal cast, only the extras. <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q20</span>If there are dozens of extras involved you'll need to keep up a swift pace</span> and not spend too long on each person. It takes quite a lot of confidence to be able to do this well.</p>
+                        <p>OK now about terms and conditions....</p>
+                    </div>
+
+                    <h5 class="font-bold text-2xl mb-4 text-cyan-700 dark:text-cyan-400 border-b pb-2">Part 3</h5>
+                    <div class="space-y-4 text-gray-800 dark:text-gray-200 leading-relaxed mb-8">
+                        <p><strong>PHIL:</strong> That lecture from the visiting speaker yesterday was good, wasn't it?</p>
+                        <p><strong>LUCY:</strong> Yeah, I learned a lot from her about ocean biodiversity. I've already done some reading on it, and I did an assignment on some of the problems associated with it last year, but I especially liked the way her lecture focused on more long-term issues.</p>
+                        <p><strong>PHIL:</strong> <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q21/22</span>Yes, things that aren't currently receiving widespread attention but are likely to be important in the future. That impressed me too.</span> It wasn't exactly a feel-good conclusion because it's hard to see any real solution for a lot of the problems.</p>
+                        <p><strong>LUCY:</strong> No, though she did point to where policy changes could be made to protect our marine and coastal environments.</p>
+                        <p><strong>PHIL:</strong> Mm. But that's just at a national level. <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q21/22</span>The examples she gave were at a more global level, and they really made it clear to me just how wide-ranging the threats to ocean biodiversity are.</span></p>
+                        <p><strong>LUCY:</strong> <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q21/22</span>Yes, me too.</span></p>
+                        <p><strong>PHIL:</strong> <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q23/24</span>The research project she described was impressive, wasn't it? I'd have thought it was quite unusual to have so many experts working together.</span></p>
+                        <p><strong>LUCY:</strong> <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q23/24</span>Yeah, and from such different backgrounds.</span> Must have been a really exciting team to work with. I'd heard of a couple of them before they were involved in research way back in 2009 warning about the dangers of ocean pollution.</p>
+                        <p><strong>PHIL:</strong> But now people are much more aware of that, aren't they?</p>
+                        <p><strong>LUCY:</strong> I suppose so.</p>
+                        <p><strong>PHIL:</strong> Another thing about the research is that the team members came from all round the world. Though I suppose that's not unusual nowadays, now everyone can work remotely.</p>
+                        <p><strong>LUCY:</strong> Right. I liked the way she didn't bombard us with figures - I mean, they were available, but she focused more on the general points they indicated.</p>
+                        <p><strong>PHIL:</strong> <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q23/24</span>Mm. And the description of improvements in systems used for tracking marine animals and things like robots were really interesting.</span></p>
+                        <p><strong>LUCY:</strong> <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q23/24</span>Yes, and her description of how robotics can be used to investigate threats to biodiversity.</span></p>
+                        <p><strong>PHIL:</strong> Absolutely.</p>
+                        <p><strong>PHIL:</strong> While you're here, can we talk about the list of resources we have to evaluate for the seminar tomorrow. I've had a look at them all, but it's been a bit of a rush.</p>
+                        <p><strong>LUCY:</strong> Yeah. What did you think of that article on invasive lionfish? The one claiming they were expanding their habitat throughout the Mediterranean Sea.</p>
+                        <p><strong>PHIL:</strong> <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q25</span>Well, the writer went on about how dangerous they were in environmental terms, which is probably true, but he didn't really provide much information to explain why.</span></p>
+                        <p><strong>LUCY:</strong> I know what you mean.</p>
+                        <p><strong>PHIL:</strong> <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q26</span>I watched the documentary on microplastics, at least I started to, but then I found it was made ten years ago so I gave up.</span></p>
+                        <p><strong>LUCY:</strong> <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q26</span>I watched to the end but you're right, it was showing its age.</span> People had hardly heard of microplastics then, whereas now everyone knows about them and how dangerous they are.</p>
+                        <p><strong>PHIL:</strong> Yeah. Did you listen to the podcast on ocean pollution?</p>
+                        <p><strong>LUCY:</strong> <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q27</span>Mm. I didn't get anything out of it though. Most of it was stating the obvious.</span></p>
+                        <p><strong>PHIL:</strong> <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q27</span>Yes, it mentioned pesticides and plastic and things, and it clearly made the point that they were a bad thing, but everybody knows that anyway.</span> Did you read that book on coastal ecosystems?</p>
+                        <p><strong>LUCY:</strong> <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q28</span>The one by John Harper? Yes, I found it hard going at first, it went into a lot of detail about things like the effects of offshore windfarms and fish farms, but actually I ended up with a much better understanding of the issues.</span></p>
+                        <p><strong>PHIL:</strong> <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q28</span>Yes, I agree and I thought it was a well-written summary of those. And the diagrams helped a lot too.</span></p>
+                        <p><strong>LUCY:</strong> <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q29</span>The article on metal toxicity was way above my head, I didn't know anything about how metals from industrial emissions react in the ocean... and I still don't understand it.</span></p>
+                        <p><strong>PHIL:</strong> <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q29</span>I gave up reading after the first chapter - I just couldn't follow it.</span></p>
+                        <p><strong>LUCY:</strong> <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q30</span>That podcast on floating marine cities was interesting, though it presented a rather one-sided picture, I thought.</span></p>
+                        <p><strong>PHIL:</strong> <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q30</span>Yes, it focused on how this would benefit people and ignored the effects on the environment.</span></p>
+                        <p><strong>LUCY:</strong> But anyway, shall we ...</p>
+                    </div>
+
+                    <h5 class="font-bold text-2xl mb-4 text-cyan-700 dark:text-cyan-400 border-b pb-2">Part 4</h5>
+                    <div class="space-y-4 text-gray-800 dark:text-gray-200 leading-relaxed mb-8">
+                        <p>Much of the world now lives in an industrial civilisation. But this has only become possible because we have the necessary natural resources. <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q31</span>There are three types of natural resource without which industry could not exist. One of these is metal</span> - without that we'd have no machines and no transportation. Another is fossil fuels, which we need to power those machines. But there's a third resource that's essential to connect the different parts of a machine together with belts and pipes and shock absorbers, and that is rubber. It's now used in over 40,000 products, from waterproof footwear to surgical gloves.</p>
+                        <p>At present, we have two types of rubber in common use. One is natural rubber, which nearly all comes from the Pará rubber tree. This was originally native to Brazil, but is now cultivated on plantations in South-East Asia. Recently, however, concern's been growing that supplies may soon be insufficient for the world's needs. So what exactly is limiting the supply of natural rubber?</p>
+                        <p>Well, for one thing, rubber trees don't just spring up overnight. <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q32</span>It can take eight to ten years for a tree to start producing rubber, so cultivating them's a slow process.</span> And this leads to another problem. <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q33</span>With most crops, farmers don't have to think very far ahead, so they can easily change what crop they produce, or how much of a crop they produce, if they find the demand for that crop is rising or falling.</span> But if you have to plant eight or ten years ahead, that's much harder. And also the rubber tree's very choosy about where it grows. It needs the right temperature, the right amount of rainfall, and the right altitude - not too high and not too low. <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q34</span>The result is that it can't be grown in the northern or southern parts of the globe, only around the equator.</span></p>
+                        <p>Another problem is that the rubber is basically extracted in the same way as it's been done for hundreds of years, and that's by hand, by making small cuts in the trunk of the tree, and putting a little cup there to catch the latex, as the rubber is called. It's very labour-intensive. And it's not just the initial production that's limiting supplies. <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q35</span>With other resources such as water and glass, when we've finished using them we can recycle them, but although this is also possible with rubber, it's very difficult</span>, so that also reduces the amount we have available.</p>
+                        <p>And in the last few years, there have been new threats to the supply of natural rubber. One problem is linked to the fact that nearly all the rubber trees in South-East Asia are descended from just a small number of seeds brought from Brazil in the nineteenth century. This means that there's very little genetic diversity among the trees, which in turn makes them very vulnerable to disease. <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q36</span>The most dangerous threat is a fungus, which destroyed large numbers of rubber trees in Brazil, and which could cause devastation to plantations worldwide.</span> Another problem is that farmers in South-East Asia are increasingly turning to the cultivation of palm oil, which is easier and more profitable for them. <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q37</span>And finally, in recent years South-East Asia, like other parts of the world, has been repeatedly hit by extreme types of weather, and this looks likely to continue in the future.</span></p>
+                        <p>However, as well as using natural rubber, it's also possible to make rubber synthetically. This works very well for some purposes, for example, making engine parts, or silicone pots and pans used for cooking. <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q38</span>But compared with natural rubber, it's not anything like as strong, and this means it can't replace natural rubber in other products.</span> For example, while a mixture of natural rubber and synthetic rubber works well in car tyres, only natural rubber can stand up to the extreme speeds of aircraft tyres during take-off and landing.</p>
+                        <p>So for some time, scientists have been looking for alternative sources of natural rubber. One that's been known about for some time seems initially to be a rather unlikely source. It's a wild plant with yellow flowers that we normally regard as a weed when we see it in our gardens. <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q39</span>But when it's pulled up and its roots cut open, they're found to contain rubber.</span></p>
+                        <p>Now, compared to the rubber tree, dandelions produce relatively small amounts of rubber, but unlike rubber trees, they're very adaptable. <span class="bg-amber-200 dark:bg-amber-700/50 rounded px-1 transition-colors"><span class="bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-sm mr-1">Q40</span>They'll grow in all sorts of places, and they don't need rich soil.</span> So at present there are several projects underway investigating the possibility of using dandelions as a source of rubber.</p>
+                        <p>Another possibility is a desert shrub grown in Mexico and Texas...</p>
+                    </div>
+                `
+            },
         };
                 
      // HÀM ĐÃ SỬA: Tự động cập nhật điểm lên vòng tròn cho TẤT CẢ các kỹ năng (Listening, Reading,...)
