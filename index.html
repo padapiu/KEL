@@ -121,8 +121,7 @@
 <body class="bg-[#f4f7fe] text-[#2b3674] dark:bg-darkBg dark:text-darkText">
 
     <!-- STREAMING_CHUNK: Setting up navigation bar and responsive header... -->
-    <header class="bg-white dark:bg-darkCard shadow-sm rounded-b-3xl sticky top-0 z-50 px-6 py-4 flex flex-wrap justify-between items-center md:px-12 transition-colors duration-300">
-       <!-- KHU VỰC LOGO HÌNH ẢNH MỚI -->
+<header id="main-header" class="bg-white dark:bg-darkCard shadow-sm rounded-b-3xl sticky top-0 z-50 px-6 py-4 flex flex-wrap justify-between items-center md:px-12 transition-colors duration-300">       <!-- KHU VỰC LOGO HÌNH ẢNH MỚI -->
 <div class="cursor-pointer flex items-center" onclick="showPage('home')">
     <img src="https://i.postimg.cc/MG12Bzyq/logo.png" alt="KEL Logo" class="h-10 md:h-14 w-auto object-contain transition-transform duration-300 hover:scale-105">
 </div>
@@ -3270,12 +3269,23 @@ window.hasShownStrictPopup = false;
             const audioControlBox = document.querySelector('#ielts-exam-room .bg-cyan-50.rounded-xl.p-3');
             const oldNavigator = document.getElementById('ielts-part-navigator');
             const timerContainer = document.getElementById('ielts-timer-display').parentElement;
+
+            // [MỚI] Lấy Header và Thanh công cụ bài thi
+            const mainHeader = document.getElementById('main-header');
+            const examTopBar = document.querySelector('#ielts-exam-room > div.fixed');
             
             if (isStrict) {
                 // CHẾ ĐỘ THI THẬT: Ẩn giao diện cũ, dùng giao diện mới
                 examRoom.classList.add('strict-mode');
                 if(audioControlBox) audioControlBox.classList.add('hidden');
                 if(oldNavigator) oldNavigator.classList.add('hidden');
+
+                // [MỚI] Ẩn Menu chính và đẩy thanh làm bài lên trên cùng
+                if (mainHeader) mainHeader.classList.add('hidden');
+                if (examTopBar) {
+                    examTopBar.classList.remove('top-[75px]', 'md:top-[88px]');
+                    examTopBar.classList.add('top-4');
+                }
                 
                 // Đổi giao diện đồng hồ sang dạng "34 minutes remaining"
                 timerContainer.className = "text-gray-600 dark:text-gray-300 font-bold flex items-center gap-2";
@@ -3296,6 +3306,13 @@ window.hasShownStrictPopup = false;
                 examRoom.classList.remove('strict-mode');
                 if(audioControlBox) audioControlBox.classList.remove('hidden');
                 if(oldNavigator) oldNavigator.classList.remove('hidden');
+
+                // [MỚI] Hiện lại Menu chính và đưa thanh làm bài về vị trí cũ
+                if (mainHeader) mainHeader.classList.remove('hidden');
+                if (examTopBar) {
+                    examTopBar.classList.remove('top-4');
+                    examTopBar.classList.add('top-[75px]', 'md:top-[88px]');
+                }
                 
                 // Trả lại giao diện đồng hồ đếm ngược bình thường
                 timerContainer.className = "bg-rose-50 dark:bg-rose-900/30 text-rose-500 dark:text-rose-400 font-mono font-bold text-2xl px-4 py-2 rounded-xl border border-rose-200 dark:border-rose-800 flex items-center gap-2";
@@ -3613,6 +3630,11 @@ window.submitIeltsExam = function(isTimeout = false) {
     window.tempListeningResultsMap = resultsMap;
 
     // 3. ĐIỀU HƯỚNG GIAO DIỆN (Sửa lỗi lồng thẻ màn hình)
+
+// [MỚI] Hiển thị lại Menu chính sau khi thi xong
+    const mainHeader = document.getElementById('main-header');
+    if (mainHeader) mainHeader.classList.remove('hidden');
+    
     const topHeaderListen = document.querySelector('#ielts-exam-room > div.fixed');
     if (topHeaderListen) topHeaderListen.classList.add('hidden');
 
