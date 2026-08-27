@@ -4839,240 +4839,195 @@ window.history.pushState({ pageId: 'thpt', tabId: null }, "", "#thpt");
         // ========================================================
         window.activeReadingParts = [1, 2, 3];
 
-        window.startIeltsReadingExam = function(testName, isStrict, customDuration = 60, selectedParts = [1, 2, 3]) {
-            currentIeltsReadingTestName = testName;
-            window.activeReadingParts = selectedParts; 
-            isTakingExam = true;
+window.startIeltsReadingExam = function(testName, isStrict, customDuration = 60, selectedParts = [1, 2, 3]) {
+    currentIeltsReadingTestName = testName;
+    window.activeReadingParts = selectedParts; 
+    isTakingExam = true;
 
-            // 1. Đổi URL ảo
-            const safeUrlName = encodeURIComponent(testName.replace(/\s+/g, '-').toLowerCase());
-            window.history.pushState({ pageId: 'exam', tabId: 'reading' }, "", `#exam/reading/${safeUrlName}`);
-            
-            // 2. Cập nhật giao diện ẩn/hiện
-            const dashboard = document.getElementById('ielts-dashboard');
-            const readingRoom = document.getElementById('ielts-reading-exam-room');
-            
-            if (dashboard) dashboard.classList.add('hidden');
-            if (readingRoom) readingRoom.classList.remove('hidden');
-            
-            document.getElementById('ielts-reading-result-dashboard').classList.add('hidden');
-            document.getElementById('ielts-reading-explanation-area').classList.add('hidden');
-            
-            // 3. Cập nhật Tiêu đề bài thi
-            const titleEl = document.getElementById('ielts-reading-exam-title');
-            if (titleEl) titleEl.innerText = testName;
+    const safeUrlName = encodeURIComponent(testName.replace(/\s+/g, '-').toLowerCase());
+    window.history.pushState({ pageId: 'exam', tabId: 'reading' }, "", `#exam/reading/${safeUrlName}`);
+    
+    const dashboard = document.getElementById('ielts-dashboard');
+    const readingRoom = document.getElementById('ielts-reading-exam-room');
+    
+    if (dashboard) dashboard.classList.add('hidden');
+    if (readingRoom) readingRoom.classList.remove('hidden');
+    
+    const resultDash = document.getElementById('ielts-reading-result-dashboard');
+    const expArea = document.getElementById('ielts-reading-explanation-area');
+    if(resultDash) resultDash.classList.add('hidden');
+    if(expArea) expArea.classList.add('hidden');
+    
+    const titleEl = document.getElementById('ielts-reading-exam-title');
+    if (titleEl) titleEl.innerText = testName;
 
-            // 4. Khôi phục khu vực nội dung split-screen
-            const splitContainer = document.getElementById('reading-split-container');
-            if (splitContainer) {
-                splitContainer.classList.remove('hidden');
-                splitContainer.style.paddingBottom = isStrict ? "80px" : "0px";
-            }
-            
-            // 5. Xử lý UI theo chế độ Luyện tập / Thi thật
-            const mainHeader = document.getElementById('main-header');
-            const examTopBar = document.querySelector('#ielts-reading-exam-room > div.fixed');
-            const topTabsContainer = document.getElementById('reading-tabs-container');
-            const timerContainer = document.getElementById('reading-timer-container');
-            const btnSubmitTop = document.getElementById('btn-submit-reading');
-            const bottomNav = document.getElementById('strict-reading-bottom-nav');
-            
-            if (isStrict) {
-                if (mainHeader) mainHeader.classList.add('hidden');
-                if (examTopBar) {
-                    examTopBar.classList.remove('top-[75px]', 'md:top-[88px]');
-                    examTopBar.classList.add('top-4');
-                }
-                if (topTabsContainer) topTabsContainer.classList.add('hidden');
-                if (btnSubmitTop) btnSubmitTop.classList.add('hidden');
-                
-                if (timerContainer) {
-                    timerContainer.className = "text-gray-600 dark:text-gray-300 font-bold flex items-center gap-2";
-                    timerContainer.classList.remove('hidden');
-                }
-                const timerDisplay = document.getElementById('ielts-reading-timer-display');
-                if (timerDisplay) {
-                    timerDisplay.className = "text-sm";
-                    timerDisplay.innerHTML = `${customDuration} minutes remaining`;
-                }
-                
-                if (bottomNav) {
-                    bottomNav.classList.remove('hidden');
-                    bottomNav.classList.add('flex');
-                }
-            } else {
-                if (mainHeader) mainHeader.classList.remove('hidden');
-                if (examTopBar) {
-                    examTopBar.classList.remove('top-4');
-                    examTopBar.classList.add('top-[75px]', 'md:top-[88px]');
-                }
-                if (topTabsContainer) topTabsContainer.classList.remove('hidden');
-                if (btnSubmitTop) btnSubmitTop.classList.remove('hidden');
-                
-                if (timerContainer) {
-                    timerContainer.className = "bg-rose-50 dark:bg-rose-900/30 text-rose-500 dark:text-rose-400 font-mono font-bold text-2xl px-4 py-2 rounded-xl border border-rose-200 dark:border-rose-800 flex items-center gap-2";
-                    timerContainer.classList.remove('hidden');
-                }
-                const timerDisplay = document.getElementById('ielts-reading-timer-display');
-                if (timerDisplay) timerDisplay.className = "";
-                
-                if (bottomNav) {
-                    bottomNav.classList.add('hidden');
-                    bottomNav.classList.remove('flex');
-                }
-            }
-            
-            // 6. Reset đáp án cũ
-            for (let i = 1; i <= 40; i++) {
-                window[`userAnsRead${i}`] = null;
-            }
-            
-            // 7. Cập nhật hiển thị các Tab theo lựa chọn
-            for (let i = 1; i <= 3; i++) {
-                const tab = document.getElementById(`tab-read-${i}`);
-                const strictTab = document.getElementById(`strict-read-tab-${i}`);
-                if (tab) tab.style.display = selectedParts.includes(i) ? 'inline-block' : 'none';
-                if (strictTab) strictTab.style.display = selectedParts.includes(i) ? 'flex' : 'none';
-            }
-            
-            // 8. Nạp nội dung Part đầu tiên
-            if (typeof window.switchIeltsReadingPart === 'function') {
-                window.switchIeltsReadingPart(selectedParts[0]);
-            }
-            
-            // 9. Thiết lập đồng hồ đếm ngược
-            let timeInSecs = customDuration * 60;
-            const timerDisplayEl = document.getElementById('ielts-reading-timer-display');
-            if (!isStrict && timerDisplayEl && timerDisplayEl.parentElement) {
-                timerDisplayEl.parentElement.classList.remove('animate-pulse');
-            }
-            
-            if (typeof ieltsReadingTimerInterval !== 'undefined') clearInterval(ieltsReadingTimerInterval);
-            
-            ieltsReadingTimerInterval = setInterval(() => {
-                timeInSecs--;
-                let m = Math.floor(timeInSecs / 60).toString().padStart(2, '0');
-                let s = (timeInSecs % 60).toString().padStart(2, '0');
-                
-                if (isStrict) {
-                    if(timerDisplayEl) timerDisplayEl.innerText = `${m} minutes remaining`;
-                } else {
-                    if(timerDisplayEl) timerDisplayEl.innerText = `${m}:${s}`;
-                    if (timeInSecs === 300) {
-                        window.showToast("Chỉ còn 5 phút nữa!", "warning");
-                        if(timerDisplayEl && timerDisplayEl.parentElement) timerDisplayEl.parentElement.classList.add('animate-pulse');
-                    }
-                }
-                
-                if (timeInSecs <= 0) {
-                    clearInterval(ieltsReadingTimerInterval);
-                    if(typeof window.submitIeltsReadingExam === 'function') window.submitIeltsReadingExam(true); 
-                }
-            }, 1000);
-            
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+    const splitContainer = document.getElementById('reading-split-container');
+    if (splitContainer) {
+        splitContainer.classList.remove('hidden');
+        splitContainer.style.paddingBottom = isStrict ? "80px" : "0px";
+    }
+    
+    const mainHeader = document.getElementById('main-header');
+    const examTopBar = document.querySelector('#ielts-reading-exam-room > div.fixed');
+    const topTabsContainer = document.getElementById('reading-tabs-container');
+    const timerContainer = document.getElementById('reading-timer-container');
+    const btnSubmitTop = document.getElementById('btn-submit-reading');
+    const bottomNav = document.getElementById('strict-reading-bottom-nav');
+    
+    if (isStrict) {
+        if (mainHeader) mainHeader.classList.add('hidden');
+        if (examTopBar) {
+            examTopBar.classList.remove('top-[75px]', 'md:top-[88px]');
+            examTopBar.classList.add('top-4');
         }
+        if (topTabsContainer) topTabsContainer.classList.add('hidden');
+        if (btnSubmitTop) btnSubmitTop.classList.add('hidden');
+        
+        if (timerContainer) {
+            timerContainer.className = "text-gray-600 dark:text-gray-300 font-bold flex items-center gap-2";
+            timerContainer.classList.remove('hidden');
+        }
+        const timerDisplay = document.getElementById('ielts-reading-timer-display');
+        if (timerDisplay) {
+            timerDisplay.className = "text-sm";
+            timerDisplay.innerHTML = `${customDuration} minutes remaining`;
+        }
+        
+        if (bottomNav) {
+            bottomNav.classList.remove('hidden');
+            bottomNav.classList.add('flex');
+        }
+    } else {
+        if (mainHeader) mainHeader.classList.remove('hidden');
+        if (examTopBar) {
+            examTopBar.classList.remove('top-4');
+            examTopBar.classList.add('top-[75px]', 'md:top-[88px]');
+        }
+        if (topTabsContainer) topTabsContainer.classList.remove('hidden');
+        if (btnSubmitTop) btnSubmitTop.classList.remove('hidden');
+        
+        if (timerContainer) {
+            timerContainer.className = "bg-rose-50 dark:bg-rose-900/30 text-rose-500 dark:text-rose-400 font-mono font-bold text-2xl px-4 py-2 rounded-xl border border-rose-200 dark:border-rose-800 flex items-center gap-2";
+            timerContainer.classList.remove('hidden');
+        }
+        const timerDisplay = document.getElementById('ielts-reading-timer-display');
+        if (timerDisplay) timerDisplay.className = "";
+        
+        if (bottomNav) {
+            bottomNav.classList.add('hidden');
+            bottomNav.classList.remove('flex');
+        }
+    }
+    
+    for (let i = 1; i <= 40; i++) {
+        window[`userAnsRead${i}`] = null;
+    }
+    
+    for (let i = 1; i <= 3; i++) {
+        const tab = document.getElementById(`tab-read-${i}`);
+        const strictTab = document.getElementById(`strict-read-tab-${i}`);
+        if (tab) tab.style.display = selectedParts.includes(i) ? 'inline-block' : 'none';
+        if (strictTab) strictTab.style.display = selectedParts.includes(i) ? 'flex' : 'none';
+    }
+    
+    if (typeof window.switchIeltsReadingPart === 'function') {
+        window.switchIeltsReadingPart(selectedParts[0]);
+    }
+    
+    let timeInSecs = customDuration * 60;
+    const timerDisplayEl = document.getElementById('ielts-reading-timer-display');
+    if (!isStrict && timerDisplayEl && timerDisplayEl.parentElement) {
+        timerDisplayEl.parentElement.classList.remove('animate-pulse');
+    }
+    
+    if (typeof ieltsReadingTimerInterval !== 'undefined') clearInterval(ieltsReadingTimerInterval);
+    
+    ieltsReadingTimerInterval = setInterval(() => {
+        timeInSecs--;
+        let m = Math.floor(timeInSecs / 60).toString().padStart(2, '0');
+        let s = (timeInSecs % 60).toString().padStart(2, '0');
+        
+        if (isStrict) {
+            if(timerDisplayEl) timerDisplayEl.innerText = `${m} minutes remaining`;
+        } else {
+            if(timerDisplayEl) timerDisplayEl.innerText = `${m}:${s}`;
+            if (timeInSecs === 300) {
+                if (typeof window.showToast === 'function') window.showToast("Chỉ còn 5 phút nữa!", "warning");
+                if(timerDisplayEl && timerDisplayEl.parentElement) timerDisplayEl.parentElement.classList.add('animate-pulse');
+            }
+        }
+        
+        if (timeInSecs <= 0) {
+            clearInterval(ieltsReadingTimerInterval);
+            if(typeof window.submitIeltsReadingExam === 'function') window.submitIeltsReadingExam(true); 
+        }
+    }, 1000);
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
-        window.switchIeltsReadingPart = function(partNum) {
-            // 1. Cập nhật giao diện hiển thị các Tab
-            for (let i = 1; i <= 3; i++) {
-                const tab = document.getElementById(`tab-read-${i}`);
-                const strictTab = document.getElementById(`strict-read-tab-${i}`);
-                
-                if (window.activeReadingParts.includes(i)) {
-                    if (i === partNum) {
-                        if (tab) tab.className = "px-4 py-2 font-bold bg-emerald-500 text-white transition focus:outline-none";
-                        if (strictTab) strictTab.className = "px-6 h-full border-b-4 border-emerald-500 font-bold text-emerald-600 bg-white dark:bg-slate-800 flex items-center justify-center transition-colors";
-                    } else {
-                        if (tab) tab.className = "px-4 py-2 font-bold bg-gray-100 text-gray-600 dark:bg-slate-700 dark:text-gray-300 hover:bg-gray-200 transition focus:outline-none";
-                        if (strictTab) strictTab.className = "px-6 h-full border-b-4 border-transparent font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-800 flex items-center justify-center transition-colors";
-                    }
-                }
-            }
-            
-            // 2. Tìm thẻ chứa Bài Đọc và Câu Hỏi
-            const passageContainer = document.getElementById('reading-passage-container');
-            const questionsContainer = document.getElementById('reading-questions-container');
-            
-            if (window.activeReadingParts.includes(partNum)) {
-                // Lấy từ kho dữ liệu tổng ieltsReadingDatabase thay vì ieltsReadingData cũ kỹ
-                const testData = typeof ieltsReadingDatabase !== 'undefined' ? ieltsReadingDatabase[currentIeltsReadingTestName] : null;
-                
-                if (testData && testData.passages && testData.questions) {
-                    if (passageContainer) passageContainer.innerHTML = testData.passages[partNum] || "<p>Chưa có dữ liệu bài đọc.</p>";
-                    if (questionsContainer) questionsContainer.innerHTML = testData.questions[partNum] || "<p>Chưa có dữ liệu câu hỏi.</p>";
-                } else if (typeof ieltsReadingData !== 'undefined' && ieltsReadingData[partNum]) {
-                    // Fallback dự phòng
-                    if (passageContainer) passageContainer.innerHTML = ieltsReadingData[partNum].content;
-                    if (questionsContainer) questionsContainer.innerHTML = ieltsReadingData[partNum].questions;
-                }
-                
-                // 3. Gắn lại dữ liệu người dùng đã điền và bắt sự kiện
-                for (let i = 1; i <= 40; i++) {
-                    if (window[`userAnsRead${i}`]) {
-                        let el = document.getElementById(`read-ans-${i}`);
-                        if (el) {
-                            el.value = window[`userAnsRead${i}`];
-                        } else {
-                            let radio = document.querySelector(`input[name="rq${i}"][value="${window[`userAnsRead${i}`]}"]`);
-                            if (radio) radio.checked = true;
-                        }
-                    }
-                    
-                    let elInput = document.getElementById(`read-ans-${i}`);
-                    if (elInput) {
-                        elInput.addEventListener('change', (e) => { window[`userAnsRead${i}`] = e.target.value; });
-                    } else {
-                        let radios = document.querySelectorAll(`input[name="rq${i}"]`);
-                        radios.forEach(r => r.addEventListener('change', (e) => { window[`userAnsRead${i}`] = e.target.value; }));
-                    }
-                }
+window.switchIeltsReadingPart = function(partNum) {
+    for (let i = 1; i <= 3; i++) {
+        const tab = document.getElementById(`tab-read-${i}`);
+        const strictTab = document.getElementById(`strict-read-tab-${i}`);
+        
+        if (window.activeReadingParts.includes(i)) {
+            if (i === partNum) {
+                if (tab) tab.className = "px-4 py-2 font-bold bg-emerald-500 text-white transition focus:outline-none";
+                if (strictTab) strictTab.className = "px-6 h-full border-b-4 border-emerald-500 font-bold text-emerald-600 bg-white dark:bg-slate-800 flex items-center justify-center transition-colors";
             } else {
-                if (passageContainer) passageContainer.innerHTML = "";
-                if (questionsContainer) questionsContainer.innerHTML = "";
+                if (tab) tab.className = "px-4 py-2 font-bold bg-gray-100 text-gray-600 dark:bg-slate-700 dark:text-gray-300 hover:bg-gray-200 transition focus:outline-none";
+                if (strictTab) strictTab.className = "px-6 h-full border-b-4 border-transparent font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-800 flex items-center justify-center transition-colors";
             }
-            
-            // 4. Tự động cuộn trang lên đầu, có kiểm tra tồn tại của thẻ để chống crash code
-            const passPane = document.querySelector('.reading-passage-pane');
-            const quesPane = document.querySelector('.reading-questions-pane');
-            if(passPane) passPane.scrollTop = 0;
-            if(quesPane) quesPane.scrollTop = 0;
-        };
-
-        window.strictNextReadingPart = function() {
-            let currentPart = 1;
-            for(let i=1; i<=3; i++) {
-                const tab = document.getElementById(`strict-read-tab-${i}`);
-                if (tab && tab.classList.contains('border-emerald-500')) {
-                    currentPart = i;
-                    break;
+        }
+    }
+    
+    const passageContainer = document.getElementById('reading-passage-container');
+    const questionsContainer = document.getElementById('reading-questions-container');
+    
+    if (window.activeReadingParts.includes(partNum)) {
+        const testData = typeof window.ieltsReadingDatabase !== 'undefined' ? window.ieltsReadingDatabase[currentIeltsReadingTestName] : null;
+        
+        if (testData && testData.passages && testData.questions) {
+            if (passageContainer) passageContainer.innerHTML = testData.passages[partNum] || "<p>Chưa có dữ liệu bài đọc.</p>";
+            if (questionsContainer) questionsContainer.innerHTML = testData.questions[partNum] || "<p>Chưa có dữ liệu câu hỏi.</p>";
+        } else if (typeof window.ieltsReadingData !== 'undefined' && window.ieltsReadingData[partNum]) {
+            if (passageContainer) passageContainer.innerHTML = window.ieltsReadingData[partNum].content;
+            if (questionsContainer) questionsContainer.innerHTML = window.ieltsReadingData[partNum].questions;
+        } else {
+            if (passageContainer) passageContainer.innerHTML = "<p>Lỗi tải nội dung bài đọc.</p>";
+            if (questionsContainer) questionsContainer.innerHTML = "<p>Lỗi tải nội dung câu hỏi.</p>";
+        }
+        
+        for (let i = 1; i <= 40; i++) {
+            if (window[`userAnsRead${i}`]) {
+                let el = document.getElementById(`read-ans-${i}`);
+                if (el) {
+                    el.value = window[`userAnsRead${i}`];
+                } else {
+                    let radio = document.querySelector(`input[name="rq${i}"][value="${window[`userAnsRead${i}`]}"]`);
+                    if (radio) radio.checked = true;
                 }
             }
             
-            if (currentPart < window.activeReadingParts[window.activeReadingParts.length - 1]) {
-                const nextIdx = window.activeReadingParts.indexOf(currentPart) + 1;
-                switchIeltsReadingPart(window.activeReadingParts[nextIdx]);
+            let elInput = document.getElementById(`read-ans-${i}`);
+            if (elInput) {
+                elInput.addEventListener('change', (e) => { window[`userAnsRead${i}`] = e.target.value; });
             } else {
-                if(confirm("Đây là đoạn văn cuối cùng. Bạn có chắc chắn muốn nộp bài?")) {
-                    submitIeltsReadingExam(false);
-                }
+                let radios = document.querySelectorAll(`input[name="rq${i}"]`);
+                radios.forEach(r => r.addEventListener('change', (e) => { window[`userAnsRead${i}`] = e.target.value; }));
             }
-        };
-        window.strictPrevReadingPart = function() {
-            let currentPart = 1;
-            for(let i=1; i<=3; i++) {
-                const tab = document.getElementById(`strict-read-tab-${i}`);
-                if (tab && tab.classList.contains('border-emerald-500')) {
-                    currentPart = i;
-                    break;
-                }
-            }
-            
-            if (currentPart > window.activeReadingParts[0]) {
-                const prevIdx = window.activeReadingParts.indexOf(currentPart) - 1;
-                switchIeltsReadingPart(window.activeReadingParts[prevIdx]);
-            }
-        };
+        }
+    } else {
+        if (passageContainer) passageContainer.innerHTML = "";
+        if (questionsContainer) questionsContainer.innerHTML = "";
+    }
+    
+    const passPane = document.querySelector('.reading-passage-pane');
+    const quesPane = document.querySelector('.reading-questions-pane');
+    if(passPane) passPane.scrollTop = 0;
+    if(quesPane) quesPane.scrollTop = 0;
+};
         window.submitIeltsReadingExam = function(isTimeout = false) {
             if (!isTimeout) {
                 if (!confirm("Bạn có chắc chắn muốn nộp bài? Các câu chưa điền sẽ tính là sai.")) return;
