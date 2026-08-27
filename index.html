@@ -3103,39 +3103,81 @@
             if(cbFull) cbFull.checked = allChecked;
         };
 
-        // 3. Hàm phân luồng thi nhận danh sách Parts
-        window.startExamFromModal = function(isStrict) {
-            closeModeModal();
-            let duration = 40; 
-            const isReading = selectedTestForModal.toLowerCase().includes('reading');
-            const totalParts = isReading ? 3 : 4;
-            let selectedParts = Array.from({length: totalParts}, (_, i) => i + 1);
-            
-            if (!isStrict) {
-                const timeSelect = document.getElementById('practice-time-select');
-                if (timeSelect) duration = timeSelect.value === 'none' ? 999 : parseInt(timeSelect.value);
+       window.startExamFromModal = function(isStrict) {
+    // Đóng Modal chọn chế độ
+    closeModeModal();
 
-                selectedParts = [];
-                for(let i=1; i<=totalParts; i++) {
-                    const cb = document.getElementById('cb-part-' + i);
-                    if (cb && cb.checked) selectedParts.push(i);
-                }
-                if(selectedParts.length === 0) selectedParts = Array.from({length: totalParts}, (_, i) => i + 1);
-            } else {
-                duration = isReading ? 60 : 40;
-            }
-            
-            if (isReading) {
-                if(typeof startIeltsReadingExam === 'function') {
-                    startIeltsReadingExam(selectedTestForModal, isStrict, duration, selectedParts); 
-                }
-            } else {
-                if(typeof startIeltsExam === 'function') {
-                    startIeltsExam(selectedTestForModal, isStrict, duration, selectedParts);
-                }
-            }
-        };
+    try {
+        // 1. Tính toán thời gian và các phần (Parts) được chọn (giữ nguyên logic của bạn)
+        let duration = 40;
+        const isReading = selectedTestForModal.toLowerCase().includes('reading');
+        const totalParts = isReading ? 3 : 4;
+        let selectedParts = Array.from({length: totalParts}, (_, i) => i + 1);
 
+        if (!isStrict) {
+            const timeSelect = document.getElementById('practice-time-select');
+            if (timeSelect) duration = timeSelect.value === 'none' ? 999 : parseInt(timeSelect.value);
+
+            selectedParts = [];
+            for(let i=1; i<=totalParts; i++) {
+                const cb = document.getElementById('cb-part-' + i);
+                if (cb && cb.checked) selectedParts.push(i);
+            }
+            if(selectedParts.length === 0) selectedParts = Array.from({length: totalParts}, (_, i) => i + 1);
+        } else {
+            duration = isReading ? 60 : 40;
+        }
+
+        // 2. Ẩn Dashboard danh sách đề
+        const dashboard = document.getElementById('ielts-dashboard');
+        if (dashboard) dashboard.classList.add('hidden');
+
+        // 3. Đánh dấu trạng thái hệ thống là đang làm bài
+        isTakingExam = true;
+
+        // 4. KIỂM TRA PHÂN LOẠI BÀI THI VÀ MỞ ĐÚNG GIAO DIỆN
+        if (isReading) {
+            // Mở phòng thi Reading
+            const readingRoom = document.getElementById('ielts-reading-exam-room');
+            if (readingRoom) readingRoom.classList.remove('hidden');
+            
+            // Cập nhật tiêu đề
+            const titleEl = document.getElementById('ielts-reading-exam-title');
+            if (titleEl) titleEl.innerText = selectedTestForModal;
+
+            // TODO: Gọi hàm tải dữ liệu Reading ở đây (Sẽ bổ sung sau)
+            console.log("Đã mở phòng thi Reading - Đang chờ tải dữ liệu...");
+
+        } else if (selectedTestForModal.toLowerCase().includes('listening')) {
+            // Mở phòng thi Listening
+            const listeningRoom = document.getElementById('ielts-exam-room');
+            if (listeningRoom) listeningRoom.classList.remove('hidden');
+            
+            // Cập nhật tiêu đề
+            const titleEl = document.getElementById('ielts-exam-title');
+            if (titleEl) titleEl.innerText = selectedTestForModal;
+
+            // TODO: Gọi hàm tải dữ liệu Listening ở đây (Sẽ bổ sung sau)
+            console.log("Đã mở phòng thi Listening - Đang chờ tải dữ liệu...");
+
+        } else {
+            // Nếu chọn Speaking/Writing hoặc tên bài không khớp
+            alert("Tính năng cho dạng bài này đang được cập nhật!");
+            isTakingExam = false;
+            if (dashboard) dashboard.classList.remove('hidden');
+        }
+
+    } catch (error) {
+        // 5. Bắt lỗi để KHÔNG BỊ TRẮNG MÀN HÌNH
+        console.error("Lỗi khi mở phòng thi:", error);
+        alert("Đã xảy ra lỗi khi tải giao diện bài thi. Vui lòng nhấn F12 mở Console để xem chi tiết.");
+        
+        // Khôi phục lại giao diện ban đầu
+        isTakingExam = false;
+        const dashboard = document.getElementById('ielts-dashboard');
+        if (dashboard) dashboard.classList.remove('hidden');
+    }
+};
         // Biến toàn cục lưu trữ các part đang được phép hiển thị
         window.activeListeningParts = [1, 2, 3, 4];
 
