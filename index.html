@@ -1549,6 +1549,22 @@ let selectedTestForModal = "";
 
 // Hàm này được gọi khi bạn click vào 1 thẻ bài thi ở giao diện ngoài
 function openModeModal(testName) {
+    // Hàm đóng Modal Chọn chế độ làm bài
+window.closeModeModal = function() {
+    const modal = document.getElementById('mode-selection-modal');
+    const content = document.getElementById('mode-modal-content');
+    
+    if (modal && content) {
+        modal.classList.add('opacity-0');
+        content.classList.remove('scale-100');
+        content.classList.add('scale-95');
+        
+        // Đợi hiệu ứng mờ dần (300ms) rồi mới ẩn hẳn
+        setTimeout(() => {
+            modal.classList.add('hidden');
+        }, 300);
+    }
+};
     selectedTestForModal = testName; // Lưu lại tên bài thi
     
     // Cập nhật tên bài thi lên Modal
@@ -3108,55 +3124,59 @@ function openModeModal(testName) {
             if(cbFull) cbFull.checked = allChecked;
         };
 
- // Hàm này được gọi khi bạn bấm nút "Start Now" trong Modal
-function startExamFromModal(isStrict) {
+// Hàm này được gọi khi bạn bấm nút "Start Now" trong Modal
+window.startExamFromModal = function(isStrict) {
     // 1. Đóng Modal
-    closeModeModal();
+    if (typeof window.closeModeModal === 'function') {
+        window.closeModeModal();
+    }
 
     // 2. Ẩn giao diện Dashboard (Danh sách đề thi)
     const dashboard = document.getElementById('ielts-dashboard');
     if (dashboard) dashboard.classList.add('hidden');
 
-    // 3. Kiểm tra xem đây là bài Reading hay Listening để mở đúng phòng thi
-    if (selectedTestForModal.includes('Reading')) {
-        
-        // Mở phòng thi Reading
-        const readingRoom = document.getElementById('ielts-reading-exam-room');
-        if (readingRoom) {
-            readingRoom.classList.remove('hidden');
-            readingRoom.classList.add('block'); // Đảm bảo giao diện được hiển thị
+    // 3. Phân tích lựa chọn thời gian và các Part của học viên
+    const isReading = selectedTestForModal.toLowerCase().includes('reading');
+    const maxParts = isReading ? 3 : 4;
+    
+    // Lấy thời gian (Nếu là thi thật thì dùng mặc định 40p Nghe / 60p Đọc)
+    let customDuration = isReading ? 60 : 40; 
+    const timeSelect = document.getElementById('practice-time-select');
+    
+    if (!isStrict && timeSelect) {
+        if (timeSelect.value === 'none') {
+            customDuration = 999; // Không đếm giờ
+        } else {
+            customDuration = parseInt(timeSelect.value);
         }
-        
-        // Cập nhật tiêu đề bài thi Reading
-        const titleEl = document.getElementById('ielts-reading-exam-title');
-        if (titleEl) titleEl.innerText = selectedTestForModal;
-
-        // (Tùy chọn) Gọi hàm render dữ liệu Reading của bạn ở đây
-        // renderReadingData(selectedTestForModal);
-
-    } else if (selectedTestForModal.includes('Listening')) {
-        
-        // Mở phòng thi Listening
-        const listeningRoom = document.getElementById('ielts-exam-room');
-        if (listeningRoom) {
-            listeningRoom.classList.remove('hidden');
-            listeningRoom.classList.add('block'); // Đảm bảo giao diện được hiển thị
-        }
-        
-        // Cập nhật tiêu đề bài thi Listening
-        const titleEl = document.getElementById('ielts-exam-title');
-        if (titleEl) titleEl.innerText = selectedTestForModal;
-
-        // (Tùy chọn) Gọi hàm render dữ liệu Listening của bạn ở đây
-        // renderListeningData(selectedTestForModal);
     }
 
-    // 4. Đánh dấu trạng thái đang làm bài để ngăn người dùng thoát nhầm
-    isTakingExam = true;
+    // Lấy danh sách các Part được tick
+    let selectedParts = [];
+    for (let i = 1; i <= maxParts; i++) {
+        const cb = document.getElementById('cb-part-' + i);
+        // Ở chế độ thi thật, ép buộc làm full test. Nếu luyện tập thì lấy theo checkbox.
+        if (isStrict || (cb && cb.checked)) {
+            selectedParts.push(i);
+        }
+    }
 
-    // 5. Cuộn trang lên trên cùng để bắt đầu làm bài
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+    // Đảm bảo mảng không bị rỗng (phòng hờ lỗi UI)
+    if (selectedParts.length === 0) {
+        for (let i = 1; i <= maxParts; i++) selectedParts.push(i);
+    }
+
+    // 4. Khởi chạy đúng phòng thi cùng với cấu hình đã thiết lập
+    if (isReading) {
+        if (typeof window.startIeltsReadingExam === 'function') {
+            window.startIeltsReadingExam(selectedTestForModal, isStrict, customDuration, selectedParts);
+        }
+    } else {
+        if (typeof window.startIeltsExam === 'function') {
+            window.startIeltsExam(selectedTestForModal, isStrict, customDuration, selectedParts);
+        }
+    }
+};
 
 // Khôi phục lại giao diện ban đầu
         isTakingExam = false;
