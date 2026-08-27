@@ -1544,25 +1544,30 @@
     <script>
         let isTakingExam = false; 
         // ------------------ LOGIC ĐÓNG/MỞ MODAL CHỌN CHẾ ĐỘ ------------------
-        let selectedTestForModal = "";
+        // Biến toàn cục để lưu tên bài thi đang được chọn
+let selectedTestForModal = "";
 
-// Hàm đóng Modal Chọn Chế Độ
-        window.closeModeModal = function() {
-            const modal = document.getElementById('mode-selection-modal');
-            const content = document.getElementById('mode-modal-content');
-            
-            if (modal && content) {
-                // 1. Tạo hiệu ứng mờ dần và thu nhỏ (ngược lại với lúc mở)
-                modal.classList.add('opacity-0');
-                content.classList.remove('scale-100');
-                content.classList.add('scale-95');
-                
-                // 2. Chờ hiệu ứng CSS chạy xong (300ms) rồi mới thêm class 'hidden' để ẩn hoàn toàn
-                setTimeout(() => {
-                    modal.classList.add('hidden');
-                }, 300);
-            }
-        };
+// Hàm này được gọi khi bạn click vào 1 thẻ bài thi ở giao diện ngoài
+function openModeModal(testName) {
+    selectedTestForModal = testName; // Lưu lại tên bài thi
+    
+    // Cập nhật tên bài thi lên Modal
+    const modalTitle = document.getElementById('modal-test-name');
+    if (modalTitle) modalTitle.innerText = testName;
+    
+    // Hiển thị Modal
+    const modal = document.getElementById('mode-selection-modal');
+    const content = document.getElementById('mode-modal-content');
+    
+    if (modal && content) {
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+            modal.classList.remove('opacity-0');
+            content.classList.remove('scale-95');
+            content.classList.add('scale-100');
+        }, 10);
+    }
+}
 
         // ------------------ DỮ LIỆU ĐỀ THI THPT ------------------
         const clozePassage2 = `The rise of digital technology has profoundly impacted education. In recent years, traditional classrooms have been supplemented by online learning platforms, (25) ______ provide students with greater flexibility. Online courses allow learners to access materials at their own pace, making education more accessible to those with busy schedules. (26) ______, this shift also presents challenges. Some students struggle with time management and lack the discipline needed for self-study. Moreover, the absence of face-to-face interaction can lead to feelings of isolation. To address these issues, many educators are adopting a blended learning approach. This method combines online resources (27) ______ traditional classroom instruction. By blending the two, schools can offer the benefits of digital tools while maintaining the personal connection that is (28) ______ for effective learning. Ultimately, (29) ______ technology continues to evolve, education systems must adapt to ensure that all students can succeed.`;
@@ -3103,81 +3108,55 @@
             if(cbFull) cbFull.checked = allChecked;
         };
 
-       window.startExamFromModal = function(isStrict) {
-    // Đóng Modal chọn chế độ
+ // Hàm này được gọi khi bạn bấm nút "Start Now" trong Modal
+function startExamFromModal(isStrict) {
+    // 1. Đóng Modal
     closeModeModal();
 
-    try {
-        // 1. Tính toán thời gian và các phần (Parts) được chọn (giữ nguyên logic của bạn)
-        let duration = 40;
-        const isReading = selectedTestForModal.toLowerCase().includes('reading');
-        const totalParts = isReading ? 3 : 4;
-        let selectedParts = Array.from({length: totalParts}, (_, i) => i + 1);
+    // 2. Ẩn giao diện Dashboard (Danh sách đề thi)
+    const dashboard = document.getElementById('ielts-dashboard');
+    if (dashboard) dashboard.classList.add('hidden');
 
-        if (!isStrict) {
-            const timeSelect = document.getElementById('practice-time-select');
-            if (timeSelect) duration = timeSelect.value === 'none' ? 999 : parseInt(timeSelect.value);
-
-            selectedParts = [];
-            for(let i=1; i<=totalParts; i++) {
-                const cb = document.getElementById('cb-part-' + i);
-                if (cb && cb.checked) selectedParts.push(i);
-            }
-            if(selectedParts.length === 0) selectedParts = Array.from({length: totalParts}, (_, i) => i + 1);
-        } else {
-            duration = isReading ? 60 : 40;
-        }
-
-        // 2. Ẩn Dashboard danh sách đề
-        const dashboard = document.getElementById('ielts-dashboard');
-        if (dashboard) dashboard.classList.add('hidden');
-
-        // 3. Đánh dấu trạng thái hệ thống là đang làm bài
-        isTakingExam = true;
-
-        // 4. KIỂM TRA PHÂN LOẠI BÀI THI VÀ MỞ ĐÚNG GIAO DIỆN
-        if (isReading) {
-            // Mở phòng thi Reading
-            const readingRoom = document.getElementById('ielts-reading-exam-room');
-            if (readingRoom) readingRoom.classList.remove('hidden');
-            
-            // Cập nhật tiêu đề
-            const titleEl = document.getElementById('ielts-reading-exam-title');
-            if (titleEl) titleEl.innerText = selectedTestForModal;
-
-            // TODO: Gọi hàm tải dữ liệu Reading ở đây (Sẽ bổ sung sau)
-            console.log("Đã mở phòng thi Reading - Đang chờ tải dữ liệu...");
-
-        } else if (selectedTestForModal.toLowerCase().includes('listening')) {
-            // Mở phòng thi Listening
-            const listeningRoom = document.getElementById('ielts-exam-room');
-            if (listeningRoom) listeningRoom.classList.remove('hidden');
-            
-            // Cập nhật tiêu đề
-            const titleEl = document.getElementById('ielts-exam-title');
-            if (titleEl) titleEl.innerText = selectedTestForModal;
-
-            // TODO: Gọi hàm tải dữ liệu Listening ở đây (Sẽ bổ sung sau)
-            console.log("Đã mở phòng thi Listening - Đang chờ tải dữ liệu...");
-
-        } else {
-            // Nếu chọn Speaking/Writing hoặc tên bài không khớp
-            alert("Tính năng cho dạng bài này đang được cập nhật!");
-            isTakingExam = false;
-            if (dashboard) dashboard.classList.remove('hidden');
-        }
-
-    } catch (error) {
-        // 5. Bắt lỗi để KHÔNG BỊ TRẮNG MÀN HÌNH
-        console.error("Lỗi khi mở phòng thi:", error);
-        alert("Đã xảy ra lỗi khi tải giao diện bài thi. Vui lòng nhấn F12 mở Console để xem chi tiết.");
+    // 3. Kiểm tra xem đây là bài Reading hay Listening để mở đúng phòng thi
+    if (selectedTestForModal.includes('Reading')) {
         
-        // Khôi phục lại giao diện ban đầu
-        isTakingExam = false;
-        const dashboard = document.getElementById('ielts-dashboard');
-        if (dashboard) dashboard.classList.remove('hidden');
+        // Mở phòng thi Reading
+        const readingRoom = document.getElementById('ielts-reading-exam-room');
+        if (readingRoom) {
+            readingRoom.classList.remove('hidden');
+            readingRoom.classList.add('block'); // Đảm bảo giao diện được hiển thị
+        }
+        
+        // Cập nhật tiêu đề bài thi Reading
+        const titleEl = document.getElementById('ielts-reading-exam-title');
+        if (titleEl) titleEl.innerText = selectedTestForModal;
+
+        // (Tùy chọn) Gọi hàm render dữ liệu Reading của bạn ở đây
+        // renderReadingData(selectedTestForModal);
+
+    } else if (selectedTestForModal.includes('Listening')) {
+        
+        // Mở phòng thi Listening
+        const listeningRoom = document.getElementById('ielts-exam-room');
+        if (listeningRoom) {
+            listeningRoom.classList.remove('hidden');
+            listeningRoom.classList.add('block'); // Đảm bảo giao diện được hiển thị
+        }
+        
+        // Cập nhật tiêu đề bài thi Listening
+        const titleEl = document.getElementById('ielts-exam-title');
+        if (titleEl) titleEl.innerText = selectedTestForModal;
+
+        // (Tùy chọn) Gọi hàm render dữ liệu Listening của bạn ở đây
+        // renderListeningData(selectedTestForModal);
     }
-};
+
+    // 4. Đánh dấu trạng thái đang làm bài để ngăn người dùng thoát nhầm
+    isTakingExam = true;
+
+    // 5. Cuộn trang lên trên cùng để bắt đầu làm bài
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
         // Biến toàn cục lưu trữ các part đang được phép hiển thị
         window.activeListeningParts = [1, 2, 3, 4];
 
