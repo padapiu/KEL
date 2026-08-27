@@ -3375,41 +3375,6 @@ window.switchIeltsReadingPart = function(partNumber) {
     }
 };
 
-// 3. HÀM KHỞI TẠO PHÒNG THI READING (Đã sửa lỗi trống giao diện)
-window.startIeltsReadingExam = function(testName, isStrict, customDuration, selectedParts) {
-    isTakingExam = true;
-
-    const titleEl = document.getElementById('ielts-reading-exam-title');
-    if (titleEl) titleEl.innerText = testName;
-
-    const readingRoom = document.getElementById('ielts-reading-exam-room');
-    if (readingRoom) readingRoom.classList.remove('hidden');
-
-    const strictBottomNav = document.getElementById('strict-reading-bottom-nav');
-    const normalControls = document.getElementById('reading-controls-container');
-
-    if (isStrict) {
-        if (strictBottomNav) {
-            strictBottomNav.classList.remove('hidden');
-            strictBottomNav.classList.add('flex');
-        }
-        if (normalControls) normalControls.classList.add('hidden');
-    } else {
-        if (strictBottomNav) {
-            strictBottomNav.classList.add('hidden');
-            strictBottomNav.classList.remove('flex');
-        }
-        if (normalControls) normalControls.classList.remove('hidden');
-    }
-
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-
-    // QUAN TRỌNG: Lệnh này yêu cầu hệ thống "bơm" ngay đoạn HTML vào giao diện lúc bắt đầu thi
-    if (typeof window.switchIeltsReadingPart === 'function') {
-        window.switchIeltsReadingPart(1);
-    }
-};
-
 // HÀM KHỞI TẠO PHÒNG THI LISTENING 
 // (Mình cung cấp luôn để bạn không bị lỗi tương tự ở phần Nghe)
 window.startIeltsExam = function(testName, isStrict, customDuration, selectedParts) {
@@ -4847,22 +4812,41 @@ window.startIeltsReadingExam = function(testName, isStrict, customDuration = 60,
     const safeUrlName = encodeURIComponent(testName.replace(/\s+/g, '-').toLowerCase());
     window.history.pushState({ pageId: 'exam', tabId: 'reading' }, "", `#exam/reading/${safeUrlName}`);
     
-   // 1. Quét tìm phòng thi linh hoạt (đề phòng sai ID)
+// 1. Ẩn màn hình Dashboard
     const dashboard = document.getElementById('ielts-dashboard') || document.querySelector('.dashboard-container');
-    const readingRoom = document.getElementById('ielts-reading-exam-room') || document.querySelector('[id*="reading-exam"]');
-    
     if (dashboard) dashboard.classList.add('hidden');
-    
+
+    // 2. Tự động dò tìm phòng thi thông qua phần tử con (chống lỗi sai ID)
+    const splitContainer = document.getElementById('reading-split-container');
+    let readingRoom = document.getElementById('ielts-reading-exam-room');
+
+    if (!readingRoom && splitContainer) {
+        // Truy ngược lên tìm thẻ cha đang bị ẩn
+        readingRoom = splitContainer.closest('.hidden') || splitContainer.parentElement;
+    }
+
+    // 3. Ép hiển thị phòng thi và phá mọi lớp bảo vệ ẩn
     if (readingRoom) {
-        // 2. Ép hiển thị phòng thi
         readingRoom.classList.remove('hidden');
-        readingRoom.style.display = 'block'; 
+        readingRoom.style.display = 'block';
         
-        // 3. Tự động rà soát và gỡ lớp 'hidden' của tất cả các thẻ bọc bên ngoài nó
         let parentNode = readingRoom.parentElement;
         while(parentNode && parentNode.tagName !== 'BODY') {
             parentNode.classList.remove('hidden');
+            if (parentNode.style.display === 'none') {
+                parentNode.style.display = 'block';
+            }
             parentNode = parentNode.parentElement;
+        }
+    } else {
+        alert("Lỗi cấu trúc: Không tìm thấy thẻ chứa bài đọc (reading-split-container) trong file HTML!");
+    }
+
+    // 4. Đảm bảo các bảng kết quả cũ đã được dọn dẹp
+    const resultDash = document.getElementById('ielts-reading-result-dashboard');
+    const expArea = document.getElementById('ielts-reading-explanation-area');
+    if(resultDash) resultDash.classList.add('hidden');
+    if(expArea) expArea.classList.add('hidden');
         }
     } else {
         console.warn("CẢNH BÁO: Không tìm thấy thẻ HTML phòng thi. Hãy kiểm tra lại ID trong thẻ div chứa phòng đọc!");
