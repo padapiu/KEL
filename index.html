@@ -4847,11 +4847,26 @@ window.startIeltsReadingExam = function(testName, isStrict, customDuration = 60,
     const safeUrlName = encodeURIComponent(testName.replace(/\s+/g, '-').toLowerCase());
     window.history.pushState({ pageId: 'exam', tabId: 'reading' }, "", `#exam/reading/${safeUrlName}`);
     
-    const dashboard = document.getElementById('ielts-dashboard');
-    const readingRoom = document.getElementById('ielts-reading-exam-room');
+   // 1. Quét tìm phòng thi linh hoạt (đề phòng sai ID)
+    const dashboard = document.getElementById('ielts-dashboard') || document.querySelector('.dashboard-container');
+    const readingRoom = document.getElementById('ielts-reading-exam-room') || document.querySelector('[id*="reading-exam"]');
     
     if (dashboard) dashboard.classList.add('hidden');
-    if (readingRoom) readingRoom.classList.remove('hidden');
+    
+    if (readingRoom) {
+        // 2. Ép hiển thị phòng thi
+        readingRoom.classList.remove('hidden');
+        readingRoom.style.display = 'block'; 
+        
+        // 3. Tự động rà soát và gỡ lớp 'hidden' của tất cả các thẻ bọc bên ngoài nó
+        let parentNode = readingRoom.parentElement;
+        while(parentNode && parentNode.tagName !== 'BODY') {
+            parentNode.classList.remove('hidden');
+            parentNode = parentNode.parentElement;
+        }
+    } else {
+        console.warn("CẢNH BÁO: Không tìm thấy thẻ HTML phòng thi. Hãy kiểm tra lại ID trong thẻ div chứa phòng đọc!");
+    }
     
     const resultDash = document.getElementById('ielts-reading-result-dashboard');
     const expArea = document.getElementById('ielts-reading-explanation-area');
