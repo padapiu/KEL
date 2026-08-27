@@ -3123,7 +3123,22 @@ window.closeModeModal = function() {
             const cbFull = document.getElementById('cb-part-full');
             if(cbFull) cbFull.checked = allChecked;
         };
-
+// Hàm đóng Modal Chọn chế độ làm bài
+window.closeModeModal = function() {
+    const modal = document.getElementById('mode-selection-modal');
+    const content = document.getElementById('mode-modal-content');
+    
+    if (modal && content) {
+        modal.classList.add('opacity-0');
+        content.classList.remove('scale-100');
+        content.classList.add('scale-95');
+        
+        // Đợi hiệu ứng mờ dần (300ms) rồi mới ẩn hẳn
+        setTimeout(() => {
+            modal.classList.add('hidden');
+        }, 300);
+    }
+};
 // Hàm này được gọi khi bạn bấm nút "Start Now" trong Modal
 window.startExamFromModal = function(isStrict) {
     // 1. Đóng Modal
