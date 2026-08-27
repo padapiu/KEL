@@ -3139,6 +3139,78 @@ window.closeModeModal = function() {
         }, 300);
     }
 };
+
+// ========================================================
+// HÀM KHỞI TẠO PHÒNG THI READING
+// ========================================================
+window.startIeltsReadingExam = function(testName, isStrict, customDuration, selectedParts) {
+    // 1. Bật cờ đang thi để chặn chuyển trang đột ngột
+    isTakingExam = true;
+
+    // 2. Cập nhật tên bài thi lên giao diện
+    const titleEl = document.getElementById('ielts-reading-exam-title');
+    if (titleEl) titleEl.innerText = testName;
+
+    // 3. Hiển thị khu vực phòng thi Reading
+    const readingRoom = document.getElementById('ielts-reading-exam-room');
+    if (readingRoom) readingRoom.classList.remove('hidden');
+
+    // 4. Xử lý giao diện theo chế độ Luyện tập / Thi thật
+    const strictBottomNav = document.getElementById('strict-reading-bottom-nav');
+    const normalControls = document.getElementById('reading-controls-container');
+
+    if (isStrict) {
+        // Chế độ thi thật: Hiện thanh dưới đáy, ẩn thanh luyện tập
+        if (strictBottomNav) {
+            strictBottomNav.classList.remove('hidden');
+            strictBottomNav.classList.add('flex');
+        }
+        if (normalControls) normalControls.classList.add('hidden');
+    } else {
+        // Chế độ luyện tập: Ẩn thanh dưới đáy, hiện thanh luyện tập
+        if (strictBottomNav) {
+            strictBottomNav.classList.add('hidden');
+            strictBottomNav.classList.remove('flex');
+        }
+        if (normalControls) normalControls.classList.remove('hidden');
+    }
+
+    // 5. Cuộn trang lên trên cùng để bắt đầu làm bài
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+// ========================================================
+// HÀM KHỞI TẠO PHÒNG THI LISTENING 
+// (Mình cung cấp luôn để bạn không bị lỗi tương tự ở phần Nghe)
+// ========================================================
+window.startIeltsExam = function(testName, isStrict, customDuration, selectedParts) {
+    isTakingExam = true;
+
+    const titleEl = document.getElementById('ielts-exam-title');
+    if (titleEl) titleEl.innerText = testName;
+
+    const listeningRoom = document.getElementById('ielts-exam-room');
+    if (listeningRoom) listeningRoom.classList.remove('hidden');
+
+    const strictBottomNav = document.getElementById('strict-bottom-nav');
+    if (isStrict) {
+        if (strictBottomNav) {
+            strictBottomNav.classList.remove('hidden');
+            strictBottomNav.classList.add('flex');
+        }
+        // Hiện popup cảnh báo Audio cho thi thật
+        const audioPopup = document.getElementById('strict-audio-popup');
+        if (audioPopup) audioPopup.classList.remove('hidden');
+    } else {
+        if (strictBottomNav) {
+            strictBottomNav.classList.add('hidden');
+            strictBottomNav.classList.remove('flex');
+        }
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+        
 // Hàm này được gọi khi bạn bấm nút "Start Now" trong Modal
 window.startExamFromModal = function(isStrict) {
     // 1. Đóng Modal
