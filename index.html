@@ -3157,6 +3157,12 @@ function startExamFromModal(isStrict) {
     // 5. Cuộn trang lên trên cùng để bắt đầu làm bài
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
+// Khôi phục lại giao diện ban đầu
+        isTakingExam = false;
+        const dashboard = document.getElementById('ielts-dashboard');
+        if (dashboard) dashboard.classList.remove('hidden');
+        
         // Biến toàn cục lưu trữ các part đang được phép hiển thị
         window.activeListeningParts = [1, 2, 3, 4];
 
