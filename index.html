@@ -4737,6 +4737,10 @@ window.switchIeltsReadingPart = function(partNum) {
             const topHeader = document.querySelector('#ielts-reading-exam-room > div.fixed');
             if (topHeader) topHeader.classList.add('hidden');
 
+            // [SỬA LỖI THÊM VÀO ĐÂY] - Hiện lại Menu chính khi nộp bài
+            const mainHeader = document.getElementById('main-header');
+            if (mainHeader) mainHeader.classList.remove('hidden');
+
             // 2. Ẩn phần câu hỏi làm bài
             const splitContainer = document.getElementById('reading-split-container');
             if (splitContainer) {
@@ -4868,6 +4872,15 @@ window.switchIeltsReadingPart = function(partNum) {
             isTakingExam = false;
 
             window.history.pushState({ pageId: 'ielts', tabId: 'reading' }, "", "#ielts/reading");
+
+            // [SỬA LỖI THÊM VÀO ĐÂY] - Phục hồi Menu chính và vị trí topHeader
+            const mainHeader = document.getElementById('main-header');
+            if (mainHeader) mainHeader.classList.remove('hidden');
+            const topHeader = document.querySelector('#ielts-reading-exam-room > div.fixed');
+            if (topHeader) {
+                topHeader.classList.remove('top-4');
+                topHeader.classList.add('top-[75px]', 'md:top-[88px]');
+            }
             
             // 1. Ẩn các khu vực liên quan đến làm bài và kết quả Reading
             document.getElementById('ielts-reading-exam-room').classList.add('hidden');
