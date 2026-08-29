@@ -4545,7 +4545,7 @@ window.startIeltsReadingExam = function(testName, isStrict, customDuration = 60,
         
         // [ĐÃ SỬA LỖI]: Khai báo rõ 2 biến này ở ngoài cùng để cả if và else đều hiểu
         const mainHeader = document.getElementById('main-header');
-        const topHeader = document.querySelector('#ielts-reading-exam-room > div.fixed');
+        topHeader = document.querySelector('#ielts-reading-exam-room > div.fixed');
 
         if (isStrict) {
             // Giao diện thi thật
