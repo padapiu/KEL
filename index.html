@@ -4537,66 +4537,67 @@ window.startIeltsReadingExam = function(testName, isStrict, customDuration = 60,
             
             document.getElementById('ielts-reading-exam-title').innerText = testName;
             
-            // --- XỬ LÝ GIAO DIỆN "THI THẬT" (STRICT MODE) CHO READING ---
-            const topTabsContainer = document.getElementById('reading-tabs-container');
-            const timerContainer = document.getElementById('reading-timer-container');
-            const btnSubmitTop = document.getElementById('btn-submit-reading');
-            const bottomNav = document.getElementById('strict-reading-bottom-nav');
-            
-            if (isStrict) {
-                // [SỬA LỖI Ở ĐÂY] Ẩn Menu chính và đẩy thanh làm bài lên trên cùng
-                if (mainHeader) mainHeader.classList.add('hidden');
-                if (topHeader) {
-                    topHeader.classList.remove('top-[75px]', 'md:top-[88px]');
-                    topHeader.classList.add('top-4');
-                }
-                // Ẩn thanh Tab trên và Nút nộp bài trên
-                if(topTabsContainer) topTabsContainer.classList.add('hidden');
-                if(btnSubmitTop) btnSubmitTop.classList.add('hidden');
-                
-                // Đổi đồng hồ sang dạng Text
-                if(timerContainer) {
-                    timerContainer.className = "text-gray-600 dark:text-gray-300 font-bold flex items-center gap-2";
-                    timerContainer.classList.remove('hidden');
-                }
-                const timerDisplay = document.getElementById('ielts-reading-timer-display');
-                if (timerDisplay) {
-                    timerDisplay.className = "text-sm";
-                    timerDisplay.innerHTML = `${duration} minutes remaining`;
-                }
-                
-                // Hiện thanh điều hướng dưới đáy
-                if(bottomNav) {
-                    bottomNav.classList.remove('hidden');
-                    bottomNav.classList.add('flex');
-                }
-                
-                // Tạo khoảng trống dưới cùng để không bị che chữ
-                if(splitContainer) splitContainer.style.paddingBottom = "80px";
-            } else {
-                // [SỬA LỖI Ở ĐÂY] Hiện lại Menu chính và đưa thanh làm bài về vị trí cũ
-                if (mainHeader) mainHeader.classList.remove('hidden');
-                if (topHeader) {
-                    topHeader.classList.remove('top-4');
-                    topHeader.classList.add('top-[75px]', 'md:top-[88px]');
-                }
-                // Trả lại giao diện luyện tập
-                if(topTabsContainer) topTabsContainer.classList.remove('hidden');
-                if(btnSubmitTop) btnSubmitTop.classList.remove('hidden');
-                
-                if(timerContainer) {
-                    timerContainer.className = "bg-rose-50 dark:bg-rose-900/30 text-rose-500 dark:text-rose-400 font-mono font-bold text-2xl px-4 py-2 rounded-xl border border-rose-200 dark:border-rose-800 flex items-center gap-2";
-                    timerContainer.classList.remove('hidden');
-                }
-                const timerDisplay = document.getElementById('ielts-reading-timer-display');
-                if (timerDisplay) timerDisplay.className = "";
-                
-                if(bottomNav) {
-                    bottomNav.classList.add('hidden');
-                    bottomNav.classList.remove('flex');
-                }
-                if(splitContainer) splitContainer.style.paddingBottom = "0px";
+// --- XỬ LÝ GIAO DIỆN "THI THẬT" (STRICT MODE) CHO READING ---
+        const topTabsContainer = document.getElementById('reading-tabs-container');
+        const timerContainer = document.getElementById('reading-timer-container');
+        const btnSubmitTop = document.getElementById('btn-submit-reading');
+        const bottomNav = document.getElementById('strict-reading-bottom-nav');
+        
+        // [ĐÃ SỬA LỖI]: Khai báo rõ 2 biến này ở ngoài cùng để cả if và else đều hiểu
+        const mainHeader = document.getElementById('main-header');
+        const topHeader = document.querySelector('#ielts-reading-exam-room > div.fixed');
+
+        if (isStrict) {
+            // Giao diện thi thật
+            if (mainHeader) mainHeader.classList.add('hidden');
+            if (topHeader) {
+                topHeader.classList.remove('top-[75px]', 'md:top-[88px]');
+                topHeader.classList.add('top-4');
             }
+
+            if(topTabsContainer) topTabsContainer.classList.add('hidden');
+            if(btnSubmitTop) btnSubmitTop.classList.add('hidden');
+
+            if(timerContainer) {
+                timerContainer.className = "text-gray-600 dark:text-gray-300 font-bold flex items-center gap-2";
+                timerContainer.classList.remove('hidden');
+            }
+            const timerDisplay = document.getElementById('ielts-reading-timer-display');
+            if (timerDisplay) {
+                timerDisplay.className = "text-sm";
+                timerDisplay.innerHTML = `${duration} minutes remaining`;
+            }
+
+            if(bottomNav) {
+                bottomNav.classList.remove('hidden');
+                bottomNav.classList.add('flex');
+            }
+            if(splitContainer) splitContainer.style.paddingBottom = "80px";
+            
+        } else {
+            // Giao diện luyện tập
+            if (mainHeader) mainHeader.classList.remove('hidden');
+            if (topHeader) {
+                topHeader.classList.remove('top-4');
+                topHeader.classList.add('top-[75px]', 'md:top-[88px]');
+            }
+
+            if(topTabsContainer) topTabsContainer.classList.remove('hidden');
+            if(btnSubmitTop) btnSubmitTop.classList.remove('hidden');
+            
+            if(timerContainer) {
+                timerContainer.className = "bg-rose-50 dark:bg-rose-900/30 text-rose-500 dark:text-rose-400 font-mono font-bold text-2xl px-4 py-2 rounded-xl border border-rose-200 dark:border-rose-800 flex items-center gap-2";
+                timerContainer.classList.remove('hidden');
+            }
+            const timerDisplay = document.getElementById('ielts-reading-timer-display');
+            if (timerDisplay) timerDisplay.className = "";
+            
+            if(bottomNav) {
+                bottomNav.classList.add('hidden');
+                bottomNav.classList.remove('flex');
+            }
+            if(splitContainer) splitContainer.style.paddingBottom = "0px";
+        }
             
             for (let i = 1; i <= 40; i++) {
                 window[`userAnsRead${i}`] = null;
