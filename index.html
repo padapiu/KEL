@@ -4477,11 +4477,47 @@ window.history.pushState({ pageId: 'thpt', tabId: null }, "", "#thpt");
         // ========================================================
         window.activeReadingParts = [1, 2, 3];
 
+        // --- DỮ LIỆU ĐỀ THI READING MINH HỌA ---
+const dummyReadingTestData = {
+    title: "Cambridge 21 - Reading Test 4 (Minh họa)",
+    passages: [
+        {
+            id: 1,
+            title: "Reading Passage 1: The History of Coding",
+            content: `
+                <h3 style="font-size: 1.25rem; font-weight: bold; margin-bottom: 1rem;">The origins of programming</h3>
+                <p style="margin-bottom: 1rem;">Programming started long before computers were invented. Ada Lovelace is often considered the first computer programmer for her work on Charles Babbage's early mechanical general-purpose computer, the Analytical Engine.</p>
+                <p style="margin-bottom: 1rem;">Today, coding is a vital skill in the modern digital economy, powering everything from interactive websites to advanced Artificial Intelligence systems. The evolution of programming languages from Assembly to high-level languages like JavaScript has made software development more accessible.</p>
+            `,
+            questions: [
+                {
+                    id: "q1",
+                    type: "multiple_choice",
+                    number: 1,
+                    question: "Who is often considered the first computer programmer?",
+                    options: ["Alan Turing", "Ada Lovelace", "Bill Gates", "Charles Babbage"],
+                    answer: "Ada Lovelace"
+                },
+                {
+                    id: "q2",
+                    type: "fill_in_blank",
+                    number: 2,
+                    question: "Today, coding is considered a vital ________ in the modern digital economy.",
+                    answer: "skill"
+                }
+            ]
+        }
+    ]
+};
+
 window.startIeltsReadingExam = function(testName, isStrict, customDuration = 60, selectedParts = [1, 2, 3]) {
             currentIeltsReadingTestName = testName;
             let duration = customDuration; 
             window.activeReadingParts = selectedParts; 
             isTakingExam = true;
+    // --- BƯỚC 2: NẠP DỮ LIỆU VÀO HÀM ---
+    // Nạp dữ liệu minh họa vào biến quản lý đề thi ngay sau khi xác nhận đang làm bài
+    window.currentReadingTest = dummyReadingTestData;
 
             const safeUrlName = encodeURIComponent(testName.replace(/\s+/g, '-').toLowerCase());
             window.history.pushState({ pageId: 'exam', tabId: 'reading' }, "", `#exam/reading/${safeUrlName}`);
