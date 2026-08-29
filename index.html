@@ -4499,47 +4499,45 @@ const cambridge21Test4 = {
         }
     ]
 };
-        
-// Biến toàn cục lưu danh sách Passage đang được chọn
-        window.activeReadingParts = [1, 2, 3];
 
 // ========================================================
         // LOGIC PHÒNG THI IELTS READING (CÓ GIAO DIỆN THI THẬT)
         // ========================================================
         window.activeReadingParts = [1, 2, 3];
 
-        // --- DỮ LIỆU ĐỀ THI READING MINH HỌA ---
-const dummyReadingTestData = {
-    title: "Cambridge 21 - Reading Test 4 (Minh họa)",
+       // ==========================================
+// 1. DỮ LIỆU ĐỀ THI READING (DATA)
+// ==========================================
+let currentReadingTest = null;
+
+const cambridge21Test4 = {
+    title: "Cambridge IELTS 21 Academic Reading Test 4",
     passages: [
         {
             id: 1,
-            title: "Reading Passage 1: The History of Coding",
+            title: "The problems and benefits created by the spread of the water hyacinth in Kenya",
             content: `
-                <h3 style="font-size: 1.25rem; font-weight: bold; margin-bottom: 1rem;">The origins of programming</h3>
-                <p style="margin-bottom: 1rem;">Programming started long before computers were invented. Ada Lovelace is often considered the first computer programmer for her work on Charles Babbage's early mechanical general-purpose computer, the Analytical Engine.</p>
-                <p style="margin-bottom: 1rem;">Today, coding is a vital skill in the modern digital economy, powering everything from interactive websites to advanced Artificial Intelligence systems. The evolution of programming languages from Assembly to high-level languages like JavaScript has made software development more accessible.</p>
+                <p class="mb-4">Water hyacinth (Eichhornia crassipes), an aquatic plant native to South America, first appeared in countries in Africa in the early 1900s. Scientists there called it the 'world's worst aquatic weed', after it spread from the southernmost tip of Africa in the early 1900s and started obstructing major dams and rivers.</p>
+                <p class="mb-4">In east Africa the plant arrived with Belgian colonists in Rwanda, who liked the look of its glossy leaves and delicate purple flowers floating in their ponds. But by the 1980s, it had 'escaped' out of the country via the Kagera river and made its way downstream to Lake Victoria. There, with no natural predators and perfect temperature conditions, the plant began spreading in the open water, blocking fishing routes and providing a new habitat for disease-carrying mosquitoes.</p>
+                <p class="mb-4"><em>(Thêm các đoạn văn tiếp theo của bài vào đây...)</em></p>
             `,
-            questions: [
+            questionGroups: [
                 {
-                    id: "q1",
-                    type: "multiple_choice",
-                    number: 1,
-                    question: "Who is often considered the first computer programmer?",
-                    options: ["Alan Turing", "Ada Lovelace", "Bill Gates", "Charles Babbage"],
-                    answer: "Ada Lovelace"
-                },
-                {
-                    id: "q2",
-                    type: "fill_in_blank",
-                    number: 2,
-                    question: "Today, coding is considered a vital ________ in the modern digital economy.",
-                    answer: "skill"
+                    type: "TRUE_FALSE_NOT_GIVEN",
+                    instruction: "Do the following statements agree with the information given in Reading Passage 1?",
+                    questions: [
+                        { id: 1, number: 1, text: "Water hyacinth was introduced as a decorative plant in east Africa.", answer: "TRUE" },
+                        { id: 2, number: 2, text: "Fishermen took some water hyacinth plants to Lake Victoria.", answer: "FALSE" },
+                        { id: 3, number: 3, text: "It is now difficult to force boats through the thick water hyacinth on Lake Victoria.", answer: "TRUE" }
+                    ]
                 }
             ]
         }
     ]
 };
+
+// Biến toàn cục lưu danh sách Passage đang được chọn
+window.activeReadingParts = [1, 2, 3];
 
 // ==========================================
 // 2. KHỞI TẠO VÀ XỬ LÝ GIAO DIỆN PHÒNG THI
@@ -4563,7 +4561,7 @@ window.startIeltsReadingExam = function(testName, isStrict, customDuration = 60,
     const splitContainer = document.getElementById('reading-split-container');
     if (splitContainer) splitContainer.classList.remove('hidden');
 
-    // 3. Khai báo các thành phần UI (Chỉ khai báo 1 lần để tránh lỗi)
+    // 3. Khai báo các thành phần UI
     const mainHeader = document.getElementById('main-header');
     const topHeader = document.querySelector('#ielts-reading-exam-room > div.fixed');
     const topTabsContainer = document.getElementById('reading-tabs-container');
@@ -4603,14 +4601,12 @@ window.startIeltsReadingExam = function(testName, isStrict, customDuration = 60,
     renderReadingTestContent(1); // Mặc định hiển thị Passage 1 trước
 };
 
-        // ==========================================
+// ==========================================
 // 3. HÀM KẾT XUẤT DỮ LIỆU RA MÀN HÌNH
 // ==========================================
 function renderReadingTestContent(passageIndex) {
     if (!currentReadingTest || !currentReadingTest.passages) return;
 
-    // Lấy dữ liệu của Passage tương ứng (1, 2 hoặc 3)
-    // Mảng trong JavaScript bắt đầu từ 0, nên passageIndex 1 ứng với vị trí 0
     const passageData = currentReadingTest.passages[passageIndex - 1]; 
     if (!passageData) return;
 
@@ -4628,9 +4624,6 @@ function renderReadingTestContent(passageIndex) {
             </div>
         `;
     }
-
-    // Tương lai: Bạn sẽ viết thêm logic để lấy passageData.questionGroups 
-    // và render ra khu vực chứa câu hỏi (bên phải màn hình) tại đây.
 }
         
 window.switchIeltsReadingPart = function(partNum) {
