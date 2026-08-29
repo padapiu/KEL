@@ -4470,71 +4470,74 @@ window.history.pushState({ pageId: 'thpt', tabId: null }, "", "#thpt");
         };
 
         // ==========================================
-// 1. DỮ LIỆU ĐỀ THI READING (DATA)
+// MODULE: IELTS READING (XÂY LẠI HOÀN TOÀN)
 // ==========================================
-let currentReadingTest = null;
 
-const cambridge21Test4 = {
-    title: "Cambridge IELTS 21 Academic Reading Test 4",
+// 1. BIẾN TOÀN CỤC CHUẨN HOÁ
+window.currentReadingTest = null;
+window.currentReadingPassageIndex = 1;
+
+// 2. DỮ LIỆU ĐỀ THI MẪU
+const cambridge21Test4Reading = {
+    title: "Cambridge 21 - Reading Test 4",
     passages: [
         {
             id: 1,
-            title: "The problems and benefits created by the spread of the water hyacinth in Kenya",
+            title: "Reading Passage 1: Water hyacinth in Kenya",
             content: `
-                <p class="mb-4">Water hyacinth (Eichhornia crassipes), an aquatic plant native to South America, first appeared in countries in Africa in the early 1900s. Scientists there called it the 'world's worst aquatic weed', after it spread from the southernmost tip of Africa in the early 1900s and started obstructing major dams and rivers.</p>
-                <p class="mb-4">In east Africa the plant arrived with Belgian colonists in Rwanda, who liked the look of its glossy leaves and delicate purple flowers floating in their ponds. But by the 1980s, it had 'escaped' out of the country via the Kagera river and made its way downstream to Lake Victoria. There, with no natural predators and perfect temperature conditions, the plant began spreading in the open water, blocking fishing routes and providing a new habitat for disease-carrying mosquitoes.</p>
-                <p class="mb-4"><em>(Thêm các đoạn văn tiếp theo của bài vào đây...)</em></p>
+                <p class="mb-4 text-justify">Water hyacinth (Eichhornia crassipes), an aquatic plant native to South America, first appeared in countries in Africa in the early 1900s. Scientists there called it the 'world's worst aquatic weed'.</p>
+                <p class="mb-4 text-justify">In east Africa the plant arrived with Belgian colonists in Rwanda, who liked the look of its glossy leaves...</p>
             `,
-            questionGroups: [
-                {
-                    type: "TRUE_FALSE_NOT_GIVEN",
-                    instruction: "Do the following statements agree with the information given in Reading Passage 1?",
-                    questions: [
-                        { id: 1, number: 1, text: "Water hyacinth was introduced as a decorative plant in east Africa.", answer: "TRUE" },
-                        { id: 2, number: 2, text: "Fishermen took some water hyacinth plants to Lake Victoria.", answer: "FALSE" },
-                        { id: 3, number: 3, text: "It is now difficult to force boats through the thick water hyacinth on Lake Victoria.", answer: "TRUE" }
-                    ]
-                }
-            ]
+            questionsHTML: `
+                <div class="mb-6 text-gray-800 dark:text-gray-200">
+                    <h4 class="font-bold text-lg mb-2">Questions 1-3</h4>
+                    <p class="italic mb-4">Do the following statements agree with the information given in Reading Passage 1?</p>
+                    <div class="space-y-4">
+                        <p>1. Water hyacinth was introduced as a decorative plant in east Africa. <input type="text" class="border-b-2 border-cyan-500 bg-transparent w-20 text-center font-bold text-cyan-600 focus:outline-none"></p>
+                        <p>2. Fishermen took some water hyacinth plants to Lake Victoria. <input type="text" class="border-b-2 border-cyan-500 bg-transparent w-20 text-center font-bold text-cyan-600 focus:outline-none"></p>
+                    </div>
+                </div>
+            `
+        },
+        {
+            id: 2,
+            title: "Reading Passage 2: Multilingualism in India",
+            content: `<p class="mb-4 text-justify">The crowded and bustling streets of Delhi teem with life...</p>`,
+            questionsHTML: `<p class="text-gray-500 italic">Câu hỏi của Passage 2 sẽ hiển thị ở đây.</p>`
+        },
+        {
+            id: 3,
+            title: "Reading Passage 3: The Globemakers",
+            content: `<p class="mb-4 text-justify">Peter Bellerby, who lived in London, wanted to give his father a model globe...</p>`,
+            questionsHTML: `<p class="text-gray-500 italic">Câu hỏi của Passage 3 sẽ hiển thị ở đây.</p>`
         }
     ]
 };
 
-// ========================================================
-        // LOGIC PHÒNG THI IELTS READING (CÓ GIAO DIỆN THI THẬT)
-        // ========================================================
-        window.activeReadingParts = [1, 2, 3];
-
-// ==========================================
-// 2. KHỞI TẠO VÀ XỬ LÝ GIAO DIỆN PHÒNG THI
-// ==========================================
-window.startIeltsReadingExam = function(testName, isStrict, customDuration = 60, selectedParts = [1, 2, 3]) {
-    // 1. Cập nhật dữ liệu hệ thống
-    currentIeltsReadingTestName = testName;
-    window.activeReadingParts = selectedParts;
+// 3. HÀM ĐIỀU KHIỂN BẮT ĐẦU BÀI THI
+window.startIeltsReadingExam = function(testName, isStrict = false) {
+    // Khởi tạo trạng thái
     isTakingExam = true;
-    currentReadingTest = cambridge21Test4; // Nạp đề thi Cambridge 21 vào hệ thống
+    window.currentReadingTest = cambridge21Test4Reading;
+    window.currentReadingPassageIndex = 1;
 
-    // Cập nhật đường dẫn URL
-    const safeUrlName = encodeURIComponent(testName.replace(/\s+/g, '-').toLowerCase());
-    window.history.pushState({ pageId: 'exam', tabId: 'reading' }, "", `#exam/reading/${safeUrlName}`);
-
-    // 2. Chuyển đổi màn hình (Ẩn Dashboard, Hiện Phòng thi)
+    // Chuyển đổi màn hình chính
     document.getElementById('ielts-dashboard').classList.add('hidden');
     document.getElementById('ielts-reading-exam-room').classList.remove('hidden');
     document.getElementById('ielts-reading-result-dashboard').classList.add('hidden');
+    document.getElementById('ielts-reading-explanation-area').classList.add('hidden');
     
     const splitContainer = document.getElementById('reading-split-container');
     if (splitContainer) splitContainer.classList.remove('hidden');
 
-    // 3. Khai báo các thành phần UI
+    // Lấy các thẻ UI cần thao tác
     const mainHeader = document.getElementById('main-header');
     const topHeader = document.querySelector('#ielts-reading-exam-room > div.fixed');
     const topTabsContainer = document.getElementById('reading-tabs-container');
     const btnSubmitTop = document.getElementById('btn-submit-reading');
     const bottomNav = document.getElementById('strict-reading-bottom-nav');
 
-    // 4. Phân nhánh chế độ Thi thật / Luyện tập
+    // Cấu hình giao diện theo chế độ (Luyện tập / Thi thật)
     if (isStrict) {
         if (mainHeader) mainHeader.classList.add('hidden');
         if (topHeader) {
@@ -4563,117 +4566,59 @@ window.startIeltsReadingExam = function(testName, isStrict, customDuration = 60,
         if (splitContainer) splitContainer.style.paddingBottom = "0px";
     }
 
-    // 5. Gọi hàm vẽ nội dung đề thi ra màn hình
-    renderReadingTestContent(1); // Mặc định hiển thị Passage 1 trước
+    // Tự động load Passage 1 khi vừa vào phòng thi
+    window.switchIeltsReadingPart(1);
 };
 
-// ==========================================
-// 3. HÀM KẾT XUẤT DỮ LIỆU RA MÀN HÌNH
-// ==========================================
-function renderReadingTestContent(passageIndex) {
-    if (!currentReadingTest || !currentReadingTest.passages) return;
+// 4. HÀM CHUYỂN ĐỔI GIỮA CÁC PASSAGE
+window.switchIeltsReadingPart = function(partNumber) {
+    window.currentReadingPassageIndex = partNumber;
 
-    const passageData = currentReadingTest.passages[passageIndex - 1]; 
+    // Cập nhật màu sắc Tab Luyện Tập
+    for (let i = 1; i <= 3; i++) {
+        const tab = document.getElementById('tab-read-' + i);
+        if (tab) {
+            tab.className = (i === partNumber) 
+                ? "px-4 py-2 font-bold bg-emerald-500 text-white transition focus:outline-none" 
+                : "px-4 py-2 font-bold bg-gray-100 text-gray-600 dark:bg-slate-700 dark:text-gray-300 hover:bg-gray-200 transition focus:outline-none";
+        }
+    }
+
+    // Cập nhật màu sắc Tab Thi Thật
+    for (let i = 1; i <= 3; i++) {
+        const strictTab = document.getElementById('strict-read-tab-' + i);
+        if (strictTab) {
+            strictTab.className = (i === partNumber)
+                ? "px-6 h-full border-b-4 border-emerald-500 font-bold text-emerald-600 bg-white dark:bg-slate-800 flex items-center justify-center transition-colors"
+                : "px-6 h-full border-b-4 border-transparent font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-800 flex items-center justify-center transition-colors";
+        }
+    }
+
+    // Vẽ dữ liệu tương ứng ra màn hình
+    window.renderReadingTestContent(partNumber);
+};
+
+// 5. HÀM KẾT XUẤT (RENDER) DỮ LIỆU RA MÀN HÌNH
+window.renderReadingTestContent = function(passageIndex) {
+    if (!window.currentReadingTest || !window.currentReadingTest.passages) return;
+
+    const passageData = window.currentReadingTest.passages[passageIndex - 1]; 
     if (!passageData) return;
 
-    // Tìm vùng chứa bài đọc trên giao diện
-    const passageContentContainer = document.getElementById('reading-passage-content');
+    const passageContainer = document.getElementById('reading-passage-container');
+    const questionsContainer = document.getElementById('reading-questions-container');
     
-    // Đổ dữ liệu vào vùng chứa
-    if (passageContentContainer) {
-        passageContentContainer.innerHTML = `
-            <h2 class="text-2xl font-bold mb-6 text-slate-800 dark:text-slate-100">
-                ${passageData.title}
-            </h2>
-            <div class="text-slate-700 dark:text-slate-300 leading-relaxed text-lg text-justify">
-                ${passageData.content}
-            </div>
-        `;
+    // Đổ đoạn văn
+    if (passageContainer) {
+        passageContainer.innerHTML = '<h2 class="text-2xl font-bold mb-6 text-slate-800 dark:text-slate-100">' + passageData.title + '</h2>' + passageData.content;
     }
-}
-        
-window.switchIeltsReadingPart = function(partNum) {
-            for(let i=1; i<=3; i++) {
-                const tab = document.getElementById(`tab-read-${i}`);
-                const strictTab = document.getElementById(`strict-read-tab-${i}`);
-                
-                if(window.activeReadingParts.includes(i)) {
-                    if(i === partNum) {
-                        if(tab) tab.className = "px-4 py-2 font-bold bg-emerald-500 text-white transition focus:outline-none";
-                        if(strictTab) strictTab.className = "px-6 h-full border-b-4 border-emerald-500 font-bold text-emerald-600 bg-white dark:bg-slate-800 flex items-center justify-center transition-colors";
-                    } else {
-                        if(tab) tab.className = "px-4 py-2 font-bold bg-gray-100 text-gray-600 dark:bg-slate-700 dark:text-gray-300 hover:bg-gray-200 transition focus:outline-none";
-                        if(strictTab) strictTab.className = "px-6 h-full border-b-4 border-transparent font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-800 flex items-center justify-center transition-colors";
-                    }
-                }
-            }
-            
-            if (window.activeReadingParts.includes(partNum)) {
-                document.getElementById('reading-passage-container').innerHTML = ieltsReadingData[partNum].content;
-                document.getElementById('reading-questions-container').innerHTML = ieltsReadingData[partNum].questions;
-                
-                for(let i=1; i<=40; i++) {
-                    if(window[`userAnsRead${i}`]) {
-                        let el = document.getElementById(`read-ans-${i}`);
-                        if(el) {
-                            el.value = window[`userAnsRead${i}`];
-                        } else {
-                            let radio = document.querySelector(`input[name="rq${i}"][value="${window[`userAnsRead${i}`]}"]`);
-                            if(radio) radio.checked = true;
-                        }
-                    }
-                    
-                    let elInput = document.getElementById(`read-ans-${i}`);
-                    if(elInput) {
-                        elInput.addEventListener('change', (e) => { window[`userAnsRead${i}`] = e.target.value; });
-                    } else {
-                        let radios = document.querySelectorAll(`input[name="rq${i}"]`);
-                        radios.forEach(r => r.addEventListener('change', (e) => { window[`userAnsRead${i}`] = e.target.value; }));
-                    }
-                }
-            } else {
-                document.getElementById('reading-passage-container').innerHTML = "";
-                document.getElementById('reading-questions-container').innerHTML = "";
-            }
-            
-            document.querySelector('.reading-passage-pane').scrollTop = 0;
-            document.querySelector('.reading-questions-pane').scrollTop = 0;
-        };
+    
+    // Đổ câu hỏi
+    if (questionsContainer) {
+        questionsContainer.innerHTML = passageData.questionsHTML || "";
+    }
+};
 
-        window.strictNextReadingPart = function() {
-            let currentPart = 1;
-            for(let i=1; i<=3; i++) {
-                const tab = document.getElementById(`strict-read-tab-${i}`);
-                if (tab && tab.classList.contains('border-emerald-500')) {
-                    currentPart = i;
-                    break;
-                }
-            }
-            
-            if (currentPart < window.activeReadingParts[window.activeReadingParts.length - 1]) {
-                const nextIdx = window.activeReadingParts.indexOf(currentPart) + 1;
-                switchIeltsReadingPart(window.activeReadingParts[nextIdx]);
-            } else {
-                if(confirm("Đây là đoạn văn cuối cùng. Bạn có chắc chắn muốn nộp bài?")) {
-                    submitIeltsReadingExam(false);
-                }
-            }
-        };
-        window.strictPrevReadingPart = function() {
-            let currentPart = 1;
-            for(let i=1; i<=3; i++) {
-                const tab = document.getElementById(`strict-read-tab-${i}`);
-                if (tab && tab.classList.contains('border-emerald-500')) {
-                    currentPart = i;
-                    break;
-                }
-            }
-            
-            if (currentPart > window.activeReadingParts[0]) {
-                const prevIdx = window.activeReadingParts.indexOf(currentPart) - 1;
-                switchIeltsReadingPart(window.activeReadingParts[prevIdx]);
-            }
-        };
         window.submitIeltsReadingExam = function(isTimeout = false) {
             if (!isTimeout) {
                 if (!confirm("Bạn có chắc chắn muốn nộp bài? Các câu chưa điền sẽ tính là sai.")) return;
