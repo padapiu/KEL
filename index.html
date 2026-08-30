@@ -6317,33 +6317,37 @@ window.addEventListener('load', protectExamRoute);
 window.startExamFromModal = function(isStrict) {
     closeModeModal(); // Đóng bảng chọn chế độ
     
-    // Fallback an toàn nếu chưa có tên bài thi
-    if (!window.currentIeltsReadingTestName) {
-        const titleEl = document.getElementById('modal-test-name');
-        window.currentIeltsReadingTestName = titleEl ? titleEl.innerText : "Cambridge 21 - Reading Test 4";
-    }
+    // SỬA LỖI TẠI ĐÂY: Đồng bộ đúng tên biến lưu đề thi từ cấu trúc của bạn
+    window.currentIeltsReadingTestName = selectedTestForModal || "Cambridge 21 - Reading Test 4";
 
-    // Lấy dữ liệu bài thi từ Object toàn cục mới (reading-data.js)
-    const testData = window.ieltsReadingDatabase ? window.ieltsReadingDatabase[currentIeltsReadingTestName] : null;
+    // Lấy dữ liệu bài thi từ Object toàn cục
+    const testData = window.ieltsReadingDatabase ? window.ieltsReadingDatabase[window.currentIeltsReadingTestName] : null;
     
     if (!testData) {
-        alert("Dữ liệu cho đề thi này đang được cập nhật!");
+        alert("Dữ liệu cho đề thi [" + window.currentIeltsReadingTestName + "] đang được cập nhật!");
         window.location.hash = '#ielts/reading'; 
         return;
     }
 
-    // Cập nhật URL (Trigger hàm protectExamRoute ở trên)
-    let slug = currentIeltsReadingTestName.toLowerCase().replace(/ /g, '-');
+    // Cập nhật URL
+    let slug = window.currentIeltsReadingTestName.toLowerCase().replace(/ /g, '-');
     window.location.hash = `#exam/reading/${slug}`;
 
     // Chuyển đổi giao diện
-    document.getElementById('ielts-dashboard').classList.add('hidden');
-    document.getElementById('ielts-reading-exam-room').classList.remove('hidden');
-    document.getElementById('ielts-reading-result-dashboard').classList.add('hidden');
-    document.getElementById('ielts-reading-explanation-area').classList.add('hidden');
+    const dashboard = document.getElementById('ielts-dashboard');
+    if (dashboard) dashboard.classList.add('hidden');
+    
+    const readingRoom = document.getElementById('ielts-reading-exam-room');
+    if (readingRoom) readingRoom.classList.remove('hidden');
+    
+    const resultDash = document.getElementById('ielts-reading-result-dashboard');
+    if (resultDash) resultDash.classList.add('hidden');
+    
+    const expArea = document.getElementById('ielts-reading-explanation-area');
+    if (expArea) expArea.classList.add('hidden');
     
     const examTitle = document.getElementById('ielts-reading-exam-title');
-    if (examTitle) examTitle.innerText = currentIeltsReadingTestName;
+    if (examTitle) examTitle.innerText = window.currentIeltsReadingTestName;
 
     // Cấu hình các Part sẽ thi
     window.activeReadingParts = [];
@@ -6358,7 +6362,9 @@ window.startExamFromModal = function(isStrict) {
     }
 
     // Tải nội dung Part đầu tiên
-    switchIeltsReadingPart(window.activeReadingParts[0]);
+    if (typeof switchIeltsReadingPart === 'function') {
+        switchIeltsReadingPart(window.activeReadingParts[0]);
+    }
     
     isTakingExam = true;
     window.scrollTo({ top: 0, behavior: 'smooth' });
