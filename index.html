@@ -6312,63 +6312,6 @@ function protectExamRoute() {
 // Kích hoạt bảo vệ giao diện khi đổi URL hoặc tải lại trang
 window.addEventListener('hashchange', protectExamRoute);
 window.addEventListener('load', protectExamRoute);
-
-// 2. CẬP NHẬT HÀM START EXAM ĐỂ SỬ DỤNG DỮ LIỆU ĐỘNG TỪ FILE JS MỚI
-window.startExamFromModal = function(isStrict) {
-    closeModeModal(); // Đóng bảng chọn chế độ
-    
-    // SỬA LỖI TẠI ĐÂY: Đồng bộ đúng tên biến lưu đề thi từ cấu trúc của bạn
-    window.currentIeltsReadingTestName = selectedTestForModal || "Cambridge 21 - Reading Test 4";
-
-    // Lấy dữ liệu bài thi từ Object toàn cục
-    const testData = window.ieltsReadingDatabase ? window.ieltsReadingDatabase[window.currentIeltsReadingTestName] : null;
-    
-    if (!testData) {
-        alert("Dữ liệu cho đề thi [" + window.currentIeltsReadingTestName + "] đang được cập nhật!");
-        window.location.hash = '#ielts/reading'; 
-        return;
-    }
-
-    // Cập nhật URL
-    let slug = window.currentIeltsReadingTestName.toLowerCase().replace(/ /g, '-');
-    window.location.hash = `#exam/reading/${slug}`;
-
-    // Chuyển đổi giao diện
-    const dashboard = document.getElementById('ielts-dashboard');
-    if (dashboard) dashboard.classList.add('hidden');
-    
-    const readingRoom = document.getElementById('ielts-reading-exam-room');
-    if (readingRoom) readingRoom.classList.remove('hidden');
-    
-    const resultDash = document.getElementById('ielts-reading-result-dashboard');
-    if (resultDash) resultDash.classList.add('hidden');
-    
-    const expArea = document.getElementById('ielts-reading-explanation-area');
-    if (expArea) expArea.classList.add('hidden');
-    
-    const examTitle = document.getElementById('ielts-reading-exam-title');
-    if (examTitle) examTitle.innerText = window.currentIeltsReadingTestName;
-
-    // Cấu hình các Part sẽ thi
-    window.activeReadingParts = [];
-    if (document.getElementById('cb-part-1') && document.getElementById('cb-part-1').checked) window.activeReadingParts.push(1);
-    if (document.getElementById('cb-part-2') && document.getElementById('cb-part-2').checked) window.activeReadingParts.push(2);
-    if (document.getElementById('cb-part-3') && document.getElementById('cb-part-3').checked) window.activeReadingParts.push(3);
-    if (window.activeReadingParts.length === 0) window.activeReadingParts = [1, 2, 3];
-
-    // Reset đáp án của người dùng
-    for (let i = 1; i <= 40; i++) {
-        window[`userAnsRead${i}`] = "";
-    }
-
-    // Tải nội dung Part đầu tiên
-    if (typeof switchIeltsReadingPart === 'function') {
-        switchIeltsReadingPart(window.activeReadingParts[0]);
-    }
-    
-    isTakingExam = true;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-};
     
     </script>
 </body>
