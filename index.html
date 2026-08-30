@@ -3439,39 +3439,6 @@ window.ieltsReadingDatabase = {
             if(cbFull) cbFull.checked = allChecked;
         };
 
-        // 3. Hàm phân luồng thi nhận danh sách Parts
-        window.startExamFromModal = function(isStrict) {
-            closeModeModal();
-            let duration = 40; 
-            const isReading = selectedTestForModal.toLowerCase().includes('reading');
-            const totalParts = isReading ? 3 : 4;
-            let selectedParts = Array.from({length: totalParts}, (_, i) => i + 1);
-            
-            if (!isStrict) {
-                const timeSelect = document.getElementById('practice-time-select');
-                if (timeSelect) duration = timeSelect.value === 'none' ? 999 : parseInt(timeSelect.value);
-
-                selectedParts = [];
-                for(let i=1; i<=totalParts; i++) {
-                    const cb = document.getElementById('cb-part-' + i);
-                    if (cb && cb.checked) selectedParts.push(i);
-                }
-                if(selectedParts.length === 0) selectedParts = Array.from({length: totalParts}, (_, i) => i + 1);
-            } else {
-                duration = isReading ? 60 : 40;
-            }
-            
-            if (isReading) {
-                if(typeof startIeltsReadingExam === 'function') {
-                    startIeltsReadingExam(selectedTestForModal, isStrict, duration, selectedParts); 
-                }
-            } else {
-                if(typeof startIeltsExam === 'function') {
-                    startIeltsExam(selectedTestForModal, isStrict, duration, selectedParts);
-                }
-            }
-        };
-
         // Biến toàn cục lưu trữ các part đang được phép hiển thị
         window.activeListeningParts = [1, 2, 3, 4];
 
@@ -6289,6 +6256,75 @@ window.submitWritingToAI = async function() {
     }
 };
 
+// 1. HÀM CHÍNH: Xử lý khi người dùng bấm "Start Now" (Chỉ có 1 hàm duy nhất)
+window.startExamFromModal = function(isStrict) {
+    // Bước 1: Đóng bảng chọn chế độ
+    closeModeModal();
+    
+    // Bước 2: Lấy tên đề thi, nếu không có thì dùng mặc định
+    const testName = window.selectedTestForModal || "Cambridge 21 - Reading Test 4";
+    
+    // Bước 3: Đổi URL để hàm protectExamRoute tự động hiển thị giao diện phòng thi
+    window.location.hash = `#exam/reading/${testName.replace(/\s+/g, '-').toLowerCase()}`;
+    
+    // Bước 4: Đợi 100ms cho giao diện mở ra, sau đó đổ dữ liệu vào
+    setTimeout(() => {
+        if (testName.toLowerCase().includes('reading')) {
+            renderReadingPassage(testName, 1); // Mặc định mở đoạn văn số 1 (Passage 1)
+        }
+    }, 100);
+};
+
+// 2. HÀM HỖ TRỢ: Lấy dữ liệu từ kho (Database) và hiển thị lên màn hình
+window.renderReadingPassage = function(testName, passageNumber) {
+    const database = window.ieltsReadingDatabase;
+    
+    // Kiểm tra xem dữ liệu có tồn tại không để tránh lỗi
+    if (!database || !database[testName] || !database[testName].passages[passageNumber]) {
+        console.error("Lỗi: Không tìm thấy dữ liệu cho bài thi", testName);
+        return;
+    }
+
+    // Lấy dữ liệu của đoạn văn tương ứng
+    const currentPassage = database[testName].passages[passageNumber];
+    
+    // Tìm các thẻ div trên giao diện để nhét dữ liệu vào
+    const titleUI = document.getElementById('ielts-reading-exam-title');
+    const passageUI = document.getElementById('reading-passage-container');
+    const questionsUI = document.getElementById('reading-questions-container');
+
+    // Đổ dữ liệu vào giao diện
+    if (titleUI) titleUI.innerText = testName;
+    if (passageUI) {
+        passageUI.innerHTML = `<h3 class="text-2xl font-bold mb-4 text-cyan-800 dark:text-cyan-300">${currentPassage.title}</h3>` + currentPassage.content;
+        passageUI.scrollTop = 0; // Tự động cuộn lên đầu trang
+    }
+    if (questionsUI) {
+        questionsUI.innerHTML = currentPassage.questions;
+        questionsUI.scrollTop = 0; 
+    }
+};
+
+// 3. HÀM HỖ TRỢ: Chuyển đổi qua lại giữa Passage 1, 2 và 3
+window.switchIeltsReadingPart = function(passageNumber) {
+    const testName = window.selectedTestForModal || "Cambridge 21 - Reading Test 4";
+    
+    // Gọi lại hàm render để cập nhật nội dung
+    renderReadingPassage(testName, passageNumber);
+    
+    // Đổi màu làm nổi bật tab đang được chọn
+    for (let i = 1; i <= 3; i++) {
+        const tab = document.getElementById(`tab-read-${i}`);
+        if (tab) {
+            if (i === passageNumber) {
+                tab.className = "px-4 py-2 font-bold bg-emerald-500 text-white transition focus:outline-none rounded-md";
+            } else {
+                tab.className = "px-4 py-2 font-bold bg-gray-100 text-gray-600 dark:bg-slate-700 dark:text-gray-300 hover:bg-gray-200 transition focus:outline-none rounded-md";
+            }
+        }
+    }
+};
+    
 // 1. VÁ LỖI ROUTING: BẢO VỆ GIAO DIỆN KHÔNG BỊ TRẮNG KHI URL LÀ #EXAM
 function protectExamRoute() {
     const hash = window.location.hash;
