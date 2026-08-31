@@ -6262,7 +6262,7 @@ window.startExamFromModal = function(isStrict) {
     closeModeModal();
     
     // Bước 2: Lấy tên đề thi đang được chọn
-    const testName = window.selectedTestForModal;
+    const testName = selectedTestForModal;
     if (!testName) {
         showToast("Không tìm thấy tên bài thi!", "error");
         return;
