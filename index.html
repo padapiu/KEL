@@ -6256,23 +6256,40 @@ window.submitWritingToAI = async function() {
     }
 };
 
-// 1. HÀM CHÍNH: Xử lý khi người dùng bấm "Start Now" (Chỉ có 1 hàm duy nhất)
+// 1. HÀM CHÍNH: Xử lý khi người dùng bấm "Start Now" (Đã sửa lỗi trắng màn hình và điều hướng)
 window.startExamFromModal = function(isStrict) {
     // Bước 1: Đóng bảng chọn chế độ
     closeModeModal();
     
-    // Bước 2: Lấy tên đề thi, nếu không có thì dùng mặc định
-    const testName = window.selectedTestForModal || "Cambridge 21 - Reading Test 4";
+    // Bước 2: Lấy tên đề thi đang được chọn
+    const testName = window.selectedTestForModal;
+    if (!testName) {
+        showToast("Không tìm thấy tên bài thi!", "error");
+        return;
+    }
     
-    // Bước 3: Đổi URL để hàm protectExamRoute tự động hiển thị giao diện phòng thi
-    window.location.hash = `#exam/reading/${testName.replace(/\s+/g, '-').toLowerCase()}`;
+    // Bước 3: Lấy thời gian người dùng chọn ở phần Luyện tập (nếu có)
+    const timeSelect = document.getElementById('practice-time-select');
+    let duration = null;
+    if (timeSelect && timeSelect.value !== 'none') {
+        duration = parseInt(timeSelect.value);
+    }
     
-    // Bước 4: Đợi 100ms cho giao diện mở ra, sau đó đổ dữ liệu vào
-    setTimeout(() => {
-        if (testName.toLowerCase().includes('reading')) {
-            renderReadingPassage(testName, 1); // Mặc định mở đoạn văn số 1 (Passage 1)
-        }
-    }, 100);
+    // Bước 4: Kiểm tra đây là bài Reading hay Listening để gọi đúng hàm khởi tạo
+    if (testName.toLowerCase().includes('reading')) {
+        // Đặt thời gian mặc định nếu thi thật
+        if (!duration || isStrict) duration = 60; 
+        
+        // Gọi hàm khởi tạo phòng thi Reading (Hàm này đã xử lý việc lưu History State, chống lỗi Trang chủ)
+        startIeltsReadingExam(testName, isStrict, duration, [1, 2, 3]);
+        
+    } else if (testName.toLowerCase().includes('listening')) {
+        // Đặt thời gian mặc định nếu thi thật
+        if (!duration || isStrict) duration = 40; 
+        
+        // Gọi hàm khởi tạo phòng thi Listening
+        startIeltsExam(testName, isStrict, duration, [1, 2, 3, 4]);
+    }
 };
 
 // 2. HÀM HỖ TRỢ: Lấy dữ liệu từ kho (Database) và hiển thị lên màn hình
