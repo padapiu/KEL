@@ -84,7 +84,7 @@
                     <textarea class="writing-part-input w-full p-4 rounded-xl border border-gray-300 bg-white text-gray-800 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-200 resize-none h-28" placeholder="Nhập phần Introduction của bạn ở đây..."></textarea>
                 </div>
                 <div>
-                    <label class="block font-bold text-gray-700 mb-2">Overview</label>
+                    <label id="label-overview" class="block font-bold text-gray-700 mb-2">Overview</label>
                     <textarea class="writing-part-input w-full p-4 rounded-xl border border-gray-300 bg-white text-gray-800 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-200 resize-none h-32" placeholder="Nhập phần Overview của bạn ở đây..."></textarea>
                 </div>
                 <div>
@@ -145,12 +145,12 @@
             "Water Filter Construction": {
                 type: "Task 1",
                 text: "The diagram below shows how a simple water filter is constructed and how it functions to produce clean drinking water.",
-                image: "https://plain-apac-prod-public.komododecks.com/202608/25/FZWcb77ta3mnv17I9gsY/image.png"
+                image: "https://plain-apac-prod-public.komododecks.com/202609/01/upfT9vSuDz7JNhKsxlzi/image.png"
             },
             "Mobile phone sales by manufacturers": {
                 type: "Task 1",
                 text: "The line graph below illustrates the proportion of mobile phone sales by three manufacturers (Motorola, Nokia and Sony Ericsson) between 1994 and 2004.",
-                image: "https://plain-apac-prod-public.komododecks.com/202608/25/9dJZERiYVtW2CV62RfkH/image.png"
+                image: "https://plain-apac-prod-public.komododecks.com/202609/01/fSzRTZrdpcsZdwoi7PO2/image.png"
             }
         };
 
@@ -162,11 +162,29 @@
         document.getElementById('display-task-title').innerText = testTitle;
 
         const currentTestData = writingDatabase[testTitle];
+        const labelOverview = document.getElementById('label-overview');
+
         if (currentTestData) {
             document.getElementById('writing-prompt-text').innerText = currentTestData.text;
-            document.getElementById('writing-prompt-image').src = currentTestData.image;
             document.getElementById('display-task-type').innerText = "Writing " + currentTestData.type;
+
+            // KIỂM TRA: Nếu là Task 2
+            if (currentTestData.type === "Task 2") {
+                // Ẩn hoàn toàn hình ảnh
+                document.getElementById('writing-prompt-image').style.display = 'none';
+                // Đổi chữ Overview thành Conclusion
+                if (labelOverview) labelOverview.innerText = "Conclusion";
+            } 
+            // Nếu là Task 1
+            else {
+                // Hiện hình ảnh
+                document.getElementById('writing-prompt-image').src = currentTestData.image;
+                document.getElementById('writing-prompt-image').style.display = 'block';
+                // Giữ nguyên chữ Overview
+                if (labelOverview) labelOverview.innerText = "Overview";
+            }
         } else {
+            // Chế độ viết tự do (Không có trong database)
             document.getElementById('writing-prompt-text').innerText = "Vui lòng nhập bài viết của bạn. (Chế độ viết tự do)";
             document.getElementById('writing-prompt-image').style.display = 'none';
         }
