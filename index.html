@@ -4751,7 +4751,7 @@ btnStopRecord.addEventListener('click', () => {
                         <td class="py-4 px-4 text-center">
                             <div class="flex items-center justify-center gap-3 text-cyan-600 dark:text-cyan-400 font-semibold text-sm">
                                 <button class="hover:underline hover:text-cyan-800 transition">Làm lại</button>
-                                <button class="hover:underline hover:text-cyan-800 transition">Xem lại</button>
+                               <button class="hover:underline hover:text-cyan-800 transition">Xem lại</button>
                             </div>
                         </td>
                     </tr>
@@ -4760,7 +4760,8 @@ btnStopRecord.addEventListener('click', () => {
             
             tbody.innerHTML = html;
         };
-    
+
+        // Hàm hiển thị Lịch sử và Tiến trình học tập
         window.showProgressModal = async function() {
             document.getElementById('progress-modal').classList.remove('hidden');
             const container = document.getElementById('progress-list-container');
@@ -4782,33 +4783,38 @@ btnStopRecord.addEventListener('click', () => {
                     let emoji = "👍";
                     if(parseFloat(data.score) >= 8.0) {
                         scoreColor = "bg-emerald-100 text-emerald-700 border-emerald-300 dark:bg-emerald-900/50 dark:text-emerald-300 dark:border-emerald-700";
-                        emoji = "🏆";
-                    } else if(parseFloat(data.score) < 5.0) {
+                        emoji = "🌟";
+                    } else if(parseFloat(data.score) <= 5.0) {
                         scoreColor = "bg-rose-100 text-rose-700 border-rose-300 dark:bg-rose-900/50 dark:text-rose-300 dark:border-rose-700";
                         emoji = "💪";
                     }
-
+                    
+                    let dateStr = "Vừa xong";
+                    if (data.timestamp && typeof data.timestamp.toDate === 'function') {
+                        dateStr = data.timestamp.toDate().toLocaleString('vi-VN');
+                    }
+                    
                     historyHTML += `
-                        <div class="flex justify-between items-center p-5 bg-white dark:bg-slate-800 rounded-2xl border shadow-sm hover:shadow-md transition duration-300 transform hover:-translate-y-1">
-                            <div class="flex items-center gap-4">
-                                <div class="w-12 h-12 rounded-full ${scoreColor} shadow-inner flex items-center justify-center text-2xl border">
-                                    ${emoji}
-                                </div>
-                                <div>
-                                    <h4 class="text-lg font-black text-slate-800 dark:text-white">${data.testName}</h4>
-                                    <p class="text-sm font-semibold text-slate-500 dark:text-slate-400 mt-1 flex items-center gap-1"><span>🕒</span> ${data.dateStr}</p>
-                                </div>
+                        <div class="flex justify-between items-center p-4 rounded-xl border-2 ${scoreColor} shadow-sm transition transform hover:scale-[1.01]">
+                            <div>
+                                <h4 class="font-extrabold text-lg">${data.testName}</h4>
+                                <p class="text-sm opacity-80 font-semibold mt-1">🕒 ${dateStr}</p>
                             </div>
-                            <div class="${scoreColor} font-black text-3xl px-5 py-2 rounded-xl shadow-sm border bg-opacity-50 backdrop-blur-sm">
-                                ${parseFloat(data.score).toFixed(1)}
+                            <div class="text-right">
+                                <span class="text-3xl font-black drop-shadow-sm">${parseFloat(data.score).toFixed(1)}</span>
+                                <span class="text-xl ml-1">${emoji}</span>
                             </div>
                         </div>
                     `;
                 });
-                historyHTML += '</div>';
-                container.innerHTML = count === 0 ? '<div class="text-center py-10"><div class="text-6xl mb-4">📭</div><p class="text-gray-500 font-medium text-lg">Bạn chưa hoàn thành bài thi nào.<br>Hãy bắt đầu chinh phục đề đầu tiên nhé!</p></div>' : historyHTML;
+                
+                if (count === 0) historyHTML = '<p class="text-center text-gray-500 my-4 italic">Chưa có dữ liệu. Hãy làm thử một bài test nhé!</p>';
+                else historyHTML += '</div>';
+                
+                container.innerHTML = historyHTML;
             } catch (error) {
-                container.innerHTML = '<p class="text-center text-rose-500 font-bold my-4">Không thể tải dữ liệu.</p>';
+                container.innerHTML = '<p class="text-center text-rose-500 my-4 font-bold">Lỗi tải dữ liệu!</p>';
+                console.error(error);
             }
         };
 
