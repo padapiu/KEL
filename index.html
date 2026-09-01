@@ -518,9 +518,17 @@
     
     <!-- BƯỚC 2: MÀN HÌNH DASHBOARD (DANH SÁCH ĐỀ) -->
     <div id="writing-dashboard" class="max-w-6xl mx-auto mb-8">
-        <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">Kho đề thi Writing Task 1</h3>
+
+        <!-- Nút chuyển đổi giữa Task 1 và Task 2 -->
+        <div class="flex justify-center gap-4 mb-10 border-b border-gray-200 dark:border-slate-700 pb-6">
+            <button id="btn-writing-task1" onclick="switchWritingTask(1)" class="px-8 py-2 rounded-full font-bold transition shadow-md bg-cyan-500 text-white transform scale-105"> Task 1</button>
+            <button id="btn-writing-task2" onclick="switchWritingTask(2)" class="px-8 py-2 rounded-full font-bold transition bg-gray-100 text-gray-600 dark:bg-slate-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-600">🧠 Task 2</button>
+        </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- ================= KHU VỰC TASK 1 ================= -->
+        <div id="writing-task-1-content" class="block transition-opacity duration-300">
+            <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">Writing Task 1</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             
             <!-- Thẻ Đề thi 1 (Process) -->
             <div onclick="openWritingRoom('[C21T3] - Rain-shadow Desert Formation')" class="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl flex p-4 relative overflow-hidden cursor-pointer hover:shadow-lg transition-shadow group">
@@ -550,6 +558,32 @@
 
         </div>
     </div>
+
+        <!-- ================= KHU VỰC TASK 2 ================= -->
+        <div id="writing-task-2-content" class="hidden transition-opacity duration-300">
+            <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">Kho đề thi Writing Task 2</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                
+                <!-- Thẻ Đề thi mẫu Task 2 - 1 -->
+                <div onclick="openWritingRoom('Technology & Education')" class="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl flex p-4 relative overflow-hidden cursor-pointer hover:shadow-lg transition-shadow group min-h-[140px]">
+                    <span class="absolute top-0 left-0 bg-emerald-600 text-white text-xs font-bold px-4 py-1.5 rounded-br-xl shadow-sm z-10">Opinion Essay</span>
+                    <div class="w-full pt-6 flex flex-col">
+                        <h4 class="text-cyan-700 dark:text-cyan-400 font-extrabold text-lg group-hover:text-emerald-500 transition-colors">Technology & Education</h4>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mt-2 line-clamp-3">Some people think that computers and the internet are more important in a child's education than attending school. To what extent do you agree or disagree?</p>
+                    </div>
+                </div>
+
+                <!-- Thẻ Đề thi mẫu Task 2 - 2 -->
+                <div onclick="openWritingRoom('Environment & Society')" class="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl flex p-4 relative overflow-hidden cursor-pointer hover:shadow-lg transition-shadow group min-h-[140px]">
+                    <span class="absolute top-0 left-0 bg-amber-600 text-white text-xs font-bold px-4 py-1.5 rounded-br-xl shadow-sm z-10">Discussion Essay</span>
+                    <div class="w-full pt-6 flex flex-col">
+                        <h4 class="text-cyan-700 dark:text-cyan-400 font-extrabold text-lg group-hover:text-amber-500 transition-colors">Environment & Society</h4>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mt-2 line-clamp-3">Some people think that environmental problems are too big for individuals to solve. Others believe individuals can also do something. Discuss both views and give your opinion.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
 </div>
 </div> 
               
@@ -1902,6 +1936,40 @@
                 }
             }
         }
+
+        // Hàm chuyển đổi giữa Task 1 và Task 2 trong phần Writing
+window.switchWritingTask = function(taskNumber) {
+    const t1Content = document.getElementById('writing-task-1-content');
+    const t2Content = document.getElementById('writing-task-2-content');
+    const btnT1 = document.getElementById('btn-writing-task1');
+    const btnT2 = document.getElementById('btn-writing-task2');
+
+    // Các class css dùng chung
+    const activeClass = 'px-8 py-2 rounded-full font-bold transition shadow-md bg-cyan-500 text-white transform scale-105';
+    const inactiveClass = 'px-8 py-2 rounded-full font-bold transition bg-gray-100 text-gray-600 dark:bg-slate-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-600';
+
+    if (taskNumber === 1) {
+        // Hiện Task 1, Ẩn Task 2
+        t1Content.classList.remove('hidden');
+        t1Content.classList.add('block');
+        t2Content.classList.add('hidden');
+        t2Content.classList.remove('block');
+        
+        // Đổi màu nút
+        btnT1.className = activeClass;
+        btnT2.className = inactiveClass;
+    } else {
+        // Hiện Task 2, Ẩn Task 1
+        t2Content.classList.remove('hidden');
+        t2Content.classList.add('block');
+        t1Content.classList.add('hidden');
+        t1Content.classList.remove('block');
+        
+        // Đổi màu nút
+        btnT2.className = activeClass;
+        btnT1.className = inactiveClass;
+    }
+};
 
         // Tối ưu hàm reveal khi người dùng scroll chuột
         function initScrollReveal() {
