@@ -1212,16 +1212,16 @@
                         </div>
                     </div>
 
-                    <!-- Card Đề Mẫu 2: Education and Learning -->
-                    <div onclick="startFlashcard('education_learning')" class="bg-white dark:bg-slate-800 rounded-2xl p-5 shadow-sm hover:shadow-lg border border-gray-100 dark:border-slate-700 transition cursor-pointer group flex flex-col h-full">
-                        <h4 class="font-bold text-lg text-gray-800 dark:text-white group-hover:text-cyan-500 transition-colors mb-2 line-clamp-2">Topic: Education and Learning (Level B1-B2)</h4>
-                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-6 flex items-center gap-2"><span> 50 từ</span> <span class="w-1 h-1 rounded-full bg-gray-300"></span> <span></span></p>
+                    <!-- Card Đề Mẫu 2 -->
+                    <div onclick="startFlashcard()" class="bg-white dark:bg-slate-800 rounded-2xl p-5 shadow-sm hover:shadow-lg border border-gray-100 dark:border-slate-700 transition cursor-pointer group flex flex-col h-full">
+                        <h4 class="font-bold text-lg text-gray-800 dark:text-white group-hover:text-cyan-500 transition-colors mb-2 line-clamp-2">Từ vựng Tiếng Anh giao tiếp trung cấp</h4>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-6 flex items-center gap-2"><span>📑 797 từ</span> <span class="w-1 h-1 rounded-full bg-gray-300"></span> <span>👤 28,728</span></p>
                         <div class="flex items-center gap-2 mt-auto">
                             <img src="https://i.postimg.cc/MG12Bzyq/logo.png" class="w-6 h-6 rounded-full bg-cyan-100 object-cover border border-cyan-200">
-                            <span class="text-xs font-bold text-gray-600 dark:text-gray-400">KELVIN LE</span>
+                            <span class="text-xs font-bold text-gray-600 dark:text-gray-400">KEL Education</span>
                         </div>
                     </div>
-                    
+
                     <!-- Card Đề Mẫu 3 -->
                     <div onclick="startFlashcard()" class="bg-white dark:bg-slate-800 rounded-2xl p-5 shadow-sm hover:shadow-lg border border-gray-100 dark:border-slate-700 transition cursor-pointer group flex flex-col h-full">
                         <h4 class="font-bold text-lg text-gray-800 dark:text-white group-hover:text-cyan-500 transition-colors mb-2 line-clamp-2">900 từ vựng IELTS (có ảnh minh họa)</h4>
@@ -3868,60 +3868,6 @@ window.renderStreakCalendar();
             { word: "take over a role", type: "phrase", phonetic: "/.../", meaning: "Đảm nhận vị trí", example: "She will take over the role of manager next month.<br><br><i>Đồng nghĩa: assume a position</i>" }
         ];
 
-        // BỘ DỮ LIỆU TỪ VỰNG: EDUCATION AND LEARNING (B1-B2)
-        const educationLearningVocab = [
-            { word: "academic achievement", type: "noun", phonetic: "/.../", meaning: "Thành tích học tập", example: "Her academic achievements are truly impressive.<br><br><i>Đồng nghĩa: scholastic success</i>" },
-            { word: "attend classes", type: "phrase", phonetic: "/.../", meaning: "Tham dự lớp học", example: "It is mandatory to attend classes regularly.<br><br><i>Đồng nghĩa: go to lessons</i>" },
-            { word: "bachelor's degree", type: "noun", phonetic: "/.../", meaning: "Bằng cử nhân", example: "She holds a bachelor's degree in psychology.<br><br><i>Đồng nghĩa: undergraduate degree</i>" },
-            { word: "boarding school", type: "noun", phonetic: "/.../", meaning: "Trường nội trú", example: "He was sent to a boarding school when he was ten.<br><br><i>Đồng nghĩa: residential school</i>" },
-            { word: "catch up with", type: "phrase", phonetic: "/.../", meaning: "Bắt kịp (tiến độ)", example: "After my illness, I had to catch up with my studies.<br><br><i>Đồng nghĩa: get back on track</i>" },
-            { word: "compulsory subject", type: "noun", phonetic: "/.../", meaning: "Môn học bắt buộc", example: "Math is a compulsory subject in high school.<br><br><i>Đồng nghĩa: mandatory subject, required course</i>" },
-            { word: "core curriculum", type: "noun", phonetic: "/.../", meaning: "Chương trình học cốt lõi", example: "Science is part of the core curriculum.<br><br><i>Đồng nghĩa: main syllabus, central curriculum</i>" },
-            { word: "distance learning", type: "noun", phonetic: "/.../", meaning: "Học từ xa", example: "Distance learning has become very popular recently.<br><br><i>Đồng nghĩa: online learning, remote learning</i>" },
-            { word: "drop out of school", type: "phrase", phonetic: "/.../", meaning: "Bỏ học", example: "He dropped out of school to start a business.<br><br><i>Đồng nghĩa: leave school early, quit studying</i>" },
-            { word: "enroll in a course", type: "phrase", phonetic: "/.../", meaning: "Đăng ký một khóa học", example: "I plan to enroll in a photography course.<br><br><i>Đồng nghĩa: register for, sign up for</i>" },
-            { word: "extracurricular activities", type: "noun", phonetic: "/.../", meaning: "Hoạt động ngoại khóa", example: "He participates in many extracurricular activities.<br><br><i>Đồng nghĩa: after-school activities, non-academic activities</i>" },
-            { word: "fall behind", type: "phrase", phonetic: "/.../", meaning: "Tụt hậu", example: "If you miss classes, you will fall behind in your work.<br><br><i>Đồng nghĩa: lag behind</i>" },
-            { word: "group work", type: "noun", phonetic: "/.../", meaning: "Làm việc nhóm", example: "Group work teaches students how to collaborate.<br><br><i>Đồng nghĩa: team project, collaborative work</i>" },
-            { word: "higher education", type: "noun", phonetic: "/.../", meaning: "Giáo dục đại học", example: "Higher education is expensive in many countries.<br><br><i>Đồng nghĩa: tertiary education, university education</i>" },
-            { word: "hit the books", type: "phrase", phonetic: "/.../", meaning: "Bắt đầu học bài", example: "I have a test tomorrow, so I need to hit the books.<br><br><i>Đồng nghĩa: study hard, cram</i>" },
-            { word: "intensive course", type: "noun", phonetic: "/.../", meaning: "Khóa học cấp tốc", example: "She took an intensive course in Spanish.<br><br><i>Đồng nghĩa: crash course, rigorous course</i>" },
-            { word: "keep up with", type: "phrase", phonetic: "/.../", meaning: "Theo kịp", example: "It is hard to keep up with the reading assignments.<br><br><i>Đồng nghĩa: stay level with, follow</i>" },
-            { word: "learn by heart", type: "phrase", phonetic: "/.../", meaning: "Học thuộc lòng", example: "We had to learn the poem by heart.<br><br><i>Đồng nghĩa: memorize</i>" },
-            { word: "lifelong learning", type: "noun", phonetic: "/.../", meaning: "Học tập suốt đời", example: "The university promotes a culture of lifelong learning.<br><br><i>Đồng nghĩa: continuous education</i>" },
-            { word: "major in", type: "phrase", phonetic: "/.../", meaning: "Chuyên ngành", example: "I decided to major in computer science.<br><br><i>Đồng nghĩa: specialize in</i>" },
-            { word: "master's degree", type: "noun", phonetic: "/.../", meaning: "Bằng thạc sĩ", example: "He is studying for a master's degree in business.<br><br><i>Đồng nghĩa: postgraduate degree</i>" },
-            { word: "meet the entry requirements", type: "phrase", phonetic: "/.../", meaning: "Đáp ứng yêu cầu đầu vào", example: "You must meet the entry requirements to apply.<br><br><i>Đồng nghĩa: fulfill prerequisites</i>" },
-            { word: "memorize facts", type: "phrase", phonetic: "/.../", meaning: "Ghi nhớ thông tin", example: "Education shouldn't just be about memorizing facts.<br><br><i>Đồng nghĩa: rote learn, remember</i>" },
-            { word: "pass with flying colors", type: "phrase", phonetic: "/.../", meaning: "Đỗ với điểm cao", example: "She passed her exams with flying colors.<br><br><i>Đồng nghĩa: excel, do exceptionally well</i>" },
-            { word: "pay attention", type: "phrase", phonetic: "/.../", meaning: "Chú ý", example: "You must pay attention to the teacher's instructions.<br><br><i>Đồng nghĩa: focus, listen closely</i>" },
-            { word: "peer pressure", type: "noun", phonetic: "/.../", meaning: "Áp lực đồng trang lứa", example: "Teenagers often face peer pressure at school.<br><br><i>Đồng nghĩa: social pressure</i>" },
-            { word: "plagiarism", type: "noun", phonetic: "/.../", meaning: "Đạo văn", example: "Plagiarism is a serious offense in universities.<br><br><i>Đồng nghĩa: copying, intellectual theft</i>" },
-            { word: "postgraduate study", type: "noun", phonetic: "/.../", meaning: "Học sau đại học", example: "Postgraduate study requires a lot of independent research.<br><br><i>Đồng nghĩa: graduate study</i>" },
-            { word: "prepare for an exam", type: "phrase", phonetic: "/.../", meaning: "Chuẩn bị cho kỳ thi", example: "I need a quiet place to prepare for my exam.<br><br><i>Đồng nghĩa: study for a test</i>" },
-            { word: "private tutor", type: "noun", phonetic: "/.../", meaning: "Gia sư riêng", example: "His parents hired a private tutor for math.<br><br><i>Đồng nghĩa: personal instructor, coach</i>" },
-            { word: "research paper", type: "noun", phonetic: "/.../", meaning: "Bài nghiên cứu", example: "We have to write a 10-page research paper.<br><br><i>Đồng nghĩa: academic essay, thesis</i>" },
-            { word: "revise for a test", type: "phrase", phonetic: "/.../", meaning: "Ôn thi", example: "I spent the whole weekend revising for my history test.<br><br><i>Đồng nghĩa: review for an exam</i>" },
-            { word: "scholarship", type: "noun", phonetic: "/.../", meaning: "Học bổng", example: "She won a scholarship to study abroad.<br><br><i>Đồng nghĩa: grant, financial aid</i>" },
-            { word: "school uniform", type: "noun", phonetic: "/.../", meaning: "Đồng phục học sinh", example: "Wearing a school uniform creates a sense of equality.<br><br><i>Đồng nghĩa: standard attire</i>" },
-            { word: "skip classes", type: "phrase", phonetic: "/.../", meaning: "Cúp học", example: "Students who skip classes will face disciplinary action.<br><br><i>Đồng nghĩa: play truant, cut class</i>" },
-            { word: "student loan", type: "noun", phonetic: "/.../", meaning: "Khoản vay sinh viên", example: "It will take years to pay off my student loan.<br><br><i>Đồng nghĩa: education loan</i>" },
-            { word: "study abroad", type: "phrase", phonetic: "/.../", meaning: "Du học", example: "Studying abroad broadens your horizons.<br><br><i>Đồng nghĩa: study overseas</i>" },
-            { word: "syllabus", type: "noun", phonetic: "/.../", meaning: "Đề cương môn học", example: "The teacher handed out the syllabus on the first day.<br><br><i>Đồng nghĩa: curriculum, course outline</i>" },
-            { word: "take a gap year", type: "phrase", phonetic: "/.../", meaning: "Nghỉ một năm (trước đại học)", example: "Many students take a gap year to travel.<br><br><i>Đồng nghĩa: take a year off</i>" },
-            { word: "take an exam", type: "phrase", phonetic: "/.../", meaning: "Làm bài thi", example: "We have to take a final exam in June.<br><br><i>Đồng nghĩa: sit an exam</i>" },
-            { word: "tuition fees", type: "noun", phonetic: "/.../", meaning: "Học phí", example: "University tuition fees have increased significantly.<br><br><i>Đồng nghĩa: education costs, school fees</i>" },
-            { word: "undergraduate student", type: "noun", phonetic: "/.../", meaning: "Sinh viên đại học", example: "The library is open to all undergraduate students.<br><br><i>Đồng nghĩa: college student</i>" },
-            { word: "vocational training", type: "noun", phonetic: "/.../", meaning: "Đào tạo nghề", example: "Vocational training prepares students for specific careers.<br><br><i>Đồng nghĩa: career training, occupational training</i>" },
-            { word: "written assignment", type: "noun", phonetic: "/.../", meaning: "Bài tập viết", example: "We have three written assignments due this term.<br><br><i>Đồng nghĩa: essay, coursework</i>" },
-            { word: "academic year", type: "noun", phonetic: "/.../", meaning: "Năm học", example: "The academic year begins in September.<br><br><i>Đồng nghĩa: school year</i>" },
-            { word: "co-educational school", type: "noun", phonetic: "/.../", meaning: "Trường nam nữ học chung", example: "My kids go to a co-educational school.<br><br><i>Đồng nghĩa: mixed school</i>" },
-            { word: "degree certificate", type: "noun", phonetic: "/.../", meaning: "Bằng cấp", example: "You will receive your degree certificate at graduation.<br><br><i>Đồng nghĩa: diploma</i>" },
-            { word: "educational background", type: "noun", phonetic: "/.../", meaning: "Nền tảng giáo dục", example: "Her educational background is very strong.<br><br><i>Đồng nghĩa: academic history</i>" },
-            { word: "learning environment", type: "noun", phonetic: "/.../", meaning: "Môi trường học tập", example: "A supportive learning environment helps students thrive.<br><br><i>Đồng nghĩa: educational setting</i>" },
-            { word: "sit for an exam", type: "phrase", phonetic: "/.../", meaning: "Tham gia kỳ thi", example: "I have to sit for my IELTS exam next week.<br><br><i>Đồng nghĩa: take a test</i>" }
-        ];
-
         let currentCardIndex = 0;
         let learnedCount = 0;
 
@@ -3998,16 +3944,9 @@ window.renderStreakCalendar();
             document.getElementById('vocab-dashboard').classList.add('hidden');
             document.getElementById('vocab-study-room').classList.remove('hidden');
             
-            // 2. Hàm bắt đầu học (Nhận tham số để biết học bộ nào)
-        window.startFlashcard = function(deckType = 'personal') {
-            document.getElementById('vocab-dashboard').classList.add('hidden');
-            document.getElementById('vocab-study-room').classList.remove('hidden');
-            
             // Chuyển đổi cơ sở dữ liệu dựa trên nút người dùng bấm
             if (deckType === 'work_career') {
                 currentLearningDB = workCareerVocab;
-            } else if (deckType === 'education_learning') {
-                currentLearningDB = educationLearningVocab;
             } else {
                 currentLearningDB = vocabDatabase; // Mặc định là bộ từ cá nhân
             }
@@ -4751,7 +4690,7 @@ btnStopRecord.addEventListener('click', () => {
                         <td class="py-4 px-4 text-center">
                             <div class="flex items-center justify-center gap-3 text-cyan-600 dark:text-cyan-400 font-semibold text-sm">
                                 <button class="hover:underline hover:text-cyan-800 transition">Làm lại</button>
-                               <button class="hover:underline hover:text-cyan-800 transition">Xem lại</button>
+                                <button class="hover:underline hover:text-cyan-800 transition">Xem lại</button>
                             </div>
                         </td>
                     </tr>
@@ -4760,8 +4699,7 @@ btnStopRecord.addEventListener('click', () => {
             
             tbody.innerHTML = html;
         };
-
-        // Hàm hiển thị Lịch sử và Tiến trình học tập
+    
         window.showProgressModal = async function() {
             document.getElementById('progress-modal').classList.remove('hidden');
             const container = document.getElementById('progress-list-container');
@@ -4783,40 +4721,35 @@ btnStopRecord.addEventListener('click', () => {
                     let emoji = "👍";
                     if(parseFloat(data.score) >= 8.0) {
                         scoreColor = "bg-emerald-100 text-emerald-700 border-emerald-300 dark:bg-emerald-900/50 dark:text-emerald-300 dark:border-emerald-700";
-                        emoji = "🌟";
-                    } else if(parseFloat(data.score) <= 5.0) {
+                        emoji = "🏆";
+                    } else if(parseFloat(data.score) < 5.0) {
                         scoreColor = "bg-rose-100 text-rose-700 border-rose-300 dark:bg-rose-900/50 dark:text-rose-300 dark:border-rose-700";
                         emoji = "💪";
                     }
-                    
-                    let dateStr = "Vừa xong";
-                    if (data.timestamp && typeof data.timestamp.toDate === 'function') {
-                        dateStr = data.timestamp.toDate().toLocaleString('vi-VN');
-                    }
-                    
+
                     historyHTML += `
-                        <div class="flex justify-between items-center p-4 rounded-xl border-2 ${scoreColor} shadow-sm transition transform hover:scale-[1.01]">
-                            <div>
-                                <h4 class="font-extrabold text-lg">${data.testName}</h4>
-                                <p class="text-sm opacity-80 font-semibold mt-1">🕒 ${dateStr}</p>
+                        <div class="flex justify-between items-center p-5 bg-white dark:bg-slate-800 rounded-2xl border shadow-sm hover:shadow-md transition duration-300 transform hover:-translate-y-1">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full ${scoreColor} shadow-inner flex items-center justify-center text-2xl border">
+                                    ${emoji}
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-black text-slate-800 dark:text-white">${data.testName}</h4>
+                                    <p class="text-sm font-semibold text-slate-500 dark:text-slate-400 mt-1 flex items-center gap-1"><span>🕒</span> ${data.dateStr}</p>
+                                </div>
                             </div>
-                            <div class="text-right">
-                                <span class="text-3xl font-black drop-shadow-sm">${parseFloat(data.score).toFixed(1)}</span>
-                                <span class="text-xl ml-1">${emoji}</span>
+                            <div class="${scoreColor} font-black text-3xl px-5 py-2 rounded-xl shadow-sm border bg-opacity-50 backdrop-blur-sm">
+                                ${parseFloat(data.score).toFixed(1)}
                             </div>
                         </div>
                     `;
                 });
-                
-                if (count === 0) historyHTML = '<p class="text-center text-gray-500 my-4 italic">Chưa có dữ liệu. Hãy làm thử một bài test nhé!</p>';
-                else historyHTML += '</div>';
-                
-                container.innerHTML = historyHTML;
+                historyHTML += '</div>';
+                container.innerHTML = count === 0 ? '<div class="text-center py-10"><div class="text-6xl mb-4">📭</div><p class="text-gray-500 font-medium text-lg">Bạn chưa hoàn thành bài thi nào.<br>Hãy bắt đầu chinh phục đề đầu tiên nhé!</p></div>' : historyHTML;
             } catch (error) {
-                container.innerHTML = '<p class="text-center text-rose-500 my-4 font-bold">Lỗi tải dữ liệu!</p>';
-                console.error(error);
+                container.innerHTML = '<p class="text-center text-rose-500 font-bold my-4">Không thể tải dữ liệu.</p>';
             }
-        };
+        }
 
  // Quản lý các view của Speaking
 const speakingDashboard = document.getElementById('speaking-dashboard-view');
