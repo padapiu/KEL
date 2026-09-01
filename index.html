@@ -4520,7 +4520,6 @@ window.startIeltsReadingExam = function(testName, isStrict, customDuration = 60,
                 }
                 if(splitContainer) splitContainer.style.paddingBottom = "0px";
             }
-            // -----------------------------------------------------------
             
             for (let i = 1; i <= 40; i++) {
                 window[`userAnsRead${i}`] = null;
@@ -5256,15 +5255,39 @@ document.addEventListener('DOMContentLoaded', () => {
                 const initialTab = hashParts[1] || 'listening';
                 
                 // KHI ĐANG Ở PHÒNG THI MÀ TẢI LẠI TRANG HOẶC VÀO TỪ LINK CHIA SẺ
-                if (initialPage === 'exam') {
-                    const testSlug = hashParts[2] || '';
-                    
-                    // 1. Chuyển trang nền bên dưới về đúng chuyên mục trước
-                    if (initialTab === 'thpt') {
-                        showPage('thpt', null, false);
-                    } else {
-                        showPage('ielts', initialTab, false);
+if (initialPage === 'exam') {
+    const testSlug = hashParts[2] || '';
+
+    // 1. Chuyển trang nền bên dưới về đúng chuyên mục trước
+    if (initialTab === 'thpt') {
+        showPage('thpt', null, false);
+    } else {
+        showPage('ielts', initialTab, false);
+        
+        // 2. KHÔI PHỤC DỮ LIỆU BÀI THI TỪ URL (SỬA LỖI TRẮNG MÀN HÌNH)
+        if (initialTab === 'reading' && testSlug) {
+            let originalTestName = "";
+            
+            // Quét database để tìm lại tên bài thi gốc từ slug trên URL
+            for (let key in window.ieltsReadingDatabase) {
+                let slug = key.toLowerCase().replace(/ /g, '-').replace(/[^a-z0-9-]/g, '');
+                if (slug === testSlug) {
+                    originalTestName = key;
+                    break;
+                }
+            }
+            
+            // Nếu tìm thấy, đợi một chút để giao diện nền chuyển xong rồi tự động mở phòng thi
+            if (originalTestName) {
+                setTimeout(() => {
+                    if (typeof startIeltsReadingExam === 'function') {
+                        startIeltsReadingExam(originalTestName, false, 60, [1, 2, 3]);
                     }
+                }, 50);
+            }
+        }
+    }
+}
 
                     // 2. Đợi 1 giây để Firebase kịp xác thực đăng nhập, sau đó mở bài thi
                     setTimeout(() => {
@@ -6341,30 +6364,6 @@ window.switchIeltsReadingPart = function(passageNumber) {
         }
     }
 };
-    
-// 1. VÁ LỖI ROUTING: BẢO VỆ GIAO DIỆN KHÔNG BỊ TRẮNG KHI URL LÀ #EXAM
-function protectExamRoute() {
-    const hash = window.location.hash;
-    if (hash.startsWith('#exam/')) {
-        // Ép hệ thống luôn hiển thị container chứa bài thi IELTS
-        document.querySelectorAll('.page-content').forEach(page => page.classList.remove('active'));
-        const ieltsPage = document.getElementById('page-ielts');
-        if (ieltsPage) ieltsPage.classList.add('active');
-        
-        // Ẩn Dashboard, chỉ hiện Phòng Thi Reading
-        const dashboard = document.getElementById('ielts-dashboard');
-        const readingRoom = document.getElementById('ielts-reading-exam-room');
-        
-        if (dashboard) dashboard.classList.add('hidden');
-        if (readingRoom && hash.includes('/reading/')) {
-            readingRoom.classList.remove('hidden');
-        }
-    }
-}
-
-// Kích hoạt bảo vệ giao diện khi đổi URL hoặc tải lại trang
-window.addEventListener('hashchange', protectExamRoute);
-window.addEventListener('load', protectExamRoute);
     
     </script>
 </body>
