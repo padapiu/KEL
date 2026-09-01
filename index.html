@@ -1232,16 +1232,15 @@
     </div>
 </div>
 
-                    <!-- Card Đề Mẫu 4 -->
-                    <div onclick="startFlashcard()" class="bg-white dark:bg-slate-800 rounded-2xl p-5 shadow-sm hover:shadow-lg border border-gray-100 dark:border-slate-700 transition cursor-pointer group flex flex-col h-full">
-                        <h4 class="font-bold text-lg text-gray-800 dark:text-white group-hover:text-cyan-500 transition-colors mb-2 line-clamp-2">TOEIC Word List (Cập nhật mới)</h4>
-                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-6 flex items-center gap-2"><span>📑 1,194 từ</span> <span class="w-1 h-1 rounded-full bg-gray-300"></span> <span>👤 63,066</span></p>
-                        <div class="flex items-center gap-2 mt-auto">
-                            <img src="https://i.postimg.cc/MG12Bzyq/logo.png" class="w-6 h-6 rounded-full bg-cyan-100 object-cover border border-cyan-200">
-                            <span class="text-xs font-bold text-gray-600 dark:text-gray-400">KEL Education</span>
-                        </div>
-                    </div>
-                </div>
+                    <!-- Card Đề Mẫu 4: Environment and Nature -->
+<div onclick="startFlashcard('env_nature')" class="bg-white dark:bg-slate-800 rounded-2xl p-5 shadow-sm hover:shadow-lg border border-gray-100 dark:border-slate-700 transition cursor-pointer group flex flex-col h-full">
+    <h4 class="font-bold text-lg text-gray-800 dark:text-white group-hover:text-cyan-500 transition-colors mb-2 line-clamp-2">Topic: Environment and Nature (Level B1-B2)</h4>
+    <p class="text-sm text-gray-500 dark:text-gray-400 mb-6 flex items-center gap-2"><span>📑 50 từ</span> <span class="w-1 h-1 rounded-full bg-gray-300"></span> <span>KEL Education</span></p>
+    <div class="flex items-center gap-2 mt-auto">
+        <img src="https://i.postimg.cc/MG12Bzyq/logo.png" class="w-6 h-6 rounded-full bg-cyan-100 object-cover border border-cyan-200">
+        <span class="text-xs font-bold text-gray-600 dark:text-gray-400">KEL Education</span>
+    </div>
+</div>
 
                 <!-- Khu vực 2: Từ vựng cá nhân (Có nút Thêm) -->
                 <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-6 border-b pb-2 dark:border-slate-700">⭐ Bộ từ vựng cá nhân của bạn</h3>
@@ -3971,6 +3970,58 @@ window.renderStreakCalendar();
     { word: "prescription medicine", type: "noun phrase", phonetic: "/.../", meaning: "Thuốc kê đơn", example: "You can only buy this with a prescription medicine.<br><br><i>Đồng nghĩa: prescribed drugs</i>" },
     { word: "symptom", type: "noun", phonetic: "/.../", meaning: "Triệu chứng", example: "A fever is a common symptom of the flu.<br><br><i>Đồng nghĩa: sign of illness, indication</i>" }
 ];
+        const environmentNatureVocab = [
+    { word: "air pollution", type: "noun phrase", phonetic: "/.../", meaning: "Ô nhiễm không khí", example: "Air pollution is a major problem in big cities.<br><br><i>Đồng nghĩa: smog, contaminated air</i>" },
+    { word: "alternative energy", type: "noun phrase", phonetic: "/.../", meaning: "Năng lượng thay thế", example: "Solar and wind power are forms of alternative energy.<br><br><i>Đồng nghĩa: renewable energy, green energy</i>" },
+    { word: "carbon footprint", type: "noun phrase", phonetic: "/.../", meaning: "Lượng khí thải carbon", example: "Riding a bike reduces your carbon footprint.<br><br><i>Đồng nghĩa: carbon emissions, environmental impact</i>" },
+    { word: "climate change", type: "noun phrase", phonetic: "/.../", meaning: "Biến đổi khí hậu", example: "Climate change is causing extreme weather events.<br><br><i>Đồng nghĩa: global warming, weather pattern shifts</i>" },
+    { word: "conserve energy", type: "phrase", phonetic: "/.../", meaning: "Bảo tồn năng lượng", example: "Turn off the lights to conserve energy.<br><br><i>Đồng nghĩa: save energy, preserve power</i>" },
+    { word: "cut down trees", type: "phrase", phonetic: "/.../", meaning: "Chặt cây", example: "Cutting down trees destroys animal habitats.<br><br><i>Đồng nghĩa: chop down trees, log</i>" },
+    { word: "deforestation", type: "noun", phonetic: "/.../", meaning: "Nạn phá rừng", example: "Deforestation contributes significantly to global warming.<br><br><i>Đồng nghĩa: clear-cutting, logging</i>" },
+    { word: "dispose of waste", type: "phrase", phonetic: "/.../", meaning: "Xử lý rác thải", example: "We must dispose of hazardous waste properly.<br><br><i>Đồng nghĩa: get rid of trash, discard garbage</i>" },
+    { word: "eco-friendly", type: "adjective", phonetic: "/.../", meaning: "Thân thiện với môi trường", example: "Using cloth bags is an eco-friendly practice.<br><br><i>Đồng nghĩa: environmentally friendly, green</i>" },
+    { word: "endangered species", type: "noun phrase", phonetic: "/.../", meaning: "Các loài có nguy cơ tuyệt chủng", example: "The giant panda is an endangered species.<br><br><i>Đồng nghĩa: threatened species</i>" },
+    { word: "environmental impact", type: "noun phrase", phonetic: "/.../", meaning: "Tác động môi trường", example: "The new factory will have a huge environmental impact.<br><br><i>Đồng nghĩa: ecological effect</i>" },
+    { word: "extinct", type: "adjective", phonetic: "/.../", meaning: "Tuyệt chủng", example: "Dinosaurs became extinct millions of years ago.<br><br><i>Đồng nghĩa: wiped out, vanished</i>" },
+    { word: "fossil fuels", type: "noun phrase", phonetic: "/.../", meaning: "Nhiên liệu hóa thạch", example: "Burning fossil fuels releases greenhouse gases.<br><br><i>Đồng nghĩa: non-renewable energy</i>" },
+    { word: "global warming", type: "noun phrase", phonetic: "/.../", meaning: "Nóng lên toàn cầu", example: "Global warming is melting the polar ice caps.<br><br><i>Đồng nghĩa: climate change, planetary heating</i>" },
+    { word: "greenhouse effect", type: "noun phrase", phonetic: "/.../", meaning: "Hiệu ứng nhà kính", example: "The greenhouse effect traps heat in the atmosphere.<br><br><i>Đồng nghĩa: atmospheric heating</i>" },
+    { word: "habitat destruction", type: "noun phrase", phonetic: "/.../", meaning: "Sự phá hủy môi trường sống", example: "Habitat destruction threatens many wild animals.<br><br><i>Đồng nghĩa: loss of habitat, ecological damage</i>" },
+    { word: "illegal logging", type: "noun phrase", phonetic: "/.../", meaning: "Khai thác gỗ trái phép", example: "Illegal logging is destroying the rainforest.<br><br><i>Đồng nghĩa: unauthorized tree cutting</i>" },
+    { word: "marine life", type: "noun phrase", phonetic: "/.../", meaning: "Sinh vật biển", example: "Plastic pollution is extremely harmful to marine life.<br><br><i>Đồng nghĩa: sea life, ocean creatures</i>" },
+    { word: "natural disaster", type: "noun phrase", phonetic: "/.../", meaning: "Thiên tai", example: "Earthquakes and floods are devastating natural disasters.<br><br><i>Đồng nghĩa: catastrophe, act of nature</i>" },
+    { word: "natural resources", type: "noun phrase", phonetic: "/.../", meaning: "Tài nguyên thiên nhiên", example: "Water and oil are vital natural resources.<br><br><i>Đồng nghĩa: earth's resources, raw materials</i>" },
+    { word: "noise pollution", type: "noun phrase", phonetic: "/.../", meaning: "Ô nhiễm tiếng ồn", example: "Living near the airport means constant noise pollution.<br><br><i>Đồng nghĩa: excessive noise</i>" },
+    { word: "ozone layer", type: "noun phrase", phonetic: "/.../", meaning: "Tầng ô-zôn", example: "The ozone layer protects us from the sun's harmful rays.<br><br><i>Đồng nghĩa: ozone shield</i>" },
+    { word: "plant trees", type: "phrase", phonetic: "/.../", meaning: "Trồng cây", example: "We are organizing a campaign to plant trees in the city.<br><br><i>Đồng nghĩa: afforest, reforest</i>" },
+    { word: "poaching", type: "noun", phonetic: "/.../", meaning: "Săn trộm", example: "Poaching poses a huge threat to rhinos and elephants.<br><br><i>Đồng nghĩa: illegal hunting</i>" },
+    { word: "protect the environment", type: "phrase", phonetic: "/.../", meaning: "Bảo vệ môi trường", example: "Everyone must do their part to protect the environment.<br><br><i>Đồng nghĩa: preserve nature, safeguard the earth</i>" },
+    { word: "public transport", type: "noun phrase", phonetic: "/.../", meaning: "Giao thông công cộng", example: "Using public transport helps reduce traffic emissions.<br><br><i>Đồng nghĩa: mass transit, public transit</i>" },
+    { word: "recycled materials", type: "noun phrase", phonetic: "/.../", meaning: "Vật liệu tái chế", example: "This notebook is made from recycled materials.<br><br><i>Đồng nghĩa: repurposed materials, reused items</i>" },
+    { word: "reduce waste", type: "phrase", phonetic: "/.../", meaning: "Giảm lượng rác thải", example: "Buy in bulk to reduce packaging waste.<br><br><i>Đồng nghĩa: cut down trash, minimize rubbish</i>" },
+    { word: "renewable energy", type: "noun phrase", phonetic: "/.../", meaning: "Năng lượng tái tạo", example: "Renewable energy is the key to a sustainable future.<br><br><i>Đồng nghĩa: sustainable energy, clean power</i>" },
+    { word: "reusable", type: "adjective", phonetic: "/.../", meaning: "Có thể tái sử dụng", example: "I always carry a reusable water bottle.<br><br><i>Đồng nghĩa: recyclable, multi-use</i>" },
+    { word: "save energy", type: "phrase", phonetic: "/.../", meaning: "Tiết kiệm năng lượng", example: "Using LED bulbs helps you save energy.<br><br><i>Đồng nghĩa: conserve power, economize energy</i>" },
+    { word: "sea level rise", type: "noun phrase", phonetic: "/.../", meaning: "Mực nước biển dâng", example: "Sea level rise threatens coastal cities.<br><br><i>Đồng nghĩa: rising ocean levels</i>" },
+    { word: "single-use plastic", type: "noun phrase", phonetic: "/.../", meaning: "Nhựa dùng một lần", example: "We should ban single-use plastics like straws.<br><br><i>Đồng nghĩa: disposable plastic</i>" },
+    { word: "solar panels", type: "noun phrase", phonetic: "/.../", meaning: "Tấm pin năng lượng mặt trời", example: "Installing solar panels lowers your electricity bill.<br><br><i>Đồng nghĩa: photovoltaic cells</i>" },
+    { word: "sort rubbish", type: "phrase", phonetic: "/.../", meaning: "Phân loại rác", example: "Please sort your rubbish into paper, plastic, and glass.<br><br><i>Đồng nghĩa: separate garbage, categorize waste</i>" },
+    { word: "sustainable development", type: "noun phrase", phonetic: "/.../", meaning: "Phát triển bền vững", example: "Sustainable development balances economic growth and environmental care.<br><br><i>Đồng nghĩa: eco-friendly growth, viable progress</i>" },
+    { word: "toxic waste", type: "noun phrase", phonetic: "/.../", meaning: "Chất thải độc hại", example: "The factory dumped toxic waste into the river.<br><br><i>Đồng nghĩa: hazardous waste, poisonous rubbish</i>" },
+    { word: "water conservation", type: "noun phrase", phonetic: "/.../", meaning: "Bảo vệ nguồn nước", example: "Water conservation is essential during a drought.<br><br><i>Đồng nghĩa: saving water</i>" },
+    { word: "wildlife conservation", type: "noun phrase", phonetic: "/.../", meaning: "Bảo tồn động vật hoang dã", example: "The charity focuses on wildlife conservation in Africa.<br><br><i>Đồng nghĩa: animal protection</i>" },
+    { word: "wind turbine", type: "noun phrase", phonetic: "/.../", meaning: "Tuabin gió", example: "Wind turbines generate electricity without polluting.<br><br><i>Đồng nghĩa: wind generator</i>" },
+    { word: "biodiversity", type: "noun", phonetic: "/.../", meaning: "Đa dạng sinh học", example: "The Amazon rainforest has incredible biodiversity.<br><br><i>Đồng nghĩa: biological diversity</i>" },
+    { word: "carbon emissions", type: "noun phrase", phonetic: "/.../", meaning: "Khí thải carbon", example: "Airlines are trying to reduce their carbon emissions.<br><br><i>Đồng nghĩa: greenhouse gas emissions</i>" },
+    { word: "clean energy", type: "noun phrase", phonetic: "/.../", meaning: "Năng lượng sạch", example: "Clean energy is essential for reducing pollution.<br><br><i>Đồng nghĩa: green energy, renewable power</i>" },
+    { word: "ecological balance", type: "noun phrase", phonetic: "/.../", meaning: "Cân bằng sinh thái", example: "Predators are necessary to maintain ecological balance.<br><br><i>Đồng nghĩa: balance of nature</i>" },
+    { word: "energy efficient", type: "adjective", phonetic: "/.../", meaning: "Tiết kiệm năng lượng", example: "Modern appliances are much more energy efficient.<br><br><i>Đồng nghĩa: power-saving, economical</i>" },
+    { word: "green initiatives", type: "noun phrase", phonetic: "/.../", meaning: "Sáng kiến xanh", example: "The local council has launched several green initiatives.<br><br><i>Đồng nghĩa: environmental programs</i>" },
+    { word: "nature reserve", type: "noun phrase", phonetic: "/.../", meaning: "Khu bảo tồn thiên nhiên", example: "The park was declared a nature reserve in 1990.<br><br><i>Đồng nghĩa: wildlife sanctuary, national park</i>" },
+    { word: "plastic waste", type: "noun phrase", phonetic: "/.../", meaning: "Rác thải nhựa", example: "Oceans are increasingly polluted with plastic waste.<br><br><i>Đồng nghĩa: plastic trash, synthetic rubbish</i>" },
+    { word: "preserve nature", type: "phrase", phonetic: "/.../", meaning: "Bảo tồn thiên nhiên", example: "It is our duty to preserve nature for future generations.<br><br><i>Đồng nghĩa: protect the environment</i>" },
+    { word: "throw away", type: "phrasal verb", phonetic: "/.../", meaning: "Vứt đi", example: "Don't throw away items that can be repaired.<br><br><i>Đồng nghĩa: discard, dispose of</i>" }
+];
 
         let currentCardIndex = 0;
         let learnedCount = 0;
@@ -4054,7 +4105,9 @@ window.renderStreakCalendar();
                 } else if (deckType === 'edu_learning') {
         currentLearningDB = educationLearningVocab;
                 } else if (deckType === 'health_lifestyle') {
-        currentLearningDB = healthLifestyleVocab;
+                currentLearningDB = healthLifestyleVocab;
+    } else if (deckType === 'env_nature') {
+        currentLearningDB = environmentNatureVocab;
             } else {
                 currentLearningDB = vocabDatabase; // Mặc định là bộ từ cá nhân
             }
