@@ -2759,6 +2759,8 @@ window.hasShownStrictPopup = false;
                 example: `EN: ${englishMeaning}` 
             });
 
+            localStorage.setItem('myVocabDB', JSON.stringify(vocabDatabase));
+
             // Cập nhật giao diện thống kê
             const totalEl = document.getElementById('vocab-total');
             const reviewEl = document.getElementById('vocab-review');
@@ -3810,7 +3812,7 @@ window.renderStreakCalendar();
         // ==========================================
         
         // 1. Cơ sở dữ liệu từ vựng mẫu
-        const vocabDatabase = [];
+        let vocabDatabase = JSON.parse(localStorage.getItem('myVocabDB')) || [];
         // BỘ DỮ LIỆU TỪ VỰNG: WORK AND CAREER (B1-B2)
         const workCareerVocab = [
             { word: "apply for a job", type: "phrase", phonetic: "/.../", meaning: "Nộp đơn xin việc", example: "I decided to apply for a job at the new tech company.<br><br><i>Đồng nghĩa: seek a job, put in an application</i>" },
@@ -3918,6 +3920,8 @@ window.renderStreakCalendar();
                 example: "Nguồn: Tự thêm thủ công"
             });
 
+            localStorage.setItem('myVocabDB', JSON.stringify(vocabDatabase));
+
             // Cập nhật lại 3 con số thống kê ở mặt ngoài
             const totalEl = document.getElementById('vocab-total');
             const reviewEl = document.getElementById('vocab-review');
@@ -3989,15 +3993,33 @@ window.renderStreakCalendar();
         };
 
        // 6. Hàm chuyển sang thẻ tiếp theo khi bấm nút Đánh giá
-        window.nextCard = function(rating) {
+window.nextCard = function(rating) {
             const container = document.querySelector('.flashcard-container');
             container.classList.remove('flipped');
 
-            if(rating !== 'hard') learnedCount++;
+            // Nếu người dùng chọn "Đã biết", ta sẽ xóa từ này khỏi danh sách
+            if (rating === 'known') {
+                // Xóa 1 phần tử tại vị trí hiện tại
+                currentLearningDB.splice(currentCardIndex, 1);
+                
+                // Nếu đang học bộ từ cá nhân, lưu cập nhật vào trình duyệt
+                if (currentLearningDB === vocabDatabase) {
+                    localStorage.setItem('myVocabDB', JSON.stringify(vocabDatabase));
+                }
+                
+                // Cập nhật lại số liệu hiển thị bên ngoài
+                const totalEl = document.getElementById('vocab-total');
+                if (totalEl) totalEl.innerText = vocabDatabase.length;
+                
+                // Lưu ý: Không tăng currentCardIndex vì mảng đã bị rút ngắn, 
+                // thẻ tiếp theo sẽ tự động lấp vào vị trí hiện tại.
+            } else {
+                if (rating !== 'hard') learnedCount++;
+                currentCardIndex++; // Chỉ tiến tới thẻ tiếp theo nếu không xóa thẻ hiện tại
+            }
 
             setTimeout(() => {
-                currentCardIndex++;
-                // So sánh với độ dài của mảng đang học
+                // Kiểm tra xem còn thẻ nào để học không
                 if (currentCardIndex < currentLearningDB.length) {
                     loadCardData(currentCardIndex);
                 } else {
