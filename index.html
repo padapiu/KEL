@@ -1150,7 +1150,7 @@
                 </div>
 <div class="flex flex-col lg:flex-row gap-6 mt-28">
                 
-                    <div class="lg:w-3/4 space-y-6" id="thpt-questions-container"></div>
+                    <div class="lg:w-3/4 space-y-6 highlightable-content" id="thpt-questions-container"></div>
                     <div class="lg:w-1/4">
                         <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-md p-6 sticky top-48 border border-gray-100 dark:border-slate-700">
                             <h4 class="font-bold mb-4 text-center dark:text-white border-b pb-2 dark:border-slate-700">Bảng Câu Hỏi</h4>
@@ -2591,7 +2591,7 @@ window.hasShownStrictPopup = false;
             const examTextReadPassage = document.getElementById('reading-passage-container');
             const examTextReadQuestions = document.getElementById('reading-questions-container'); // Cho phép highlight câu hỏi
             const examTextExp = document.getElementById('exp-passage-container');
-            
+            const examTextThpt = document.getElementById('thpt-questions-container');
             const tooltip = document.getElementById('highlight-tooltip');
             
             let targetNode = null;
@@ -2599,6 +2599,7 @@ window.hasShownStrictPopup = false;
             else if (examTextReadPassage && examTextReadPassage.contains(e.target)) targetNode = examTextReadPassage;
             else if (examTextReadQuestions && examTextReadQuestions.contains(e.target)) targetNode = examTextReadQuestions;
             else if (examTextExp && examTextExp.contains(e.target)) targetNode = examTextExp;
+            else if (examTextThpt && examTextThpt.contains(e.target)) targetNode = examTextThpt;
             
             if (!targetNode && !tooltip.contains(e.target)) {
                 tooltip.classList.add('hidden');
