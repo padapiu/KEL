@@ -1222,15 +1222,15 @@
     </div>
 </div>
 
-                    <!-- Card Đề Mẫu 3 -->
-                    <div onclick="startFlashcard()" class="bg-white dark:bg-slate-800 rounded-2xl p-5 shadow-sm hover:shadow-lg border border-gray-100 dark:border-slate-700 transition cursor-pointer group flex flex-col h-full">
-                        <h4 class="font-bold text-lg text-gray-800 dark:text-white group-hover:text-cyan-500 transition-colors mb-2 line-clamp-2">900 từ vựng IELTS (có ảnh minh họa)</h4>
-                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-6 flex items-center gap-2"><span>📑 893 từ</span> <span class="w-1 h-1 rounded-full bg-gray-300"></span> <span>👤 59,145</span></p>
-                        <div class="flex items-center gap-2 mt-auto">
-                            <img src="https://i.postimg.cc/MG12Bzyq/logo.png" class="w-6 h-6 rounded-full bg-cyan-100 object-cover border border-cyan-200">
-                            <span class="text-xs font-bold text-gray-600 dark:text-gray-400">KEL Education</span>
-                        </div>
-                    </div>
+                    <!-- Card Đề Mẫu 3: Health and Lifestyle -->
+<div onclick="startFlashcard('health_lifestyle')" class="bg-white dark:bg-slate-800 rounded-2xl p-5 shadow-sm hover:shadow-lg border border-gray-100 dark:border-slate-700 transition cursor-pointer group flex flex-col h-full">
+    <h4 class="font-bold text-lg text-gray-800 dark:text-white group-hover:text-cyan-500 transition-colors mb-2 line-clamp-2">Topic: Health and Lifestyle (Level B1-B2)</h4>
+    <p class="text-sm text-gray-500 dark:text-gray-400 mb-6 flex items-center gap-2"><span> 50 từ</span> <span class="w-1 h-1 rounded-full bg-gray-300"></span> <span></span></p>
+    <div class="flex items-center gap-2 mt-auto">
+        <img src="https://i.postimg.cc/MG12Bzyq/logo.png" class="w-6 h-6 rounded-full bg-cyan-100 object-cover border border-cyan-200">
+        <span class="text-xs font-bold text-gray-600 dark:text-gray-400">KELVIN LE</span>
+    </div>
+</div>
 
                     <!-- Card Đề Mẫu 4 -->
                     <div onclick="startFlashcard()" class="bg-white dark:bg-slate-800 rounded-2xl p-5 shadow-sm hover:shadow-lg border border-gray-100 dark:border-slate-700 transition cursor-pointer group flex flex-col h-full">
@@ -3919,6 +3919,58 @@ window.renderStreakCalendar();
     { word: "learning environment", type: "noun", phonetic: "/.../", meaning: "Môi trường học tập", example: "A supportive learning environment helps students thrive.<br><br><i>Đồng nghĩa: educational setting</i>" },
     { word: "sit for an exam", type: "phrase", phonetic: "/.../", meaning: "Tham gia kỳ thi", example: "I have to sit for my IELTS exam next week.<br><br><i>Đồng nghĩa: take a test</i>" }
 ];
+        const healthLifestyleVocab = [
+    { word: "active lifestyle", type: "noun phrase", phonetic: "/.../", meaning: "Lối sống năng động", example: "Having an active lifestyle reduces the risk of disease.<br><br><i>Đồng nghĩa: energetic lifestyle, dynamic lifestyle</i>" },
+    { word: "balanced diet", type: "noun phrase", phonetic: "/.../", meaning: "Chế độ ăn uống cân bằng", example: "A balanced diet includes fruits, vegetables, and protein.<br><br><i>Đồng nghĩa: healthy diet, well-proportioned diet</i>" },
+    { word: "burn calories", type: "phrase", phonetic: "/.../", meaning: "Đốt cháy calo", example: "Running is a great way to burn calories.<br><br><i>Đồng nghĩa: expend energy</i>" },
+    { word: "catch a cold", type: "phrase", phonetic: "/.../", meaning: "Bị cảm lạnh", example: "Dress warmly so you don't catch a cold.<br><br><i>Đồng nghĩa: come down with a cold, get sick</i>" },
+    { word: "chronic disease", type: "noun phrase", phonetic: "/.../", meaning: "Bệnh mãn tính", example: "Diabetes is a common chronic disease.<br><br><i>Đồng nghĩa: long-term illness, persistent condition</i>" },
+    { word: "cut down on", type: "phrasal verb", phonetic: "/.../", meaning: "Cắt giảm", example: "You should cut down on sugar to lose weight.<br><br><i>Đồng nghĩa: reduce, consume less</i>" },
+    { word: "do exercise", type: "phrase", phonetic: "/.../", meaning: "Tập thể dục", example: "Doctors recommend doing exercise daily.<br><br><i>Đồng nghĩa: work out, keep fit</i>" },
+    { word: "eating disorder", type: "noun phrase", phonetic: "/.../", meaning: "Rối loạn ăn uống", example: "Anorexia is a serious eating disorder.<br><br><i>Đồng nghĩa: unhealthy eating habit</i>" },
+    { word: "fast food", type: "noun phrase", phonetic: "/.../", meaning: "Đồ ăn nhanh", example: "Eating too much fast food is bad for your health.<br><br><i>Đồng nghĩa: junk food, convenience food</i>" },
+    { word: "feel under the weather", type: "idiom", phonetic: "/.../", meaning: "Cảm thấy không khỏe", example: "I'm feeling a bit under the weather today.<br><br><i>Đồng nghĩa: feel sick, feel unwell</i>" },
+    { word: "fitness center", type: "noun phrase", phonetic: "/.../", meaning: "Trung tâm thể dục", example: "She goes to the fitness center three times a week.<br><br><i>Đồng nghĩa: gym, health club</i>" },
+    { word: "food poisoning", type: "noun phrase", phonetic: "/.../", meaning: "Ngộ độc thực phẩm", example: "I got food poisoning from eating undercooked chicken.<br><br><i>Đồng nghĩa: upset stomach, gastric illness</i>" },
+    { word: "gain weight", type: "phrase", phonetic: "/.../", meaning: "Tăng cân", example: "He gained weight during the holiday season.<br><br><i>Đồng nghĩa: put on weight</i>" },
+    { word: "get in shape", type: "phrase", phonetic: "/.../", meaning: "Lấy lại vóc dáng", example: "I joined a gym to get in shape for summer.<br><br><i>Đồng nghĩa: become fit, tone up</i>" },
+    { word: "go on a diet", type: "phrase", phonetic: "/.../", meaning: "Ăn kiêng", example: "She decided to go on a diet to improve her health.<br><br><i>Đồng nghĩa: follow a diet plan</i>" },
+    { word: "health care system", type: "noun phrase", phonetic: "/.../", meaning: "Hệ thống chăm sóc sức khỏe", example: "The country has an excellent health care system.<br><br><i>Đồng nghĩa: medical services</i>" },
+    { word: "health insurance", type: "noun phrase", phonetic: "/.../", meaning: "Bảo hiểm y tế", example: "Make sure you have travel health insurance.<br><br><i>Đồng nghĩa: medical coverage</i>" },
+    { word: "healthy habits", type: "noun phrase", phonetic: "/.../", meaning: "Thói quen lành mạnh", example: "Drinking water in the morning is a healthy habit.<br><br><i>Đồng nghĩa: beneficial routines</i>" },
+    { word: "heart attack", type: "noun phrase", phonetic: "/.../", meaning: "Đau tim", example: "High blood pressure can lead to a heart attack.<br><br><i>Đồng nghĩa: cardiac arrest, heart failure</i>" },
+    { word: "immune system", type: "noun phrase", phonetic: "/.../", meaning: "Hệ miễn dịch", example: "Vitamins help boost your immune system.<br><br><i>Đồng nghĩa: body's defense</i>" },
+    { word: "junk food", type: "noun phrase", phonetic: "/.../", meaning: "Đồ ăn vặt", example: "Junk food contains a lot of empty calories.<br><br><i>Đồng nghĩa: unhealthy food, fast food</i>" },
+    { word: "keep fit", type: "phrase", phonetic: "/.../", meaning: "Giữ dáng", example: "Swimming is a fantastic way to keep fit.<br><br><i>Đồng nghĩa: stay in shape, stay healthy</i>" },
+    { word: "lose weight", type: "phrase", phonetic: "/.../", meaning: "Giảm cân", example: "She goes jogging every morning to lose weight.<br><br><i>Đồng nghĩa: shed pounds, slim down</i>" },
+    { word: "make an appointment", type: "phrase", phonetic: "/.../", meaning: "Đặt lịch hẹn", example: "I need to make an appointment with my dentist.<br><br><i>Đồng nghĩa: schedule a visit, book a session</i>" },
+    { word: "mental health", type: "noun phrase", phonetic: "/.../", meaning: "Sức khỏe tinh thần", example: "Mental health is just as important as physical health.<br><br><i>Đồng nghĩa: psychological well-being</i>" },
+    { word: "nutritious food", type: "noun phrase", phonetic: "/.../", meaning: "Thực phẩm bổ dưỡng", example: "Parents should provide nutritious food for their kids.<br><br><i>Đồng nghĩa: wholesome food, nourishing food</i>" },
+    { word: "obesity", type: "noun", phonetic: "/.../", meaning: "Bệnh béo phì", example: "Childhood obesity is a growing problem globally.<br><br><i>Đồng nghĩa: extreme overweight, corpulence</i>" },
+    { word: "painkiller", type: "noun", phonetic: "/.../", meaning: "Thuốc giảm đau", example: "I took a painkiller for my headache.<br><br><i>Đồng nghĩa: pain reliever, analgesic</i>" },
+    { word: "physical activity", type: "noun phrase", phonetic: "/.../", meaning: "Hoạt động thể chất", example: "Children need at least an hour of physical activity daily.<br><br><i>Đồng nghĩa: exercise, bodily movement</i>" },
+    { word: "preventative medicine", type: "noun phrase", phonetic: "/.../", meaning: "Y tế dự phòng", example: "Vaccines are an important part of preventative medicine.<br><br><i>Đồng nghĩa: preventive care</i>" },
+    { word: "processed food", type: "noun phrase", phonetic: "/.../", meaning: "Thực phẩm chế biến sẵn", example: "Try to avoid highly processed foods.<br><br><i>Đồng nghĩa: refined food, packaged food</i>" },
+    { word: "recover from an illness", type: "phrase", phonetic: "/.../", meaning: "Phục hồi sau bão bệnh", example: "It took him weeks to recover from the illness.<br><br><i>Đồng nghĩa: get over a disease, bounce back</i>" },
+    { word: "reduce stress", type: "phrase", phonetic: "/.../", meaning: "Giảm căng thẳng", example: "Yoga and meditation can help reduce stress.<br><br><i>Đồng nghĩa: alleviate stress, relieve tension</i>" },
+    { word: "regular check-up", type: "noun phrase", phonetic: "/.../", meaning: "Khám sức khỏe định kỳ", example: "You should have a regular check-up every year.<br><br><i>Đồng nghĩa: routine physical, health screening</i>" },
+    { word: "relieve pain", type: "phrase", phonetic: "/.../", meaning: "Giảm đau", example: "A massage can help relieve pain in your back.<br><br><i>Đồng nghĩa: ease pain, alleviate discomfort</i>" },
+    { word: "sedentary lifestyle", type: "noun phrase", phonetic: "/.../", meaning: "Lối sống ít vận động", example: "A sedentary lifestyle can cause back problems.<br><br><i>Đồng nghĩa: inactive lifestyle</i>" },
+    { word: "sleep deprivation", type: "noun phrase", phonetic: "/.../", meaning: "Thiếu ngủ", example: "Sleep deprivation affects your ability to concentrate.<br><br><i>Đồng nghĩa: lack of sleep, sleeplessness</i>" },
+    { word: "stay healthy", type: "phrase", phonetic: "/.../", meaning: "Giữ gìn sức khỏe", example: "Eating well and sleeping enough helps you stay healthy.<br><br><i>Đồng nghĩa: keep well, remain fit</i>" },
+    { word: "suffer from", type: "phrasal verb", phonetic: "/.../", meaning: "Mắc phải (bệnh tật)", example: "He suffers from asthma, so he carries an inhaler.<br><br><i>Đồng nghĩa: be afflicted by, endure</i>" },
+    { word: "take medication", type: "phrase", phonetic: "/.../", meaning: "Uống thuốc", example: "You must take this medication after meals.<br><br><i>Đồng nghĩa: take medicine, take drugs</i>" },
+    { word: "vegetarian diet", type: "noun phrase", phonetic: "/.../", meaning: "Chế độ ăn chay", example: "A vegetarian diet can provide all necessary nutrients.<br><br><i>Đồng nghĩa: meat-free diet, plant-based diet</i>" },
+    { word: "work out", type: "phrasal verb", phonetic: "/.../", meaning: "Tập luyện thể hình", example: "He works out at the gym every evening.<br><br><i>Đồng nghĩa: exercise, train</i>" },
+    { word: "blood pressure", type: "noun phrase", phonetic: "/.../", meaning: "Huyết áp", example: "You need to monitor your blood pressure regularly.<br><br><i>Đồng nghĩa: blood flow pressure</i>" },
+    { word: "catch an infection", type: "phrase", phonetic: "/.../", meaning: "Bị nhiễm trùng", example: "Wash your hands to avoid catching an infection.<br><br><i>Đồng nghĩa: get infected, contract a bug</i>" },
+    { word: "cure an illness", type: "phrase", phonetic: "/.../", meaning: "Chữa khỏi bệnh", example: "Scientists are working hard to cure the illness.<br><br><i>Đồng nghĩa: heal a disease, treat successfully</i>" },
+    { word: "diagnose a condition", type: "phrase", phonetic: "/.../", meaning: "Chẩn đoán bệnh", example: "The doctor diagnosed his condition as chronic fatigue.<br><br><i>Đồng nghĩa: identify an illness, determine a disease</i>" },
+    { word: "life expectancy", type: "noun phrase", phonetic: "/.../", meaning: "Tuổi thọ trung bình", example: "Life expectancy has increased over the last century.<br><br><i>Đồng nghĩa: lifespan, longevity</i>" },
+    { word: "medical treatment", type: "noun phrase", phonetic: "/.../", meaning: "Điều trị y tế", example: "She is receiving medical treatment for her injury.<br><br><i>Đồng nghĩa: healthcare, clinical care</i>" },
+    { word: "prescription medicine", type: "noun phrase", phonetic: "/.../", meaning: "Thuốc kê đơn", example: "You can only buy this with a prescription medicine.<br><br><i>Đồng nghĩa: prescribed drugs</i>" },
+    { word: "symptom", type: "noun", phonetic: "/.../", meaning: "Triệu chứng", example: "A fever is a common symptom of the flu.<br><br><i>Đồng nghĩa: sign of illness, indication</i>" }
+];
 
         let currentCardIndex = 0;
         let learnedCount = 0;
@@ -4001,6 +4053,8 @@ window.renderStreakCalendar();
                 currentLearningDB = workCareerVocab;
                 } else if (deckType === 'edu_learning') {
         currentLearningDB = educationLearningVocab;
+                } else if (deckType === 'health_lifestyle') {
+        currentLearningDB = healthLifestyleVocab;
             } else {
                 currentLearningDB = vocabDatabase; // Mặc định là bộ từ cá nhân
             }
