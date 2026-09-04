@@ -1,109 +1,67 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+const config = {
+  api: { bodyParser: { sizeLimit: '4mb' } },
+};
 
-module.exports = async function handler(req, res) {
-    if (req.method !== 'POST') {
-        return res.status(405).json({ message: "Chỉ chấp nhận phương thức POST" });
-    }
+async function handler(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Chỉ hỗ trợ phương thức POST' });
+  }
 
-    try {
-        if (!process.env.GEMINI_API_KEY) {
-            throw new Error("Lỗi máy chủ: Chưa cấu hình GEMINI_API_KEY trong Vercel.");
-        }
-
-        // Nhận thêm imageUrl từ request body
-        const { taskType, prompt, essay, imageUrl } = req.body;
-
-        if (!essay) {
-            return res.status(400).json({ message: "Không tìm thấy nội dung bài viết." });
-        }
-
-        const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-        // Chuyển sang gemini-1.5-flash để hỗ trợ đọc hình ảnh đa phương thức
-        const model = genAI.getGenerativeModel({ model: "gemini-3.5-flash" });
-
-        // Khởi tạo mảng chứa câu lệnh (Prompt Parts)
-        let promptParts = [
-            `Bạn là một giám khảo chấm thi IELTS chuyên nghiệp. Hãy chấm bài viết sau đây một cách khách quan dựa trên Đề bài và Hình ảnh/Biểu đồ gốc được cung cấp.
-            - Loại bài thi: ${taskType || "Writing Task 1"}
-            - Đề bài: ${prompt || "Không có đề bài cụ thể"}
-            - Bài làm của học sinh:
-            """
-            ${essay}
-            """
-            
-            Hãy đánh giá chi tiết dựa trên 4 tiêu chí: Task Achievement (đối chiếu chặt chẽ bài viết với số liệu trên hình ảnh gốc), Coherence and Cohesion, Lexical Resource, Grammatical Range and Accuracy.
-            Bạn BẮT BUỘC PHẢI trả về kết quả DƯỚI DẠNG JSON với cấu trúc chính xác như sau (không in thêm văn bản nào khác):
-            {
-                "score": 6.5,
-                "feedback": "Nhận xét chi tiết bằng tiếng Việt ở đây. Trình bày rõ điểm mạnh, điểm yếu và cách khắc phục."
-            }`
-        ];
-
-        // Nếu client có gửi hình ảnh bài gốc, tải nó về và chuyển sang Base64
-        if (imageUrl) {
-            try {
-                // Vercel (Node 18+) hỗ trợ hàm fetch mặc định
-                const imageResp = await fetch(imageUrl);
-                const arrayBuffer = await imageResp.arrayBuffer();
-                const buffer = Buffer.from(arrayBuffer);
-                const mimeType = imageResp.headers.get('content-type') || 'image/png';
-                
-                // Đẩy dữ liệu ảnh vào mảng Prompt để Gemini đọc
-                promptParts.push({
-                    inlineData: {
-                        data: buffer.toString("base64"),
-                        mimeType: mimeType
-                    }
-                });
-            } catch (imgErr) {
-                console.error("Lỗi khi tải ảnh bài gốc:", imgErr);
-            }
-        }
-
-        let result;
-        let retries = 3; 
+  try {
+    const { taskType, prompt, essay } = req.body;
+    
+    // Gộp prompt để tránh lỗi khai báo trùng và thiết lập luật nghiêm ngặt cho AI
+    const combinedPrompt = `
+        Bạn là một chuyên gia giám khảo IELTS Writing.
+        Học viên vừa hoàn thành bài viết IELTS ${taskType} với đề bài sau: "${prompt}"
         
-        for (let i = 0; i < retries; i++) {
-            try {
-                // Truyền toàn bộ mảng (Text + Image) vào Gemini
-                result = await model.generateContent(promptParts);
-                break; 
-            } catch (err) {
-                if (err.status === 503 && i < retries - 1) {
-                    console.warn(`Máy chủ bận, đang thử lại lần ${i + 1}...`);
-                    await delay(2000); 
-                } else {
-                    throw err; 
-                }
-            }
-        }
-
-        const responseText = result.response.text();
+        Bài làm của học viên:
+        "${essay}"
         
-        let aiData;
-        try {
-            const cleanJson = responseText.replace(/```json/g, '').replace(/```/g, '').trim();
-            aiData = JSON.parse(cleanJson);
-        } catch (parseError) {
-            aiData = {
-                score: 0.0,
-                feedback: "AI không trả về đúng định dạng JSON. Nhận xét thô:\n\n" + responseText
-            };
-        }
-
-        res.status(200).json(aiData);
-
-    } catch (error) {
-        console.error("Lỗi API Writing:", error);
+        Nhiệm vụ của bạn:
+        1. Đánh giá bài viết dựa trên 4 tiêu chí chuẩn IELTS: Task Achievement/Response (TA/TR), Coherence and Cohesion (CC), Lexical Resource (LR), Grammatical Range and Accuracy (GRA).
+        2. Đưa ra Overall Band Score dự kiến (0.0 - 9.0).
+        3. Phân tích điểm mạnh và điểm yếu cho TỪNG TIÊU CHÍ. Nêu rõ lỗi cụ thể (trích dẫn lỗi từ bài viết của học viên) và cách sửa lại cho đúng/hay hơn.
         
-        if (error.status === 503) {
-            return res.status(503).json({ 
-                message: "Máy chủ AI của Google hiện đang quá tải. Bạn vui lòng đợi 1-2 phút rồi bấm chấm lại nhé!" 
-            });
+        YÊU CẦU ĐẦU RA (RẤT QUAN TRỌNG):
+        - Chỉ trả về DUY NHẤT một chuỗi JSON hợp lệ. KHÔNG dùng thẻ markdown (\`\`\`json).
+        - Cấu trúc JSON gồm 2 trường chính xác như sau:
+        {
+          "score": (nhập số điểm, ví dụ: 7.5),
+          "feedback": "(Nhập toàn bộ nội dung nhận xét vào đây. Bắt buộc dùng các thẻ HTML như sau để định dạng: 
+          Sử dụng <h4> để làm tiêu đề cho 4 tiêu chí. 
+          Sử dụng <p> để viết đoạn văn. 
+          Sử dụng <ul> và <li> để liệt kê điểm mạnh, điểm yếu. 
+          Sử dụng <b> cho các từ khoá quan trọng. 
+          Sử dụng <i> cho các từ/câu được trích dẫn từ bài làm.
+          Tuyệt đối KHÔNG dùng Markdown như ** hay ### trong trường này)"
         }
+    `;
+    
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+    const model = genAI.getGenerativeModel({ model: "gemini-3.5-flash-lite" });
 
-        res.status(500).json({ message: "Lỗi máy chủ", error: error.message });
-    }
+    const result = await model.generateContent([combinedPrompt]);
+    const response = await result.response;
+    let text = response.text();
+
+    // Dọn dẹp chuỗi JSON đề phòng AI vẫn trả về thẻ markdown
+    text = text.replace(/```json/gi, '').replace(/```/g, '').trim();
+    
+    const parsedData = JSON.parse(text);
+
+    return res.status(200).json({ 
+        score: parseFloat(parsedData.score), 
+        feedback: parsedData.feedback 
+    });
+
+  } catch (error) {
+    console.error("Lỗi AI Backend Writing:", error);
+    return res.status(500).json({ error: "Lỗi trong quá trình chấm điểm: " + error.message });
+  }
 }
+
+module.exports = handler;
+module.exports.config = config;
