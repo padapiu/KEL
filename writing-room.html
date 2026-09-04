@@ -197,18 +197,20 @@
             document.getElementById('writing-prompt-text').innerText = currentTestData.text;
             document.getElementById('display-task-type').innerText = "Writing " + currentTestData.type;
 
-            // KIỂM TRA: Nếu là Task 2
-            if (currentTestData.type === "Task 2") {
+            const promptImage = document.getElementById('writing-prompt-image');
+
+            // KIỂM TRA: Nếu là Task 2 hoặc không có hình ảnh
+            if (currentTestData.type === "Task 2" || !currentTestData.image) {
                 // Ẩn hoàn toàn hình ảnh
-                document.getElementById('writing-prompt-image').style.display = 'none';
+                promptImage.style.display = 'none';
                 // Đổi chữ Overview thành Conclusion
                 if (labelOverview) labelOverview.innerText = "Conclusion";
             } 
-            // Nếu là Task 1
+            // Nếu là Task 1 và CÓ hình ảnh
             else {
-                // Hiện hình ảnh
-                document.getElementById('writing-prompt-image').src = currentTestData.image;
-                document.getElementById('writing-prompt-image').style.display = 'block';
+                // Gắn đường dẫn ảnh và hiện hình ảnh
+                promptImage.src = currentTestData.image;
+                promptImage.style.display = 'block';
                 // Giữ nguyên chữ Overview
                 if (labelOverview) labelOverview.innerText = "Overview";
             }
