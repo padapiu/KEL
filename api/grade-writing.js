@@ -12,7 +12,6 @@ async function handler(req, res) {
   try {
     const { taskType, prompt, essay } = req.body;
     
-    // Gộp prompt để tránh lỗi khai báo trùng và thiết lập luật nghiêm ngặt cho AI
     const combinedPrompt = `
         Bạn là một chuyên gia giám khảo IELTS Writing.
         Học viên vừa hoàn thành bài viết IELTS ${taskType} với đề bài sau: "${prompt}"
@@ -21,22 +20,18 @@ async function handler(req, res) {
         "${essay}"
         
         Nhiệm vụ của bạn:
-        1. Đánh giá bài viết dựa trên 4 tiêu chí chuẩn IELTS: Task Achievement/Response (TA/TR), Coherence and Cohesion (CC), Lexical Resource (LR), Grammatical Range and Accuracy (GRA).
+        1. Đánh giá bài viết dựa trên 4 tiêu chí chuẩn IELTS: Task Achievement/Response, Coherence and Cohesion, Lexical Resource, Grammatical Range and Accuracy.
         2. Đưa ra Overall Band Score dự kiến (0.0 - 9.0).
-        3. Phân tích điểm mạnh và điểm yếu cho TỪNG TIÊU CHÍ. Nêu rõ lỗi cụ thể (trích dẫn lỗi từ bài viết của học viên) và cách sửa lại cho đúng/hay hơn.
+        3. Đọc kỹ từng câu trong bài làm, viết lại toàn bộ bài làm và sửa lỗi trực tiếp (ngữ pháp, từ vựng, diễn đạt). BẮT BUỘC dùng thẻ <del> để bọc những từ bị sai/bị xóa và thẻ <ins> để bọc những từ được thêm vào/sửa lại. 
+        4. Đưa ra nhận xét chi tiết điểm mạnh, điểm yếu cho từng tiêu chí.
         
         YÊU CẦU ĐẦU RA (RẤT QUAN TRỌNG):
         - Chỉ trả về DUY NHẤT một chuỗi JSON hợp lệ. KHÔNG dùng thẻ markdown (\`\`\`json).
-        - Cấu trúc JSON gồm 2 trường chính xác như sau:
+        - Cấu trúc JSON gồm 3 trường chính xác như sau:
         {
           "score": (nhập số điểm, ví dụ: 7.5),
-          "feedback": "(Nhập toàn bộ nội dung nhận xét vào đây. Bắt buộc dùng các thẻ HTML như sau để định dạng: 
-          Sử dụng <h4> để làm tiêu đề cho 4 tiêu chí. 
-          Sử dụng <p> để viết đoạn văn. 
-          Sử dụng <ul> và <li> để liệt kê điểm mạnh, điểm yếu. 
-          Sử dụng <b> cho các từ khoá quan trọng. 
-          Sử dụng <i> cho các từ/câu được trích dẫn từ bài làm.
-          Tuyệt đối KHÔNG dùng Markdown như ** hay ### trong trường này)"
+          "corrected_text": "(Toàn bộ bài viết đã được sửa lỗi nội tuyến. Ví dụ: The <del>peoples</del><ins>people</ins> are... Dùng thẻ <br><br> để tách đoạn)",
+          "feedback": "(Nhận xét chi tiết 4 tiêu chí. Dùng thẻ <h4>, <p>, <ul>, <li>, <b>, <i> để định dạng. KHÔNG dùng Markdown)"
         }
     `;
     
@@ -47,13 +42,12 @@ async function handler(req, res) {
     const response = await result.response;
     let text = response.text();
 
-    // Dọn dẹp chuỗi JSON đề phòng AI vẫn trả về thẻ markdown
     text = text.replace(/```json/gi, '').replace(/```/g, '').trim();
-    
     const parsedData = JSON.parse(text);
 
     return res.status(200).json({ 
         score: parseFloat(parsedData.score), 
+        corrected_text: parsedData.corrected_text,
         feedback: parsedData.feedback 
     });
 
