@@ -32,7 +32,7 @@ async function handler(req, res) {
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
     // Sử dụng mô hình hợp lệ
-    const model = genAI.getGenerativeModel({ model: "gemini-3.6-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-3.5-flash-lite" });
 
     // Đóng gói âm thanh để gửi cho Gemini
     const audioPart = {
