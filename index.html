@@ -115,6 +115,25 @@
 .equalizer-bar:nth-child(3) { animation-delay: 0.4s; }
 .equalizer-bar:nth-child(4) { animation-delay: 0.2s; }
 .equalizer-bar:nth-child(5) { animation-delay: 0s; }
+
+        /* CSS cho phần chữa lỗi Speaking */
+        .speech-correction del {
+            color: #ef4444; 
+            text-decoration: line-through;
+            background-color: #fee2e2; 
+            padding: 0 4px;
+            border-radius: 4px;
+            margin: 0 2px;
+        }
+        .speech-correction ins {
+            color: #10b981; 
+            text-decoration: none;
+            background-color: #d1fae5; 
+            padding: 0 4px;
+            border-radius: 4px;
+            margin: 0 2px;
+            font-weight: 700;
+        }
         
     </style>
 </head>
@@ -4410,21 +4429,31 @@ window.sendAudioToAI = async function(audioBlob) {
                 feedbackBox.innerHTML = `
                     <div class="flex flex-col gap-6 mt-4 w-full text-left">
                         <!-- Khối Box Điểm Số -->
-                        <div class="bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 p-6 rounded-2xl flex flex-col sm:flex-row items-center gap-6 shadow-sm">
-                            <div class="bg-white dark:bg-slate-800 border-2 border-emerald-400 rounded-xl p-4 flex flex-col items-center justify-center w-32 h-32 flex-shrink-0 shadow-sm">
+                        <div class="bg-blue-50 dark:bg-slate-700/50 border border-blue-200 dark:border-slate-600 p-6 rounded-2xl flex flex-col sm:flex-row items-center gap-6 shadow-sm">
+                            <div class="bg-white dark:bg-slate-800 border-2 border-[#4c00ff] rounded-xl p-4 flex flex-col items-center justify-center w-32 h-32 flex-shrink-0 shadow-sm">
                                 <span class="text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1 text-center">Band<br>Score</span>
-                                <span class="text-5xl font-black text-emerald-600 dark:text-emerald-400">${scoreDisplay}</span>
+                                <span class="text-5xl font-black text-[#4c00ff] dark:text-blue-400">${scoreDisplay}</span>
                             </div>
                             <div class="text-center sm:text-left flex-1">
-                                <p class="text-gray-800 dark:text-gray-200 font-medium italic text-lg mb-2">Bạn đã hoàn thành bài nói!</p>
-                                <p class="text-gray-600 dark:text-gray-400 text-sm">Hãy xem chi tiết nhận xét bên dưới để rút kinh nghiệm cho lần sau nhé.</p>
+                                <p class="text-gray-800 dark:text-white font-medium italic text-lg mb-2">Bạn đã hoàn thành bài nói!</p>
+                                <p class="text-gray-600 dark:text-gray-400 text-sm">Dưới đây là bản transcript được AI nhận diện và sửa lỗi chi tiết từng từ.</p>
+                            </div>
+                        </div>
+
+                        <!-- Khối Chữa Bài Trực Tiếp (Transcript & Sửa lỗi) -->
+                        <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm">
+                            <h3 class="text-xl font-bold text-rose-500 mb-6 border-b pb-2 dark:border-slate-600 uppercase flex items-center gap-2">
+                                <span>🎙️</span> Transcript & Sửa lỗi
+                            </h3>
+                            <div class="speech-correction text-gray-800 dark:text-gray-200 leading-loose text-base whitespace-pre-wrap font-medium">
+                                ${result.corrected_text || "Không thể tải bản transcript."}
                             </div>
                         </div>
                         
                         <!-- Khối Nội dung Nhận xét chi tiết -->
-                        <div class="text-gray-800 dark:text-gray-200 leading-relaxed text-base bg-white dark:bg-slate-800 p-6 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm">
-                            <h3 class="text-xl font-bold text-cyan-700 dark:text-cyan-400 mb-4 border-b pb-2 dark:border-slate-600 uppercase">Đánh giá chi tiết</h3>
-                            <div class="space-y-3">
+                        <div class="text-gray-800 dark:text-gray-200 leading-relaxed text-base bg-white dark:bg-slate-800 p-6 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm prose max-w-none">
+                            <h3 class="text-xl font-bold text-cyan-700 dark:text-cyan-400 mb-6 border-b pb-2 dark:border-slate-600 uppercase">Đánh giá theo tiêu chí</h3>
+                            <div class="space-y-4">
                                 ${result.feedback}
                             </div>
                         </div>
